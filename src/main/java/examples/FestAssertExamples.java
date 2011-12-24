@@ -12,15 +12,26 @@ import static org.fest.util.Arrays.array;
 import static org.fest.util.Collections.list;
 import static org.fest.util.Dates.*;
 
-import java.io.*;
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileWriter;
 import java.math.BigDecimal;
-import java.text.*;
-import java.util.*;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Comparator;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
-import org.junit.*;
+import org.junit.Before;
+import org.junit.Test;
 
 import org.fest.assertions.api.DateAssert;
-import org.fest.assertions.internal.*;
+import org.fest.assertions.internal.Failures;
+import org.fest.assertions.internal.PropertySupport;
 
 public class FestAssertExamples {
 
@@ -60,6 +71,7 @@ public class FestAssertExamples {
   private Comparator<String> caseInsensitiveStringComparator = new CaseInsensitiveStringComparator();
   private Comparator<Integer> absValueComparator = new AbsValueComparator<Integer>();
   private Comparator<Character> caseInsensitiveComparator = new CaseInsensitiveComparator();
+  private Comparator<Date> yearAndMonthComparator = new YearAndMonthDateComparator();
 
   @Before
   public void setup() {
@@ -98,7 +110,8 @@ public class FestAssertExamples {
   @Test
   public void string_assertions_with_custom_comparison_examples() {
     assertThat(frodo.getName()).startsWith("Fro").endsWith("do");
-    assertThat(frodo.getName()).usingComparator(caseInsensitiveStringComparator).startsWith("FR").endsWith("ODO").contains("ROD");
+    assertThat(frodo.getName()).usingComparator(caseInsensitiveStringComparator).startsWith("FR").endsWith("ODO")
+        .contains("ROD");
     assertThat(frodo.getName()).usingComparator(caseInsensitiveStringComparator).contains("fro").doesNotContain("don");
   }
 
@@ -340,29 +353,40 @@ public class FestAssertExamples {
   public void number_assertions_with_custom_comparison_examples() {
     assertThat(-8).usingComparator(absValueComparator).isEqualTo(8);
     assertThat(new Integer("-8")).usingComparator(new AbsValueComparator<Integer>()).isEqualTo(new Integer("8"));
-    
+
     assertThat(new Long("-8")).usingComparator(new AbsValueComparator<Long>()).isEqualTo(new Long("8"));
     assertThat(-8l).usingComparator(absValueComparator).isEqualTo(8l);
-    
+
     assertThat(new Short("-8")).usingComparator(new AbsValueComparator<Short>()).isEqualTo(new Short("8"));
-    assertThat((short)-8).usingComparator(absValueComparator).isEqualTo((short)8);
-    
+    assertThat((short) -8).usingComparator(absValueComparator).isEqualTo((short) 8);
+
     assertThat(new Float("-8")).usingComparator(new AbsValueComparator<Float>()).isEqualTo(new Float("8"));
     assertThat(-8.0f).usingComparator(absValueComparator).isEqualTo(8.0f);
-    
+
     assertThat(new Double("-8")).usingComparator(new AbsValueComparator<Double>()).isEqualTo(new Double("8"));
     assertThat(-8.0).usingComparator(absValueComparator).isEqualTo(8.0);
-    
+
     assertThat('a').usingComparator(caseInsensitiveComparator).isEqualTo('A');
     assertThat(new Character('a')).usingComparator(caseInsensitiveComparator).isEqualTo(new Character('A'));
-    
+
     assertThat(new Byte("-8")).usingComparator(new AbsValueComparator<Byte>()).isEqualTo(new Byte("8"));
-    assertThat((byte)-8).usingComparator(absValueComparator).isEqualTo((byte)8);
-    
-    assertThat(new BigDecimal("-8")).usingComparator(new AbsValueComparator<BigDecimal>()).isEqualTo(new BigDecimal("8"));
-    //assertThat(-8).usingComparator(absValueComparator).isEqualTo(9);
+    assertThat((byte) -8).usingComparator(absValueComparator).isEqualTo((byte) 8);
+
+    assertThat(new BigDecimal("-8")).usingComparator(new AbsValueComparator<BigDecimal>()).isEqualTo(
+        new BigDecimal("8"));
+    // assertThat(-8).usingComparator(absValueComparator).isEqualTo(9);
+    // assertThat(new int[] { -1, 2, 3 }).contains(1, 2, 3);
+    assertThat(new int[] { -1, 2, 3 }).usingComparator(absValueComparator).contains(1, 2, -3);
+    assertThat(new long[] { -1, 2, 3 }).usingComparator(new AbsValueComparator<Long>()).contains(1, 2, -3);
+    assertThat(new short[] { -1, 2, 3 }).usingComparator(new AbsValueComparator<Short>()).contains(
+        new short[] { 1, 2, -3 });
+    assertThat(new float[] { -1, 2, 3 }).usingComparator(new AbsValueComparator<Float>()).contains(1, 2, -3);
+    assertThat(new double[] { -1, 2, 3 }).usingComparator(new AbsValueComparator<Double>()).contains(1, 2, -3);
+    assertThat(new byte[] { -1, 2, 3 }).usingComparator(new AbsValueComparator<Byte>()).contains(
+        new byte[] { 1, 2, -3 });
+    assertThat(new char[] { 'a', 'B', 'c' }).usingComparator(caseInsensitiveComparator).contains('A', 'B', 'C');
   }
-  
+
   @Test
   public void fail_usage() throws Exception {
     try {
@@ -474,6 +498,35 @@ public class FestAssertExamples {
     // choose whatever approach suits you best !
   }
 
+  @Test
+  // new in FEST 2.0
+  public void date_assertions_with_custom_comparison_examples() throws Exception {
+    // yearAndMonthComparator
+    assertThat(theTwoTowers.getReleaseDate()).usingComparator(yearAndMonthComparator).isEqualTo("2002-12-01")
+        .isEqualTo("2002-12-02").isNotEqualTo("2002-11-18");
+    assertThat(theTwoTowers.getReleaseDate()).isEqualTo(parse("2002-12-18")).isAfter("2002-12-17")
+        .isBefore("2002-12-19");
+
+    // various usage of isBetween assertion
+    assertThat(theTwoTowers.getReleaseDate()).usingComparator(yearAndMonthComparator)
+        .isBetween("2002-12-01", "2002-12-10", true, true).isNotBetween("2002-12-17", "2002-12-18") // [2002-12-17, 2002-12-18[
+        .isBetween("2002-12-17", "2002-12-18", true, true); // [2002-12-17, 2002-12-18]
+
+    assertThat(theReturnOfTheKing.getReleaseDate()).isBeforeYear(2004).isAfterYear(2001);
+
+    // equals assertion with delta
+    Date date1 = new Date();
+    Date date2 = new Date(date1.getTime() + 100);
+    assertThat(date1).isCloseTo(date2, 100); // would not be true for delta of 99ms
+
+    // isIn isNotIn works with String based date parameter
+    assertThat(theTwoTowers.getReleaseDate()).usingComparator(yearAndMonthComparator).isIn("2002-12-17", "2002-12-19")
+        .isNotIn("2002-11-17", "2002-10-19");
+
+    assertThat(parse("2010-12-18")).usingComparator(yearAndMonthComparator).isInThePast();
+    assertThat(parse("2011-12-18")).usingComparator(yearAndMonthComparator).isToday();
+  }
+
   // new in FEST 2.0
   @Test
   public void assertion_error_with_message_differentiating_expected_double_and_actual_float() throws Exception {
@@ -530,7 +583,7 @@ public class FestAssertExamples {
   // ------------------------------------------------------------------------------------------------------
 
   private File writeFile(String fileName, String fileContent) throws Exception {
-    File file = new File("target/"+fileName);
+    File file = new File("target/" + fileName);
     BufferedWriter out = new BufferedWriter(new FileWriter(file));
     out.write(fileContent);
     out.close();
