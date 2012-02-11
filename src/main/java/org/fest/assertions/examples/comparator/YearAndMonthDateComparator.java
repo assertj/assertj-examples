@@ -1,4 +1,4 @@
-package examples;
+package org.fest.assertions.examples.comparator;
 
 import static org.fest.util.Dates.*;
 

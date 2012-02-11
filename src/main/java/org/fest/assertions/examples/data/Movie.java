@@ -1,4 +1,4 @@
-package examples;
+package org.fest.assertions.examples.data;
 
 import java.util.Date;
 

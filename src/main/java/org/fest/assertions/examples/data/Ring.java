@@ -12,7 +12,7 @@
  * 
  * Copyright @2010 the original author or authors.
  */
-package examples;
+package org.fest.assertions.examples.data;
 
 /**
  * Rings of Power in Tolkien's Lord of the Rings.

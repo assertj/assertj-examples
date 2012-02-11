@@ -1,4 +1,7 @@
-package examples;
+package org.fest.assertions.examples.advanced;
+
+import org.fest.assertions.api.Assertions;
+import org.fest.assertions.examples.data.TolkienCharacter;
 
 
 /**
@@ -6,7 +9,7 @@ package examples;
  * <p>
  * With  MyProjectAssertions.assertThat sttaic import, you will access all possible assertions (standard and custom ones)
  */
-public class MyProjectAssertions { // extends Assertions make available all standard assertions.  
+public class MyProjectAssertions extends Assertions { // extending make all standard Fest assertions available.  
 
   // add the custom assertions related to MyProject
   
