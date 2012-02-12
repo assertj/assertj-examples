@@ -3,91 +3,90 @@ package org.fest.assertions.examples;
 import static java.lang.Integer.toHexString;
 
 import static org.fest.assertions.api.Assertions.assertThat;
-import static org.fest.assertions.api.Fail.fail;
-import static org.fest.assertions.data.Index.atIndex;
-import static org.fest.util.Arrays.array;
-import static org.fest.util.Collections.list;
 
-import java.io.ByteArrayInputStream;
 import java.math.BigDecimal;
+import java.util.Comparator;
 
 import org.junit.Test;
 
 import org.fest.assertions.examples.comparator.AbsValueComparator;
-import org.fest.assertions.examples.data.Person;
-import org.fest.assertions.examples.data.TolkienCharacter;
 
+/**
+ * Number assertions examples.<br>
+ * 
+ * @author Joel Costigliola
+ */
 public class NumberAssertionsExamples extends AbstractAssertionsExamples {
 
   @Test
   public void number_assertions_examples() throws Exception {
-    assertThat(gandalf.getAge()).isGreaterThan(frodo.getAge());
-  }
 
+    // equals / no equals assertions
+    assertThat(sam.getAge()).isEqualTo(38);
+    assertThat(frodo.getAge()).isEqualTo(33).isNotEqualTo(sam.getAge());
+
+    // <= < > >= assertions
+    assertThat(sam.getAge()).isGreaterThan(frodo.getAge()).isGreaterThanOrEqualTo(38);
+    assertThat(frodo.getAge()).isLessThan(sam.getAge()).isLessThanOrEqualTo(33);
+
+    // shortcuts for assertions : > 0, < 0 and == 0
+    assertThat(frodo.getAge() - frodo.getAge()).isZero();
+    assertThat(frodo.getAge() - sauron.getAge()).isNegative();
+    assertThat(gandalf.getAge() - frodo.getAge()).isPositive();
+  }
 
   @Test
   public void number_assertions_with_custom_comparison_examples() {
+
+    // with absolute values comparator : |-8| == |8|
     assertThat(-8).usingComparator(absValueComparator).isEqualTo(8);
-    assertThat(new Integer("-8")).usingComparator(new AbsValueComparator<Integer>()).isEqualTo(new Integer("8"));
-
-    assertThat(new Long("-8")).usingComparator(new AbsValueComparator<Long>()).isEqualTo(new Long("8"));
-    assertThat(-8l).usingComparator(absValueComparator).isEqualTo(8l);
-
-    assertThat(new Short("-8")).usingComparator(new AbsValueComparator<Short>()).isEqualTo(new Short("8"));
-    assertThat((short) -8).usingComparator(absValueComparator).isEqualTo((short) 8);
-
-    assertThat(new Float("-8")).usingComparator(new AbsValueComparator<Float>()).isEqualTo(new Float("8"));
-    assertThat(-8.0f).usingComparator(absValueComparator).isEqualTo(8.0f);
-
-    assertThat(new Double("-8")).usingComparator(new AbsValueComparator<Double>()).isEqualTo(new Double("8"));
-    assertThat(-8.0).usingComparator(absValueComparator).isEqualTo(8.0);
-
-    assertThat('a').usingComparator(caseInsensitiveComparator).isEqualTo('A');
-    assertThat(new Character('a')).usingComparator(caseInsensitiveComparator).isEqualTo(new Character('A'));
-
-    assertThat(new Byte("-8")).usingComparator(new AbsValueComparator<Byte>()).isEqualTo(new Byte("8"));
-    assertThat((byte) -8).usingComparator(absValueComparator).isEqualTo((byte) 8);
-
+    assertThat(-8.0).usingComparator(new AbsValueComparator<Double>()).isEqualTo(8.0);
+    assertThat((byte) -8).usingComparator(new AbsValueComparator<Byte>()).isEqualTo((byte) 8);
     assertThat(new BigDecimal("-8")).usingComparator(new AbsValueComparator<BigDecimal>()).isEqualTo(
         new BigDecimal("8"));
-    // assertThat(-8).usingComparator(absValueComparator).isEqualTo(9);
-    // assertThat(new int[] { -1, 2, 3 }).contains(1, 2, 3);
+
+    // works with arrays !
     assertThat(new int[] { -1, 2, 3 }).usingComparator(absValueComparator).contains(1, 2, -3);
-    assertThat(new long[] { -1, 2, 3 }).usingComparator(new AbsValueComparator<Long>()).contains(1, 2, -3);
-    assertThat(new short[] { -1, 2, 3 }).usingComparator(new AbsValueComparator<Short>()).contains(
-        new short[] { 1, 2, -3 });
-    assertThat(new float[] { -1, 2, 3 }).usingComparator(new AbsValueComparator<Float>()).contains(1, 2, -3);
-    assertThat(new double[] { -1, 2, 3 }).usingComparator(new AbsValueComparator<Double>()).contains(1, 2, -3);
-    assertThat(new byte[] { -1, 2, 3 }).usingComparator(new AbsValueComparator<Byte>()).contains(
-        new byte[] { 1, 2, -3 });
-    assertThat(new char[] { 'a', 'B', 'c' }).usingComparator(caseInsensitiveComparator).contains('A', 'B', 'C');
   }
 
   // new in FEST 2.0
   @Test
-  public void assertion_error_with_message_differentiating_expected_double_and_actual_float() throws Exception {
+  public void assertion_error_with_message_differentiating_double_and_float() {
 
-    final Object expected = 42d;
-    final Object actual = 42f;
+    // Assertion error message is built with a String description of involved objects.
+    // Sometimes, the descriptions are the same, in that case the error message would be confusing, ex :
+    // "expected:<'42.0'> but was:<'42.0'> ... How confusing !
+    // In that case, Fest is smart enough and differentiates objects description by adding their class and hashCode.
+
+    // we declare numbers as Object to get their hashCode when asserting the error message
+    final Object expected = 42d; 
+    final Object actual = 42f; 
     try {
       assertThat(actual).isEqualTo(expected);
     } catch (AssertionError e) {
-      assertThat(expected.hashCode()).isNotEqualTo(actual.hashCode());
       assertThat(e).hasMessage(
           "expected:<'42.0 (Double@" + toHexString(expected.hashCode()) + ")'> but was:<'42.0 (Float@"
               + toHexString(actual.hashCode()) + ")'>");
       return;
     }
-    fail("AssertionError expected");
   }
 
-  
+  @Test
+  public void big_decimals_assertions_examples() {
 
-  
-  
-  // ------------------------------------------------------------------------------------------------------
-  // methods used in our examples
-  // ------------------------------------------------------------------------------------------------------
+    // With BigDecimal, 8.0 is not equals to 8.00 but it is if you use compareTo()
+    assertThat(new BigDecimal("8.0")).isEqualByComparingTo(new BigDecimal("8.00"));
 
+    // The following won't work because it relies on equals methos
+    // assertThat(new BigDecimal("8.0")).isGreaterThanOrEqualTo(new BigDecimal("8.00"));
+    // To have a consistent comparison ignoring BigDecimal scale, switch of comparison strategy :
+    Comparator<BigDecimal> bigDecimalComparator = new Comparator<BigDecimal>() {
+      public int compare(BigDecimal bigDecimal1, BigDecimal bigDecimal2) {
+        return bigDecimal1.compareTo(bigDecimal2);
+      }
+    };
+    assertThat(new BigDecimal("8.0")).usingComparator(bigDecimalComparator).isEqualTo(new BigDecimal("8.00"))
+        .isGreaterThanOrEqualTo(new BigDecimal("8.00"));
+  }
 
 }

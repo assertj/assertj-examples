@@ -11,7 +11,9 @@ import org.fest.assertions.examples.data.Person;
 import org.fest.assertions.examples.data.TolkienCharacter;
 
 /**
- *  Assertions available for all objects.
+ * Assertions available for all objects.
+ *
+ * @author Joel Costigliola
  */
 public class BasicAssertionsExamples extends AbstractAssertionsExamples {
 
@@ -67,9 +69,9 @@ public class BasicAssertionsExamples extends AbstractAssertionsExamples {
 
   // new in FEST 2.0
   @Test
-  public void assertion_error_message_differentiates_expected_and_actual_persons() throws Exception {
+  public void assertion_error_message_differentiates_expected_and_actual_persons() {
     // Assertion error message is built with toString description of involved objects.
-    // Sometimes, objects differs but not their toString description, in that case the error message would
+    // Sometimes, objects differs but not their toString description, in that case the error message would be
     // confusing because, if toString returns "Jake" for different objects, isEqualTo would return :
     // "expected:<'Jake'> but was:<'Jake'> ... How confusing !
     // In that case, Fest is smart enough and differentiates objects description by adding their class and hashCode.
@@ -86,4 +88,41 @@ public class BasicAssertionsExamples extends AbstractAssertionsExamples {
     fail("AssertionError expected");
   }
 
+  // new in FEST 2.0
+  @Test
+  public void basic_assertions_with_custom_comparator_examples() {
+    
+    // standard comparison : frodo is not equal to sam ...
+    assertThat(frodo).isNotEqualTo(sam);
+    // ... but if we compare only character's race frodo is equal to sam
+    assertThat(frodo).usingComparator(raceNameComparator).isEqualTo(sam).isEqualTo(merry).isEqualTo(pippin);
+    
+    // isIn assertion should be consistent with raceComparator :
+    assertThat(frodo).usingComparator(raceNameComparator).isIn(sam, merry, pippin);
+    
+    // chained assertions use the specified comparator, we thus can write
+    assertThat(frodo).usingComparator(raceNameComparator).isEqualTo(sam).isIn(merry, pippin);
+
+    // note that error message mentions the comparator used to understand the failure better.
+    try {
+      assertThat(frodo).usingComparator(raceNameComparator).isEqualTo(sauron);
+    } catch (AssertionError e) {
+      assertThat(e).hasMessage(
+          "Expecting actual:<Character [name=Frodo, race=Race [name=Hobbit, immortal=false], age=33]> to be equal to "
+              + "<Character [name=Sauron, race=Race [name=Maia, immortal=true], age=50000]> "
+              + "according to 'TolkienCharacterRaceNameComparator' comparator but was not.");
+    }
+
+    // custom comparison by race : frodo IS equal to sam => isNotEqual must fail
+    try {
+      assertThat(frodo).usingComparator(raceNameComparator).isNotEqualTo(sam);
+    } catch (AssertionError e) {
+      assertThat(e).hasMessage(
+          "<Character [name=Frodo, race=Race [name=Hobbit, immortal=false], age=33]> should not be equal to:"
+              + "<Character [name=Sam, race=Race [name=Hobbit, immortal=false], age=38]> "
+              + "according to 'TolkienCharacterRaceNameComparator' comparator");
+    }
+  }
+
+  
 }

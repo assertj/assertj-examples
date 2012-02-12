@@ -1,37 +1,43 @@
 package org.fest.assertions.examples;
 
 import static org.fest.assertions.api.Assertions.assertThat;
+import static org.fest.assertions.api.Fail.*;
 
 import org.junit.Test;
 
 import org.fest.assertions.internal.Failures;
 
 /**
- * Exception assertions examples.
+ * Fail usage examples.
  * 
  * @author Joel Costigliola
  */
-public class ExceptionAssertionsExamples extends AbstractAssertionsExamples {
+public class FailUsageExamples extends AbstractAssertionsExamples {
 
   @Test
-  public void exceptions_assertions_examples() {
+  public void fail_usage_examples() {
+    
     assertThat(fellowshipOfTheRing).hasSize(9);
+    
+    // here's the typical pattern to use Fail :
     try {
       fellowshipOfTheRing.get(9); // argggl !
-    } catch (Exception e) {
-      // you can check exception type
-      assertThat(e).isInstanceOf(IndexOutOfBoundsException.class);
-
-      // you can check if exception nas no cause
-      assertThat(e).hasNoCause();
-
-      // you can check exception message
+      // we should not arrive here => use fail to expresses that
+      fail("IndexOutOfBoundsException expected because fellowshipOfTheRing has only 9 elements");
+    } catch (IndexOutOfBoundsException e) {
       assertThat(e).hasMessage("Index: 9, Size: 9");
+    }
+    
+    // Warning : don"t catch Throwable in catch clause, it would catch AssertionError thrown by fail
+    // Anyway, you should never catch Throwable, it is a good thing to do. 
 
-      // sometimes message are not entirely predictible, you can then check for start, end or containing string.
-      assertThat(e).hasMessageStartingWith("Index: 9").hasMessageContaining("9").hasMessageEndingWith("Size: 9");
-      // this equivalent to (unless for error message which is more explicit in assertThat(e).hasMessageXXX)
-      assertThat(e.getMessage()).startsWith("Index: 9").contains("9").endsWith("Size: 9");
+    // another way to do the same thing
+    try {
+      fellowshipOfTheRing.get(9); // argggl !
+      // we should not arrive here 
+      failBecauseExceptionWasNotThrown(IndexOutOfBoundsException.class);
+    } catch (IndexOutOfBoundsException e) {
+      assertThat(e).hasMessage("Index: 9, Size: 9");
     }
   }
 
@@ -99,7 +105,7 @@ public class ExceptionAssertionsExamples extends AbstractAssertionsExamples {
     }
   }
   // see below that elements :
-  
+
   // at org.fest.assertions.error.ConstructorInvoker.newInstance(ConstructorInvoker.java:34)
   // at org.fest.assertions.error.ShouldBeEqual.newComparisonFailure(ShouldBeEqual.java:180)
   // at org.fest.assertions.error.ShouldBeEqual.comparisonFailure(ShouldBeEqual.java:171)
@@ -109,7 +115,7 @@ public class ExceptionAssertionsExamples extends AbstractAssertionsExamples {
   // at org.fest.assertions.api.AbstractAssert.isEqualTo(AbstractAssert.java:86)
   // at
   // org.fest.assertions.examples.ExceptionAssertionsExamples.stack_trace_filtering(ExceptionAssertionsExamples.java:56)
-  
+
   // don't appear in :
 
   // --------------- stack trace filtered -----------------

@@ -12,9 +12,10 @@ import java.util.Map;
 import org.junit.Before;
 
 import org.fest.assertions.examples.comparator.AbsValueComparator;
+import org.fest.assertions.examples.comparator.AgeComparator;
 import org.fest.assertions.examples.comparator.CaseInsensitiveCharacterComparator;
 import org.fest.assertions.examples.comparator.CaseInsensitiveStringComparator;
-import org.fest.assertions.examples.comparator.CharacterRaceComparator;
+import org.fest.assertions.examples.comparator.TolkienCharacterRaceNameComparator;
 import org.fest.assertions.examples.comparator.YearAndMonthDateComparator;
 import org.fest.assertions.examples.data.Movie;
 import org.fest.assertions.examples.data.Race;
@@ -60,13 +61,8 @@ public abstract class AbstractAssertionsExamples {
   protected final Movie theSilmarillion = new Movie("the Silmarillion", parse("2030-01-01"));
   
   // Various comparators
-  protected Comparator<TolkienCharacter> ageComparator = new Comparator<TolkienCharacter>() {
-    public int compare(TolkienCharacter c1, TolkienCharacter c2) {
-      if (c1.getAge() == c2.getAge()) return 0;
-      return c1.getAge() - c2.getAge() > 0 ? -1 : 1;
-    }
-  };
-  protected Comparator<TolkienCharacter> raceComparator = new CharacterRaceComparator();
+  protected Comparator<TolkienCharacter> ageComparator = new AgeComparator();
+  protected Comparator<TolkienCharacter> raceNameComparator = new TolkienCharacterRaceNameComparator();
   protected Comparator<String> caseInsensitiveStringComparator = new CaseInsensitiveStringComparator();
   protected Comparator<Integer> absValueComparator = new AbsValueComparator<Integer>();
   protected Comparator<Character> caseInsensitiveComparator = new CaseInsensitiveCharacterComparator();

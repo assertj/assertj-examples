@@ -1,36 +1,36 @@
 package org.fest.assertions.examples;
 
-import static java.lang.Integer.toHexString;
-
 import static org.fest.assertions.api.Assertions.assertThat;
-import static org.fest.assertions.api.Fail.fail;
-import static org.fest.assertions.data.Index.atIndex;
 import static org.fest.util.Arrays.array;
 import static org.fest.util.Collections.list;
+import static org.fest.util.Dates.*;
 
-import java.io.BufferedWriter;
-import java.io.ByteArrayInputStream;
-import java.io.File;
-import java.io.FileWriter;
 import java.math.BigDecimal;
+import java.util.Date;
 
 import org.junit.Test;
 
 import org.fest.assertions.examples.comparator.AbsValueComparator;
-import org.fest.assertions.examples.data.Person;
 import org.fest.assertions.examples.data.TolkienCharacter;
-import org.fest.assertions.internal.Failures;
 
+/**
+ * Examples of assertions using a specific comparator.
+ *
+ * @author Joel Costigliola
+ */
 public class AssertionsWithCustomComparatorExamples extends AbstractAssertionsExamples {
 
   @Test
   public void string_assertions_with_custom_comparison_examples() {
+    
     // standard assertion based on equals() comparison strategy
     assertThat("Frodo").startsWith("Fro").endsWith("do");
+    
     // now let's use a specific comparison strategy that is case iNsenSiTIve :o)
     // We see that assertions succeeds even though case is not the same (that's the point)
     assertThat("Frodo").usingComparator(caseInsensitiveStringComparator).startsWith("fr").endsWith("ODO");
-    // Assertions after usingComparator(caseInsensitiveStringComparator) are based on the given comparator ... 
+    
+    // All assertions called after usingComparator(caseInsensitiveStringComparator) are based on the given comparator ... 
     assertThat("Frodo").usingComparator(caseInsensitiveStringComparator).contains("fro").doesNotContain("don");
     // ... but a new assertion is not  
     // assertThat("Frodo").startsWith("fr").endsWith("ODO"); // FAILS !!!
@@ -38,206 +38,150 @@ public class AssertionsWithCustomComparatorExamples extends AbstractAssertionsEx
 
   @Test
   public void equals_assertions_with_custom_comparator_examples() {
+    
     // standard comparison : frodo is not equal to sam ...
     assertThat(frodo).isNotEqualTo(sam);
     // ... but if we compare only character's race frodo is equal to sam
-    assertThat(frodo).usingComparator(raceComparator).isEqualTo(sam).isEqualTo(merry).isEqualTo(pippin);
+    assertThat(frodo).usingComparator(raceNameComparator).isEqualTo(sam).isEqualTo(merry).isEqualTo(pippin);
+    
     // isIn assertion should be consistent with raceComparator :
-    assertThat(frodo).usingComparator(raceComparator).isIn(sam, merry, pippin);
+    assertThat(frodo).usingComparator(raceNameComparator).isIn(sam, merry, pippin);
+    
     // chained assertions use the specified comparator, we thus can write
-    assertThat(frodo).usingComparator(raceComparator).isEqualTo(sam).isIn(merry, pippin);
+    assertThat(frodo).usingComparator(raceNameComparator).isEqualTo(sam).isIn(merry, pippin);
 
     // note that error message mentions the comparator used to understand the failure better.
-    boolean errorHasBeenThrown = false;
     try {
-      assertThat(frodo).usingComparator(raceComparator).isEqualTo(sauron);
+      assertThat(frodo).usingComparator(raceNameComparator).isEqualTo(sauron);
     } catch (AssertionError e) {
-      errorHasBeenThrown = true;
       assertThat(e).hasMessage(
           "Expecting actual:<Character [name=Frodo, race=Race [name=Hobbit, immortal=false], age=33]> to be equal to "
               + "<Character [name=Sauron, race=Race [name=Maia, immortal=true], age=50000]> "
-              + "according to 'CharacterRaceComparator' comparator but was not.");
+              + "according to 'TolkienCharacterRaceNameComparator' comparator but was not.");
     }
-    assertThat(errorHasBeenThrown).as("expecting an assertion error").isTrue();
 
-    errorHasBeenThrown = false;
     // custom comparison by race : frodo IS equal to sam => isNotEqual must fail
     try {
-      assertThat(frodo).usingComparator(raceComparator).isNotEqualTo(sam);
+      assertThat(frodo).usingComparator(raceNameComparator).isNotEqualTo(sam);
     } catch (AssertionError e) {
-      errorHasBeenThrown = true;
       assertThat(e).hasMessage(
           "<Character [name=Frodo, race=Race [name=Hobbit, immortal=false], age=33]> should not be equal to:"
               + "<Character [name=Sam, race=Race [name=Hobbit, immortal=false], age=38]> "
-              + "according to 'CharacterRaceComparator' comparator");
+              + "according to 'TolkienCharacterRaceNameComparator' comparator");
     }
-    assertThat(errorHasBeenThrown).as("expecting an assertion error").isTrue();
   }
 
   @Test
-  public void assertions_with_custom_contains_comparison_examples() {
-    boolean errorHasBeenThrown = false;
-    // standard comparison : the fellowshipOfTheRing does not include sauron ...
-    assertThat(fellowshipOfTheRing).doesNotContain(sauron);
-    // ... but if we compare only character's race sauron is in fellowshipOfTheRing because he's a maia like Gandalf.
-    assertThat(fellowshipOfTheRing).contains(gandalf);
-    assertThat(fellowshipOfTheRing).usingComparator(raceComparator).contains(sauron);
-    assertThat(list(gandalf)).usingComparator(raceComparator).contains(sauron);
-    assertThat(list(gandalf)).usingComparator(raceComparator).containsOnly(sauron);
-    assertThat(list(sam, gandalf)).usingComparator(raceComparator).contains(sauron, atIndex(1));
-    assertThat(list(sam, gandalf)).usingComparator(raceComparator).doesNotContain(sauron, atIndex(0));
-    assertThat(list(sam, gandalf)).isSortedAccordingTo(raceComparator);
-    assertThat(list(sam, gandalf)).usingComparator(raceComparator).isSorted();
+  public void collection_assertions_with_custom_comparator_examples() {
 
-    // note that error message mentions the comparator used to understand the failure better.
+    // standard comparison : the fellowshipOfTheRing includes Gandalf but not Sauron ...
+    assertThat(fellowshipOfTheRing).contains(gandalf).doesNotContain(sauron);
+    // ... but if we compare only race name Sauron is in fellowshipOfTheRing because he's a Maia like Gandalf.
+    assertThat(fellowshipOfTheRing).usingComparator(raceNameComparator).contains(sauron);
+
+    // note that error message mentions the comparator used to better understand the failure
+    // the message indicates that Sauron were found because he is a Maia like Gandalf.
     try {
-      assertThat(list(gandalf)).usingComparator(raceComparator).doesNotContain(sauron);
+      assertThat(list(gandalf)).usingComparator(raceNameComparator).doesNotContain(sauron);
     } catch (AssertionError e) {
-      errorHasBeenThrown = true;
       assertThat(e).hasMessage(
           "expecting:<[Character [name=Gandalf, race=Race [name=Maia, immortal=true], age=2020]]> not to contain:"
               + "<[Character [name=Sauron, race=Race [name=Maia, immortal=true], age=50000]]> but found:"
               + "<[Character [name=Sauron, race=Race [name=Maia, immortal=true], age=50000]]> "
-              + "according to 'CharacterRaceComparator' comparator");
+              + "according to 'TolkienCharacterRaceNameComparator' comparator");
     }
-    assertThat(errorHasBeenThrown).as("expecting an assertion error").isTrue();
 
-    // note that error message mentions the comparator used to understand the failure better.
-    try {
-      errorHasBeenThrown = false;
-      assertThat(list(sam, gandalf)).usingComparator(raceComparator).contains(sauron, atIndex(0));
-    } catch (AssertionError e) {
-      errorHasBeenThrown = true;
-      assertThat(e).hasMessage(
-          "expecting <Character [name=Sauron, race=Race [name=Maia, immortal=true], age=50000]> at index <0> "
-              + "but found <Character [name=Sam, race=Race [name=Hobbit, immortal=false], age=38]> in "
-              + "<[Character [name=Sam, race=Race [name=Hobbit, immortal=false], age=38]"
-              + ", Character [name=Gandalf, race=Race [name=Maia, immortal=true], age=2020]]>"
-              + " according to 'CharacterRaceComparator' comparator");
-    }
-    assertThat(errorHasBeenThrown).as("expecting an assertion error").isTrue();
-
-    // note that error message mentions the comparator used to understand the failure better.
-    try {
-      errorHasBeenThrown = false;
-      assertThat(list(sam, gandalf)).usingComparator(raceComparator).doesNotContain(sauron, atIndex(1));
-    } catch (AssertionError e) {
-      errorHasBeenThrown = true;
-      assertThat(e).hasMessage(
-          "expecting <[Character [name=Sam, race=Race [name=Hobbit, immortal=false], age=38], "
-              + "Character [name=Gandalf, race=Race [name=Maia, immortal=true], age=2020]]> "
-              + "not to contain <Character [name=Sauron, race=Race [name=Maia, immortal=true], age=50000]> "
-              + "at index <1> according to 'CharacterRaceComparator' comparator");
-    }
-    assertThat(errorHasBeenThrown).as("expecting an assertion error").isTrue();
-
-    // duplicates assertion honors custom comparator :
+    // duplicates assertion honors custom comparator
     assertThat(fellowshipOfTheRing).doesNotHaveDuplicates();
-    assertThat(list(sam, gandalf)).usingComparator(raceComparator).doesNotHaveDuplicates();
+    assertThat(list(sam, gandalf)).usingComparator(raceNameComparator).doesNotHaveDuplicates();
     try {
-      errorHasBeenThrown = false;
-      assertThat(list(sam, gandalf, frodo)).usingComparator(raceComparator).doesNotHaveDuplicates();
+      assertThat(list(sam, gandalf, frodo)).usingComparator(raceNameComparator).doesNotHaveDuplicates();
     } catch (AssertionError e) {
-      errorHasBeenThrown = true;
       assertThat(e).hasMessage(
           "found duplicate(s):<[Character [name=Frodo, race=Race [name=Hobbit, immortal=false], age=33]]> in:<"
               + "[Character [name=Sam, race=Race [name=Hobbit, immortal=false], age=38], "
               + "Character [name=Gandalf, race=Race [name=Maia, immortal=true], age=2020], "
               + "Character [name=Frodo, race=Race [name=Hobbit, immortal=false], age=33]]> "
-              + "according to 'CharacterRaceComparator' comparator");
-    }
-    assertThat(errorHasBeenThrown).as("expecting an assertion error").isTrue();
-  }
-
-  @Test
-  public void exceptions_assertions_examples() {
-    assertThat(fellowshipOfTheRing).hasSize(9);
-    try {
-      fellowshipOfTheRing.get(9); // argggl !
-    } catch (Exception e) {
-      assertThat(e).isInstanceOf(IndexOutOfBoundsException.class).hasMessage("Index: 9, Size: 9")
-          .hasMessageStartingWith("Index: 9").hasMessageContaining("9").hasMessageEndingWith("Size: 9").hasNoCause();
+              + "according to 'TolkienCharacterRaceNameComparator' comparator");
     }
   }
 
   @Test
-  public void fail_usage() throws Exception {
+  public void array_assertions_with_custom_comparison_examples() {
+    TolkienCharacter[] fellowshipOfTheRingCharacters = fellowshipOfTheRing.toArray(new TolkienCharacter[0]);
+
+    // standard comparison : the fellowshipOfTheRing includes Gandalf but not Sauron ...
+    assertThat(fellowshipOfTheRingCharacters).contains(gandalf).doesNotContain(sauron);
+    // ... but if we compare only race name Sauron is in fellowshipOfTheRing because he's a Maia like Gandalf.
+    assertThat(fellowshipOfTheRingCharacters).usingComparator(raceNameComparator).contains(sauron);
+
+    // isSorted assertion honors custom comparator (new in FEST 2.0)
+    assertThat(array(sam, gandalf)).isSortedAccordingTo(ageComparator);
+    assertThat(array(sam, gandalf)).usingComparator(ageComparator).isSorted();
+
+    // note that error message mentions the comparator used to better understand the failure
     try {
-      Failures.instance().failure(null);
-    } catch (Exception e) {
-      // TODO: handle exception
-    }
-  }
-
-  @Test
-  public void file_assertions_examples() throws Exception {
-    File xFile = writeFile("xFile", "The Truth Is Out There");
-    File xFileClone = writeFile("xFileClone", "The Truth Is Out There");
-    assertThat(xFile).exists().isFile().hasContentEqualTo(xFileClone).isRelative();
-    File emptyFile = writeFile("emptyFile", "");
-    assertThat(emptyFile.length()).isZero();
-  }
-
-  @Test
-  // new in FEST 2.0
-  public void stream_assertions_examples() throws Exception {
-    assertThat(streamFrom("string")).hasContentEqualTo(streamFrom("string"));
-  }
-
-  private static ByteArrayInputStream streamFrom(String string) {
-    return new ByteArrayInputStream(string.getBytes());
-  }
-  
-  // new in FEST 2.0
-  @Test
-  public void assertion_error_with_message_differentiating_expected_double_and_actual_float() throws Exception {
-
-    final Object expected = 42d;
-    final Object actual = 42f;
-    try {
-      assertThat(actual).isEqualTo(expected);
+      assertThat(array(gandalf, sam)).usingComparator(ageComparator).isSorted();
     } catch (AssertionError e) {
-      assertThat(expected.hashCode()).isNotEqualTo(actual.hashCode());
       assertThat(e).hasMessage(
-          "expected:<'42.0 (Double@" + toHexString(expected.hashCode()) + ")'> but was:<'42.0 (Float@"
-              + toHexString(actual.hashCode()) + ")'>");
-      return;
+          "group is not sorted according to 'AgeComparator' comparator because "
+              + "element 0:<Character [name=Gandalf, race=Race [name=Maia, immortal=true], age=2020]> "
+              + "is not less or equal than "
+              + "element 1:<Character [name=Sam, race=Race [name=Hobbit, immortal=false], age=38]>, " + "group was:<["
+              + "Character [name=Gandalf, race=Race [name=Maia, immortal=true], age=2020], "
+              + "Character [name=Sam, race=Race [name=Hobbit, immortal=false], age=38]]>");
     }
-    fail("AssertionError expected");
-  }
 
-  // new in FEST 2.0
-  @Test
-  public void assertion_error_with_message_differentiating_expected_and_actual_persons() throws Exception {
-
-    Person actual = new Person("Jake", 43);
-    Person expected = new Person("Jake", 47);
+    // duplicates assertion honors custom comparator :
+    assertThat(fellowshipOfTheRingCharacters).doesNotHaveDuplicates();
+    assertThat(array(sam, gandalf)).usingComparator(raceNameComparator).doesNotHaveDuplicates();
     try {
-      assertThat(actual).isEqualTo(expected);
+      assertThat(array(sam, gandalf, frodo)).usingComparator(raceNameComparator).doesNotHaveDuplicates();
     } catch (AssertionError e) {
-      assertThat(expected.hashCode()).isNotEqualTo(actual.hashCode());
       assertThat(e).hasMessage(
-          "expected:<'Person[name=Jake] (Person@" + toHexString(expected.hashCode())
-              + ")'> but was:<'Person[name=Jake] (Person@" + toHexString(actual.hashCode()) + ")'>");
-      return;
+          "found duplicate(s):<[Character [name=Frodo, race=Race [name=Hobbit, immortal=false], age=33]]> in:<"
+              + "[Character [name=Sam, race=Race [name=Hobbit, immortal=false], age=38], "
+              + "Character [name=Gandalf, race=Race [name=Maia, immortal=true], age=2020], "
+              + "Character [name=Frodo, race=Race [name=Hobbit, immortal=false], age=33]]> "
+              + "according to 'TolkienCharacterRaceNameComparator' comparator");
     }
-    fail("AssertionError expected");
   }
 
-  
+  @Test
+  public void number_assertions_with_custom_comparison_examples() {
 
-  
-  
-  // ------------------------------------------------------------------------------------------------------
-  // methods used in our examples
-  // ------------------------------------------------------------------------------------------------------
+    // with absolute values comparator : |-8| == |8|
+    assertThat(-8).usingComparator(absValueComparator).isEqualTo(8);
+    assertThat(-8.0).usingComparator(new AbsValueComparator<Double>()).isEqualTo(8.0);
+    assertThat((byte) -8).usingComparator(new AbsValueComparator<Byte>()).isEqualTo((byte) 8);
+    assertThat(new BigDecimal("-8")).usingComparator(new AbsValueComparator<BigDecimal>()).isEqualTo(
+        new BigDecimal("8"));
 
-  private File writeFile(String fileName, String fileContent) throws Exception {
-    File file = new File("target/" + fileName);
-    BufferedWriter out = new BufferedWriter(new FileWriter(file));
-    out.write(fileContent);
-    out.close();
-    return file;
+    // works with arrays !
+    assertThat(new int[] { -1, 2, 3 }).usingComparator(absValueComparator).contains(1, 2, -3);
   }
 
+  @Test
+  public void char_assertions_with_custom_comparison_examples() {
+    assertThat('a').usingComparator(caseInsensitiveComparator).isEqualTo('A');
+    assertThat(new Character('a')).usingComparator(caseInsensitiveComparator).isEqualTo(new Character('A'));
+  }
+
+  @Test
+  public void date_assertions_with_custom_comparison_examples() {
+    
+    // theTwoTowers.getReleaseDate() : 2002-12-18
+    assertThat(theTwoTowers.getReleaseDate()).usingComparator(yearAndMonthComparator)
+        .isEqualTo("2002-12-01").isEqualTo("2002-12-02") // same year and month
+        .isNotEqualTo("2002-11-18") // same year but different month
+        .isBetween("2002-12-01", "2002-12-10", true, true)
+        .isNotBetween("2002-12-01", "2002-12-10") // second date is excluded !
+        .isIn("2002-12-01") // ok same year and month
+        .isNotIn("2002-11-01", "2002-10-01"); // same year but different month
+
+    // build date away from today by one day (if we are at the end of the month we subtract one day, otherwise we add one)
+    Date oneDayFromTodayInSameMonth = monthOf(tomorrow()) == monthOf(new Date()) ? tomorrow() : yesterday();
+    assertThat(oneDayFromTodayInSameMonth).usingComparator(yearAndMonthComparator).isToday();
+  }
+  
 }
