@@ -18,7 +18,7 @@ import org.fest.assertions.examples.data.Ring;
 /**
  * Iterable (including Collection) assertions examples.<br>
  * Iterable has been introduces in <b>FEST 2.0</b> (before 2.0 version, only Collection assertions were available).
- *
+ * 
  * @author Joel Costigliola
  */
 public class CollectionAssertionsExamples extends AbstractAssertionsExamples {
@@ -47,6 +47,10 @@ public class CollectionAssertionsExamples extends AbstractAssertionsExamples {
     Iterable<Ring> allRings = list(oneRing, vilya, nenya, narya, dwarfRing, manRing);
     assertThat(allRings).startsWith(oneRing, vilya).endsWith(dwarfRing, manRing);
     assertThat(allRings).containsSequence(nenya, narya, dwarfRing);
+
+    List<Integer> testedList = list(1);
+    List<Integer> referenceList = list(1, 2, 3);
+    assertThat(referenceList).containsSequence(testedList.toArray());
   }
 
   @Test
@@ -87,12 +91,12 @@ public class CollectionAssertionsExamples extends AbstractAssertionsExamples {
   @Test
   public void list_specific_assertions_examples() {
     // list assertions inherits from collection/iterable assertions but offers more.
-    
+
     // You can check that a list is sorted (new in FEST 2.0)
     Collections.sort(fellowshipOfTheRing, ageComparator);
     assertThat(fellowshipOfTheRing).isSortedAccordingTo(ageComparator);
     assertThat(fellowshipOfTheRing).usingComparator(ageComparator).isSorted();
-    
+
     // You can check element at a given index (we use Index.atIndex(int) synthetic sugar for better readability).
     List<Ring> elvesRings = list(vilya, nenya, narya);
     assertThat(elvesRings).contains(vilya, atIndex(0)).contains(nenya, atIndex(1)).contains(narya, atIndex(2));
@@ -101,17 +105,17 @@ public class CollectionAssertionsExamples extends AbstractAssertionsExamples {
   // CHANGED IN FEST 2.x, was assertThat(myCollection).onProperty(propertyName).contains...
   @Test
   public void collection_assertions_on_extracted_property_values_example() {
-    
+
     // extract simple property values having a java standard type
     assertThat(propertyValuesOf("name", fellowshipOfTheRing)).contains("Boromir", "Gandalf", "Frodo", "Legolas");
     assertThat(propertyValuesOf("name", fellowshipOfTheRing)).doesNotContain("Sauron", "Elrond");
-    
+
     // extracting property works also with user's types (here Race)
     assertThat(propertyValuesOf("race", fellowshipOfTheRing)).contains(HOBBIT, ELF).doesNotContain(ORC);
-    
+
     // extract nested property on Race
     assertThat(propertyValuesOf("race.name", fellowshipOfTheRing)).contains("Hobbit", "Elf").doesNotContain("Orc");
-    
+
     // in Fest 1.x, this would have been written
     // assertThat(fellowshipOfTheRing).onProperty("name").contains("Boromir", "Gandalf", "Frodo", "Legolas");
   }
@@ -119,17 +123,30 @@ public class CollectionAssertionsExamples extends AbstractAssertionsExamples {
   // new in FEST 2.0
   @Test
   public void collection_is_sorted_assertion_example() {
-    
+
     // enum order = order of declaration = ring power
     assertThat(list(oneRing, vilya, nenya, narya, dwarfRing, manRing)).isSorted();
-    
+
     // ring comparison by increasing power
     Comparator<Ring> increasingPowerRingComparator = new Comparator<Ring>() {
       public int compare(Ring ring1, Ring ring2) {
         return -ring1.compareTo(ring2);
       }
     };
-    assertThat(list(manRing, dwarfRing, narya, nenya, vilya, oneRing)).isSortedAccordingTo(increasingPowerRingComparator);
+    assertThat(list(manRing, dwarfRing, narya, nenya, vilya, oneRing)).isSortedAccordingTo(
+        increasingPowerRingComparator);
+  }
+
+  // new in FEST 2.0
+  @Test
+  public void assertion_error_message_differentiates_long_from_integer() {
+    // Assertion error message is built with ToString.toStringOf description of involved objects.
+    try {
+      List<Long> longs = list(5L, 7L);
+      assertThat(longs).contains(5, 7);
+    } catch (AssertionError e) {
+      assertThat(e).hasMessage("expecting:<[5L, 7L]> to contain:<[5, 7]> but could not find:<[5, 7]>");
+    }
   }
 
 }
