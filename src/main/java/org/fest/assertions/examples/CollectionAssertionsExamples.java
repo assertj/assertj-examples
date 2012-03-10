@@ -149,4 +149,11 @@ public class CollectionAssertionsExamples extends AbstractAssertionsExamples {
     }
   }
 
+  // new in FEST 2.0
+  @Test
+  public void is_subset_of_assertion_example() {
+    Collection<Ring> elvesRings = list(vilya, nenya, narya);
+    assertThat(elvesRings).isSubsetOf(ringsOfPower);
+  }
+
 }

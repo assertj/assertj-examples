@@ -1,5 +1,7 @@
 package org.fest.assertions.examples;
 
+import static org.fest.assertions.examples.data.Ring.*;
+import static org.fest.util.Collections.list;
 import static org.fest.util.Dates.parse;
 
 import java.util.ArrayList;
@@ -52,6 +54,8 @@ public abstract class AbstractAssertionsExamples {
   protected final TolkienCharacter galadriel = new TolkienCharacter("Legolas", 3000, ELF);
   private final TolkienCharacter elrond = new TolkienCharacter("Legolas", 3000, ELF);
   protected final List<TolkienCharacter> fellowshipOfTheRing = new ArrayList<TolkienCharacter>();
+  // Rings and their bearer
+  protected final List<Ring> ringsOfPower = list(oneRing, vilya, nenya, narya, dwarfRing, manRing);
   protected final Map<Ring, TolkienCharacter> ringBearers = new HashMap<Ring, TolkienCharacter>();
   
   // Lord of the Rings movies
