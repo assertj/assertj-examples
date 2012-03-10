@@ -3,7 +3,6 @@ package org.fest.assertions.examples;
 import static java.lang.Integer.toHexString;
 
 import static org.fest.assertions.api.Assertions.assertThat;
-import static org.fest.assertions.api.Fail.fail;
 
 import org.junit.Test;
 
@@ -83,9 +82,7 @@ public class BasicAssertionsExamples extends AbstractAssertionsExamples {
       assertThat(e).hasMessage(
           "expected:<'Person[name=Jake] (Person@" + toHexString(expected.hashCode())
               + ")'> but was:<'Person[name=Jake] (Person@" + toHexString(actual.hashCode()) + ")'>");
-      return;
     }
-    fail("AssertionError expected");
   }
 
   // new in FEST 2.0
