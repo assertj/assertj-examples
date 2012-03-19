@@ -35,36 +35,36 @@ public class UsingConditionExamples extends AbstractAssertionsExamples {
     assertThat(set("Leia", "Solo")).doNotHave(jediPower);
     
     // areAtLeast & areNotAtLeast
-    assertThat(set("Luke", "Yoda", "Leia")).areAtLeast(jedi, 2);
-    assertThat(set("Luke", "Yoda", "Obiwan")).areAtLeast(jedi, 2);
-    assertThat(set("Luke", "Yoda", "Leia")).areNotAtLeast(jedi, 1);
-    assertThat(set("Luke", "Solo", "Leia")).areNotAtLeast(jedi, 1);
+    assertThat(set("Luke", "Yoda", "Leia")).areAtLeast(2, jedi);
+    assertThat(set("Luke", "Yoda", "Obiwan")).areAtLeast(2, jedi);
+    assertThat(set("Luke", "Yoda", "Leia")).areNotAtLeast(1, jedi);
+    assertThat(set("Luke", "Solo", "Leia")).areNotAtLeast(1, jedi);
     
     // haveAtLeast & doNotHaveAtLeast
-    assertThat(set("Luke", "Yoda", "Leia")).haveAtLeast(jediPower, 2);
-    assertThat(set("Luke", "Yoda", "Obiwan")).haveAtLeast(jediPower, 2);
-    assertThat(set("Luke", "Yoda", "Leia")).doNotHaveAtLeast(jediPower, 1);   
-    assertThat(set("Luke", "Solo", "Leia")).doNotHaveAtLeast(jediPower, 1);
+    assertThat(set("Luke", "Yoda", "Leia")).haveAtLeast(2, jediPower);
+    assertThat(set("Luke", "Yoda", "Obiwan")).haveAtLeast(2, jediPower);
+    assertThat(set("Luke", "Yoda", "Leia")).doNotHaveAtLeast(1, jediPower);   
+    assertThat(set("Luke", "Solo", "Leia")).doNotHaveAtLeast(1, jediPower);
     
     // areAtMost & areNotAtMost
-    assertThat(set("Luke", "Yoda", "Leia")).areAtMost(jedi, 2);
-    assertThat(set("Luke", "Solo", "Leia")).areAtMost(jedi, 2);
-    assertThat(set("Luke", "Yoda", "Leia")).areNotAtMost(jedi, 1);
-    assertThat(set("Luke", "Yoda", "Obiwan")).areNotAtMost(jedi, 1);   
+    assertThat(set("Luke", "Yoda", "Leia")).areAtMost(2, jedi);
+    assertThat(set("Luke", "Solo", "Leia")).areAtMost(2, jedi);
+    assertThat(set("Luke", "Yoda", "Leia")).areNotAtMost(1, jedi);
+    assertThat(set("Luke", "Yoda", "Obiwan")).areNotAtMost(1, jedi);   
     
     // haveAtMost & doNotHaveAtMost
-    assertThat(set("Luke", "Yoda", "Leia")).haveAtMost(jediPower, 2);
-    assertThat(set("Luke", "Solo", "Leia")).haveAtMost(jediPower, 2);
-    assertThat(set("Luke", "Yoda", "Leia")).doNotHaveAtMost(jediPower, 1);
-    assertThat(set("Luke", "Yoda", "Obiwan")).doNotHaveAtMost(jediPower, 1);   
+    assertThat(set("Luke", "Yoda", "Leia")).haveAtMost(2, jediPower);
+    assertThat(set("Luke", "Solo", "Leia")).haveAtMost(2, jediPower);
+    assertThat(set("Luke", "Yoda", "Leia")).doNotHaveAtMost(1, jediPower);
+    assertThat(set("Luke", "Yoda", "Obiwan")).doNotHaveAtMost(1, jediPower);   
     
     // areExactly & areNotExactly
-    assertThat(set("Luke", "Yoda", "Leia")).areExactly(jedi, 2);
-    assertThat(set("Luke", "Yoda", "Leia")).areNotExactly(jedi, 1);
+    assertThat(set("Luke", "Yoda", "Leia")).areExactly(2, jedi);
+    assertThat(set("Luke", "Yoda", "Leia")).areNotExactly(1, jedi);
     
     // haveExactly & haveNotExactly
-    assertThat(set("Luke", "Yoda", "Leia")).haveExactly(jediPower, 2);
-    assertThat(set("Luke", "Yoda", "Leia")).areNotExactly(jediPower, 1);    
+    assertThat(set("Luke", "Yoda", "Leia")).haveExactly(2, jediPower);
+    assertThat(set("Luke", "Yoda", "Leia")).areNotExactly(1, jediPower);    
   }
   
   private final Condition<String> jedi = new Condition<String>("jedi") {
