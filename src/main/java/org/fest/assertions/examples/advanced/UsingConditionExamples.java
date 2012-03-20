@@ -64,7 +64,7 @@ public class UsingConditionExamples extends AbstractAssertionsExamples {
     
     // haveExactly & haveNotExactly
     assertThat(set("Luke", "Yoda", "Leia")).haveExactly(2, jediPower);
-    assertThat(set("Luke", "Yoda", "Leia")).areNotExactly(1, jediPower);    
+    assertThat(set("Luke", "Yoda", "Leia")).doNotHaveExactly(1, jediPower);    
   }
   
   private final Condition<String> jedi = new Condition<String>("jedi") {
