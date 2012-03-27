@@ -1,6 +1,8 @@
 package org.fest.assertions.examples.advanced;
 
 import static org.fest.assertions.api.Assertions.assertThat;
+import static org.fest.assertions.condition.AllOf.allOf;
+import static org.fest.assertions.condition.Not.not;
 import static org.fest.util.Collections.set;
 
 import java.util.Set;
@@ -67,6 +69,15 @@ public class UsingConditionExamples extends AbstractAssertionsExamples {
     assertThat(set("Luke", "Yoda", "Leia")).doNotHaveExactly(1, jediPower);    
   }
   
+  @SuppressWarnings("unchecked")
+  @Test
+  public void has_not_condition_example() {
+    assertThat("Yoda").has(jediPower);
+    assertThat("Yoda").has(allOf(jediPower, not(sithPower)));
+    assertThat("Solo").has(not(jediPower));
+    assertThat("Solo").is(allOf(not(jedi), not(sith)));
+    }
+  
   private final Condition<String> jedi = new Condition<String>("jedi") {
     private final Set<String> jedis = set("Luke", "Yoda", "Obiwan");
 
@@ -82,6 +93,24 @@ public class UsingConditionExamples extends AbstractAssertionsExamples {
     @Override
     public boolean matches(String value) {
       return jedis.contains(value);
+    };
+  };
+  
+  private final Condition<String> sith = new Condition<String>("sith") {
+    private final Set<String> siths = set("Sidious", "Vader", "Plagueis");
+    
+    @Override
+    public boolean matches(String value) {
+      return siths.contains(value);
+    };
+  };
+  
+  private final Condition<String> sithPower = new Condition<String>("sith power") {
+    private final Set<String> siths = set("Sidious", "Vader", "Plagueis");
+    
+    @Override
+    public boolean matches(String value) {
+      return siths.contains(value);
     };
   };
   
