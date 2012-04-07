@@ -3,7 +3,7 @@ package org.fest.assertions.examples;
 import static org.fest.assertions.api.Assertions.assertThat;
 import static org.fest.assertions.data.Index.atIndex;
 import static org.fest.assertions.examples.data.Ring.*;
-import static org.fest.assertions.internal.PropertySupport.propertyValuesOf;
+import static org.fest.assertions.groups.Properties.extractProperty;
 import static org.fest.util.Collections.list;
 
 import java.util.Collection;
@@ -107,14 +107,14 @@ public class CollectionAssertionsExamples extends AbstractAssertionsExamples {
   public void collection_assertions_on_extracted_property_values_example() {
 
     // extract simple property values having a java standard type
-    assertThat(propertyValuesOf("name", fellowshipOfTheRing)).contains("Boromir", "Gandalf", "Frodo", "Legolas");
-    assertThat(propertyValuesOf("name", fellowshipOfTheRing)).doesNotContain("Sauron", "Elrond");
+    assertThat(extractProperty("name").from(fellowshipOfTheRing)).contains("Boromir", "Gandalf", "Frodo", "Legolas")
+                                                                 .doesNotContain("Sauron", "Elrond");
 
     // extracting property works also with user's types (here Race)
-    assertThat(propertyValuesOf("race", fellowshipOfTheRing)).contains(HOBBIT, ELF).doesNotContain(ORC);
+    assertThat(extractProperty("race").from(fellowshipOfTheRing)).contains(HOBBIT, ELF).doesNotContain(ORC);
 
     // extract nested property on Race
-    assertThat(propertyValuesOf("race.name", fellowshipOfTheRing)).contains("Hobbit", "Elf").doesNotContain("Orc");
+    assertThat(extractProperty("race.name").from(fellowshipOfTheRing)).contains("Hobbit", "Elf").doesNotContain("Orc");
 
     // in Fest 1.x, this would have been written
     // assertThat(fellowshipOfTheRing).onProperty("name").contains("Boromir", "Gandalf", "Frodo", "Legolas");

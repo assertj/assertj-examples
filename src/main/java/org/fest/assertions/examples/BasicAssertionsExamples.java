@@ -121,5 +121,4 @@ public class BasicAssertionsExamples extends AbstractAssertionsExamples {
     }
   }
 
-  
 }
