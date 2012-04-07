@@ -1,9 +1,8 @@
 package org.fest.assertions.examples;
 
-import static org.fest.assertions.api.Assertions.assertThat;
+import static org.fest.assertions.api.Assertions.*;
 import static org.fest.assertions.data.Index.atIndex;
 import static org.fest.assertions.examples.data.Ring.*;
-import static org.fest.assertions.groups.Properties.extractProperty;
 import static org.fest.util.Collections.list;
 
 import java.util.Collection;

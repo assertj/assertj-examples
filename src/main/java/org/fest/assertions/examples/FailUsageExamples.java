@@ -1,7 +1,6 @@
 package org.fest.assertions.examples;
 
-import static org.fest.assertions.api.Assertions.assertThat;
-import static org.fest.assertions.api.Fail.*;
+import static org.fest.assertions.api.Assertions.*;
 
 import org.junit.Test;
 
