@@ -108,15 +108,14 @@ public class CollectionAssertionsExamples extends AbstractAssertionsExamples {
     // extract simple property values having a java standard type
     assertThat(extractProperty("name").from(fellowshipOfTheRing)).contains("Boromir", "Gandalf", "Frodo", "Legolas")
                                                                  .doesNotContain("Sauron", "Elrond");
+    // in Fest 1.x, this would have been written :
+    // assertThat(fellowshipOfTheRing).onProperty("name").contains("Boromir", "Gandalf", "Frodo", "Legolas");
 
     // extracting property works also with user's types (here Race)
     assertThat(extractProperty("race").from(fellowshipOfTheRing)).contains(HOBBIT, ELF).doesNotContain(ORC);
 
     // extract nested property on Race
     assertThat(extractProperty("race.name").from(fellowshipOfTheRing)).contains("Hobbit", "Elf").doesNotContain("Orc");
-
-    // in Fest 1.x, this would have been written
-    // assertThat(fellowshipOfTheRing).onProperty("name").contains("Boromir", "Gandalf", "Frodo", "Legolas");
   }
 
   // new in FEST 2.0

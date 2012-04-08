@@ -1,9 +1,8 @@
 package org.fest.assertions.examples;
 
-import static org.fest.assertions.api.Assertions.assertThat;
+import static org.fest.assertions.api.Assertions.*;
 import static org.fest.assertions.data.Index.atIndex;
 import static org.fest.assertions.examples.data.Ring.*;
-import static org.fest.assertions.internal.PropertySupport.propertyValuesOf;
 import static org.fest.util.Arrays.array;
 import static org.fest.util.Collections.list;
 
@@ -98,17 +97,16 @@ public class ArrayAssertionsExamples extends AbstractAssertionsExamples {
     TolkienCharacter[] fellowshipOfTheRingArray = fellowshipOfTheRing.toArray(new TolkienCharacter[0]);
 
     // extract simple property value (having a java standard type)
-    assertThat(propertyValuesOf("name", fellowshipOfTheRingArray)).contains("Boromir", "Gandalf", "Frodo", "Legolas");
-    assertThat(propertyValuesOf("name", fellowshipOfTheRingArray)).doesNotContain("Sauron", "Elrond");
+    assertThat(extractProperty("name").from(fellowshipOfTheRingArray)).contains("Boromir", "Gandalf", "Frodo", "Legolas")
+                                                                      .doesNotContain("Sauron", "Elrond");
+    // in Fest 1.x, this would have been written :
+    // assertThat(fellowshipOfTheRingArray).onProperty("name").contains("Boromir", "Gandalf", "Frodo", "Legolas");
     
     // extracting property works also with user's types (here Race)
-    assertThat(propertyValuesOf("race", fellowshipOfTheRingArray)).contains(HOBBIT, ELF).doesNotContain(ORC);
+    assertThat(extractProperty("race").from(fellowshipOfTheRingArray)).contains(HOBBIT, ELF).doesNotContain(ORC);
     
     // extract nested property on Race
-    assertThat(propertyValuesOf("race.name", fellowshipOfTheRingArray)).contains("Hobbit", "Elf").doesNotContain("Orc");
-
-    // in Fest 1.x, this would have been written
-    // assertThat(fellowshipOfTheRingArray).onProperty("name").contains("Boromir", "Gandalf", "Frodo", "Legolas");
+    assertThat(extractProperty("race.name").from(fellowshipOfTheRingArray)).contains("Hobbit", "Elf").doesNotContain("Orc");
   }
 
   // new in FEST 2.0
