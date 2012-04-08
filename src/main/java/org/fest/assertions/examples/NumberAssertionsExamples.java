@@ -1,7 +1,5 @@
 package org.fest.assertions.examples;
 
-import static java.lang.Integer.toHexString;
-
 import static org.fest.assertions.api.Assertions.assertThat;
 
 import java.math.BigDecimal;
@@ -54,19 +52,19 @@ public class NumberAssertionsExamples extends AbstractAssertionsExamples {
   public void assertion_error_with_message_differentiating_double_and_float() {
 
     // Assertion error message is built with a String description of involved objects.
-    // Sometimes, the descriptions are the same, in that case the error message would be confusing, ex :
-    // "expected:<'42.0'> but was:<'42.0'> ... How confusing !
-    // In that case, Fest is smart enough and differentiates objects description by adding their class and hashCode.
+    // Sometimes, the descriptions are the same, if you were to compare a double and a float with same values, the error
+    // message would be confusing, ex :
+    // "expected:<'42.0'> but was:<'42.0'> ... How bad !
+    // In that case, Fest is smart enough and differentiates the number types in the error message.
 
-    // we declare numbers as Object to get their hashCode when asserting the error message
-    final Object expected = 42d; 
-    final Object actual = 42f; 
+    // we declare numbers instead of Double and Float to be able to compare them with isEqualTo.
+    final Number expected = 42d;
+    final Number actual = 42f;
     try {
       assertThat(actual).isEqualTo(expected);
     } catch (AssertionError e) {
-      assertThat(e).hasMessage(
-          "expected:<'42.0 (Double@" + toHexString(expected.hashCode()) + ")'> but was:<'42.0 (Float@"
-              + toHexString(actual.hashCode()) + ")'>");
+      // this message is formatted by JUnit to show what is different (looks nice in IDE but not so in the error message)
+      assertThat(e).hasMessage("expected:<42.0[]> but was:<42.0[f]>");
       return;
     }
   }
