@@ -23,11 +23,17 @@ public class CustomAssertExamples extends AbstractAssertionsExamples {
   @Test
   public void succesful_custom_assertion_example() {
     // custom assertion : assertThat is resolved from TolkienCharacterAssert static import
-    assertThat(frodo).hasName("Frodo");
+    TolkienCharacterAssert.assertThat(frodo).hasName("Frodo");
     // Fest standard assertion : assertThat is resolved from org.fest.assertions.Assertions static import
     assertThat(frodo.getAge()).isEqualTo(33);  
     // generic assertion like 'isNotEqualTo' are available for TolkienCharacterAssert 
     assertThat(frodo).isNotEqualTo(merry);  
+    // If you have created a class inheriting from org.fest.assertions.Assertions having an entry point to 
+    // TolkienCharacterAssert you can use it to access TolkienCharacterAssert and standard assertions.
+    // The rationale here is to have a unique entry to all assertions : yours and the standard ones.  
+    MyProjectAssertions.assertThat(frodo).hasName("Frodo");
+    MyProjectAssertions.assertThat(frodo).isNotEqualTo(merry);
+    MyProjectAssertions.assertThat(frodo.getAge()).isEqualTo(33);  
   }
 
   @Test
