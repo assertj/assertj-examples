@@ -2,6 +2,7 @@ package org.fest.assertions.examples.advanced;
 
 import static org.fest.assertions.api.Assertions.assertThat;
 import static org.fest.assertions.condition.AllOf.allOf;
+import static org.fest.assertions.condition.AnyOf.anyOf;
 import static org.fest.assertions.condition.Not.not;
 import static org.fest.util.Collections.set;
 
@@ -26,6 +27,12 @@ public class UsingConditionExamples extends AbstractAssertionsExamples {
     assertThat("Solo").doesNotHave(jediPower);
   }
 
+  @SuppressWarnings("unchecked")
+  @Test
+  public void anyOf_condition_example() {
+    assertThat("Vader").is(anyOf(jedi, sith));
+  }
+  
   @Test
   public void condition_example_on_multiple_elements() {
     // are & areNot
