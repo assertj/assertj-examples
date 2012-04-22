@@ -1,7 +1,6 @@
 package org.fest.assertions.examples;
 
 import static org.fest.assertions.api.Assertions.*;
-import static org.fest.assertions.data.Index.atIndex;
 import static org.fest.assertions.examples.data.Ring.*;
 import static org.fest.util.Collections.list;
 
@@ -96,7 +95,7 @@ public class CollectionAssertionsExamples extends AbstractAssertionsExamples {
     assertThat(fellowshipOfTheRing).isSortedAccordingTo(ageComparator);
     assertThat(fellowshipOfTheRing).usingComparator(ageComparator).isSorted();
 
-    // You can check element at a given index (we use Index.atIndex(int) synthetic sugar for better readability).
+    // You can check element at a given index (we use Assertions.atIndex(int) synthetic sugar for better readability).
     List<Ring> elvesRings = list(vilya, nenya, narya);
     assertThat(elvesRings).contains(vilya, atIndex(0)).contains(nenya, atIndex(1)).contains(narya, atIndex(2));
   }

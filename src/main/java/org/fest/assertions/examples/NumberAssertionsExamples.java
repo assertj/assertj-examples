@@ -1,6 +1,6 @@
 package org.fest.assertions.examples;
 
-import static org.fest.assertions.api.Assertions.assertThat;
+import static org.fest.assertions.api.Assertions.*;
 
 import java.math.BigDecimal;
 import java.util.Comparator;
@@ -87,4 +87,13 @@ public class NumberAssertionsExamples extends AbstractAssertionsExamples {
         .isGreaterThanOrEqualTo(new BigDecimal("8.00"));
   }
 
+  @Test
+  public void number_assertions_with_offset_examples() {
+    // Offset in Fest 2.0 is like Delta in Fest 1.4  
+    assertThat(8.1).isEqualTo(8.0, offset(0.1));
+    assertThat(8.2f).isEqualTo(8.0f, offset(0.2f));
+    // FEST-476 illustrate error message : assertThat(8.1f).isEqualTo(8.0f, offset(0.1f));
+    
+  }
+  
 }
