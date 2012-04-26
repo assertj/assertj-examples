@@ -1,16 +1,18 @@
 package org.fest.assertions.examples;
 
 import static java.lang.Integer.toHexString;
+
 import static org.fest.assertions.api.Assertions.assertThat;
+
+import org.junit.Test;
 
 import org.fest.assertions.examples.data.Person;
 import org.fest.assertions.examples.data.TolkienCharacter;
 import org.fest.util.IntrospectionError;
-import org.junit.Test;
 
 /**
  * Assertions available for all objects.
- *
+ * 
  * @author Joel Costigliola
  */
 public class BasicAssertionsExamples extends AbstractAssertionsExamples {
@@ -87,15 +89,15 @@ public class BasicAssertionsExamples extends AbstractAssertionsExamples {
   // new in FEST 2.0
   @Test
   public void basic_assertions_with_custom_comparator_examples() {
-    
+
     // standard comparison : frodo is not equal to sam ...
     assertThat(frodo).isNotEqualTo(sam);
     // ... but if we compare only character's race frodo is equal to sam
     assertThat(frodo).usingComparator(raceNameComparator).isEqualTo(sam).isEqualTo(merry).isEqualTo(pippin);
-    
+
     // isIn assertion should be consistent with raceComparator :
     assertThat(frodo).usingComparator(raceNameComparator).isIn(sam, merry, pippin);
-    
+
     // chained assertions use the specified comparator, we thus can write
     assertThat(frodo).usingComparator(raceNameComparator).isEqualTo(sam).isIn(merry, pippin);
 
@@ -119,99 +121,101 @@ public class BasicAssertionsExamples extends AbstractAssertionsExamples {
               + "according to 'TolkienCharacterRaceNameComparator' comparator");
     }
   }
-  
+
   // new in FEST-2.0
   @Test
   public void basic_assertions_with_lenient_equals_examples() {
-	 
-	 TolkienCharacter mysteriousHobbit = new TolkienCharacter(null, 33, HOBBIT); 
-	 Person jake = new Person("Jake", 43);
-	 //
-	 //	 
-	 // Lenient equality by ignoring null fields
-	 //
-	 //
-	 
-	 // Frodo is still Frodo ...
-	 assertThat(frodo).isLenientEqualsToByIgnoringNullFields(frodo);
-	 // The mysteriousHobbit is the mysteriousHobbit
-	 assertThat(mysteriousHobbit).isLenientEqualsToByIgnoringNullFields(mysteriousHobbit);
-	 // Null fields in expected object are ignored, the mysteriousHobbit has null name
-	 assertThat(frodo).isLenientEqualsToByIgnoringNullFields(mysteriousHobbit);
-	 // ... But the lenient equality is not reversible !
-	 try {
-		 assertThat(mysteriousHobbit).isLenientEqualsToByIgnoringNullFields(frodo);
-     } catch (AssertionError e) {
-        assertThat(e).hasMessage(
-            "expected value <'Frodo'> in field <'name'> of <Character [name=null, race=Race [name=Hobbit, immortal=false]" +
-            ", age=33]>, comparison was performed on all fields");
-     }
-	 // other must be a instance of actual
-	 try {
-		 assertThat(frodo).isLenientEqualsToByIgnoringNullFields(jake);
-	 } catch (AssertionError e) {
-		 assertThat(e).hasMessage("expected <Person[name=Jake]> to be an instance of:<org.fest.assertions.examples.data.TolkienCharacter> " +
-		 		"but was instance of:<org.fest.assertions.examples.data.Person>");
-	 }
-	 
-	 //
-	 //
-	 // Lenient equality by ignoring fields
-	 //
-	 //
-	 
-	 // Except name and age, frodo and sam both are hobbits, so they are lenient equals ignoring name and age
-	 assertThat(frodo).isLenientEqualsToByIgnoringFields(sam, "name", "age");
-	 // But not when juste age is ignore
-	 try {
-		 assertThat(frodo).isLenientEqualsToByIgnoringFields(sam, "age");
-	 } catch (AssertionError e) {
-	      assertThat(e).hasMessage(
-	              "expected value <'Sam'> in field <'name'> of <Character [name=Frodo, race=Race [name=Hobbit, " +
-	              "immortal=false], age=33]>, comparison was performed on all fields but <['age']>");
-	 }
-	 // Null fields are not ignored, so when expected has null field, actual must have too
-	 assertThat(mysteriousHobbit).isLenientEqualsToByIgnoringFields(mysteriousHobbit, "age");
-	 // other must be a instance of actual
-	 try {
-		 assertThat(frodo).isLenientEqualsToByIgnoringFields(jake, "race");
-	 } catch (AssertionError e) {
-		 assertThat(e).hasMessage("expected <Person[name=Jake]> to be an instance of:<org.fest.assertions.examples.data.TolkienCharacter> " +
-			 		"but was instance of:<org.fest.assertions.examples.data.Person>");
-	 }
 
-	 //
-	 //
-	 // Lenient equality by accepting fields
-	 //
-	 //
-	 
-	 // frodo and sam both are hobbits, so they are lenient equals on race
-	 assertThat(frodo).isLenientEqualsToByAcceptingFields(sam, "race");
-	 // but not when accepting name and race
-	 try {
-		 assertThat(frodo).isLenientEqualsToByAcceptingFields(sam, "name", "race");
-	 } catch (AssertionError e) {
-	      assertThat(e).hasMessage(
-	              "expected value <'Sam'> in field <'name'> of <Character [name=Frodo, race=Race [name=Hobbit, " +
-	              "immortal=false], age=33]>, comparison was performed on fields <['name', 'race']>");
-	 }	
-	 // Null fields are not ignored, so when expected has null field, actual must have too
-	 assertThat(mysteriousHobbit).isLenientEqualsToByAcceptingFields(mysteriousHobbit, "name");
-	 // Accepted fields must exist
-	 try {
-		 assertThat(frodo).isLenientEqualsToByAcceptingFields(sam, "hairColor");
-	 } catch (IntrospectionError e) {
-		 assertThat(e).hasMessage("No getter for property 'hairColor' in org.fest.assertions.examples.data.TolkienCharacter");
-	}
-	 // other must be a instance of actual
-	 try {
-		 assertThat(frodo).isLenientEqualsToByAcceptingFields(jake, "name");
-	 } catch (AssertionError e) {
-		 assertThat(e).hasMessage("expected <Person[name=Jake]> to be an instance of:<org.fest.assertions.examples.data.TolkienCharacter> " +
-			 		"but was instance of:<org.fest.assertions.examples.data.Person>");
-	 }
-	 
+    TolkienCharacter mysteriousHobbit = new TolkienCharacter(null, 33, HOBBIT);
+
+    // ------------------------------------------------------------------------------------
+    // Lenient equality by ignoring null fields
+    // ------------------------------------------------------------------------------------
+
+    // Frodo is still Frodo ...
+    assertThat(frodo).isLenientEqualsToByIgnoringNullFields(frodo);
+    
+    // The mysteriousHobbit is the mysteriousHobbit
+    assertThat(mysteriousHobbit).isLenientEqualsToByIgnoringNullFields(mysteriousHobbit);
+    
+    // Null fields in expected object are ignored, the mysteriousHobbit has null name
+    assertThat(frodo).isLenientEqualsToByIgnoringNullFields(mysteriousHobbit);
+    // ... But the lenient equality is not reversible !
+    try {
+      assertThat(mysteriousHobbit).isLenientEqualsToByIgnoringNullFields(frodo);
+    } catch (AssertionError e) {
+      assertThat(e).hasMessage(
+          "expected value <'Frodo'> in field <'name'> of <Character [name=null, race=Race [name=Hobbit, immortal=false]"
+              + ", age=33]>, comparison was performed on all fields");
+    }
+    
+    // other must be a instance of actual
+    Person jake = new Person("Jake", 43);
+    try {
+      assertThat(frodo).isLenientEqualsToByIgnoringNullFields(jake);
+    } catch (AssertionError e) {
+      assertThat(e).hasMessage(
+          "expected <Person[name=Jake]> to be an instance of:<org.fest.assertions.examples.data.TolkienCharacter> "
+              + "but was instance of:<org.fest.assertions.examples.data.Person>");
+    }
+
+    // ------------------------------------------------------------------------------------
+    // Lenient equality by ignoring fields
+    // ------------------------------------------------------------------------------------
+
+    // Except name and age, frodo and sam both are hobbits, so they are lenient equals ignoring name and age
+    assertThat(frodo).isLenientEqualsToByIgnoringFields(sam, "name", "age");
+    // But not when just age is ignored
+    try {
+      assertThat(frodo).isLenientEqualsToByIgnoringFields(sam, "age");
+    } catch (AssertionError e) {
+      assertThat(e).hasMessage(
+          "expected value <'Sam'> in field <'name'> of <Character [name=Frodo, race=Race [name=Hobbit, "
+              + "immortal=false], age=33]>, comparison was performed on all fields but <['age']>");
+    }
+    // Null fields are not ignored, so when expected has null field, actual must have too
+    assertThat(mysteriousHobbit).isLenientEqualsToByIgnoringFields(mysteriousHobbit, "age");
+    // other must be a instance of actual
+    try {
+      assertThat(frodo).isLenientEqualsToByIgnoringFields(jake, "race");
+    } catch (AssertionError e) {
+      assertThat(e).hasMessage(
+          "expected <Person[name=Jake]> to be an instance of:<org.fest.assertions.examples.data.TolkienCharacter> "
+              + "but was instance of:<org.fest.assertions.examples.data.Person>");
+    }
+
+    // ------------------------------------------------------------------------------------
+    // Lenient equality by accepting fields
+    // ------------------------------------------------------------------------------------
+
+    // frodo and sam both are hobbits, so they are lenient equals on race
+    assertThat(frodo).isLenientEqualsToByAcceptingFields(sam, "race");
+    // but not when accepting name and race
+    try {
+      assertThat(frodo).isLenientEqualsToByAcceptingFields(sam, "name", "race");
+    } catch (AssertionError e) {
+      assertThat(e).hasMessage(
+          "expected value <'Sam'> in field <'name'> of <Character [name=Frodo, race=Race [name=Hobbit, "
+              + "immortal=false], age=33]>, comparison was performed on fields <['name', 'race']>");
+    }
+    // Null fields are not ignored, so when expected has null field, actual must have too
+    assertThat(mysteriousHobbit).isLenientEqualsToByAcceptingFields(mysteriousHobbit, "name");
+    // Accepted fields must exist
+    try {
+      assertThat(frodo).isLenientEqualsToByAcceptingFields(sam, "hairColor");
+    } catch (IntrospectionError e) {
+      assertThat(e).hasMessage(
+          "No getter for property 'hairColor' in org.fest.assertions.examples.data.TolkienCharacter");
+    }
+    // other must be a instance of actual
+    try {
+      assertThat(frodo).isLenientEqualsToByAcceptingFields(jake, "name");
+    } catch (AssertionError e) {
+      assertThat(e).hasMessage(
+          "expected <Person[name=Jake]> to be an instance of:<org.fest.assertions.examples.data.TolkienCharacter> "
+              + "but was instance of:<org.fest.assertions.examples.data.Person>");
+    }
+
   }
 
 }
