@@ -1,18 +1,24 @@
 package org.fest.assertions.examples;
 
-import static org.fest.assertions.api.Assertions.*;
+import static org.fest.assertions.api.Assertions.assertThat;
+import static org.fest.assertions.api.Assertions.extractProperty;
 import static org.fest.assertions.data.Index.atIndex;
-import static org.fest.assertions.examples.data.Ring.*;
+import static org.fest.assertions.examples.data.Ring.dwarfRing;
+import static org.fest.assertions.examples.data.Ring.manRing;
+import static org.fest.assertions.examples.data.Ring.narya;
+import static org.fest.assertions.examples.data.Ring.nenya;
+import static org.fest.assertions.examples.data.Ring.oneRing;
+import static org.fest.assertions.examples.data.Ring.vilya;
 import static org.fest.util.Arrays.array;
 import static org.fest.util.Collections.list;
 
 import java.util.Arrays;
 import java.util.Comparator;
 
-import org.junit.Test;
-
+import org.fest.assertions.examples.data.Movie;
 import org.fest.assertions.examples.data.Ring;
 import org.fest.assertions.examples.data.TolkienCharacter;
+import org.junit.Test;
 
 /**
  * Array assertions examples.
@@ -25,7 +31,10 @@ public class ArrayAssertionsExamples extends AbstractAssertionsExamples {
   public void array_assertions_examples() {
     // array assertion are very similar to list assertions
     Ring[] elvesRings = array(vilya, nenya, narya);
+    Movie[] trilogy = array(theFellowshipOfTheRing , theTwoTowers, theReturnOfTheKing);
     assertThat(elvesRings).isNotEmpty().hasSize(3);
+    assertThat(elvesRings).hasSameSizeAs(trilogy);
+    assertThat(elvesRings).hasSameSizeAs(list(trilogy));
     assertThat(elvesRings).contains(nenya).doesNotContain(oneRing);
     // you can check element at a given index (we use Index.atIndex(int) synthetic sugar for better readability).
     assertThat(elvesRings).contains(vilya, atIndex(0)).contains(nenya, atIndex(1)).contains(narya, atIndex(2));
