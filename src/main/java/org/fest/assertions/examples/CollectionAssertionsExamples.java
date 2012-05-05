@@ -1,7 +1,14 @@
 package org.fest.assertions.examples;
 
-import static org.fest.assertions.api.Assertions.*;
-import static org.fest.assertions.examples.data.Ring.*;
+import static org.fest.assertions.api.Assertions.assertThat;
+import static org.fest.assertions.api.Assertions.atIndex;
+import static org.fest.assertions.api.Assertions.extractProperty;
+import static org.fest.assertions.examples.data.Ring.dwarfRing;
+import static org.fest.assertions.examples.data.Ring.manRing;
+import static org.fest.assertions.examples.data.Ring.narya;
+import static org.fest.assertions.examples.data.Ring.nenya;
+import static org.fest.assertions.examples.data.Ring.oneRing;
+import static org.fest.assertions.examples.data.Ring.vilya;
 import static org.fest.util.Collections.list;
 
 import java.util.Collection;
@@ -9,9 +16,9 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 
-import org.junit.Test;
-
+import org.fest.assertions.examples.data.Movie;
 import org.fest.assertions.examples.data.Ring;
+import org.junit.Test;
 
 /**
  * Iterable (including Collection) assertions examples.<br>
@@ -23,10 +30,14 @@ public class CollectionAssertionsExamples extends AbstractAssertionsExamples {
 
   @Test
   public void collection_and_iterable_assertion_examples() {
+	  
 
     // would work the same way with Iterable<Ring>,
     Collection<Ring> elvesRings = list(vilya, nenya, narya);
+    Collection<Movie> trilogy = list(theFellowshipOfTheRing , theTwoTowers, theReturnOfTheKing);
     assertThat(elvesRings).isNotEmpty().hasSize(3);
+    assertThat(elvesRings).hasSameSizeAs(trilogy);
+    assertThat(elvesRings).hasSameSizeAs(trilogy.toArray());
     assertThat(elvesRings).contains(nenya).doesNotContain(oneRing);
 
     // with containsOnly, all the elements must be present (but the order is not important)
