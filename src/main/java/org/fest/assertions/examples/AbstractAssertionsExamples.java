@@ -12,6 +12,7 @@ import java.util.List;
 import java.util.Map;
 
 import org.junit.Before;
+import org.junit.BeforeClass;
 
 import org.fest.assertions.examples.comparator.AbsValueComparator;
 import org.fest.assertions.examples.comparator.AgeComparator;
@@ -20,6 +21,8 @@ import org.fest.assertions.examples.comparator.CaseInsensitiveStringComparator;
 import org.fest.assertions.examples.comparator.TolkienCharacterRaceNameComparator;
 import org.fest.assertions.examples.comparator.YearAndMonthDateComparator;
 import org.fest.assertions.examples.data.Movie;
+import org.fest.assertions.examples.data.Name;
+import org.fest.assertions.examples.data.Player;
 import org.fest.assertions.examples.data.Race;
 import org.fest.assertions.examples.data.Ring;
 import org.fest.assertions.examples.data.TolkienCharacter;
@@ -46,14 +49,15 @@ public abstract class AbstractAssertionsExamples {
   protected final TolkienCharacter merry = new TolkienCharacter("Merry", 36, HOBBIT);
   protected final TolkienCharacter pippin = new TolkienCharacter("Pippin", 28, HOBBIT);
   protected final TolkienCharacter gandalf = new TolkienCharacter("Gandalf", 2020, MAIA);
-  private final TolkienCharacter gimli = new TolkienCharacter("Gimli", 139, DWARF);
-  private final TolkienCharacter legolas = new TolkienCharacter("Legolas", 1000, ELF);
+  protected final TolkienCharacter gimli = new TolkienCharacter("Gimli", 139, DWARF);
+  protected final TolkienCharacter legolas = new TolkienCharacter("Legolas", 1000, ELF);
   protected final TolkienCharacter aragorn = new TolkienCharacter("Aragorn", 87, MAN);
-  private final TolkienCharacter boromir = new TolkienCharacter("Boromir", 87, MAN);
+  protected final TolkienCharacter boromir = new TolkienCharacter("Boromir", 87, MAN);
   protected final TolkienCharacter sauron = new TolkienCharacter("Sauron", 50000, MAIA);
   protected final TolkienCharacter galadriel = new TolkienCharacter("Legolas", 3000, ELF);
-  private final TolkienCharacter elrond = new TolkienCharacter("Legolas", 3000, ELF);
+  protected final TolkienCharacter elrond = new TolkienCharacter("Legolas", 3000, ELF);
   protected final List<TolkienCharacter> fellowshipOfTheRing = new ArrayList<TolkienCharacter>();
+  
   // Rings and their bearer
   protected final List<Ring> ringsOfPower = list(oneRing, vilya, nenya, narya, dwarfRing, manRing);
   protected final Map<Ring, TolkienCharacter> ringBearers = new HashMap<Ring, TolkienCharacter>();
@@ -72,6 +76,35 @@ public abstract class AbstractAssertionsExamples {
   protected Comparator<Character> caseInsensitiveComparator = new CaseInsensitiveCharacterComparator();
   protected Comparator<Date> yearAndMonthComparator = new YearAndMonthDateComparator();
 
+  protected static Player rose;
+  protected static Player james;
+  protected static Player durant;
+  protected static Player noah;
+  protected static List<Player> players;
+
+  @BeforeClass
+  public static void setUpOnce() {
+    rose = new Player(new Name("Derrick", "Rose"), "Chicago Bulls");
+    rose.setAssistsPerGame(8);
+    rose.setPointsPerGame(25);
+    rose.setReboundsPerGame(5);
+    james = new Player(new Name("Lebron", "James"), "Miami Heat");
+    james.setAssistsPerGame(6);
+    james.setPointsPerGame(27);
+    james.setReboundsPerGame(8);
+    durant = new Player(new Name("Kevin", "Durant"), "OKC");
+    durant.setAssistsPerGame(4);
+    durant.setPointsPerGame(30);
+    durant.setReboundsPerGame(5);
+    noah = new Player(new Name("Joachim", "Noah"), "Chicago Bulls");
+    noah.setAssistsPerGame(4);
+    noah.setPointsPerGame(10);
+    noah.setReboundsPerGame(11);
+    players = list(rose, james, durant, noah);
+  }
+
+  
+  
   @Before
   public void setup() {
     // let's do some team building :)
