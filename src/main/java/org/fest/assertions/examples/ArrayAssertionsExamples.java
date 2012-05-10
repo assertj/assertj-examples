@@ -1,24 +1,19 @@
 package org.fest.assertions.examples;
 
-import static org.fest.assertions.api.Assertions.assertThat;
-import static org.fest.assertions.api.Assertions.extractProperty;
+import static org.fest.assertions.api.Assertions.*;
 import static org.fest.assertions.data.Index.atIndex;
-import static org.fest.assertions.examples.data.Ring.dwarfRing;
-import static org.fest.assertions.examples.data.Ring.manRing;
-import static org.fest.assertions.examples.data.Ring.narya;
-import static org.fest.assertions.examples.data.Ring.nenya;
-import static org.fest.assertions.examples.data.Ring.oneRing;
-import static org.fest.assertions.examples.data.Ring.vilya;
+import static org.fest.assertions.examples.data.Ring.*;
 import static org.fest.util.Arrays.array;
 import static org.fest.util.Collections.list;
 
 import java.util.Arrays;
 import java.util.Comparator;
 
+import org.junit.Test;
+
 import org.fest.assertions.examples.data.Movie;
 import org.fest.assertions.examples.data.Ring;
 import org.fest.assertions.examples.data.TolkienCharacter;
-import org.junit.Test;
 
 /**
  * Array assertions examples.
@@ -31,7 +26,7 @@ public class ArrayAssertionsExamples extends AbstractAssertionsExamples {
   public void array_assertions_examples() {
     // array assertion are very similar to list assertions
     Ring[] elvesRings = array(vilya, nenya, narya);
-    Movie[] trilogy = array(theFellowshipOfTheRing , theTwoTowers, theReturnOfTheKing);
+    Movie[] trilogy = array(theFellowshipOfTheRing, theTwoTowers, theReturnOfTheKing);
     assertThat(elvesRings).isNotEmpty().hasSize(3);
     assertThat(elvesRings).hasSameSizeAs(trilogy);
     assertThat(elvesRings).hasSameSizeAs(list(trilogy));
@@ -80,8 +75,9 @@ public class ArrayAssertionsExamples extends AbstractAssertionsExamples {
           "group is not sorted according to 'AgeComparator' comparator because "
               + "element 0:<Character [name=Gandalf, race=Race [name=Maia, immortal=true], age=2020]> "
               + "is not less or equal than "
-              + "element 1:<Character [name=Sam, race=Race [name=Hobbit, immortal=false], age=38]>, " + "group was:<["
-              + "Character [name=Gandalf, race=Race [name=Maia, immortal=true], age=2020], "
+              + "element 1:<Character [name=Sam, race=Race [name=Hobbit, immortal=false], age=38]>.\n"
+              + "group was:\n"
+              + "<[Character [name=Gandalf, race=Race [name=Maia, immortal=true], age=2020], "
               + "Character [name=Sam, race=Race [name=Hobbit, immortal=false], age=38]]>");
     }
 
@@ -91,12 +87,13 @@ public class ArrayAssertionsExamples extends AbstractAssertionsExamples {
     try {
       assertThat(array(sam, gandalf, frodo)).usingComparator(raceNameComparator).doesNotHaveDuplicates();
     } catch (AssertionError e) {
-      assertThat(e).hasMessage(
-          "found duplicate(s):<[Character [name=Frodo, race=Race [name=Hobbit, immortal=false], age=33]]> in:<"
-              + "[Character [name=Sam, race=Race [name=Hobbit, immortal=false], age=38], "
-              + "Character [name=Gandalf, race=Race [name=Maia, immortal=true], age=2020], "
-              + "Character [name=Frodo, race=Race [name=Hobbit, immortal=false], age=33]]> "
-              + "according to 'TolkienCharacterRaceNameComparator' comparator");
+      assertThat(e)
+          .hasMessage(
+              "found duplicate(s)\n"
+                  + "<[Character [name=Frodo, race=Race [name=Hobbit, immortal=false], age=33]]>\n"
+                  + " in\n"
+                  + "<[Character [name=Sam, race=Race [name=Hobbit, immortal=false], age=38], Character [name=Gandalf, race=Race [name=Maia, immortal=true], age=2020], Character [name=Frodo, race=Race [name=Hobbit, immortal=false], age=33]]>\n"
+                  + " according to 'TolkienCharacterRaceNameComparator' comparator");
     }
   }
 
@@ -107,13 +104,13 @@ public class ArrayAssertionsExamples extends AbstractAssertionsExamples {
 
     // extract simple property value (having a java standard type)
     assertThat(extractProperty("name").from(fellowshipOfTheRingArray)).contains("Boromir", "Gandalf", "Frodo", "Legolas")
-                                                                      .doesNotContain("Sauron", "Elrond");
+        .doesNotContain("Sauron", "Elrond");
     // in Fest 1.x, this would have been written :
     // assertThat(fellowshipOfTheRingArray).onProperty("name").contains("Boromir", "Gandalf", "Frodo", "Legolas");
-    
+
     // extracting property works also with user's types (here Race)
     assertThat(extractProperty("race").from(fellowshipOfTheRingArray)).contains(HOBBIT, ELF).doesNotContain(ORC);
-    
+
     // extract nested property on Race
     assertThat(extractProperty("race.name").from(fellowshipOfTheRingArray)).contains("Hobbit", "Elf").doesNotContain("Orc");
   }
@@ -121,10 +118,10 @@ public class ArrayAssertionsExamples extends AbstractAssertionsExamples {
   // new in FEST 2.0
   @Test
   public void array_is_sorted_assertion_example() {
-    
+
     // enum order = order of declaration = ring power
     assertThat(new Ring[] { oneRing, vilya, nenya, narya, dwarfRing, manRing }).isSorted();
-    
+
     // ring comparison by increasing power
     Comparator<Ring> increasingPowerRingComparator = new Comparator<Ring>() {
       public int compare(Ring ring1, Ring ring2) {

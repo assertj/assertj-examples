@@ -1,14 +1,7 @@
 package org.fest.assertions.examples;
 
-import static org.fest.assertions.api.Assertions.assertThat;
-import static org.fest.assertions.api.Assertions.atIndex;
-import static org.fest.assertions.api.Assertions.extractProperty;
-import static org.fest.assertions.examples.data.Ring.dwarfRing;
-import static org.fest.assertions.examples.data.Ring.manRing;
-import static org.fest.assertions.examples.data.Ring.narya;
-import static org.fest.assertions.examples.data.Ring.nenya;
-import static org.fest.assertions.examples.data.Ring.oneRing;
-import static org.fest.assertions.examples.data.Ring.vilya;
+import static org.fest.assertions.api.Assertions.*;
+import static org.fest.assertions.examples.data.Ring.*;
 import static org.fest.util.Collections.list;
 
 import java.util.Collection;
@@ -16,9 +9,10 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 
+import org.junit.Test;
+
 import org.fest.assertions.examples.data.Movie;
 import org.fest.assertions.examples.data.Ring;
-import org.junit.Test;
 
 /**
  * Iterable (including Collection) assertions examples.<br>
@@ -30,11 +24,10 @@ public class CollectionAssertionsExamples extends AbstractAssertionsExamples {
 
   @Test
   public void collection_and_iterable_assertion_examples() {
-	  
 
     // would work the same way with Iterable<Ring>,
     Collection<Ring> elvesRings = list(vilya, nenya, narya);
-    Collection<Movie> trilogy = list(theFellowshipOfTheRing , theTwoTowers, theReturnOfTheKing);
+    Collection<Movie> trilogy = list(theFellowshipOfTheRing, theTwoTowers, theReturnOfTheKing);
     assertThat(elvesRings).isNotEmpty().hasSize(3);
     assertThat(elvesRings).hasSameSizeAs(trilogy);
     assertThat(elvesRings).hasSameSizeAs(trilogy.toArray());
@@ -73,13 +66,17 @@ public class CollectionAssertionsExamples extends AbstractAssertionsExamples {
     // note that error message mentions the comparator used to better understand the failure
     // the message indicates that Sauron were found because he is a Maia like Gandalf.
     try {
-      assertThat(list(gandalf)).usingComparator(raceNameComparator).doesNotContain(sauron);
+      assertThat(list(gandalf, sam)).usingComparator(raceNameComparator).doesNotContain(sauron);
     } catch (AssertionError e) {
-      assertThat(e).hasMessage(
-          "expecting:<[Character [name=Gandalf, race=Race [name=Maia, immortal=true], age=2020]]> not to contain:"
-              + "<[Character [name=Sauron, race=Race [name=Maia, immortal=true], age=50000]]> but found:"
-              + "<[Character [name=Sauron, race=Race [name=Maia, immortal=true], age=50000]]> "
-              + "according to 'TolkienCharacterRaceNameComparator' comparator");
+      assertThat(e)
+          .hasMessage(
+              "expecting\n"
+                  + "<[Character [name=Gandalf, race=Race [name=Maia, immortal=true], age=2020], Character [name=Sam, race=Race [name=Hobbit, immortal=false], age=38]]>\n"
+                  + " not to contain\n"
+                  + "<[Character [name=Sauron, race=Race [name=Maia, immortal=true], age=50000]]>\n"
+                  + " but found\n"
+                  + "<[Character [name=Sauron, race=Race [name=Maia, immortal=true], age=50000]]>\n"
+                  + " according to 'TolkienCharacterRaceNameComparator' comparator");
     }
 
     // duplicates assertion honors custom comparator
@@ -88,12 +85,13 @@ public class CollectionAssertionsExamples extends AbstractAssertionsExamples {
     try {
       assertThat(list(sam, gandalf, frodo)).usingComparator(raceNameComparator).doesNotHaveDuplicates();
     } catch (AssertionError e) {
-      assertThat(e).hasMessage(
-          "found duplicate(s):<[Character [name=Frodo, race=Race [name=Hobbit, immortal=false], age=33]]> in:<"
-              + "[Character [name=Sam, race=Race [name=Hobbit, immortal=false], age=38], "
-              + "Character [name=Gandalf, race=Race [name=Maia, immortal=true], age=2020], "
-              + "Character [name=Frodo, race=Race [name=Hobbit, immortal=false], age=33]]> "
-              + "according to 'TolkienCharacterRaceNameComparator' comparator");
+      assertThat(e)
+          .hasMessage(
+              "found duplicate(s)\n"
+                  + "<[Character [name=Frodo, race=Race [name=Hobbit, immortal=false], age=33]]>\n"
+                  + " in\n"
+                  + "<[Character [name=Sam, race=Race [name=Hobbit, immortal=false], age=38], Character [name=Gandalf, race=Race [name=Maia, immortal=true], age=2020], Character [name=Frodo, race=Race [name=Hobbit, immortal=false], age=33]]>\n"
+                  + " according to 'TolkienCharacterRaceNameComparator' comparator");
     }
   }
 
@@ -117,7 +115,7 @@ public class CollectionAssertionsExamples extends AbstractAssertionsExamples {
 
     // extract simple property values having a java standard type
     assertThat(extractProperty("name").from(fellowshipOfTheRing)).contains("Boromir", "Gandalf", "Frodo", "Legolas")
-                                                                 .doesNotContain("Sauron", "Elrond");
+        .doesNotContain("Sauron", "Elrond");
     // in Fest 1.x, this would have been written :
     // assertThat(fellowshipOfTheRing).onProperty("name").contains("Boromir", "Gandalf", "Frodo", "Legolas");
 
@@ -153,7 +151,12 @@ public class CollectionAssertionsExamples extends AbstractAssertionsExamples {
       List<Long> longs = list(5L, 7L);
       assertThat(longs).contains(5, 7);
     } catch (AssertionError e) {
-      assertThat(e).hasMessage("expecting:<[5L, 7L]> to contain:<[5, 7]> but could not find:<[5, 7]>");
+      assertThat(e.getMessage()).isEqualTo("expecting:\n" +
+          "<[5L, 7L]>\n" +
+          " to contain:\n" +
+          "<[5, 7]>\n" +
+          " but could not find:\n" +
+          "<[5, 7]>\n");
     }
   }
 

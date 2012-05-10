@@ -15,38 +15,39 @@ import org.fest.assertions.examples.data.TolkienCharacter;
 
 /**
  * Examples of assertions using a specific comparator.
- *
+ * 
  * @author Joel Costigliola
  */
 public class AssertionsWithCustomComparatorExamples extends AbstractAssertionsExamples {
 
   @Test
   public void string_assertions_with_custom_comparison_examples() {
-    
+
     // standard assertion based on equals() comparison strategy
     assertThat("Frodo").startsWith("Fro").endsWith("do");
-    
+
     // now let's use a specific comparison strategy that is case iNsenSiTIve :o)
     // We see that assertions succeeds even though case is not the same (that's the point)
     assertThat("Frodo").usingComparator(caseInsensitiveStringComparator).startsWith("fr").endsWith("ODO");
-    
-    // All assertions called after usingComparator(caseInsensitiveStringComparator) are based on the given comparator ... 
+
+    // All assertions called after usingComparator(caseInsensitiveStringComparator) are based on the given comparator
+    // ...
     assertThat("Frodo").usingComparator(caseInsensitiveStringComparator).contains("fro").doesNotContain("don");
-    // ... but a new assertion is not  
+    // ... but a new assertion is not
     // assertThat("Frodo").startsWith("fr").endsWith("ODO"); // FAILS !!!
   }
 
   @Test
   public void equals_assertions_with_custom_comparator_examples() {
-    
+
     // standard comparison : frodo is not equal to sam ...
     assertThat(frodo).isNotEqualTo(sam);
     // ... but if we compare only character's race frodo is equal to sam
     assertThat(frodo).usingComparator(raceNameComparator).isEqualTo(sam).isEqualTo(merry).isEqualTo(pippin);
-    
+
     // isIn assertion should be consistent with raceComparator :
     assertThat(frodo).usingComparator(raceNameComparator).isIn(sam, merry, pippin);
-    
+
     // chained assertions use the specified comparator, we thus can write
     assertThat(frodo).usingComparator(raceNameComparator).isEqualTo(sam).isIn(merry, pippin);
 
@@ -85,10 +86,13 @@ public class AssertionsWithCustomComparatorExamples extends AbstractAssertionsEx
       assertThat(list(gandalf)).usingComparator(raceNameComparator).doesNotContain(sauron);
     } catch (AssertionError e) {
       assertThat(e).hasMessage(
-          "expecting:<[Character [name=Gandalf, race=Race [name=Maia, immortal=true], age=2020]]> not to contain:"
-              + "<[Character [name=Sauron, race=Race [name=Maia, immortal=true], age=50000]]> but found:"
-              + "<[Character [name=Sauron, race=Race [name=Maia, immortal=true], age=50000]]> "
-              + "according to 'TolkienCharacterRaceNameComparator' comparator");
+          "expecting\n"
+              + "<[Character [name=Gandalf, race=Race [name=Maia, immortal=true], age=2020]]>\n"
+              + " not to contain\n"
+              + "<[Character [name=Sauron, race=Race [name=Maia, immortal=true], age=50000]]>\n"
+              + " but found\n"
+              + "<[Character [name=Sauron, race=Race [name=Maia, immortal=true], age=50000]]>\n"
+              + " according to 'TolkienCharacterRaceNameComparator' comparator");
     }
 
     // duplicates assertion honors custom comparator
@@ -98,11 +102,13 @@ public class AssertionsWithCustomComparatorExamples extends AbstractAssertionsEx
       assertThat(list(sam, gandalf, frodo)).usingComparator(raceNameComparator).doesNotHaveDuplicates();
     } catch (AssertionError e) {
       assertThat(e).hasMessage(
-          "found duplicate(s):<[Character [name=Frodo, race=Race [name=Hobbit, immortal=false], age=33]]> in:<"
-              + "[Character [name=Sam, race=Race [name=Hobbit, immortal=false], age=38], "
+          "found duplicate(s)\n" +
+              "<[Character [name=Frodo, race=Race [name=Hobbit, immortal=false], age=33]]>\n" +
+              " in\n" +
+              "<[Character [name=Sam, race=Race [name=Hobbit, immortal=false], age=38], "
               + "Character [name=Gandalf, race=Race [name=Maia, immortal=true], age=2020], "
-              + "Character [name=Frodo, race=Race [name=Hobbit, immortal=false], age=33]]> "
-              + "according to 'TolkienCharacterRaceNameComparator' comparator");
+              + "Character [name=Frodo, race=Race [name=Hobbit, immortal=false], age=33]]>\n" +
+              " according to 'TolkienCharacterRaceNameComparator' comparator");
     }
   }
 
@@ -127,8 +133,9 @@ public class AssertionsWithCustomComparatorExamples extends AbstractAssertionsEx
           "group is not sorted according to 'AgeComparator' comparator because "
               + "element 0:<Character [name=Gandalf, race=Race [name=Maia, immortal=true], age=2020]> "
               + "is not less or equal than "
-              + "element 1:<Character [name=Sam, race=Race [name=Hobbit, immortal=false], age=38]>, " + "group was:<["
-              + "Character [name=Gandalf, race=Race [name=Maia, immortal=true], age=2020], "
+              + "element 1:<Character [name=Sam, race=Race [name=Hobbit, immortal=false], age=38]>.\n"
+              + "group was:\n"
+              + "<[Character [name=Gandalf, race=Race [name=Maia, immortal=true], age=2020], "
               + "Character [name=Sam, race=Race [name=Hobbit, immortal=false], age=38]]>");
     }
 
@@ -139,11 +146,13 @@ public class AssertionsWithCustomComparatorExamples extends AbstractAssertionsEx
       assertThat(array(sam, gandalf, frodo)).usingComparator(raceNameComparator).doesNotHaveDuplicates();
     } catch (AssertionError e) {
       assertThat(e).hasMessage(
-          "found duplicate(s):<[Character [name=Frodo, race=Race [name=Hobbit, immortal=false], age=33]]> in:<"
-              + "[Character [name=Sam, race=Race [name=Hobbit, immortal=false], age=38], "
+          "found duplicate(s)\n" +
+              "<[Character [name=Frodo, race=Race [name=Hobbit, immortal=false], age=33]]>\n" +
+              " in\n" +
+              "<[Character [name=Sam, race=Race [name=Hobbit, immortal=false], age=38], "
               + "Character [name=Gandalf, race=Race [name=Maia, immortal=true], age=2020], "
-              + "Character [name=Frodo, race=Race [name=Hobbit, immortal=false], age=33]]> "
-              + "according to 'TolkienCharacterRaceNameComparator' comparator");
+              + "Character [name=Frodo, race=Race [name=Hobbit, immortal=false], age=33]]>\n" +
+              " according to 'TolkienCharacterRaceNameComparator' comparator");
     }
   }
 
@@ -169,7 +178,7 @@ public class AssertionsWithCustomComparatorExamples extends AbstractAssertionsEx
 
   @Test
   public void date_assertions_with_custom_comparison_examples() {
-    
+
     // theTwoTowers.getReleaseDate() : 2002-12-18
     assertThat(theTwoTowers.getReleaseDate()).usingComparator(yearAndMonthComparator)
         .isEqualTo("2002-12-01").isEqualTo("2002-12-02") // same year and month
@@ -179,9 +188,10 @@ public class AssertionsWithCustomComparatorExamples extends AbstractAssertionsEx
         .isIn("2002-12-01") // ok same year and month
         .isNotIn("2002-11-01", "2002-10-01"); // same year but different month
 
-    // build date away from today by one day (if we are at the end of the month we subtract one day, otherwise we add one)
+    // build date away from today by one day (if we are at the end of the month we subtract one day, otherwise we add
+    // one)
     Date oneDayFromTodayInSameMonth = monthOf(tomorrow()) == monthOf(new Date()) ? tomorrow() : yesterday();
     assertThat(oneDayFromTodayInSameMonth).usingComparator(yearAndMonthComparator).isToday();
   }
-  
+
 }
