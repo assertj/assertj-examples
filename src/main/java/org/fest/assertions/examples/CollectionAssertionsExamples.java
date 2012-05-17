@@ -49,6 +49,10 @@ public class CollectionAssertionsExamples extends AbstractAssertionsExamples {
     Iterable<Ring> allRings = list(oneRing, vilya, nenya, narya, dwarfRing, manRing);
     assertThat(allRings).startsWith(oneRing, vilya).endsWith(dwarfRing, manRing);
     assertThat(allRings).containsSequence(nenya, narya, dwarfRing);
+    assertThat(allRings).containsAll(elvesRings);
+    
+    // to show an error message
+    // assertThat(elvesRings).containsAll(allRings);
 
     List<Integer> testedList = list(1);
     List<Integer> referenceList = list(1, 2, 3);
