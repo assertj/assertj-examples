@@ -14,6 +14,8 @@ import java.util.Map;
 import org.junit.Before;
 import org.junit.BeforeClass;
 
+import org.fest.assertions.core.Condition;
+import org.fest.assertions.examples.advanced.PotentialMvpCondition;
 import org.fest.assertions.examples.comparator.AbsValueComparator;
 import org.fest.assertions.examples.comparator.AgeComparator;
 import org.fest.assertions.examples.comparator.CaseInsensitiveCharacterComparator;
@@ -30,7 +32,7 @@ import org.fest.assertions.examples.data.TolkienCharacter;
 /**
  * 
  * Init data for assertions examples.
- *
+ * 
  * @author Joel Costigliola
  */
 public abstract class AbstractAssertionsExamples {
@@ -42,7 +44,7 @@ public abstract class AbstractAssertionsExamples {
   protected static final Race ELF = new Race("Elf", true);
   protected static final Race DWARF = new Race("Dwarf", false);
   protected static final Race ORC = new Race("Orc", false);
-  
+
   // Some of the Lord of the Rings characters :
   protected final TolkienCharacter frodo = new TolkienCharacter("Frodo", 33, HOBBIT);
   protected final TolkienCharacter sam = new TolkienCharacter("Sam", 38, HOBBIT);
@@ -57,17 +59,17 @@ public abstract class AbstractAssertionsExamples {
   protected final TolkienCharacter galadriel = new TolkienCharacter("Legolas", 3000, ELF);
   protected final TolkienCharacter elrond = new TolkienCharacter("Legolas", 3000, ELF);
   protected final List<TolkienCharacter> fellowshipOfTheRing = new ArrayList<TolkienCharacter>();
-  
+
   // Rings and their bearer
   protected final List<Ring> ringsOfPower = list(oneRing, vilya, nenya, narya, dwarfRing, manRing);
   protected final Map<Ring, TolkienCharacter> ringBearers = new HashMap<Ring, TolkienCharacter>();
-  
+
   // Lord of the Rings movies
   protected final Movie theFellowshipOfTheRing = new Movie("the fellowship of the Ring", parse("2001-12-19"));
   protected final Movie theTwoTowers = new Movie("the two Towers", parse("2002-12-18"));
   protected final Movie theReturnOfTheKing = new Movie("the Return of the King", parse("2003-12-17"));
   protected final Movie theSilmarillion = new Movie("the Silmarillion", parse("2030-01-01"));
-  
+
   // Various comparators
   protected Comparator<TolkienCharacter> ageComparator = new AgeComparator();
   protected Comparator<TolkienCharacter> raceNameComparator = new TolkienCharacterRaceNameComparator();
@@ -81,6 +83,8 @@ public abstract class AbstractAssertionsExamples {
   protected static Player durant;
   protected static Player noah;
   protected static List<Player> players;
+  protected static PotentialMvpCondition potentialMvp;
+  protected static Condition<Player> doubleDoubleStats;
 
   @BeforeClass
   public static void setUpOnce() {
@@ -101,10 +105,18 @@ public abstract class AbstractAssertionsExamples {
     noah.setPointsPerGame(10);
     noah.setReboundsPerGame(11);
     players = list(rose, james, durant, noah);
+    potentialMvp = new PotentialMvpCondition();
+    doubleDoubleStats = new Condition<Player>("double double stats") {
+      @Override
+      public boolean matches(Player player) {
+        if (player.getPointsPerGame() >= 10 && player.getAssistsPerGame() >= 10) return true;
+        if (player.getPointsPerGame() >= 10 && player.getReboundsPerGame() >= 10) return true;
+        if (player.getAssistsPerGame() >= 10 && player.getReboundsPerGame() >= 10) return true;
+        return false;
+      }
+    };
   }
 
-  
-  
   @Before
   public void setup() {
     // let's do some team building :)

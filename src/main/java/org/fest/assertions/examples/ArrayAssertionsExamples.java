@@ -51,7 +51,7 @@ public class ArrayAssertionsExamples extends AbstractAssertionsExamples {
     TolkienCharacter[] fellowshipOfTheRingArray = fellowshipOfTheRing.toArray(new TolkienCharacter[0]);
     Arrays.sort(fellowshipOfTheRingArray, ageComparator);
     assertThat(fellowshipOfTheRingArray).isSortedAccordingTo(ageComparator);
-    assertThat(fellowshipOfTheRingArray).usingComparator(ageComparator).isSorted();
+    assertThat(fellowshipOfTheRingArray).usingElementComparator(ageComparator).isSorted();
   }
 
   @Test
@@ -61,15 +61,15 @@ public class ArrayAssertionsExamples extends AbstractAssertionsExamples {
     // standard comparison : the fellowshipOfTheRing includes Gandalf but not Sauron ...
     assertThat(fellowshipOfTheRingCharacters).contains(gandalf).doesNotContain(sauron);
     // ... but if we compare only race name Sauron is in fellowshipOfTheRing because he's a Maia like Gandalf.
-    assertThat(fellowshipOfTheRingCharacters).usingComparator(raceNameComparator).contains(sauron);
+    assertThat(fellowshipOfTheRingCharacters).usingElementComparator(raceNameComparator).contains(sauron);
 
     // isSorted assertion honors custom comparator (new in FEST 2.0)
     assertThat(array(sam, gandalf)).isSortedAccordingTo(ageComparator);
-    assertThat(array(sam, gandalf)).usingComparator(ageComparator).isSorted();
+    assertThat(array(sam, gandalf)).usingElementComparator(ageComparator).isSorted();
 
     // note that error message mentions the comparator used to better understand the failure
     try {
-      assertThat(array(gandalf, sam)).usingComparator(ageComparator).isSorted();
+      assertThat(array(gandalf, sam)).usingElementComparator(ageComparator).isSorted();
     } catch (AssertionError e) {
       assertThat(e).hasMessage(
           "group is not sorted according to 'AgeComparator' comparator because "
@@ -83,9 +83,9 @@ public class ArrayAssertionsExamples extends AbstractAssertionsExamples {
 
     // duplicates assertion honors custom comparator :
     assertThat(fellowshipOfTheRingCharacters).doesNotHaveDuplicates();
-    assertThat(array(sam, gandalf)).usingComparator(raceNameComparator).doesNotHaveDuplicates();
+    assertThat(array(sam, gandalf)).usingElementComparator(raceNameComparator).doesNotHaveDuplicates();
     try {
-      assertThat(array(sam, gandalf, frodo)).usingComparator(raceNameComparator).doesNotHaveDuplicates();
+      assertThat(array(sam, gandalf, frodo)).usingElementComparator(raceNameComparator).doesNotHaveDuplicates();
     } catch (AssertionError e) {
       assertThat(e)
           .hasMessage(

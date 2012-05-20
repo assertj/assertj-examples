@@ -4,6 +4,7 @@ import static org.fest.assertions.api.Assertions.*;
 import static org.fest.assertions.examples.data.Ring.*;
 import static org.fest.util.Collections.list;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.Comparator;
@@ -11,7 +12,9 @@ import java.util.List;
 
 import org.junit.Test;
 
+import org.fest.assertions.examples.data.Employee;
 import org.fest.assertions.examples.data.Movie;
+import org.fest.assertions.examples.data.Person;
 import org.fest.assertions.examples.data.Ring;
 
 /**
@@ -50,13 +53,13 @@ public class CollectionAssertionsExamples extends AbstractAssertionsExamples {
     assertThat(allRings).startsWith(oneRing, vilya).endsWith(dwarfRing, manRing);
     assertThat(allRings).containsSequence(nenya, narya, dwarfRing);
     assertThat(allRings).containsAll(elvesRings);
-    
+
     // to show an error message
     // assertThat(elvesRings).containsAll(allRings);
 
     List<Integer> testedList = list(1);
     List<Integer> referenceList = list(1, 2, 3);
-    assertThat(referenceList).containsSequence(testedList.toArray());
+    assertThat(referenceList).containsSequence(testedList.toArray(new Integer[0]));
   }
 
   @Test
@@ -65,12 +68,12 @@ public class CollectionAssertionsExamples extends AbstractAssertionsExamples {
     // standard comparison : the fellowshipOfTheRing includes Gandalf but not Sauron ...
     assertThat(fellowshipOfTheRing).contains(gandalf).doesNotContain(sauron);
     // ... but if we compare only race name Sauron is in fellowshipOfTheRing because he's a Maia like Gandalf.
-    assertThat(fellowshipOfTheRing).usingComparator(raceNameComparator).contains(sauron);
+    assertThat(fellowshipOfTheRing).usingElementComparator(raceNameComparator).contains(sauron);
 
     // note that error message mentions the comparator used to better understand the failure
     // the message indicates that Sauron were found because he is a Maia like Gandalf.
     try {
-      assertThat(list(gandalf, sam)).usingComparator(raceNameComparator).doesNotContain(sauron);
+      assertThat(list(gandalf, sam)).usingElementComparator(raceNameComparator).doesNotContain(sauron);
     } catch (AssertionError e) {
       assertThat(e)
           .hasMessage(
@@ -85,9 +88,9 @@ public class CollectionAssertionsExamples extends AbstractAssertionsExamples {
 
     // duplicates assertion honors custom comparator
     assertThat(fellowshipOfTheRing).doesNotHaveDuplicates();
-    assertThat(list(sam, gandalf)).usingComparator(raceNameComparator).doesNotHaveDuplicates();
+    assertThat(list(sam, gandalf)).usingElementComparator(raceNameComparator).doesNotHaveDuplicates();
     try {
-      assertThat(list(sam, gandalf, frodo)).usingComparator(raceNameComparator).doesNotHaveDuplicates();
+      assertThat(list(sam, gandalf, frodo)).usingElementComparator(raceNameComparator).doesNotHaveDuplicates();
     } catch (AssertionError e) {
       assertThat(e)
           .hasMessage(
@@ -106,7 +109,7 @@ public class CollectionAssertionsExamples extends AbstractAssertionsExamples {
     // You can check that a list is sorted (new in FEST 2.0)
     Collections.sort(fellowshipOfTheRing, ageComparator);
     assertThat(fellowshipOfTheRing).isSortedAccordingTo(ageComparator);
-    assertThat(fellowshipOfTheRing).usingComparator(ageComparator).isSorted();
+    assertThat(fellowshipOfTheRing).usingElementComparator(ageComparator).isSorted();
 
     // You can check element at a given index (we use Assertions.atIndex(int) synthetic sugar for better readability).
     List<Ring> elvesRings = list(vilya, nenya, narya);
@@ -118,7 +121,8 @@ public class CollectionAssertionsExamples extends AbstractAssertionsExamples {
   public void collection_assertions_on_extracted_property_values_example() {
 
     // extract simple property values having a java standard type
-    assertThat(extractProperty("name").from(fellowshipOfTheRing)).contains("Boromir", "Gandalf", "Frodo", "Legolas")
+    assertThat(extractProperty("name", String.class).from(fellowshipOfTheRing))
+        .contains("Boromir", "Gandalf", "Frodo", "Legolas")
         .doesNotContain("Sauron", "Elrond");
     // in Fest 1.x, this would have been written :
     // assertThat(fellowshipOfTheRing).onProperty("name").contains("Boromir", "Gandalf", "Frodo", "Legolas");
@@ -149,26 +153,32 @@ public class CollectionAssertionsExamples extends AbstractAssertionsExamples {
 
   // new in FEST 2.0
   @Test
-  public void assertion_error_message_differentiates_long_from_integer() {
-    // Assertion error message is built with ToString.toStringOf description of involved objects.
-    try {
-      List<Long> longs = list(5L, 7L);
-      assertThat(longs).contains(5, 7);
-    } catch (AssertionError e) {
-      assertThat(e.getMessage()).isEqualTo("expecting:\n" +
-          "<[5L, 7L]>\n" +
-          " to contain:\n" +
-          "<[5, 7]>\n" +
-          " but could not find:\n" +
-          "<[5, 7]>\n");
-    }
-  }
-
-  // new in FEST 2.0
-  @Test
   public void is_subset_of_assertion_example() {
     Collection<Ring> elvesRings = list(vilya, nenya, narya);
     assertThat(elvesRings).isSubsetOf(ringsOfPower);
   }
 
+  @Test
+  public void type_safe_assertion_example() {
+    // just to show that containsAll can accept subtype of is not bounded to Object only
+    Collection<Ring> elvesRings = list(vilya, nenya, narya);
+    Collection<Object> powerfulRings = new ArrayList<Object>();
+    powerfulRings.add(oneRing);
+    powerfulRings.add(vilya);
+    powerfulRings.add(nenya);
+    powerfulRings.add(narya);
+    assertThat(powerfulRings).containsAll(elvesRings);
+    
+    
+    Person luke = new Employee("Luke", 30, "Jedi"); 
+    Employee yoda = new Employee("Yoda", 500, "Jedi Master");
+    Collection<Person> persons = new ArrayList<Person>();
+    persons.add(luke);
+    persons.add(yoda);
+    Collection<Employee> employees = new ArrayList<Employee>();
+    employees.add(yoda);
+    assertThat(persons).containsAll(employees);
+    
+  }
+  
 }

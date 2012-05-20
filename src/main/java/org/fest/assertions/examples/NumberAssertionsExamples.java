@@ -44,7 +44,7 @@ public class NumberAssertionsExamples extends AbstractAssertionsExamples {
         new BigDecimal("8"));
 
     // works with arrays !
-    assertThat(new int[] { -1, 2, 3 }).usingComparator(absValueComparator).contains(1, 2, -3);
+    assertThat(new int[] { -1, 2, 3 }).usingElementComparator(absValueComparator).contains(1, 2, -3);
   }
 
   // new in FEST 2.0
@@ -63,7 +63,8 @@ public class NumberAssertionsExamples extends AbstractAssertionsExamples {
     try {
       assertThat(actual).isEqualTo(expected);
     } catch (AssertionError e) {
-      // this message is formatted by JUnit to show what is different (looks nice in IDE but not so in the error message)
+      // this message is formatted by JUnit to show what is different (looks nice in IDE but not so in the error
+      // message)
       assertThat(e).hasMessage("expected:<42.0[]> but was:<42.0[f]>");
       return;
     }
@@ -72,6 +73,11 @@ public class NumberAssertionsExamples extends AbstractAssertionsExamples {
   @Test
   public void big_decimals_assertions_examples() {
 
+    // You can use String directly and we will create the corresponding BigDecimal for you, thus ...  
+    assertThat(new BigDecimal("8.0")).isEqualTo("8.0");
+    // ... is equivalent to :
+    assertThat(new BigDecimal("8.0")).isEqualTo(new BigDecimal("8.0"));
+    
     // With BigDecimal, 8.0 is not equals to 8.00 but it is if you use compareTo()
     assertThat(new BigDecimal("8.0")).isEqualByComparingTo(new BigDecimal("8.00"));
 
@@ -83,17 +89,18 @@ public class NumberAssertionsExamples extends AbstractAssertionsExamples {
         return bigDecimal1.compareTo(bigDecimal2);
       }
     };
-    assertThat(new BigDecimal("8.0")).usingComparator(bigDecimalComparator).isEqualTo(new BigDecimal("8.00"))
+    assertThat(new BigDecimal("8.0")).usingComparator(bigDecimalComparator)
+        .isEqualTo(new BigDecimal("8.00"))
         .isGreaterThanOrEqualTo(new BigDecimal("8.00"));
   }
 
   @Test
   public void number_assertions_with_offset_examples() {
-    // Offset in Fest 2.0 is like Delta in Fest 1.4  
+    // Offset in Fest 2.0 is like Delta in Fest 1.4
     assertThat(8.1).isEqualTo(8.0, offset(0.1));
     assertThat(8.2f).isEqualTo(8.0f, offset(0.2f));
-    // FEST-476 illustrate error message : assertThat(8.1f).isEqualTo(8.0f, offset(0.1f));
-    
+    // TODO FEST-476 illustrate error message : assertThat(8.1f).isEqualTo(8.0f, offset(0.1f));
+
   }
-  
+
 }

@@ -51,22 +51,4 @@ public class FilterExamples extends AbstractAssertionsExamples {
     assertThat(filter(players).being(potentialMvp).get()).containsOnly(rose, james);
   }
 
-  /**
-   * 
-   * A {@code Condition} checking if a {@link Player} is a potential MVP.
-   * 
-   * @author Joel Costigliola
-   */
-  class PotentialMvpCondition extends Condition<Player> {
-
-    public PotentialMvpCondition() {
-      super("is a potential MVP");
-    }
-
-    @Override
-    public boolean matches(Player player) {
-      return player.getPointsPerGame() > 20 && (player.getAssistsPerGame() >= 8 || player.getReboundsPerGame() >= 8);
-    };
-
-  }
 }

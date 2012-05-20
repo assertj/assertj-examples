@@ -17,7 +17,7 @@ import org.fest.util.IntrospectionError;
  */
 public class BasicAssertionsExamples extends AbstractAssertionsExamples {
 
-  // the data used are initialized AbstractAssertionsExamples.
+  // the data used are initialized in AbstractAssertionsExamples.
 
   @Test
   public void isEqualTo_isNotEqualTo_assertions_examples() {
@@ -149,16 +149,6 @@ public class BasicAssertionsExamples extends AbstractAssertionsExamples {
               + ", age=33]>, comparison was performed on all fields");
     }
     
-    // other must be a instance of actual
-    Person jake = new Person("Jake", 43);
-    try {
-      assertThat(frodo).isLenientEqualsToByIgnoringNullFields(jake);
-    } catch (AssertionError e) {
-      assertThat(e).hasMessage(
-          "expected <Person[name=Jake]> to be an instance of:<org.fest.assertions.examples.data.TolkienCharacter> "
-              + "but was instance of:<org.fest.assertions.examples.data.Person>");
-    }
-
     // ------------------------------------------------------------------------------------
     // Lenient equality by ignoring fields
     // ------------------------------------------------------------------------------------
@@ -175,14 +165,6 @@ public class BasicAssertionsExamples extends AbstractAssertionsExamples {
     }
     // Null fields are not ignored, so when expected has null field, actual must have too
     assertThat(mysteriousHobbit).isLenientEqualsToByIgnoringFields(mysteriousHobbit, "age");
-    // other must be a instance of actual
-    try {
-      assertThat(frodo).isLenientEqualsToByIgnoringFields(jake, "race");
-    } catch (AssertionError e) {
-      assertThat(e).hasMessage(
-          "expected <Person[name=Jake]> to be an instance of:<org.fest.assertions.examples.data.TolkienCharacter> "
-              + "but was instance of:<org.fest.assertions.examples.data.Person>");
-    }
 
     // ------------------------------------------------------------------------------------
     // Lenient equality by accepting fields
@@ -207,15 +189,6 @@ public class BasicAssertionsExamples extends AbstractAssertionsExamples {
       assertThat(e).hasMessage(
           "No getter for property 'hairColor' in org.fest.assertions.examples.data.TolkienCharacter");
     }
-    // other must be a instance of actual
-    try {
-      assertThat(frodo).isLenientEqualsToByAcceptingFields(jake, "name");
-    } catch (AssertionError e) {
-      assertThat(e).hasMessage(
-          "expected <Person[name=Jake]> to be an instance of:<org.fest.assertions.examples.data.TolkienCharacter> "
-              + "but was instance of:<org.fest.assertions.examples.data.Person>");
-    }
-
   }
 
 }

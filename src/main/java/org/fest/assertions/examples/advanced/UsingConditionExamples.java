@@ -19,12 +19,22 @@ public class UsingConditionExamples extends AbstractAssertionsExamples {
   public void is_condition_example() {
     assertThat("Yoda").is(jedi);
     assertThat("Vador").isNot(jedi);
+    assertThat(rose).is(potentialMvp);
+    assertThat(james).is(potentialMvp);
+    assertThat(noah).isNot(potentialMvp);
   }
 
   @Test
   public void has_condition_example() {
     assertThat("Yoda").has(jediPower);
     assertThat("Solo").doesNotHave(jediPower);
+    assertThat(noah).has(doubleDoubleStats);
+    assertThat(durant).doesNotHave(doubleDoubleStats);
+    try {
+      assertThat(rose).has(doubleDoubleStats);
+    } catch (AssertionError e) {
+      assertThat(e).hasMessage("expecting:<Player[Derrick Rose, team=Chicago Bulls]> to have:<double double stats>");
+    }
   }
 
   @SuppressWarnings("unchecked")
@@ -32,12 +42,22 @@ public class UsingConditionExamples extends AbstractAssertionsExamples {
   public void anyOf_condition_example() {
     assertThat("Vader").is(anyOf(jedi, sith));
   }
-  
+
   @Test
   public void condition_example_on_multiple_elements() {
     // are & areNot
     assertThat(set("Luke", "Yoda")).are(jedi);
     assertThat(set("Leia", "Solo")).areNot(jedi);
+    assertThat(set(rose, james)).are(potentialMvp);
+    try {
+      // noah is not a potential MVP !
+      assertThat(set(rose, noah)).are(potentialMvp);
+    } catch (AssertionError e) {
+      assertThat(e).hasMessage(
+          "expecting: elements <[Player[Joachim Noah, team=Chicago Bulls]]> of " +
+              "<[Player[Derrick Rose, team=Chicago Bulls], Player[Joachim Noah, team=Chicago Bulls]]> " +
+              "to be <a potential MVP>");
+    }
 
     // have & doNotHave
     assertThat(set("Luke", "Yoda")).have(jediPower);
