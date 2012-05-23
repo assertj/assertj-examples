@@ -99,8 +99,15 @@ public class NumberAssertionsExamples extends AbstractAssertionsExamples {
     // Offset in Fest 2.0 is like Delta in Fest 1.4
     assertThat(8.1).isEqualTo(8.0, offset(0.1));
     assertThat(8.2f).isEqualTo(8.0f, offset(0.2f));
-    // TODO FEST-476 illustrate error message : assertThat(8.1f).isEqualTo(8.0f, offset(0.1f));
-
+    try {
+      assertThat(8.1f).isEqualTo(8.0f, offset(0.1f));
+    } catch (AssertionError e) {
+      assertThat(e).hasMessage("expecting <8.1f> to be close to <8.0f> within offset <0.1f> but offset was <0.10000038f>");
+    }
   }
 
 }
+
+
+
+
