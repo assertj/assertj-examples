@@ -12,7 +12,6 @@ import java.util.List;
 
 import org.junit.Test;
 
-import org.fest.assertions.examples.data.Employee;
 import org.fest.assertions.examples.data.Movie;
 import org.fest.assertions.examples.data.Person;
 import org.fest.assertions.examples.data.Ring;
@@ -168,17 +167,7 @@ public class CollectionAssertionsExamples extends AbstractAssertionsExamples {
     powerfulRings.add(nenya);
     powerfulRings.add(narya);
     assertThat(powerfulRings).containsAll(elvesRings);
-    
-    
-    Person luke = new Employee("Luke", 30, "Jedi"); 
-    Employee yoda = new Employee("Yoda", 500, "Jedi Master");
-    Collection<Person> persons = new ArrayList<Person>();
-    persons.add(luke);
-    persons.add(yoda);
-    Collection<Employee> employees = new ArrayList<Employee>();
-    employees.add(yoda);
-    assertThat(persons).containsAll(employees);
-    
+
   }
   
 }
