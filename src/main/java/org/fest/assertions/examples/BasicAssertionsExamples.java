@@ -1,14 +1,12 @@
 package org.fest.assertions.examples;
 
 import static java.lang.Integer.toHexString;
-
 import static org.fest.assertions.api.Assertions.assertThat;
-
-import org.junit.Test;
 
 import org.fest.assertions.examples.data.Person;
 import org.fest.assertions.examples.data.TolkienCharacter;
 import org.fest.util.IntrospectionError;
+import org.junit.Test;
 
 /**
  * Assertions available for all objects.
@@ -190,5 +188,17 @@ public class BasicAssertionsExamples extends AbstractAssertionsExamples {
           "No getter for property 'hairColor' in org.fest.assertions.examples.data.TolkienCharacter");
     }
   }
+ 
+  // new in FEST-2.0 
+  @Test
+  public void basic_assertions_with_comparing_fields_examples() {
+	  
+	  TolkienCharacter frodoClone = new TolkienCharacter("Frodo", 33, HOBBIT);
+	  
+	  // Frodo and his clone are equals by comparing fields
+	  assertThat(frodo).isEqualsToByComparingFields(frodoClone);
+	  
+  }
+  
 
 }
