@@ -53,10 +53,11 @@ public class UsingConditionExamples extends AbstractAssertionsExamples {
       // noah is not a potential MVP !
       assertThat(set(rose, noah)).are(potentialMvp);
     } catch (AssertionError e) {
-      assertThat(e).hasMessage(
-          "expecting: elements <[Player[Joachim Noah, team=Chicago Bulls]]> of " +
-              "<[Player[Derrick Rose, team=Chicago Bulls], Player[Joachim Noah, team=Chicago Bulls]]> " +
-              "to be <a potential MVP>");
+      assertThat(e).hasMessage("expecting elements:\n" +
+          "<[Player[Joachim Noah, team=Chicago Bulls]]>\n" +
+          " of \n" +
+          "<[Player[Derrick Rose, team=Chicago Bulls], Player[Joachim Noah, team=Chicago Bulls]]>\n" +
+          " to be <a potential MVP>");
     }
 
     // have & doNotHave

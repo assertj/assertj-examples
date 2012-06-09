@@ -13,7 +13,6 @@ import java.util.List;
 import org.junit.Test;
 
 import org.fest.assertions.examples.data.Movie;
-import org.fest.assertions.examples.data.Person;
 import org.fest.assertions.examples.data.Ring;
 
 /**

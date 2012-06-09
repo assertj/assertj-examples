@@ -55,10 +55,11 @@ public class AssertionsWithCustomComparatorExamples extends AbstractAssertionsEx
     try {
       assertThat(frodo).usingComparator(raceNameComparator).isEqualTo(sauron);
     } catch (AssertionError e) {
-      assertThat(e).hasMessage(
-          "Expecting actual:<Character [name=Frodo, race=Race [name=Hobbit, immortal=false], age=33]> to be equal to "
-              + "<Character [name=Sauron, race=Race [name=Maia, immortal=true], age=50000]> "
-              + "according to 'TolkienCharacterRaceNameComparator' comparator but was not.");
+      assertThat(e).hasMessage("Expecting actual:\n" +
+          "<Character [name=Frodo, race=Race [name=Hobbit, immortal=false], age=33]>\n" +
+          " to be equal to \n"
+          + "<Character [name=Sauron, race=Race [name=Maia, immortal=true], age=50000]>\n"
+          + " according to 'TolkienCharacterRaceNameComparator' comparator but was not.");
     }
 
     // custom comparison by race : frodo IS equal to sam => isNotEqual must fail
