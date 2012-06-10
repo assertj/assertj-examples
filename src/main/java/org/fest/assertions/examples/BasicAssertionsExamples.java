@@ -6,7 +6,9 @@ import static org.fest.assertions.api.Assertions.assertThat;
 
 import org.junit.Test;
 
+import org.fest.assertions.examples.data.Movie;
 import org.fest.assertions.examples.data.Person;
+import org.fest.assertions.examples.data.Ring;
 import org.fest.assertions.examples.data.TolkienCharacter;
 import org.fest.util.IntrospectionError;
 
@@ -65,6 +67,7 @@ public class BasicAssertionsExamples extends AbstractAssertionsExamples {
   @Test
   public void isInstanceOf_assertions_examples() {
     assertThat(gandalf).isInstanceOf(TolkienCharacter.class).isInstanceOfAny(Object.class, TolkienCharacter.class);
+    assertThat(gandalf).isNotInstanceOf(Movie.class).isNotInstanceOfAny(Movie.class, Ring.class);
   }
 
   // new in FEST 2.0

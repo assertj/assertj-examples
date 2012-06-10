@@ -1,13 +1,13 @@
 package org.fest.assertions.examples;
 
-import static org.fest.assertions.api.Assertions.*;
+import static org.fest.assertions.api.Assertions.assertThat;
+import static org.fest.assertions.api.Assertions.offset;
 
 import java.math.BigDecimal;
 import java.util.Comparator;
 
-import org.junit.Test;
-
 import org.fest.assertions.examples.comparator.AbsValueComparator;
+import org.junit.Test;
 
 /**
  * Number assertions examples.<br>
@@ -31,6 +31,11 @@ public class NumberAssertionsExamples extends AbstractAssertionsExamples {
     assertThat(frodo.getAge() - frodo.getAge()).isZero();
     assertThat(frodo.getAge() - sauron.getAge()).isNegative();
     assertThat(gandalf.getAge() - frodo.getAge()).isPositive();
+    
+    assertThat(frodo.getAge() - frodo.getAge()).isNotNegative();
+    assertThat(frodo.getAge() - frodo.getAge()).isNotPositive();
+    assertThat(gandalf.getAge() - frodo.getAge()).isNotNegative();
+    assertThat(frodo.getAge() - sauron.getAge()).isNotPositive();
   }
 
   @Test
