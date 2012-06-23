@@ -21,10 +21,10 @@ import org.fest.assertions.examples.data.Ring;
  * 
  * @author Joel Costigliola
  */
-public class CollectionAssertionsExamples extends AbstractAssertionsExamples {
+public class IterableAssertionsExamples extends AbstractAssertionsExamples {
 
   @Test
-  public void collection_and_iterable_assertion_examples() {
+  public void iterable_basic_assertions_examples() {
 
     // would work the same way with Iterable<Ring>,
     Collection<Ring> elvesRings = list(vilya, nenya, narya);
@@ -61,7 +61,7 @@ public class CollectionAssertionsExamples extends AbstractAssertionsExamples {
   }
 
   @Test
-  public void collection_assertions_with_custom_comparator_examples() {
+  public void iterable_assertions_with_custom_comparator_examples() {
 
     // standard comparison : the fellowshipOfTheRing includes Gandalf but not Sauron ...
     assertThat(fellowshipOfTheRing).contains(gandalf).doesNotContain(sauron);
@@ -101,13 +101,8 @@ public class CollectionAssertionsExamples extends AbstractAssertionsExamples {
   }
 
   @Test
-  public void list_specific_assertions_examples() {
-    // list assertions inherits from collection/iterable assertions but offers more.
-
-    // You can check that a list is sorted (new in FEST 2.0)
-    Collections.sort(fellowshipOfTheRing, ageComparator);
-    assertThat(fellowshipOfTheRing).isSortedAccordingTo(ageComparator);
-    assertThat(fellowshipOfTheRing).usingElementComparator(ageComparator).isSorted();
+  public void list_contains_at_index_assertions_examples() {
+    // list assertions inherits from iterable assertions and provides additional "contains" semantics assertions specific to List.
 
     // You can check element at a given index (we use Assertions.atIndex(int) synthetic sugar for better readability).
     List<Ring> elvesRings = list(vilya, nenya, narya);
@@ -116,7 +111,7 @@ public class CollectionAssertionsExamples extends AbstractAssertionsExamples {
 
   // CHANGED IN FEST 2.x, was assertThat(myCollection).onProperty(propertyName).contains...
   @Test
-  public void collection_assertions_on_extracted_property_values_example() {
+  public void iterable_assertions_on_extracted_property_values_example() {
 
     // extract simple property values having a java standard type
     assertThat(extractProperty("name", String.class).from(fellowshipOfTheRing))
@@ -134,7 +129,12 @@ public class CollectionAssertionsExamples extends AbstractAssertionsExamples {
 
   // new in FEST 2.0
   @Test
-  public void collection_is_sorted_assertion_example() {
+  public void list_is_sorted_assertion_example() {
+
+    // You can check that a list is sorted (new in FEST 2.0)
+    Collections.sort(fellowshipOfTheRing, ageComparator);
+    assertThat(fellowshipOfTheRing).isSortedAccordingTo(ageComparator);
+    assertThat(fellowshipOfTheRing).usingElementComparator(ageComparator).isSorted();
 
     // enum order = order of declaration = ring power
     assertThat(list(oneRing, vilya, nenya, narya, dwarfRing, manRing)).isSorted();
@@ -151,13 +151,13 @@ public class CollectionAssertionsExamples extends AbstractAssertionsExamples {
 
   // new in FEST 2.0
   @Test
-  public void is_subset_of_assertion_example() {
+  public void iterable_is_subset_of_assertion_example() {
     Collection<Ring> elvesRings = list(vilya, nenya, narya);
     assertThat(elvesRings).isSubsetOf(ringsOfPower);
   }
 
   @Test
-  public void type_safe_assertion_example() {
+  public void iterable_type_safe_assertion_example() {
     // just to show that containsAll can accept subtype of is not bounded to Object only
     Collection<Ring> elvesRings = list(vilya, nenya, narya);
     Collection<Object> powerfulRings = new ArrayList<Object>();
