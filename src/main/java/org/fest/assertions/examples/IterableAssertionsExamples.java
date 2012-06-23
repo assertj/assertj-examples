@@ -27,11 +27,10 @@ public class IterableAssertionsExamples extends AbstractAssertionsExamples {
   public void iterable_basic_assertions_examples() {
 
     // would work the same way with Iterable<Ring>,
-    Collection<Ring> elvesRings = list(vilya, nenya, narya);
-    Collection<Movie> trilogy = list(theFellowshipOfTheRing, theTwoTowers, theReturnOfTheKing);
+    Iterable<Ring> elvesRings = list(vilya, nenya, narya);
+    Iterable<Movie> trilogy = list(theFellowshipOfTheRing, theTwoTowers, theReturnOfTheKing);
     assertThat(elvesRings).isNotEmpty().hasSize(3);
     assertThat(elvesRings).hasSameSizeAs(trilogy);
-    assertThat(elvesRings).hasSameSizeAs(trilogy.toArray());
     assertThat(elvesRings).contains(nenya).doesNotContain(oneRing);
 
     // with containsOnly, all the elements must be present (but the order is not important)
@@ -51,6 +50,15 @@ public class IterableAssertionsExamples extends AbstractAssertionsExamples {
     assertThat(allRings).startsWith(oneRing, vilya).endsWith(dwarfRing, manRing);
     assertThat(allRings).containsSequence(nenya, narya, dwarfRing);
     assertThat(allRings).containsAll(elvesRings);
+    
+    // You can check exactly what list contains, i.e. what elements and in which order.
+    assertThat(elvesRings).containsExactly(vilya, nenya, narya);
+    try {
+      // putting a different would make the assertion fail :
+      assertThat(elvesRings).containsExactly(nenya, vilya, narya);
+    } catch (AssertionError e) {
+      assertThat(e).hasMessage("expected:<[[nenya, vil]ya, narya]> but was:<[[vilya, nen]ya, narya]>");
+    }
 
     // to show an error message
     // assertThat(elvesRings).containsAll(allRings);
@@ -102,8 +110,6 @@ public class IterableAssertionsExamples extends AbstractAssertionsExamples {
 
   @Test
   public void list_contains_at_index_assertions_examples() {
-    // list assertions inherits from iterable assertions and provides additional "contains" semantics assertions specific to List.
-
     // You can check element at a given index (we use Assertions.atIndex(int) synthetic sugar for better readability).
     List<Ring> elvesRings = list(vilya, nenya, narya);
     assertThat(elvesRings).contains(vilya, atIndex(0)).contains(nenya, atIndex(1)).contains(narya, atIndex(2));
@@ -168,5 +174,5 @@ public class IterableAssertionsExamples extends AbstractAssertionsExamples {
     assertThat(powerfulRings).containsAll(elvesRings);
 
   }
-  
+
 }
