@@ -30,13 +30,21 @@ public class BasicAssertionsExamples extends AbstractAssertionsExamples {
 
   @Test
   public void meaningful_error_with_test_description_example() {
+    String frodonName = "Frodon";
     try {
       // set a bad name to Mr Frodo, just to see how nice is the assertion error message
-      frodo.setName("Frodon");
+      frodo.setName(frodonName);
       // you can specifiy a test description with as() method or describedAs()
       assertThat(frodo.getName()).as("check Frodo's name").isEqualTo("Frodo");
     } catch (AssertionError e) {
       assertThat(e).hasMessage("[check Frodo's name] expected:<'Frodo[]'> but was:<'Frodo[n]'>");
+    }
+    // but you still can overrides the error message if you have a better one :
+    try {
+      assertThat(frodo.getName()).as("check Frodo's name").overridingErrorMessage("Hey my name is Frodo not %s !", frodonName)
+          .isEqualTo("Frodo");
+    } catch (AssertionError e) {
+      assertThat(e).hasMessage("[check Frodo's name] Hey my name is Frodo not Frodon !");
     }
   }
 
