@@ -189,8 +189,7 @@ public class AssertionsWithCustomComparatorExamples extends AbstractAssertionsEx
         .isIn("2002-12-01") // ok same year and month
         .isNotIn("2002-11-01", "2002-10-01"); // same year but different month
 
-    // build date away from today by one day (if we are at the end of the month we subtract one day, otherwise we add
-    // one)
+    // build date away from today by one day (if we are at the end of the month we subtract one day, otherwise we add one)
     Date oneDayFromTodayInSameMonth = monthOf(tomorrow()) == monthOf(new Date()) ? tomorrow() : yesterday();
     assertThat(oneDayFromTodayInSameMonth).usingComparator(yearAndMonthComparator).isToday();
   }
