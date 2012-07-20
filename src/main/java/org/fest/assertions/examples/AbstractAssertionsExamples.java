@@ -1,5 +1,11 @@
 package org.fest.assertions.examples;
 
+import static org.fest.assertions.examples.data.Race.dwarf;
+import static org.fest.assertions.examples.data.Race.elf;
+import static org.fest.assertions.examples.data.Race.hobbit;
+import static org.fest.assertions.examples.data.Race.maia;
+import static org.fest.assertions.examples.data.Race.man;
+import static org.fest.assertions.examples.data.Race.orc;
 import static org.fest.assertions.examples.data.Ring.*;
 import static org.fest.util.Collections.list;
 import static org.fest.util.Dates.parse;
@@ -38,12 +44,12 @@ import org.fest.assertions.examples.data.TolkienCharacter;
 public abstract class AbstractAssertionsExamples {
 
   // Some of the Lord of the Rings races :
-  protected static final Race HOBBIT = new Race("Hobbit", false);
-  protected static final Race MAIA = new Race("Maia", true);
-  protected static final Race MAN = new Race("Man", false);
-  protected static final Race ELF = new Race("Elf", true);
-  protected static final Race DWARF = new Race("Dwarf", false);
-  protected static final Race ORC = new Race("Orc", false);
+  protected static final Race HOBBIT = hobbit;
+  protected static final Race MAIA = maia;
+  protected static final Race MAN = man;
+  protected static final Race ELF = elf;
+  protected static final Race DWARF = dwarf;
+  protected static final Race ORC = orc;
 
   // Some of the Lord of the Rings characters :
   protected final TolkienCharacter frodo = new TolkienCharacter("Frodo", 33, HOBBIT);
@@ -58,7 +64,9 @@ public abstract class AbstractAssertionsExamples {
   protected final TolkienCharacter sauron = new TolkienCharacter("Sauron", 50000, MAIA);
   protected final TolkienCharacter galadriel = new TolkienCharacter("Legolas", 3000, ELF);
   protected final TolkienCharacter elrond = new TolkienCharacter("Legolas", 3000, ELF);
+  protected final TolkienCharacter guruk = new TolkienCharacter("Guruk", 20, orc);
   protected final List<TolkienCharacter> fellowshipOfTheRing = new ArrayList<TolkienCharacter>();
+  protected final List<TolkienCharacter> orcsWithHobbitPrisoners = new ArrayList<TolkienCharacter>();
 
   // Rings and their bearer
   protected final List<Ring> ringsOfPower = list(oneRing, vilya, nenya, narya, dwarfRing, manRing);
@@ -134,6 +142,9 @@ public abstract class AbstractAssertionsExamples {
     ringBearers.put(Ring.narya, gandalf);
     ringBearers.put(Ring.vilya, elrond);
     ringBearers.put(Ring.oneRing, frodo);
+    orcsWithHobbitPrisoners.add(guruk);
+    orcsWithHobbitPrisoners.add(merry);
+    orcsWithHobbitPrisoners.add(pippin);
   }
 
 }

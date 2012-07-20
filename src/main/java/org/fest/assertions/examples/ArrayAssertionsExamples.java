@@ -1,19 +1,26 @@
 package org.fest.assertions.examples;
 
-import static org.fest.assertions.api.Assertions.*;
+import static org.fest.assertions.api.Assertions.assertThat;
+import static org.fest.assertions.api.Assertions.extractProperty;
+import static org.fest.assertions.api.Assertions.filter;
 import static org.fest.assertions.data.Index.atIndex;
-import static org.fest.assertions.examples.data.Ring.*;
+import static org.fest.assertions.examples.data.EvilLevel.SUPER_EVIL;
+import static org.fest.assertions.examples.data.Ring.dwarfRing;
+import static org.fest.assertions.examples.data.Ring.manRing;
+import static org.fest.assertions.examples.data.Ring.narya;
+import static org.fest.assertions.examples.data.Ring.nenya;
+import static org.fest.assertions.examples.data.Ring.oneRing;
+import static org.fest.assertions.examples.data.Ring.vilya;
 import static org.fest.util.Arrays.array;
 import static org.fest.util.Collections.list;
 
 import java.util.Arrays;
 import java.util.Comparator;
 
-import org.junit.Test;
-
 import org.fest.assertions.examples.data.Movie;
 import org.fest.assertions.examples.data.Ring;
 import org.fest.assertions.examples.data.TolkienCharacter;
+import org.junit.Test;
 
 /**
  * Array assertions examples.
@@ -130,6 +137,15 @@ public class ArrayAssertionsExamples extends AbstractAssertionsExamples {
     };
     assertThat(new Ring[] { manRing, dwarfRing, narya, nenya, vilya, oneRing }).isSortedAccordingTo(
         increasingPowerRingComparator);
+  }
+  
+  @Test
+  public void filter_then_extract_assertion_example() {
+    Iterable<TolkienCharacter> badBadGuys = filter(orcsWithHobbitPrisoners).with("race.evilLevel", SUPER_EVIL).get();
+    
+    // {@link Properties#from} now accepts {@link Iterable}s as input, easing its use with {@link Assertions#filter}
+    assertThat(extractProperty("name").from(badBadGuys)).containsOnly("Guruk");
+    
   }
 
 }

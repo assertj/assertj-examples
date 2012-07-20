@@ -14,27 +14,29 @@
  */
 package org.fest.assertions.examples.data;
 
+import static org.fest.assertions.examples.data.EvilLevel.AMBIVALENT;
+import static org.fest.assertions.examples.data.EvilLevel.KIND;
+import static org.fest.assertions.examples.data.EvilLevel.SUPER_EVIL;
+import static org.fest.assertions.examples.data.EvilLevel.SUPER_KIND;
+
 /**
  * Race in Tolkien's Lord of the Rings.
  * 
  * @author Joel Costigliola
+ * @author Florent Biville
  */
-public class Race {
+public enum Race {
 
-  public final static Race hobbit = new Race("Hobbit", false);
-  public final static Race maia = new Race("Maia", true);
-  public final static Race man = new Race("Man", false);
-  public final static Race elf = new Race("Elf", true);
-  public final static Race dwarf = new Race("Dwarf", false);
-  public final static Race orc = new Race("Orc", false);
+  hobbit("Hobbit", false, SUPER_KIND), maia("Maia", true, KIND), man("Man", false, AMBIVALENT), elf("Elf", true, KIND), dwarf("Dwarf", false, KIND), orc("Orc", false, SUPER_EVIL);
 
   private final String name;
   private final boolean immortal;
+  private EvilLevel evilLevel;
 
-  public Race(String name, boolean immortal) {
-    super();
+  Race(String name, boolean immortal, EvilLevel evilLevel) {
     this.name = name;
     this.immortal = immortal;
+    this.evilLevel = evilLevel;
   }
 
   public String getName() {
@@ -45,33 +47,12 @@ public class Race {
     return immortal;
   }
 
+  public EvilLevel getEvilLevel() {
+    return evilLevel;
+  }
+
   @Override
   public String toString() {
     return "Race [name=" + name + ", immortal=" + immortal + "]";
   }
-
-  @Override
-  public int hashCode() {
-    final int prime = 31;
-    int result = 1;
-    result = prime * result + (immortal ? 1231 : 1237);
-    result = prime * result + ((name == null) ? 0 : name.hashCode());
-    return result;
-  }
-
-  @Override
-  public boolean equals(Object obj) {
-    if (this == obj) return true;
-    if (obj == null) return false;
-    if (getClass() != obj.getClass()) return false;
-    Race other = (Race) obj;
-    if (immortal != other.immortal) return false;
-    if (name == null) {
-      if (other.name != null) return false;
-    } else if (!name.equals(other.name)) return false;
-    return true;
-  }
-  
-  
-
 }
