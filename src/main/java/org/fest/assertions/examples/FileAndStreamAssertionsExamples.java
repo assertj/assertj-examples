@@ -22,9 +22,13 @@ public class FileAndStreamAssertionsExamples extends AbstractAssertionsExamples 
     File xFile = writeFile("xFile", "The Truth Is Out There");
     assertThat(xFile).exists().isFile().isRelative();
     
-    // check content
+    // compare content with another file
     File xFileClone = writeFile("xFileClone", "The Truth Is Out There");
     assertThat(xFile).hasContentEqualTo(xFileClone);
+    
+    // compare content with a binary array
+    byte[] binaryContent = "The Truth Is Out There".getBytes();
+    assertThat(xFile).hasBinaryContent(binaryContent);
   }
 
   @Test
