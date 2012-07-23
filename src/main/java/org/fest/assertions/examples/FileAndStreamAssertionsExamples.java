@@ -5,7 +5,9 @@ import static org.fest.assertions.api.Assertions.assertThat;
 import java.io.BufferedWriter;
 import java.io.ByteArrayInputStream;
 import java.io.File;
-import java.io.FileWriter;
+import java.io.FileOutputStream;
+import java.io.OutputStreamWriter;
+import java.nio.charset.Charset;
 
 import org.junit.Test;
 
@@ -22,9 +24,20 @@ public class FileAndStreamAssertionsExamples extends AbstractAssertionsExamples 
     File xFile = writeFile("xFile", "The Truth Is Out There");
     assertThat(xFile).exists().isFile().isRelative();
     
-    // check content
+    // compare content with another file
     File xFileClone = writeFile("xFileClone", "The Truth Is Out There");
     assertThat(xFile).hasContentEqualTo(xFileClone);
+    
+    // compare content with a string
+    assertThat(xFile).hasContent("The Truth Is Out There");
+    
+    // compare content with a string, specifying a character set
+    File xFileFrench = writeFile("xFileFrench", "La Vérité Est Ailleurs", Charset.forName("UTF-8"));
+    assertThat(xFileFrench).usingCharset("UTF-8").hasContent("La Vérité Est Ailleurs");
+    
+    // compare content with a binary array
+    byte[] binaryContent = "The Truth Is Out There".getBytes();
+    assertThat(xFile).hasBinaryContent(binaryContent);
   }
 
   @Test
@@ -40,8 +53,12 @@ public class FileAndStreamAssertionsExamples extends AbstractAssertionsExamples 
   }
 
   private File writeFile(String fileName, String fileContent) throws Exception {
+    return writeFile(fileName, fileContent, Charset.defaultCharset());
+  }
+  
+  private File writeFile(String fileName, String fileContent, Charset charset) throws Exception {
     File file = new File("target/" + fileName);
-    BufferedWriter out = new BufferedWriter(new FileWriter(file));
+    BufferedWriter out = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(file), charset));
     out.write(fileContent);
     out.close();
     return file;
