@@ -23,21 +23,26 @@ public class FileAndStreamAssertionsExamples extends AbstractAssertionsExamples 
     // file assertion
     File xFile = writeFile("xFile", "The Truth Is Out There");
     assertThat(xFile).exists().isFile().isRelative();
-    
+
     // compare content with another file
     File xFileClone = writeFile("xFileClone", "The Truth Is Out There");
     assertThat(xFile).hasContentEqualTo(xFileClone);
-    
+
     // compare content with a string
     assertThat(xFile).hasContent("The Truth Is Out There");
-    
+
     // compare content with a string, specifying a character set
-    File xFileFrench = writeFile("xFileFrench", "La Vérité Est Ailleurs", Charset.forName("UTF-8"));
-    assertThat(xFileFrench).usingCharset("UTF-8").hasContent("La Vérité Est Ailleurs");
-    
+    Charset turkishCharset = Charset.forName("windows-1254");
+    File xFileWithTurkishCharset = writeFile("xFileWithTurkishCharset", "La Vérité Est Ailleurs", turkishCharset);
+    assertThat(xFileWithTurkishCharset).usingCharset(turkishCharset).hasContent("La Vérité Est Ailleurs");
+
     // compare content with a binary array
     byte[] binaryContent = "The Truth Is Out There".getBytes();
     assertThat(xFile).hasBinaryContent(binaryContent);
+
+    // compare content with a binary array
+    binaryContent = "La Vérité Est Ailleurs".getBytes(turkishCharset);
+    assertThat(xFileWithTurkishCharset).hasBinaryContent(binaryContent);
   }
 
   @Test
@@ -55,7 +60,7 @@ public class FileAndStreamAssertionsExamples extends AbstractAssertionsExamples 
   private File writeFile(String fileName, String fileContent) throws Exception {
     return writeFile(fileName, fileContent, Charset.defaultCharset());
   }
-  
+
   private File writeFile(String fileName, String fileContent, Charset charset) throws Exception {
     File file = new File("target/" + fileName);
     BufferedWriter out = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(file), charset));
