@@ -125,6 +125,11 @@ public class IterableAssertionsExamples extends AbstractAssertionsExamples {
         .doesNotContain("Sauron", "Elrond");
     // in Fest 1.x, this would have been written :
     // assertThat(fellowshipOfTheRing).onProperty("name").contains("Boromir", "Gandalf", "Frodo", "Legolas");
+    
+    // same extraction with an alternate syntax
+    assertThat(extractProperty("name").ofType(String.class).from(fellowshipOfTheRing))
+        .contains("Boromir", "Gandalf", "Frodo", "Legolas")
+        .doesNotContain("Sauron", "Elrond");
 
     // extracting property works also with user's types (here Race)
     assertThat(extractProperty("race").from(fellowshipOfTheRing)).contains(HOBBIT, ELF).doesNotContain(ORC);
