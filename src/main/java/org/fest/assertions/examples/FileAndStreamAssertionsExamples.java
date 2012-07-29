@@ -23,6 +23,7 @@ public class FileAndStreamAssertionsExamples extends AbstractAssertionsExamples 
     // file assertion
     File xFile = writeFile("xFile", "The Truth Is Out There");
     assertThat(xFile).exists().isFile().isRelative();
+    assertThat(xFile).canRead().canWrite();
 
     // compare content with another file
     File xFileClone = writeFile("xFileClone", "The Truth Is Out There");
@@ -44,7 +45,7 @@ public class FileAndStreamAssertionsExamples extends AbstractAssertionsExamples 
     binaryContent = "La Vérité Est Ailleurs".getBytes(turkishCharset);
     assertThat(xFileWithTurkishCharset).hasBinaryContent(binaryContent);
   }
-
+  
   @Test
   // new in FEST 2.0
   public void stream_assertions_examples() throws Exception {
