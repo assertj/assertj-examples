@@ -17,10 +17,11 @@ import static org.fest.util.Collections.list;
 import java.util.Arrays;
 import java.util.Comparator;
 
+import org.junit.Test;
+
 import org.fest.assertions.examples.data.Movie;
 import org.fest.assertions.examples.data.Ring;
 import org.fest.assertions.examples.data.TolkienCharacter;
-import org.junit.Test;
 
 /**
  * Array assertions examples.
@@ -38,6 +39,7 @@ public class ArrayAssertionsExamples extends AbstractAssertionsExamples {
     assertThat(elvesRings).hasSameSizeAs(trilogy);
     assertThat(elvesRings).hasSameSizeAs(list(trilogy));
     assertThat(elvesRings).contains(nenya).doesNotContain(oneRing);
+
     // you can check element at a given index (we use Index.atIndex(int) synthetic sugar for better readability).
     assertThat(elvesRings).contains(vilya, atIndex(0)).contains(nenya, atIndex(1)).contains(narya, atIndex(2));
     // with containsOnly, all the elements must be present (but the order is not important)
