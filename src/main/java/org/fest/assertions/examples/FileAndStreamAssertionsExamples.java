@@ -42,7 +42,7 @@ public class FileAndStreamAssertionsExamples extends AbstractAssertionsExamples 
     assertThat(xFile).hasBinaryContent(binaryContent);
 
     // compare content with a binary array
-    binaryContent = "La Vérité Est Ailleurs".getBytes(turkishCharset);
+    binaryContent = "La Vérité Est Ailleurs".getBytes(turkishCharset.name());
     assertThat(xFileWithTurkishCharset).hasBinaryContent(binaryContent);
   }
   
