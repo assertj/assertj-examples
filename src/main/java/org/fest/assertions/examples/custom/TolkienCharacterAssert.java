@@ -12,7 +12,7 @@
  * 
  * Copyright @2010 the original author or authors.
  */
-package org.fest.assertions.examples.advanced;
+package org.fest.assertions.examples.custom;
 
 import static java.lang.String.format;
 

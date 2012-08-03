@@ -1,4 +1,4 @@
-package org.fest.assertions.examples.advanced;
+package org.fest.assertions.examples.custom;
 
 import org.fest.assertions.api.Assertions;
 import org.fest.assertions.examples.data.TolkienCharacter;

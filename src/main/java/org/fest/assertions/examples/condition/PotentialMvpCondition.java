@@ -12,7 +12,7 @@
  * 
  * Copyright @2012 the original author or authors.
  */
-package org.fest.assertions.examples.advanced;
+package org.fest.assertions.examples.condition;
 
 import org.fest.assertions.core.Condition;
 import org.fest.assertions.examples.data.Player;

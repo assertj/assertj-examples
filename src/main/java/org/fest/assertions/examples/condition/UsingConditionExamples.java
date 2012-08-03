@@ -1,4 +1,4 @@
-package org.fest.assertions.examples.advanced;
+package org.fest.assertions.examples.condition;
 
 import static org.fest.assertions.api.Assertions.assertThat;
 import static org.fest.assertions.condition.AllOf.allOf;

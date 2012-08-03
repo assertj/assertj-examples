@@ -1,7 +1,7 @@
-package org.fest.assertions.examples.advanced;
+package org.fest.assertions.examples.custom;
 
 import static org.fest.assertions.api.Assertions.assertThat;
-import static org.fest.assertions.examples.advanced.MyProjectAssertions.assertThat;
+import static org.fest.assertions.examples.custom.MyProjectAssertions.assertThat;
 
 import org.junit.Test;
 

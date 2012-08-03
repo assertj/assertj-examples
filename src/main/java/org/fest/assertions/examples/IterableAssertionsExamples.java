@@ -1,13 +1,17 @@
 package org.fest.assertions.examples;
 
-import static org.fest.assertions.api.Assertions.*;
-import static org.fest.assertions.examples.data.Ring.*;
+import static org.fest.assertions.api.Assertions.assertThat;
+import static org.fest.assertions.api.Assertions.extractProperty;
+import static org.fest.assertions.examples.data.Ring.dwarfRing;
+import static org.fest.assertions.examples.data.Ring.manRing;
+import static org.fest.assertions.examples.data.Ring.narya;
+import static org.fest.assertions.examples.data.Ring.nenya;
+import static org.fest.assertions.examples.data.Ring.oneRing;
+import static org.fest.assertions.examples.data.Ring.vilya;
 import static org.fest.util.Collections.list;
 
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Collections;
-import java.util.Comparator;
 import java.util.List;
 
 import org.junit.Test;
@@ -108,13 +112,6 @@ public class IterableAssertionsExamples extends AbstractAssertionsExamples {
     }
   }
 
-  @Test
-  public void list_contains_at_index_assertions_examples() {
-    // You can check element at a given index (we use Assertions.atIndex(int) synthetic sugar for better readability).
-    List<Ring> elvesRings = list(vilya, nenya, narya);
-    assertThat(elvesRings).contains(vilya, atIndex(0)).contains(nenya, atIndex(1)).contains(narya, atIndex(2));
-  }
-
   // CHANGED IN FEST 2.x, was assertThat(myCollection).onProperty(propertyName).contains...
   @Test
   public void iterable_assertions_on_extracted_property_values_example() {
@@ -136,28 +133,6 @@ public class IterableAssertionsExamples extends AbstractAssertionsExamples {
 
     // extract nested property on Race
     assertThat(extractProperty("race.name").from(fellowshipOfTheRing)).contains("Hobbit", "Elf").doesNotContain("Orc");
-  }
-
-  // new in FEST 2.0
-  @Test
-  public void list_is_sorted_assertion_example() {
-
-    // You can check that a list is sorted (new in FEST 2.0)
-    Collections.sort(fellowshipOfTheRing, ageComparator);
-    assertThat(fellowshipOfTheRing).isSortedAccordingTo(ageComparator);
-    assertThat(fellowshipOfTheRing).usingElementComparator(ageComparator).isSorted();
-
-    // enum order = order of declaration = ring power
-    assertThat(list(oneRing, vilya, nenya, narya, dwarfRing, manRing)).isSorted();
-
-    // ring comparison by increasing power
-    Comparator<Ring> increasingPowerRingComparator = new Comparator<Ring>() {
-      public int compare(Ring ring1, Ring ring2) {
-        return -ring1.compareTo(ring2);
-      }
-    };
-    assertThat(list(manRing, dwarfRing, narya, nenya, vilya, oneRing)).isSortedAccordingTo(
-        increasingPowerRingComparator);
   }
 
   // new in FEST 2.0

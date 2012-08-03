@@ -21,13 +21,13 @@ import org.junit.Before;
 import org.junit.BeforeClass;
 
 import org.fest.assertions.core.Condition;
-import org.fest.assertions.examples.advanced.PotentialMvpCondition;
 import org.fest.assertions.examples.comparator.AbsValueComparator;
 import org.fest.assertions.examples.comparator.AgeComparator;
 import org.fest.assertions.examples.comparator.CaseInsensitiveCharacterComparator;
 import org.fest.assertions.examples.comparator.CaseInsensitiveStringComparator;
 import org.fest.assertions.examples.comparator.TolkienCharacterRaceNameComparator;
 import org.fest.assertions.examples.comparator.YearAndMonthDateComparator;
+import org.fest.assertions.examples.condition.PotentialMvpCondition;
 import org.fest.assertions.examples.data.Movie;
 import org.fest.assertions.examples.data.Name;
 import org.fest.assertions.examples.data.Player;
