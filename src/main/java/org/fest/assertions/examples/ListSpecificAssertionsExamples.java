@@ -59,6 +59,7 @@ public class ListSpecificAssertionsExamples extends AbstractAssertionsExamples {
   public void list_element_satisfies_condition_at_index_example() {
     // You can check that a list element satisfies a condition
     assertThat(list(rose, noah)).has(doubleDoubleStats, atIndex(1));
+    assertThat(list(rose, noah)).is(potentialMvp, atIndex(0));
   }
 
   // new in FEST 2.0
