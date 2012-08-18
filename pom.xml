@@ -7,6 +7,7 @@
   <artifactId>fest-examples</artifactId>
   <version>1.0-SNAPSHOT</version>
   <name>FEST Fluent Assertions examples</name>
+  
   <scm>
     <developerConnection>scm:git:git@github.com:joel-costigliola/fest-examples.git</developerConnection>
     <connection>scm:git:git://github.com/joel-costigliola/fest-examples.git</connection>
