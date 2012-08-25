@@ -16,6 +16,7 @@ public class StringAssertionsExamples extends AbstractAssertionsExamples {
 
     assertThat("Frodo").startsWith("Fro").endsWith("do").hasSize(5);
     assertThat("Frodo").contains("rod").doesNotContain("fro");
+    assertThat("Frodo").containsOnlyOnce("do");
 
     // you can ignore case for equals check
     assertThat("Frodo").isEqualToIgnoringCase("FROdO");
@@ -42,7 +43,7 @@ public class StringAssertionsExamples extends AbstractAssertionsExamples {
 
     // All assertions made after usingComparator(caseInsensitiveStringComparator) are based on the given comparator ...
     assertThat("Frodo").usingComparator(caseInsensitiveStringComparator).contains("fro").doesNotContain("don");
-    // ... but a assertions is not
+    // ... but a new assertions is not
     // assertThat("Frodo").startsWith("fr").endsWith("ODO"); // FAILS !!!
 
     // Last thing : matches or doesNotMatch don't use the given comparator
@@ -51,11 +52,9 @@ public class StringAssertionsExamples extends AbstractAssertionsExamples {
       // failed assertion with specific comparator mention the comparison strategy to help interpreting the error
       assertThat("Frodo").usingComparator(caseInsensitiveStringComparator).startsWith("FROO");
     } catch (AssertionError e) {
-      assertThat(e).hasMessage("expecting\n" +
-          "<'Frodo'>\n" +
-          " to start with\n" +
-          "<'FROO'>\n" +
-          " according to 'CaseInsensitiveStringComparator' comparator");
+      assertThat(e).hasMessage(
+          "expecting\n" + "<'Frodo'>\n" + " to start with\n" + "<'FROO'>\n"
+              + " according to 'CaseInsensitiveStringComparator' comparator");
     }
   }
 
