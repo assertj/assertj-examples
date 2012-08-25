@@ -8,7 +8,7 @@ import static org.fest.assertions.examples.data.Ring.narya;
 import static org.fest.assertions.examples.data.Ring.nenya;
 import static org.fest.assertions.examples.data.Ring.oneRing;
 import static org.fest.assertions.examples.data.Ring.vilya;
-import static org.fest.util.Collections.list;
+import static org.fest.util.Lists.newArrayList;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -31,8 +31,8 @@ public class IterableAssertionsExamples extends AbstractAssertionsExamples {
   public void iterable_basic_assertions_examples() {
 
     // would work the same way with Iterable<Ring>,
-    Iterable<Ring> elvesRings = list(vilya, nenya, narya);
-    Iterable<Movie> trilogy = list(theFellowshipOfTheRing, theTwoTowers, theReturnOfTheKing);
+    Iterable<Ring> elvesRings = newArrayList(vilya, nenya, narya);
+    Iterable<Movie> trilogy = newArrayList(theFellowshipOfTheRing, theTwoTowers, theReturnOfTheKing);
     assertThat(elvesRings).isNotEmpty().hasSize(3);
     assertThat(elvesRings).hasSameSizeAs(trilogy);
     assertThat(elvesRings).contains(nenya).doesNotContain(oneRing);
@@ -42,20 +42,20 @@ public class IterableAssertionsExamples extends AbstractAssertionsExamples {
     assertThat(elvesRings).doesNotContainNull().doesNotHaveDuplicates();
 
     // special check for null, empty collection or both
-    assertThat(list(frodo, null, sam)).containsNull();
-    List<Object> list = list();
-    assertThat(list).isEmpty();
-    assertThat(list).isNullOrEmpty();
-    list = null;
-    assertThat(list).isNullOrEmpty();
+    assertThat(newArrayList(frodo, null, sam)).containsNull();
+    List<Object> newArrayList = newArrayList();
+    assertThat(newArrayList).isEmpty();
+    assertThat(newArrayList).isNullOrEmpty();
+    newArrayList = null;
+    assertThat(newArrayList).isNullOrEmpty();
 
     // you can also check the start or end of your collection/iterable
-    Iterable<Ring> allRings = list(oneRing, vilya, nenya, narya, dwarfRing, manRing);
+    Iterable<Ring> allRings = newArrayList(oneRing, vilya, nenya, narya, dwarfRing, manRing);
     assertThat(allRings).startsWith(oneRing, vilya).endsWith(dwarfRing, manRing);
     assertThat(allRings).containsSequence(nenya, narya, dwarfRing);
     assertThat(allRings).containsAll(elvesRings);
     
-    // You can check exactly what list contains, i.e. what elements and in which order.
+    // You can check exactly what newArrayList contains, i.e. what elements and in which order.
     assertThat(elvesRings).containsExactly(vilya, nenya, narya);
     try {
       // putting a different would make the assertion fail :
@@ -67,8 +67,8 @@ public class IterableAssertionsExamples extends AbstractAssertionsExamples {
     // to show an error message
     // assertThat(elvesRings).containsAll(allRings);
 
-    List<Integer> testedList = list(1);
-    List<Integer> referenceList = list(1, 2, 3);
+    List<Integer> testedList = newArrayList(1);
+    List<Integer> referenceList = newArrayList(1, 2, 3);
     assertThat(referenceList).containsSequence(testedList.toArray(new Integer[0]));
   }
 
@@ -83,7 +83,7 @@ public class IterableAssertionsExamples extends AbstractAssertionsExamples {
     // note that error message mentions the comparator used to better understand the failure
     // the message indicates that Sauron were found because he is a Maia like Gandalf.
     try {
-      assertThat(list(gandalf, sam)).usingElementComparator(raceNameComparator).doesNotContain(sauron);
+      assertThat(newArrayList(gandalf, sam)).usingElementComparator(raceNameComparator).doesNotContain(sauron);
     } catch (AssertionError e) {
       assertThat(e)
           .hasMessage(
@@ -98,9 +98,9 @@ public class IterableAssertionsExamples extends AbstractAssertionsExamples {
 
     // duplicates assertion honors custom comparator
     assertThat(fellowshipOfTheRing).doesNotHaveDuplicates();
-    assertThat(list(sam, gandalf)).usingElementComparator(raceNameComparator).doesNotHaveDuplicates();
+    assertThat(newArrayList(sam, gandalf)).usingElementComparator(raceNameComparator).doesNotHaveDuplicates();
     try {
-      assertThat(list(sam, gandalf, frodo)).usingElementComparator(raceNameComparator).doesNotHaveDuplicates();
+      assertThat(newArrayList(sam, gandalf, frodo)).usingElementComparator(raceNameComparator).doesNotHaveDuplicates();
     } catch (AssertionError e) {
       assertThat(e)
           .hasMessage(
@@ -138,14 +138,14 @@ public class IterableAssertionsExamples extends AbstractAssertionsExamples {
   // new in FEST 2.0
   @Test
   public void iterable_is_subset_of_assertion_example() {
-    Collection<Ring> elvesRings = list(vilya, nenya, narya);
+    Collection<Ring> elvesRings = newArrayList(vilya, nenya, narya);
     assertThat(elvesRings).isSubsetOf(ringsOfPower);
   }
 
   @Test
   public void iterable_type_safe_assertion_example() {
     // just to show that containsAll can accept subtype of is not bounded to Object only
-    Collection<Ring> elvesRings = list(vilya, nenya, narya);
+    Collection<Ring> elvesRings = newArrayList(vilya, nenya, narya);
     Collection<Object> powerfulRings = new ArrayList<Object>();
     powerfulRings.add(oneRing);
     powerfulRings.add(vilya);

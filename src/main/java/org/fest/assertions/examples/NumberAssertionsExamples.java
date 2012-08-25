@@ -6,8 +6,9 @@ import static org.fest.assertions.api.Assertions.offset;
 import java.math.BigDecimal;
 import java.util.Comparator;
 
-import org.fest.assertions.examples.comparator.AbsValueComparator;
 import org.junit.Test;
+
+import org.fest.assertions.examples.comparator.AbsValueComparator;
 
 /**
  * Number assertions examples.<br>

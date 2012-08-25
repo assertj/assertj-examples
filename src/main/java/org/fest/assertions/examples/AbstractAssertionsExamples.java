@@ -7,7 +7,7 @@ import static org.fest.assertions.examples.data.Race.maia;
 import static org.fest.assertions.examples.data.Race.man;
 import static org.fest.assertions.examples.data.Race.orc;
 import static org.fest.assertions.examples.data.Ring.*;
-import static org.fest.util.Collections.list;
+import static org.fest.util.Lists.newArrayList;
 import static org.fest.util.Dates.parse;
 
 import java.util.ArrayList;
@@ -69,7 +69,7 @@ public abstract class AbstractAssertionsExamples {
   protected final List<TolkienCharacter> orcsWithHobbitPrisoners = new ArrayList<TolkienCharacter>();
 
   // Rings and their bearer
-  protected final List<Ring> ringsOfPower = list(oneRing, vilya, nenya, narya, dwarfRing, manRing);
+  protected final List<Ring> ringsOfPower = newArrayList(oneRing, vilya, nenya, narya, dwarfRing, manRing);
   protected final Map<Ring, TolkienCharacter> ringBearers = new HashMap<Ring, TolkienCharacter>();
 
   // Lord of the Rings movies
@@ -112,7 +112,7 @@ public abstract class AbstractAssertionsExamples {
     noah.setAssistsPerGame(4);
     noah.setPointsPerGame(10);
     noah.setReboundsPerGame(11);
-    players = list(rose, james, durant, noah);
+    players = newArrayList(rose, james, durant, noah);
     potentialMvp = new PotentialMvpCondition();
     doubleDoubleStats = new Condition<Player>("double double stats") {
       @Override

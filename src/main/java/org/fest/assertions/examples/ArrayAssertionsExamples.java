@@ -12,7 +12,7 @@ import static org.fest.assertions.examples.data.Ring.nenya;
 import static org.fest.assertions.examples.data.Ring.oneRing;
 import static org.fest.assertions.examples.data.Ring.vilya;
 import static org.fest.util.Arrays.array;
-import static org.fest.util.Collections.list;
+import static org.fest.util.Lists.newArrayList;
 
 import java.util.Arrays;
 import java.util.Comparator;
@@ -32,12 +32,12 @@ public class ArrayAssertionsExamples extends AbstractAssertionsExamples {
 
   @Test
   public void array_assertions_examples() {
-    // array assertion are very similar to list assertions
+    // array assertion are very similar to newArrayList assertions
     Ring[] elvesRings = array(vilya, nenya, narya);
     Movie[] trilogy = array(theFellowshipOfTheRing, theTwoTowers, theReturnOfTheKing);
     assertThat(elvesRings).isNotEmpty().hasSize(3);
     assertThat(elvesRings).hasSameSizeAs(trilogy);
-    assertThat(elvesRings).hasSameSizeAs(list(trilogy));
+    assertThat(elvesRings).hasSameSizeAs(newArrayList(trilogy));
     assertThat(elvesRings).contains(nenya).doesNotContain(oneRing);
 
     // you can check element at a given index (we use Index.atIndex(int) synthetic sugar for better readability).
@@ -46,7 +46,7 @@ public class ArrayAssertionsExamples extends AbstractAssertionsExamples {
     assertThat(elvesRings).containsOnly(nenya, vilya, narya);
     assertThat(elvesRings).doesNotContainNull().doesNotHaveDuplicates();
     // special check for null, empty collection or both
-    assertThat(list(frodo, null, sam)).containsNull();
+    assertThat(newArrayList(frodo, null, sam)).containsNull();
     Object[] array = array();
     assertThat(array).isEmpty();
     assertThat(array).isNullOrEmpty();

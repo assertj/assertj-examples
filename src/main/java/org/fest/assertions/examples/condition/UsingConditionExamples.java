@@ -4,7 +4,7 @@ import static org.fest.assertions.api.Assertions.assertThat;
 import static org.fest.assertions.condition.AllOf.allOf;
 import static org.fest.assertions.condition.AnyOf.anyOf;
 import static org.fest.assertions.condition.Not.not;
-import static org.fest.util.Collections.set;
+import static org.fest.util.Sets.newLinkedHashSet;
 
 import java.util.Set;
 
@@ -46,12 +46,12 @@ public class UsingConditionExamples extends AbstractAssertionsExamples {
   @Test
   public void condition_example_on_multiple_elements() {
     // are & areNot
-    assertThat(set("Luke", "Yoda")).are(jedi);
-    assertThat(set("Leia", "Solo")).areNot(jedi);
-    assertThat(set(rose, james)).are(potentialMvp);
+    assertThat(newLinkedHashSet("Luke", "Yoda")).are(jedi);
+    assertThat(newLinkedHashSet("Leia", "Solo")).areNot(jedi);
+    assertThat(newLinkedHashSet(rose, james)).are(potentialMvp);
     try {
       // noah is not a potential MVP !
-      assertThat(set(rose, noah)).are(potentialMvp);
+      assertThat(newLinkedHashSet(rose, noah)).are(potentialMvp);
     } catch (AssertionError e) {
       assertThat(e).hasMessage("expecting elements:\n" +
           "<[Player[Joachim Noah, team=Chicago Bulls]]>\n" +
@@ -61,40 +61,40 @@ public class UsingConditionExamples extends AbstractAssertionsExamples {
     }
 
     // have & doNotHave
-    assertThat(set("Luke", "Yoda")).have(jediPower);
-    assertThat(set("Leia", "Solo")).doNotHave(jediPower);
+    assertThat(newLinkedHashSet("Luke", "Yoda")).have(jediPower);
+    assertThat(newLinkedHashSet("Leia", "Solo")).doNotHave(jediPower);
 
     // areAtLeast & areNotAtLeast
-    assertThat(set("Luke", "Yoda", "Leia")).areAtLeast(2, jedi);
-    assertThat(set("Luke", "Yoda", "Obiwan")).areAtLeast(2, jedi);
-    assertThat(set("Luke", "Yoda", "Leia")).areNotAtLeast(1, jedi);
-    assertThat(set("Luke", "Solo", "Leia")).areNotAtLeast(1, jedi);
+    assertThat(newLinkedHashSet("Luke", "Yoda", "Leia")).areAtLeast(2, jedi);
+    assertThat(newLinkedHashSet("Luke", "Yoda", "Obiwan")).areAtLeast(2, jedi);
+    assertThat(newLinkedHashSet("Luke", "Yoda", "Leia")).areNotAtLeast(1, jedi);
+    assertThat(newLinkedHashSet("Luke", "Solo", "Leia")).areNotAtLeast(1, jedi);
 
     // haveAtLeast & doNotHaveAtLeast
-    assertThat(set("Luke", "Yoda", "Leia")).haveAtLeast(2, jediPower);
-    assertThat(set("Luke", "Yoda", "Obiwan")).haveAtLeast(2, jediPower);
-    assertThat(set("Luke", "Yoda", "Leia")).doNotHaveAtLeast(1, jediPower);
-    assertThat(set("Luke", "Solo", "Leia")).doNotHaveAtLeast(1, jediPower);
+    assertThat(newLinkedHashSet("Luke", "Yoda", "Leia")).haveAtLeast(2, jediPower);
+    assertThat(newLinkedHashSet("Luke", "Yoda", "Obiwan")).haveAtLeast(2, jediPower);
+    assertThat(newLinkedHashSet("Luke", "Yoda", "Leia")).doNotHaveAtLeast(1, jediPower);
+    assertThat(newLinkedHashSet("Luke", "Solo", "Leia")).doNotHaveAtLeast(1, jediPower);
 
     // areAtMost & areNotAtMost
-    assertThat(set("Luke", "Yoda", "Leia")).areAtMost(2, jedi);
-    assertThat(set("Luke", "Solo", "Leia")).areAtMost(2, jedi);
-    assertThat(set("Luke", "Yoda", "Leia")).areNotAtMost(1, jedi);
-    assertThat(set("Luke", "Yoda", "Obiwan")).areNotAtMost(1, jedi);
+    assertThat(newLinkedHashSet("Luke", "Yoda", "Leia")).areAtMost(2, jedi);
+    assertThat(newLinkedHashSet("Luke", "Solo", "Leia")).areAtMost(2, jedi);
+    assertThat(newLinkedHashSet("Luke", "Yoda", "Leia")).areNotAtMost(1, jedi);
+    assertThat(newLinkedHashSet("Luke", "Yoda", "Obiwan")).areNotAtMost(1, jedi);
 
     // haveAtMost & doNotHaveAtMost
-    assertThat(set("Luke", "Yoda", "Leia")).haveAtMost(2, jediPower);
-    assertThat(set("Luke", "Solo", "Leia")).haveAtMost(2, jediPower);
-    assertThat(set("Luke", "Yoda", "Leia")).doNotHaveAtMost(1, jediPower);
-    assertThat(set("Luke", "Yoda", "Obiwan")).doNotHaveAtMost(1, jediPower);
+    assertThat(newLinkedHashSet("Luke", "Yoda", "Leia")).haveAtMost(2, jediPower);
+    assertThat(newLinkedHashSet("Luke", "Solo", "Leia")).haveAtMost(2, jediPower);
+    assertThat(newLinkedHashSet("Luke", "Yoda", "Leia")).doNotHaveAtMost(1, jediPower);
+    assertThat(newLinkedHashSet("Luke", "Yoda", "Obiwan")).doNotHaveAtMost(1, jediPower);
 
     // areExactly & areNotExactly
-    assertThat(set("Luke", "Yoda", "Leia")).areExactly(2, jedi);
-    assertThat(set("Luke", "Yoda", "Leia")).areNotExactly(1, jedi);
+    assertThat(newLinkedHashSet("Luke", "Yoda", "Leia")).areExactly(2, jedi);
+    assertThat(newLinkedHashSet("Luke", "Yoda", "Leia")).areNotExactly(1, jedi);
 
     // haveExactly & haveNotExactly
-    assertThat(set("Luke", "Yoda", "Leia")).haveExactly(2, jediPower);
-    assertThat(set("Luke", "Yoda", "Leia")).doNotHaveExactly(1, jediPower);
+    assertThat(newLinkedHashSet("Luke", "Yoda", "Leia")).haveExactly(2, jediPower);
+    assertThat(newLinkedHashSet("Luke", "Yoda", "Leia")).doNotHaveExactly(1, jediPower);
   }
 
   @SuppressWarnings("unchecked")
@@ -108,7 +108,7 @@ public class UsingConditionExamples extends AbstractAssertionsExamples {
   }
 
   private final Condition<String> jedi = new Condition<String>("jedi") {
-    private final Set<String> jedis = set("Luke", "Yoda", "Obiwan");
+    private final Set<String> jedis = newLinkedHashSet("Luke", "Yoda", "Obiwan");
 
     @Override
     public boolean matches(String value) {
@@ -117,7 +117,7 @@ public class UsingConditionExamples extends AbstractAssertionsExamples {
   };
 
   private final Condition<String> jediPower = new Condition<String>("jedi power") {
-    private final Set<String> jedis = set("Luke", "Yoda", "Obiwan");
+    private final Set<String> jedis = newLinkedHashSet("Luke", "Yoda", "Obiwan");
 
     @Override
     public boolean matches(String value) {
@@ -126,7 +126,7 @@ public class UsingConditionExamples extends AbstractAssertionsExamples {
   };
 
   private final Condition<String> sith = new Condition<String>("sith") {
-    private final Set<String> siths = set("Sidious", "Vader", "Plagueis");
+    private final Set<String> siths = newLinkedHashSet("Sidious", "Vader", "Plagueis");
 
     @Override
     public boolean matches(String value) {
@@ -135,7 +135,7 @@ public class UsingConditionExamples extends AbstractAssertionsExamples {
   };
 
   private final Condition<String> sithPower = new Condition<String>("sith power") {
-    private final Set<String> siths = set("Sidious", "Vader", "Plagueis");
+    private final Set<String> siths = newLinkedHashSet("Sidious", "Vader", "Plagueis");
 
     @Override
     public boolean matches(String value) {

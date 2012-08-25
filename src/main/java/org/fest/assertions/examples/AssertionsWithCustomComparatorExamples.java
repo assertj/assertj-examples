@@ -2,7 +2,7 @@ package org.fest.assertions.examples;
 
 import static org.fest.assertions.api.Assertions.assertThat;
 import static org.fest.util.Arrays.array;
-import static org.fest.util.Collections.list;
+import static org.fest.util.Lists.newArrayList;
 import static org.fest.util.Dates.*;
 
 import java.math.BigDecimal;
@@ -84,7 +84,7 @@ public class AssertionsWithCustomComparatorExamples extends AbstractAssertionsEx
     // note that error message mentions the comparator used to better understand the failure
     // the message indicates that Sauron were found because he is a Maia like Gandalf.
     try {
-      assertThat(list(gandalf)).usingElementComparator(raceNameComparator).doesNotContain(sauron);
+      assertThat(newArrayList(gandalf)).usingElementComparator(raceNameComparator).doesNotContain(sauron);
     } catch (AssertionError e) {
       assertThat(e).hasMessage(
           "expecting\n"
@@ -98,9 +98,9 @@ public class AssertionsWithCustomComparatorExamples extends AbstractAssertionsEx
 
     // duplicates assertion honors custom comparator
     assertThat(fellowshipOfTheRing).doesNotHaveDuplicates();
-    assertThat(list(sam, gandalf)).usingElementComparator(raceNameComparator).doesNotHaveDuplicates();
+    assertThat(newArrayList(sam, gandalf)).usingElementComparator(raceNameComparator).doesNotHaveDuplicates();
     try {
-      assertThat(list(sam, gandalf, frodo)).usingElementComparator(raceNameComparator).doesNotHaveDuplicates();
+      assertThat(newArrayList(sam, gandalf, frodo)).usingElementComparator(raceNameComparator).doesNotHaveDuplicates();
     } catch (AssertionError e) {
       assertThat(e).hasMessage(
           "found duplicate(s)\n" +
