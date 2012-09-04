@@ -13,6 +13,8 @@ import static org.fest.util.Lists.newArrayList;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
+import java.util.SortedSet;
+import java.util.TreeSet;
 
 import org.junit.Test;
 
@@ -54,15 +56,6 @@ public class IterableAssertionsExamples extends AbstractAssertionsExamples {
     assertThat(allRings).startsWith(oneRing, vilya).endsWith(dwarfRing, manRing);
     assertThat(allRings).containsSequence(nenya, narya, dwarfRing);
     assertThat(allRings).containsAll(elvesRings);
-    
-    // You can check exactly what newArrayList contains, i.e. what elements and in which order.
-    assertThat(elvesRings).containsExactly(vilya, nenya, narya);
-    try {
-      // putting a different would make the assertion fail :
-      assertThat(elvesRings).containsExactly(nenya, vilya, narya);
-    } catch (AssertionError e) {
-      assertThat(e).hasMessage("expected:<[[nenya, vil]ya, narya]> but was:<[[vilya, nen]ya, narya]>");
-    }
 
     // to show an error message
     // assertThat(elvesRings).containsAll(allRings);
@@ -70,6 +63,29 @@ public class IterableAssertionsExamples extends AbstractAssertionsExamples {
     List<Integer> testedList = newArrayList(1);
     List<Integer> referenceList = newArrayList(1, 2, 3);
     assertThat(referenceList).containsSequence(testedList.toArray(new Integer[0]));
+  }
+
+  @Test
+  public void iterable_basic_contains_exactly_assertions_examples() {
+    Iterable<Ring> elvesRings = newArrayList(vilya, nenya, narya);
+    assertThat(elvesRings).containsExactly(vilya, nenya, narya);
+
+    // It works with collections that have a consistent iteration order
+    SortedSet<Ring> elvesRingsSet = new TreeSet<Ring>();
+    elvesRingsSet.add(vilya);
+    elvesRingsSet.add(nenya);
+    elvesRingsSet.add(narya);
+    assertThat(elvesRingsSet).containsExactly(vilya, nenya, narya);
+
+    try {
+      // putting a different order would make the assertion fail :
+      assertThat(elvesRings).containsExactly(nenya, vilya, narya);
+    } catch (AssertionError e) {
+      assertThat(e)
+          .hasMessage(
+              "actual and expected have the same elements but not in the same order, at index 0 actual element was :\n<vilya>\n whereas expected element was :\n<nenya>\n");
+    }
+
   }
 
   @Test
@@ -90,8 +106,7 @@ public class IterableAssertionsExamples extends AbstractAssertionsExamples {
               "expecting\n"
                   + "<[Character [name=Gandalf, race=Race [name=Maia, immortal=true], age=2020], Character [name=Sam, race=Race [name=Hobbit, immortal=false], age=38]]>\n"
                   + " not to contain\n"
-                  + "<[Character [name=Sauron, race=Race [name=Maia, immortal=true], age=50000]]>\n"
-                  + " but found\n"
+                  + "<[Character [name=Sauron, race=Race [name=Maia, immortal=true], age=50000]]>\n" + " but found\n"
                   + "<[Character [name=Sauron, race=Race [name=Maia, immortal=true], age=50000]]>\n"
                   + " according to 'TolkienCharacterRaceNameComparator' comparator");
     }
@@ -117,16 +132,14 @@ public class IterableAssertionsExamples extends AbstractAssertionsExamples {
   public void iterable_assertions_on_extracted_property_values_example() {
 
     // extract simple property values having a java standard type
-    assertThat(extractProperty("name", String.class).from(fellowshipOfTheRing))
-        .contains("Boromir", "Gandalf", "Frodo", "Legolas")
-        .doesNotContain("Sauron", "Elrond");
+    assertThat(extractProperty("name", String.class).from(fellowshipOfTheRing)).contains("Boromir", "Gandalf", "Frodo",
+        "Legolas").doesNotContain("Sauron", "Elrond");
     // in Fest 1.x, this would have been written :
     // assertThat(fellowshipOfTheRing).onProperty("name").contains("Boromir", "Gandalf", "Frodo", "Legolas");
-    
+
     // same extraction with an alternate syntax
-    assertThat(extractProperty("name").ofType(String.class).from(fellowshipOfTheRing))
-        .contains("Boromir", "Gandalf", "Frodo", "Legolas")
-        .doesNotContain("Sauron", "Elrond");
+    assertThat(extractProperty("name").ofType(String.class).from(fellowshipOfTheRing)).contains("Boromir", "Gandalf",
+        "Frodo", "Legolas").doesNotContain("Sauron", "Elrond");
 
     // extracting property works also with user's types (here Race)
     assertThat(extractProperty("race").from(fellowshipOfTheRing)).contains(HOBBIT, ELF).doesNotContain(ORC);
