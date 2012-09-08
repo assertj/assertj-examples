@@ -17,7 +17,6 @@ package org.fest.assertions.examples.custom;
 import static java.lang.String.format;
 
 import org.fest.assertions.api.AbstractAssert;
-import org.fest.assertions.api.Assertions;
 import org.fest.assertions.core.WritableAssertionInfo;
 import org.fest.assertions.examples.data.TolkienCharacter;
 import org.fest.assertions.internal.Objects;
@@ -34,6 +33,7 @@ public class TolkienCharacterAssert extends AbstractAssert<TolkienCharacterAsser
   // 2 - Write a constructor to build your assertion class from the object you want make assertions on.
   /**
    * Creates a new </code>{@link TolkienCharacterAssert}</code> to make assertions on actual TolkienCharacter.
+   * 
    * @param actual the TolkienCharacter we want to make assertions on.
    */
   public TolkienCharacterAssert(TolkienCharacter actual) {
@@ -47,6 +47,7 @@ public class TolkienCharacterAssert extends AbstractAssert<TolkienCharacterAsser
   /**
    * An entry point for TolkienCharacterAssert to follow Fest standard <code>assertThat()</code> statements.<br>
    * With a static import, one's can write directly : <code>assertThat(frodo).hasName("Frodo");</code>
+   * 
    * @param actual the TolkienCharacter we want to make assertions on.
    * @return a new </code>{@link TolkienCharacterAssert}</code>
    */
@@ -54,9 +55,10 @@ public class TolkienCharacterAssert extends AbstractAssert<TolkienCharacterAsser
     return new TolkienCharacterAssert(actual);
   }
 
-  // 4 - a specific assertion !
+  // 4 - a specific assertion
   /**
    * Verifies that the actual TolkienCharacter's name is equal to the given one.
+   * 
    * @param name the given name to compare the actual TolkienCharacter's name to.
    * @return this assertion object.
    * @throws AssertionError - if the actual TolkienCharacter's name is not equal to the given one.
@@ -65,29 +67,19 @@ public class TolkienCharacterAssert extends AbstractAssert<TolkienCharacterAsser
     // check that actual TolkienCharacter we want to make assertions on is not null.
     isNotNull();
 
-    // option 1 : use of other Fest assertions
-    Assertions.assertThat(actual.getName())
-        .overridingErrorMessage("Expected character's name to be <%s> but was <%s>", name, actual.getName()).isEqualTo(name);
-
-    // we overrides the default error message with a more explicit one
-    String errorMessage = format("Expected character's name to be <%s> but was <%s>", name, actual.getName());
-
-    // option 2 : use of WritableAssertionInfo to set the error message (integrate better with custom comparator
-    // triggered by usingComparator)
-    WritableAssertionInfo info = new WritableAssertionInfo();
-    info.overridingErrorMessage(errorMessage);
+    // use existing WritableAssertionInfo to set a specific error message
+    WritableAssertionInfo info = getWritableAssertionInfo();
+    info.overridingErrorMessage(format("Expected character's name to be <%s> but was <%s>", name, actual.getName()));
     Objects.instance().assertEqual(info, actual.getName(), name);
-
-    // option 3 : raw assertion
-    if (!actual.getName().equals(name)) { throw new AssertionError(errorMessage); }
 
     // return the current assertion for method chaining
     return this;
   }
 
-  // 4 - another specific assertion !
+  // another specific assertion
   /**
    * Verifies that the actual TolkienCharacter's age is equal to the given one.
+   * 
    * @param age the given age to compare the actual TolkienCharacter's age to.
    * @return this assertion object.
    * @throws AssertionError - if the actual TolkienCharacter's age is not equal to the given one.
@@ -96,9 +88,10 @@ public class TolkienCharacterAssert extends AbstractAssert<TolkienCharacterAsser
     // check that actual TolkienCharacter we want to make assertions on is not null.
     isNotNull();
 
-    // we overrides the default error message with a more explicit one
-    Assertions.assertThat(actual.getAge())
-        .overridingErrorMessage("Expected character's age to be <%s> but was <%s>", age, actual.getAge()).isEqualTo(age);
+    // use existing WritableAssertionInfo to set a specific error message
+    WritableAssertionInfo info = getWritableAssertionInfo();
+    info.overridingErrorMessage(format("Expected character's age to be <%s> but was <%s>", age, actual.getAge()));
+    Objects.instance().assertEqual(info, actual.getAge(), age);
 
     // return the current assertion for method chaining
     return this;

@@ -18,7 +18,7 @@ import org.fest.assertions.examples.data.TolkienCharacter;
 public class CustomAssertExamples extends AbstractAssertionsExamples {
 
   @Test
-  public void succesful_custom_assertion_example() {
+  public void successful_custom_assertion_example() {
     // custom assertion : assertThat is resolved from TolkienCharacterAssert static import
     TolkienCharacterAssert.assertThat(frodo).hasName("Frodo");
     // If you have created a class inheriting from org.fest.assertions.Assertions having an entry point to
@@ -42,6 +42,14 @@ public class CustomAssertExamples extends AbstractAssertionsExamples {
     } catch (AssertionError e) {
       // As we are defining custom assertion, we can set meaningful assertion error message, like this one :
       assertThat(e).hasMessage("Expected character's name to be <Sam> but was <Sammy>");
+    }
+
+    // show that the user description is honored.
+    try {
+      assertThat(sam).as("check name").hasName("Sam");
+    } catch (AssertionError e) {
+      // As we are defining custom assertion, we can set meaningful assertion error message, like this one :
+      assertThat(e).hasMessage("[check name] Expected character's name to be <Sam> but was <Sammy>");
     }
   }
 
