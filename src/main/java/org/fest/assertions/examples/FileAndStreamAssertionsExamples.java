@@ -1,6 +1,7 @@
 package org.fest.assertions.examples;
 
 import static org.fest.assertions.api.Assertions.assertThat;
+import static org.fest.assertions.api.Assertions.contentOf;
 
 import java.io.BufferedWriter;
 import java.io.ByteArrayInputStream;
@@ -24,6 +25,7 @@ public class FileAndStreamAssertionsExamples extends AbstractAssertionsExamples 
     File xFile = writeFile("xFile", "The Truth Is Out There");
     assertThat(xFile).exists().isFile().isRelative();
     assertThat(xFile).canRead().canWrite();
+    assertThat(contentOf(xFile)).startsWith("The Truth").contains("Is Out").endsWith("There");
 
     // compare content with another file
     File xFileClone = writeFile("xFileClone", "The Truth Is Out There");
