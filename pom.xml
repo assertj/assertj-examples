@@ -7,7 +7,7 @@
   <artifactId>fest-examples</artifactId>
   <version>1.0-SNAPSHOT</version>
   <name>FEST Fluent Assertions examples</name>
-  
+
   <scm>
     <developerConnection>scm:git:git@github.com:joel-costigliola/fest-examples.git</developerConnection>
     <connection>scm:git:git://github.com/joel-costigliola/fest-examples.git</connection>
@@ -63,6 +63,24 @@
           <argLine>-Xms128m -Xmx512m</argLine>
         </configuration>
       </plugin>
+      <plugin>
+        <groupId>org.easytesting</groupId>
+        <artifactId>maven-fest-assertion-generator-plugin</artifactId>
+        <version>1.0-SNAPSHOT</version>
+        <executions>
+          <execution>
+            <goals>
+              <goal>generate-assertions</goal>
+            </goals>
+          </execution>
+        </executions>
+        <configuration>
+          <packages>
+            <param>org.fest.assertions.examples.data</param>
+          </packages>
+        </configuration>
+      </plugin>
+
     </plugins>
   </build>
   <properties>
