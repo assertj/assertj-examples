@@ -78,6 +78,7 @@
           <packages>
             <param>org.fest.assertions.examples.data</param>
           </packages>
+          <targetDir>target/fest</targetDir>
         </configuration>
       </plugin>
 
