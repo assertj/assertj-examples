@@ -61,6 +61,10 @@ public class ArrayAssertionsExamples extends AbstractAssertionsExamples {
     Arrays.sort(fellowshipOfTheRingArray, ageComparator);
     assertThat(fellowshipOfTheRingArray).isSortedAccordingTo(ageComparator);
     assertThat(fellowshipOfTheRingArray).usingElementComparator(ageComparator).isSorted();
+
+    // Uncomment when #131 is fixed
+    // String[] arr = { "a", "b", "c" };
+    // assertThat(arr).containsExactly("a", "b", "c");
   }
 
   @Test
