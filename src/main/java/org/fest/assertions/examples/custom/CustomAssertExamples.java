@@ -53,4 +53,16 @@ public class CustomAssertExamples extends AbstractAssertionsExamples {
     }
   }
 
+  @Test
+  public void inherited_assertion_example() {
+    Employee employee = new Employee();
+    employee.jobTitle = "CEO";
+    employee.name = "John Smith";
+    assertThat(employee).hasJobTitle("CEO").hasName("John Smith");
+    assertThat(employee).hasName("John Smith").hasJobTitle("CEO");
+
+    Human joe = new Human();
+    assertThat(joe).hasName("joe");
+  }
+
 }

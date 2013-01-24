@@ -17,5 +17,12 @@ public class MyProjectAssertions extends Assertions { // extending make all stan
     return new TolkienCharacterAssert(actual);
   }
   
+  public static HumanAssert assertThat(Human actual) {
+    return new HumanAssert(actual);
+  }
+
+  public static EmployeeAssert assertThat(Employee actual) {
+    return new EmployeeAssert(actual);
+  }
 
 }
