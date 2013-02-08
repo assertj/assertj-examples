@@ -62,6 +62,15 @@ public class JodaTimeAssertionsExamples extends AbstractAssertionsExamples {
 
     // assertThat comes from org.fest.assertions.api.Assertions.assertThat static import
     assertThat("hello world").startsWith("hello");
+
+    // let's see if ShouldBeAfter error
+    try {
+      assertThat(new DateTime(10)).isAfter(new DateTime(1000));
+    } catch (AssertionError e) {
+      assertThat(e.getMessage()).isEqualTo(
+          "expected:<1970-01-01T01:00:00.010+01:00> to be strictly after:<1970-01-01T01:00:01.000+01:00>");
+    }
+
   }
 
 }
