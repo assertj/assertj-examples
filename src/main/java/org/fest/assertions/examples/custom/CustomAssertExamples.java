@@ -62,6 +62,7 @@ public class CustomAssertExamples extends AbstractAssertionsExamples {
     assertThat(employee).hasName("John Smith").hasJobTitle("CEO");
 
     Human joe = new Human();
+    joe.name = "joe";
     assertThat(joe).hasName("joe");
   }
 
