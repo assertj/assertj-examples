@@ -3,9 +3,13 @@ package org.fest.assertions.examples;
 import static org.fest.assertions.api.Assertions.assertThat;
 import static org.fest.assertions.api.JODA_TIME.assertThat;
 
+import static org.joda.time.DateTimeZone.UTC;
+
 import org.joda.time.DateTime;
 import org.joda.time.LocalDateTime;
 import org.junit.Test;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Joda Time assertions example.
@@ -13,6 +17,8 @@ import org.junit.Test;
  * @author Joel Costigliola
  */
 public class JodaTimeAssertionsExamples extends AbstractAssertionsExamples {
+
+  private static final Logger logger = LoggerFactory.getLogger(JodaTimeAssertionsExamples.class);
 
   @Test
   public void dateTime_assertions_examples() {
@@ -67,10 +73,117 @@ public class JodaTimeAssertionsExamples extends AbstractAssertionsExamples {
     try {
       assertThat(new DateTime(10)).isAfter(new DateTime(1000));
     } catch (AssertionError e) {
-      assertThat(e.getMessage()).isEqualTo(
-          "expected:<1970-01-01T01:00:00.010+01:00> to be strictly after:<1970-01-01T01:00:01.000+01:00>");
+      logErrorMessage("isAfter", e);
     }
+  }
 
+  @Test
+  public void date_time_comparison_with_precision_level_examples() {
+    // successfull assertions ignoring ...
+    // ... milliseconds
+    DateTime dateTime1 = new DateTime(2000, 1, 1, 0, 0, 1, 0, UTC);
+    DateTime dateTime2 = new DateTime(2000, 1, 1, 0, 0, 1, 456, UTC);
+    assertThat(dateTime1).isEqualToIgnoringMillis(dateTime2);
+    // ... seconds
+    dateTime1 = new DateTime(2000, 1, 1, 23, 50, 0, 0, UTC);
+    dateTime2 = new DateTime(2000, 1, 1, 23, 50, 10, 456, UTC);
+    assertThat(dateTime1).isEqualToIgnoringSeconds(dateTime2);
+    // ... minutes
+    dateTime1 = new DateTime(2000, 1, 1, 23, 50, 0, 0, UTC);
+    dateTime2 = new DateTime(2000, 1, 1, 23, 00, 2, 7, UTC);
+    assertThat(dateTime1).isEqualToIgnoringMinutes(dateTime2);
+    // ... hours
+    dateTime1 = new DateTime(2000, 1, 1, 23, 59, 59, 999);
+    dateTime2 = new DateTime(2000, 1, 1, 00, 00, 00, 000);
+    assertThat(dateTime1).isEqualToIgnoringHours(dateTime2);
+
+    // failing assertions even if time difference is 1ms (compared fields differ)
+    try {
+      DateTime dateTimeA = new DateTime(2000, 1, 1, 0, 0, 1, 0);
+      DateTime dateTimeB = new DateTime(2000, 1, 1, 0, 0, 0, 999);
+      assertThat(dateTimeA).isEqualToIgnoringMillis(dateTimeB);
+    } catch (AssertionError e) {
+      logErrorMessage("isEqualToIgnoringMillis", e);
+    }
+    try {
+      DateTime dateTimeA = new DateTime(2000, 1, 1, 23, 50, 00, 000);
+      DateTime dateTimeB = new DateTime(2000, 1, 1, 23, 49, 59, 999);
+      assertThat(dateTimeA).isEqualToIgnoringSeconds(dateTimeB);
+    } catch (AssertionError e) {
+      logErrorMessage("isEqualToIgnoringSeconds", e);
+    }
+    try {
+      DateTime dateTimeA = new DateTime(2000, 1, 1, 01, 00, 00, 000);
+      DateTime dateTimeB = new DateTime(2000, 1, 1, 00, 59, 59, 999);
+      assertThat(dateTimeA).isEqualToIgnoringMinutes(dateTimeB);
+    } catch (AssertionError e) {
+      logErrorMessage("isEqualToIgnoringMinutes", e);
+    }
+    try {
+      DateTime dateTimeA = new DateTime(2000, 1, 2, 00, 00, 00, 000);
+      DateTime dateTimeB = new DateTime(2000, 1, 1, 23, 59, 59, 999);
+      assertThat(dateTimeA).isEqualToIgnoringHours(dateTimeB);
+    } catch (AssertionError e) {
+      logErrorMessage("isEqualToIgnoringHours", e);
+    }
+  }
+  
+  @Test
+  public void local_date_time_comparison_with_precision_level_examples() {
+    // successfull assertions ignoring ...
+    // ... milliseconds
+    LocalDateTime localDateTime1 = new LocalDateTime(2000, 1, 1, 0, 0, 1, 0);
+    LocalDateTime localDateTime2 = new LocalDateTime(2000, 1, 1, 0, 0, 1, 456);
+    assertThat(localDateTime1).isEqualToIgnoringMillis(localDateTime2);
+    // ... seconds
+    localDateTime1 = new LocalDateTime(2000, 1, 1, 23, 50, 0, 0);
+    localDateTime2 = new LocalDateTime(2000, 1, 1, 23, 50, 10, 456);
+    assertThat(localDateTime1).isEqualToIgnoringSeconds(localDateTime2);
+    // ... minutes
+    localDateTime1 = new LocalDateTime(2000, 1, 1, 23, 50, 0, 0);
+    localDateTime2 = new LocalDateTime(2000, 1, 1, 23, 00, 2, 7);
+    assertThat(localDateTime1).isEqualToIgnoringMinutes(localDateTime2);
+    // ... hours
+    localDateTime1 = new LocalDateTime(2000, 1, 1, 23, 59, 59, 999);
+    localDateTime2 = new LocalDateTime(2000, 1, 1, 00, 00, 00, 000);
+    assertThat(localDateTime1).isEqualToIgnoringHours(localDateTime2);
+    
+    // failing assertions even if time difference is 1ms (compared fields differ)
+    try {
+      LocalDateTime localDateTimeA = new LocalDateTime(2000, 1, 1, 0, 0, 1, 0);
+      LocalDateTime localDateTimeB = new LocalDateTime(2000, 1, 1, 0, 0, 0, 999);
+      assertThat(localDateTimeA).isEqualToIgnoringMillis(localDateTimeB);
+    } catch (AssertionError e) {
+      logErrorMessage("isEqualToIgnoringMillis", e);
+    }
+    try {
+      LocalDateTime localDateTimeA = new LocalDateTime(2000, 1, 1, 23, 50, 00, 000);
+      LocalDateTime localDateTimeB = new LocalDateTime(2000, 1, 1, 23, 49, 59, 999);
+      assertThat(localDateTimeA).isEqualToIgnoringSeconds(localDateTimeB);
+    } catch (AssertionError e) {
+      logErrorMessage("isEqualToIgnoringSeconds", e);
+    }
+    try {
+      LocalDateTime localDateTimeA = new LocalDateTime(2000, 1, 1, 01, 00, 00, 000);
+      LocalDateTime localDateTimeB = new LocalDateTime(2000, 1, 1, 00, 59, 59, 999);
+      assertThat(localDateTimeA).isEqualToIgnoringMinutes(localDateTimeB);
+    } catch (AssertionError e) {
+      logErrorMessage("isEqualToIgnoringMinutes", e);
+    }
+    try {
+      LocalDateTime localDateTimeA = new LocalDateTime(2000, 1, 2, 00, 00, 00, 000);
+      LocalDateTime localDateTimeB = new LocalDateTime(2000, 1, 1, 23, 59, 59, 999);
+      assertThat(localDateTimeA).isEqualToIgnoringHours(localDateTimeB);
+    } catch (AssertionError e) {
+      logErrorMessage("isEqualToIgnoringHours", e);
+    }
+  }
+
+  /**
+   * log error message if one wants to see it "live".
+   */
+  private static void logErrorMessage(String contextDescription, AssertionError e) {
+    logger.info(ERROR_MESSAGE_EXAMPLE_FOR_ASSERTION, contextDescription, e.getMessage());
   }
 
 }

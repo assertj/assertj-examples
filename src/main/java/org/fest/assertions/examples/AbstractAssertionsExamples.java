@@ -43,6 +43,8 @@ import org.fest.assertions.examples.data.TolkienCharacter;
  */
 public abstract class AbstractAssertionsExamples {
 
+  static final String ERROR_MESSAGE_EXAMPLE_FOR_ASSERTION = "\n\nError message example for '{}' assertion : {}\n";
+
   // Some of the Lord of the Rings races :
   protected static final Race HOBBIT = hobbit;
   protected static final Race MAIA = maia;
