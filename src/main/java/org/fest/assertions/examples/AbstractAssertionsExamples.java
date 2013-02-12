@@ -19,6 +19,8 @@ import java.util.Map;
 
 import org.junit.Before;
 import org.junit.BeforeClass;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import org.fest.assertions.core.Condition;
 import org.fest.assertions.examples.comparator.AbsValueComparator;
@@ -43,7 +45,15 @@ import org.fest.assertions.examples.data.TolkienCharacter;
  */
 public abstract class AbstractAssertionsExamples {
 
-  static final String ERROR_MESSAGE_EXAMPLE_FOR_ASSERTION = "\n\nError message example for '{}' assertion : {}\n";
+  static final String ERROR_MESSAGE_EXAMPLE_FOR_ASSERTION = "'{}' assertion : {}\n";
+  protected static final Logger logger = LoggerFactory.getLogger("[ERROR MESSAGE EXAMPLE]");
+  /**
+   * log error message if one wants to see it "live".
+   */
+  protected static void logAssertionErrorMessage(String assertionContext, AssertionError e) {
+    logger.info(ERROR_MESSAGE_EXAMPLE_FOR_ASSERTION, assertionContext, e.getMessage());
+  }
+
 
   // Some of the Lord of the Rings races :
   protected static final Race HOBBIT = hobbit;
@@ -52,6 +62,7 @@ public abstract class AbstractAssertionsExamples {
   protected static final Race ELF = elf;
   protected static final Race DWARF = dwarf;
   protected static final Race ORC = orc;
+
 
   // Some of the Lord of the Rings characters :
   protected final TolkienCharacter frodo = new TolkienCharacter("Frodo", 33, HOBBIT);

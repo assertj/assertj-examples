@@ -8,8 +8,6 @@ import static org.joda.time.DateTimeZone.UTC;
 import org.joda.time.DateTime;
 import org.joda.time.LocalDateTime;
 import org.junit.Test;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Joda Time assertions example.
@@ -17,8 +15,6 @@ import org.slf4j.LoggerFactory;
  * @author Joel Costigliola
  */
 public class JodaTimeAssertionsExamples extends AbstractAssertionsExamples {
-
-  private static final Logger logger = LoggerFactory.getLogger(JodaTimeAssertionsExamples.class);
 
   @Test
   public void dateTime_assertions_examples() {
@@ -73,7 +69,7 @@ public class JodaTimeAssertionsExamples extends AbstractAssertionsExamples {
     try {
       assertThat(new DateTime(10)).isAfter(new DateTime(1000));
     } catch (AssertionError e) {
-      logErrorMessage("isAfter", e);
+      logAssertionErrorMessage("isAfter", e);
     }
   }
 
@@ -103,28 +99,28 @@ public class JodaTimeAssertionsExamples extends AbstractAssertionsExamples {
       DateTime dateTimeB = new DateTime(2000, 1, 1, 0, 0, 0, 999);
       assertThat(dateTimeA).isEqualToIgnoringMillis(dateTimeB);
     } catch (AssertionError e) {
-      logErrorMessage("isEqualToIgnoringMillis", e);
+      logAssertionErrorMessage("isEqualToIgnoringMillis", e);
     }
     try {
       DateTime dateTimeA = new DateTime(2000, 1, 1, 23, 50, 00, 000);
       DateTime dateTimeB = new DateTime(2000, 1, 1, 23, 49, 59, 999);
       assertThat(dateTimeA).isEqualToIgnoringSeconds(dateTimeB);
     } catch (AssertionError e) {
-      logErrorMessage("isEqualToIgnoringSeconds", e);
+      logAssertionErrorMessage("isEqualToIgnoringSeconds", e);
     }
     try {
       DateTime dateTimeA = new DateTime(2000, 1, 1, 01, 00, 00, 000);
       DateTime dateTimeB = new DateTime(2000, 1, 1, 00, 59, 59, 999);
       assertThat(dateTimeA).isEqualToIgnoringMinutes(dateTimeB);
     } catch (AssertionError e) {
-      logErrorMessage("isEqualToIgnoringMinutes", e);
+      logAssertionErrorMessage("isEqualToIgnoringMinutes", e);
     }
     try {
       DateTime dateTimeA = new DateTime(2000, 1, 2, 00, 00, 00, 000);
       DateTime dateTimeB = new DateTime(2000, 1, 1, 23, 59, 59, 999);
       assertThat(dateTimeA).isEqualToIgnoringHours(dateTimeB);
     } catch (AssertionError e) {
-      logErrorMessage("isEqualToIgnoringHours", e);
+      logAssertionErrorMessage("isEqualToIgnoringHours", e);
     }
   }
   
@@ -154,36 +150,29 @@ public class JodaTimeAssertionsExamples extends AbstractAssertionsExamples {
       LocalDateTime localDateTimeB = new LocalDateTime(2000, 1, 1, 0, 0, 0, 999);
       assertThat(localDateTimeA).isEqualToIgnoringMillis(localDateTimeB);
     } catch (AssertionError e) {
-      logErrorMessage("isEqualToIgnoringMillis", e);
+      logAssertionErrorMessage("isEqualToIgnoringMillis", e);
     }
     try {
       LocalDateTime localDateTimeA = new LocalDateTime(2000, 1, 1, 23, 50, 00, 000);
       LocalDateTime localDateTimeB = new LocalDateTime(2000, 1, 1, 23, 49, 59, 999);
       assertThat(localDateTimeA).isEqualToIgnoringSeconds(localDateTimeB);
     } catch (AssertionError e) {
-      logErrorMessage("isEqualToIgnoringSeconds", e);
+      logAssertionErrorMessage("isEqualToIgnoringSeconds", e);
     }
     try {
       LocalDateTime localDateTimeA = new LocalDateTime(2000, 1, 1, 01, 00, 00, 000);
       LocalDateTime localDateTimeB = new LocalDateTime(2000, 1, 1, 00, 59, 59, 999);
       assertThat(localDateTimeA).isEqualToIgnoringMinutes(localDateTimeB);
     } catch (AssertionError e) {
-      logErrorMessage("isEqualToIgnoringMinutes", e);
+      logAssertionErrorMessage("isEqualToIgnoringMinutes", e);
     }
     try {
       LocalDateTime localDateTimeA = new LocalDateTime(2000, 1, 2, 00, 00, 00, 000);
       LocalDateTime localDateTimeB = new LocalDateTime(2000, 1, 1, 23, 59, 59, 999);
       assertThat(localDateTimeA).isEqualToIgnoringHours(localDateTimeB);
     } catch (AssertionError e) {
-      logErrorMessage("isEqualToIgnoringHours", e);
+      logAssertionErrorMessage("isEqualToIgnoringHours", e);
     }
-  }
-
-  /**
-   * log error message if one wants to see it "live".
-   */
-  private static void logErrorMessage(String contextDescription, AssertionError e) {
-    logger.info(ERROR_MESSAGE_EXAMPLE_FOR_ASSERTION, contextDescription, e.getMessage());
   }
 
 }
