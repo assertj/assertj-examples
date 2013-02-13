@@ -26,6 +26,7 @@ public class Player {
   private int assistsPerGame;
   private int reboundsPerGame;
   private String team;
+  private boolean rookie;
 
   public Player() {}
 
@@ -72,6 +73,10 @@ public class Player {
 
   public void setTeam(String team) {
     this.team = team;
+  }
+  
+  public boolean isRookie() {
+    return rookie;
   }
 
   @Override public String toString() {

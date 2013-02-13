@@ -89,8 +89,8 @@ public class JodaTimeAssertionsExamples extends AbstractAssertionsExamples {
     dateTime2 = new DateTime(2000, 1, 1, 23, 00, 2, 7, UTC);
     assertThat(dateTime1).isEqualToIgnoringMinutes(dateTime2);
     // ... hours
-    dateTime1 = new DateTime(2000, 1, 1, 23, 59, 59, 999);
-    dateTime2 = new DateTime(2000, 1, 1, 00, 00, 00, 000);
+    dateTime1 = new DateTime(2000, 1, 1, 23, 59, 59, 999, UTC);
+    dateTime2 = new DateTime(2000, 1, 1, 00, 00, 00, 000, UTC);
     assertThat(dateTime1).isEqualToIgnoringHours(dateTime2);
 
     // failing assertions even if time difference is 1ms (compared fields differ)
