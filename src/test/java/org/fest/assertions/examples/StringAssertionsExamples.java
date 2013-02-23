@@ -17,6 +17,8 @@ public class StringAssertionsExamples extends AbstractAssertionsExamples {
     assertThat("Frodo").startsWith("Fro").endsWith("do").hasSize(5);
     assertThat("Frodo").contains("rod").doesNotContain("fro");
     assertThat("Frodo").containsOnlyOnce("do");
+//    String bookDescription = "{ 'title':'Games of Thrones', 'author':'George Martin'}";
+//    assertThat(bookDescription).containsInOrder("{", "title", "Games of Thrones", "}");
 
     // you can ignore case for equals check
     assertThat("Frodo").isEqualToIgnoringCase("FROdO");

@@ -53,7 +53,7 @@ public class Player {
 
   public int getAssistsPerGame() {
     return assistsPerGame;
-  }
+  } 
 
   public void setAssistsPerGame(int assistsPerGame) {
     this.assistsPerGame = assistsPerGame;
@@ -77,6 +77,10 @@ public class Player {
   
   public boolean isRookie() {
     return rookie;
+  }
+  
+  public void setRookie(boolean rookie) {
+    this.rookie = rookie;
   }
 
   @Override public String toString() {
