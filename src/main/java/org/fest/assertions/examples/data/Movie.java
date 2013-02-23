@@ -4,8 +4,8 @@ import java.util.Date;
 
 public class Movie {
 
-  private final String title;
-  private final Date releaseDate;
+  private String title;
+  private Date releaseDate;
 
   public Movie(String title, Date releaseDate) {
     super();
@@ -15,6 +15,14 @@ public class Movie {
 
   public String getTitle() {
     return title;
+  }
+  
+  public void setTitle(String title) {
+    this.title = title;
+  }
+  
+  public void setReleaseDate(Date releaseDate) {
+    this.releaseDate = releaseDate;
   }
 
   public Date getReleaseDate() {
