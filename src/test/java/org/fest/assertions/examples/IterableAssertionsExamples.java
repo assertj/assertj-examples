@@ -81,9 +81,17 @@ public class IterableAssertionsExamples extends AbstractAssertionsExamples {
       // putting a different order would make the assertion fail :
       assertThat(elvesRings).containsExactly(nenya, vilya, narya);
     } catch (AssertionError e) {
+      logger.info(e.getMessage());
       assertThat(e)
           .hasMessage(
               "actual and expected have the same elements but not in the same order, at index 0 actual element was :\n<vilya>\n whereas expected element was :\n<nenya>\n");
+    }
+    
+    try {
+      List<String> z = newArrayList("a","a","a");       
+      assertThat(z).containsExactly("a","a");
+    } catch (AssertionError e) {
+      logger.info(e.getMessage());
     }
 
   }
