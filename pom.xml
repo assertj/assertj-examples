@@ -85,7 +85,7 @@
       <plugin>
         <groupId>org.easytesting</groupId>
         <artifactId>maven-fest-assertion-generator-plugin</artifactId>
-        <version>1.0</version>
+        <version>1.1-SNAPSHOT</version>
         <executions>
           <execution>
             <goals>
