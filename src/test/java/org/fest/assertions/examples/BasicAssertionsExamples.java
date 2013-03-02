@@ -6,10 +6,10 @@ import static org.fest.assertions.api.Assertions.assertThat;
 
 import org.junit.Test;
 
-import org.fest.assertions.examples.data.Movie;
 import org.fest.assertions.examples.data.Person;
 import org.fest.assertions.examples.data.Ring;
 import org.fest.assertions.examples.data.TolkienCharacter;
+import org.fest.assertions.examples.data.movie.Movie;
 import org.fest.util.IntrospectionError;
 
 /**

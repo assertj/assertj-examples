@@ -8,7 +8,7 @@ import java.util.Date;
 
 import org.junit.Test;
 
-import org.fest.assertions.examples.data.Movie;
+import org.fest.assertions.examples.data.movie.Movie;
 
 public class BasicExamples {
 

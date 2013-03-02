@@ -19,9 +19,9 @@ import java.util.Comparator;
 
 import org.junit.Test;
 
-import org.fest.assertions.examples.data.Movie;
 import org.fest.assertions.examples.data.Ring;
 import org.fest.assertions.examples.data.TolkienCharacter;
+import org.fest.assertions.examples.data.movie.Movie;
 
 /**
  * Array assertions examples.

@@ -30,12 +30,12 @@ import org.fest.assertions.examples.comparator.CaseInsensitiveStringComparator;
 import org.fest.assertions.examples.comparator.TolkienCharacterRaceNameComparator;
 import org.fest.assertions.examples.comparator.YearAndMonthDateComparator;
 import org.fest.assertions.examples.condition.PotentialMvpCondition;
-import org.fest.assertions.examples.data.Movie;
 import org.fest.assertions.examples.data.Name;
 import org.fest.assertions.examples.data.Player;
 import org.fest.assertions.examples.data.Race;
 import org.fest.assertions.examples.data.Ring;
 import org.fest.assertions.examples.data.TolkienCharacter;
+import org.fest.assertions.examples.data.movie.Movie;
 
 /**
  * 

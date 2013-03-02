@@ -1,4 +1,4 @@
-package org.fest.assertions.examples.data;
+package org.fest.assertions.examples.data.movie;
 
 import java.util.Date;
 

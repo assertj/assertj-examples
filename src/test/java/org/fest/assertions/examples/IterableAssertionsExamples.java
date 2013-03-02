@@ -18,8 +18,8 @@ import java.util.TreeSet;
 
 import org.junit.Test;
 
-import org.fest.assertions.examples.data.Movie;
 import org.fest.assertions.examples.data.Ring;
+import org.fest.assertions.examples.data.movie.Movie;
 
 /**
  * Iterable (including Collection) assertions examples.<br>
