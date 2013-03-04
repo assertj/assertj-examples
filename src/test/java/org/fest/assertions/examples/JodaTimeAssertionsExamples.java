@@ -99,28 +99,28 @@ public class JodaTimeAssertionsExamples extends AbstractAssertionsExamples {
       DateTime dateTimeB = new DateTime(2000, 1, 1, 0, 0, 0, 999);
       assertThat(dateTimeA).isEqualToIgnoringMillis(dateTimeB);
     } catch (AssertionError e) {
-      logAssertionErrorMessage("isEqualToIgnoringMillis", e);
+      logAssertionErrorMessage("DateTimeAssert.isEqualToIgnoringMillis", e);
     }
     try {
       DateTime dateTimeA = new DateTime(2000, 1, 1, 23, 50, 00, 000);
       DateTime dateTimeB = new DateTime(2000, 1, 1, 23, 49, 59, 999);
       assertThat(dateTimeA).isEqualToIgnoringSeconds(dateTimeB);
     } catch (AssertionError e) {
-      logAssertionErrorMessage("isEqualToIgnoringSeconds", e);
+      logAssertionErrorMessage("DateTimeAssert.isEqualToIgnoringSeconds", e);
     }
     try {
       DateTime dateTimeA = new DateTime(2000, 1, 1, 01, 00, 00, 000);
       DateTime dateTimeB = new DateTime(2000, 1, 1, 00, 59, 59, 999);
       assertThat(dateTimeA).isEqualToIgnoringMinutes(dateTimeB);
     } catch (AssertionError e) {
-      logAssertionErrorMessage("isEqualToIgnoringMinutes", e);
+      logAssertionErrorMessage("DateTimeAssert.isEqualToIgnoringMinutes", e);
     }
     try {
       DateTime dateTimeA = new DateTime(2000, 1, 2, 00, 00, 00, 000);
       DateTime dateTimeB = new DateTime(2000, 1, 1, 23, 59, 59, 999);
       assertThat(dateTimeA).isEqualToIgnoringHours(dateTimeB);
     } catch (AssertionError e) {
-      logAssertionErrorMessage("isEqualToIgnoringHours", e);
+      logAssertionErrorMessage("DateTimeAssert.isEqualToIgnoringHours", e);
     }
   }
   
@@ -150,28 +150,28 @@ public class JodaTimeAssertionsExamples extends AbstractAssertionsExamples {
       LocalDateTime localDateTimeB = new LocalDateTime(2000, 1, 1, 0, 0, 0, 999);
       assertThat(localDateTimeA).isEqualToIgnoringMillis(localDateTimeB);
     } catch (AssertionError e) {
-      logAssertionErrorMessage("isEqualToIgnoringMillis", e);
+      logAssertionErrorMessage("LocalDateTimeAssert.isEqualToIgnoringMillis", e);
     }
     try {
       LocalDateTime localDateTimeA = new LocalDateTime(2000, 1, 1, 23, 50, 00, 000);
       LocalDateTime localDateTimeB = new LocalDateTime(2000, 1, 1, 23, 49, 59, 999);
       assertThat(localDateTimeA).isEqualToIgnoringSeconds(localDateTimeB);
     } catch (AssertionError e) {
-      logAssertionErrorMessage("isEqualToIgnoringSeconds", e);
+      logAssertionErrorMessage("LocalDateTimeAssert.isEqualToIgnoringSeconds", e);
     }
     try {
       LocalDateTime localDateTimeA = new LocalDateTime(2000, 1, 1, 01, 00, 00, 000);
       LocalDateTime localDateTimeB = new LocalDateTime(2000, 1, 1, 00, 59, 59, 999);
       assertThat(localDateTimeA).isEqualToIgnoringMinutes(localDateTimeB);
     } catch (AssertionError e) {
-      logAssertionErrorMessage("isEqualToIgnoringMinutes", e);
+      logAssertionErrorMessage("LocalDateTimeAssert.isEqualToIgnoringMinutes", e);
     }
     try {
       LocalDateTime localDateTimeA = new LocalDateTime(2000, 1, 2, 00, 00, 00, 000);
       LocalDateTime localDateTimeB = new LocalDateTime(2000, 1, 1, 23, 59, 59, 999);
       assertThat(localDateTimeA).isEqualToIgnoringHours(localDateTimeB);
     } catch (AssertionError e) {
-      logAssertionErrorMessage("isEqualToIgnoringHours", e);
+      logAssertionErrorMessage("LocalDateTimeAssert.isEqualToIgnoringHours", e);
     }
   }
 

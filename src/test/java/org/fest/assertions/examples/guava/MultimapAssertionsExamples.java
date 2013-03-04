@@ -1,4 +1,4 @@
-package org.fest.assertions.examples;
+package org.fest.assertions.examples.guava;
 
 import static com.google.common.collect.Lists.newArrayList;
 
@@ -9,6 +9,8 @@ import org.junit.Test;
 
 import com.google.common.collect.ArrayListMultimap;
 import com.google.common.collect.Multimap;
+
+import org.fest.assertions.examples.AbstractAssertionsExamples;
 
 /**
  * {@link Multimap} assertions example.

@@ -45,7 +45,7 @@ import org.fest.assertions.examples.data.movie.Movie;
  */
 public abstract class AbstractAssertionsExamples {
 
-  static final String ERROR_MESSAGE_EXAMPLE_FOR_ASSERTION = "'{}' assertion : {}\n";
+  static final String ERROR_MESSAGE_EXAMPLE_FOR_ASSERTION = "{} assertion : {}\n";
   protected static final Logger logger = LoggerFactory.getLogger("[ERROR MESSAGE EXAMPLE]");
   /**
    * log error message if one wants to see it "live".
