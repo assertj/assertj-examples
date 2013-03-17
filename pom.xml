@@ -101,6 +101,33 @@
         </configuration>
       </plugin>
 
+      <plugin>
+        <groupId>com.mycila.maven-license-plugin</groupId>
+        <artifactId>maven-license-plugin</artifactId>
+        <version>1.9.0</version>
+        <configuration>
+          <!-- Template location -->
+          <header>licence-header.txt</header>
+          <properties>
+            <!-- Values to be substituted in template -->
+            <inceptionYear>2012</inceptionYear>
+            <currentYear>2013</currentYear>
+          </properties>
+          <strictCheck>true</strictCheck>
+          <includes>
+            <include>src/**</include>
+          </includes>
+        </configuration>
+        <executions>
+          <execution>
+            <phase>validate</phase>
+            <goals>
+              <goal>format</goal>
+            </goals>
+          </execution>
+        </executions>
+      </plugin>
+
     </plugins>
   </build>
   <properties>
