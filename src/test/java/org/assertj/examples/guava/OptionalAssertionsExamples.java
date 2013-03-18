@@ -12,7 +12,7 @@
  */
 package org.assertj.examples.guava;
 
-import static org.assertj.guava.api.GUAVA.assertThat;
+import static org.assertj.guava.api.Assertions.assertThat;
 
 import org.assertj.examples.AbstractAssertionsExamples;
 import org.junit.Test;
