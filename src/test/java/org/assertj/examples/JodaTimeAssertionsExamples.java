@@ -13,7 +13,7 @@
 package org.assertj.examples;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.jodatime.api.JODA_TIME.assertThat;
+import static org.assertj.jodatime.api.Assertions.assertThat;
 
 import static org.joda.time.DateTimeZone.UTC;
 
