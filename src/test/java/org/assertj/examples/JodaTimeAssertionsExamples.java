@@ -13,7 +13,7 @@
 package org.assertj.examples;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.fest.assertions.api.JODA_TIME.assertThat;
+import static org.assertj.jodatime.api.JODA_TIME.assertThat;
 
 import static org.joda.time.DateTimeZone.UTC;
 
@@ -71,7 +71,7 @@ public class JodaTimeAssertionsExamples extends AbstractAssertionsExamples {
   @Test
   public void mixing_core_and_joda_time_assertions_examples() {
 
-    // assertThat comes from org.fest.assertions.api.JODA_TIME.assertThat static import
+    // assertThat comes from org.assertj.jodatime.api.JODA_TIME.assertThat static import
     assertThat(new DateTime("2000-01-01")).isEqualTo(new DateTime("2000-01-01"));
 
     // assertThat comes from org.assertj.core.api.Assertions.assertThat static import

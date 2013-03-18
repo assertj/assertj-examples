@@ -14,8 +14,8 @@ package org.assertj.examples.guava;
 
 import static com.google.common.collect.Lists.newArrayList;
 
-import static org.fest.assertions.api.GUAVA.assertThat;
-import static org.fest.assertions.api.GUAVA.entry;
+import static org.assertj.guava.api.GUAVA.assertThat;
+import static org.assertj.guava.api.GUAVA.entry;
 
 import org.assertj.examples.AbstractAssertionsExamples;
 import org.junit.Test;

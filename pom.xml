@@ -25,24 +25,24 @@
       <version>1.0.0M1-SNAPSHOT</version>
     </dependency>
     <dependency>
+      <groupId>org.assertj</groupId>
+      <artifactId>assertj-joda-time</artifactId>
+      <version>1.0.0-SNAPSHOT</version>
+    </dependency>
+    <dependency>
+      <groupId>org.assertj</groupId>
+      <artifactId>assertj-guava</artifactId>
+      <version>1.0.0-SNAPSHOT</version>
+    </dependency>
+    <dependency>
       <groupId>com.google.guava</groupId>
       <artifactId>guava</artifactId>
       <version>14.0</version>
     </dependency>
     <dependency>
-      <groupId>org.easytesting</groupId>
-      <artifactId>fest-guava-assert</artifactId>
-      <version>1.1</version>
-    </dependency>
-    <dependency>
       <groupId>ch.qos.logback</groupId>
       <artifactId>logback-classic</artifactId>
       <version>1.0.9</version>
-    </dependency>
-    <dependency>
-      <groupId>org.easytesting</groupId>
-      <artifactId>fest-joda-time-assert</artifactId>
-      <version>1.1.0</version>
     </dependency>
     <dependency>
       <groupId>junit</groupId>
@@ -82,6 +82,7 @@
           <argLine>-Xms128m -Xmx512m</argLine>
         </configuration>
       </plugin>
+      <!-- TODO uncomment when maven plugin is migrated to AssertJ
       <plugin>
         <groupId>org.easytesting</groupId>
         <artifactId>maven-fest-assertion-generator-plugin</artifactId>
@@ -100,6 +101,7 @@
           <targetDir>target/assertj</targetDir>
         </configuration>
       </plugin>
+       -->
 
       <plugin>
         <groupId>com.mycila.maven-license-plugin</groupId>
