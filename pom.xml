@@ -82,11 +82,10 @@
           <argLine>-Xms128m -Xmx512m</argLine>
         </configuration>
       </plugin>
-      <!-- TODO uncomment when maven plugin is migrated to AssertJ
       <plugin>
-        <groupId>org.easytesting</groupId>
-        <artifactId>maven-fest-assertion-generator-plugin</artifactId>
-        <version>1.1-SNAPSHOT</version>
+        <groupId>org.assertj</groupId>
+        <artifactId>assertj-assertions-generator-maven-plugin</artifactId>
+        <version>1.0.0-SNAPSHOT</version>
         <executions>
           <execution>
             <goals>
@@ -96,12 +95,11 @@
         </executions>
         <configuration>
           <packages>
-            <param>org.assertj.assertions.examples.data</param>
+            <param>org.assertj.examples.data</param>
           </packages>
           <targetDir>target/assertj</targetDir>
         </configuration>
       </plugin>
-       -->
 
       <plugin>
         <groupId>com.mycila.maven-license-plugin</groupId>
