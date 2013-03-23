@@ -12,6 +12,6 @@
  */
 package org.assertj.examples.data;
 
-public enum EvilLevel {
-  SUPER_EVIL, EVIL, AMBIVALENT, KIND, SUPER_KIND;
+public enum Alignment {
+  SUPER_EVIL, EVIL, NEUTRAL, GOOD, SUPER_GOOD;
 }

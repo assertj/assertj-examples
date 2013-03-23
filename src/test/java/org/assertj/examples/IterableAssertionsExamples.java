@@ -12,6 +12,9 @@
  */
 package org.assertj.examples;
 
+import static org.assertj.examples.data.Race.ELF;
+import static org.assertj.examples.data.Race.HOBBIT;
+import static org.assertj.examples.data.Race.ORC;
 import static org.assertj.examples.data.Ring.dwarfRing;
 import static org.assertj.examples.data.Ring.manRing;
 import static org.assertj.examples.data.Ring.narya;
@@ -29,6 +32,7 @@ import java.util.List;
 import java.util.SortedSet;
 import java.util.TreeSet;
 
+import org.assertj.examples.data.Race;
 import org.assertj.examples.data.Ring;
 import org.assertj.examples.data.movie.Movie;
 import org.junit.Test;

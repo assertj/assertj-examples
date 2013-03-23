@@ -15,8 +15,10 @@ package org.assertj.examples;
 import static java.lang.Integer.toHexString;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.examples.data.Race.HOBBIT;
 
 import org.assertj.examples.data.Person;
+import org.assertj.examples.data.Race;
 import org.assertj.examples.data.Ring;
 import org.assertj.examples.data.TolkienCharacter;
 import org.assertj.examples.data.movie.Movie;

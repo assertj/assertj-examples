@@ -17,7 +17,7 @@ import static java.lang.String.format;
 /**
  * @author Joel Costigliola
  */
-public class Player {
+public class BasketBallPlayer {
 
   private Name name;
   private int pointsPerGame;
@@ -26,9 +26,9 @@ public class Player {
   private String team;
   private boolean rookie;
 
-  public Player() {}
+  public BasketBallPlayer() {}
 
-  public Player(Name name, String team) {
+  public BasketBallPlayer(Name name, String team) {
     setName(name);
     setTeam(team);
   }

@@ -12,24 +12,24 @@
  */
 package org.assertj.examples.condition;
 
-import org.assertj.examples.data.Player;
+import org.assertj.examples.data.BasketBallPlayer;
 
 import org.assertj.core.api.Condition;
 
 /**
  * 
- * A {@code Condition} checking if a {@link Player} is a potential MVP.
+ * A {@code Condition} checking if a {@link BasketBallPlayer} is a potential MVP.
  * 
  * @author Joel Costigliola
  */
-public class PotentialMvpCondition extends Condition<Player> {
+public class PotentialMvpCondition extends Condition<BasketBallPlayer> {
 
   public PotentialMvpCondition() {
     super("a potential MVP");
   }
 
   @Override
-  public boolean matches(Player player) {
+  public boolean matches(BasketBallPlayer player) {
     return player.getPointsPerGame() > 20 && (player.getAssistsPerGame() >= 8 || player.getReboundsPerGame() >= 8);
   };
 

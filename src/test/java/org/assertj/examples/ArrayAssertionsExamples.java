@@ -12,7 +12,11 @@
  */
 package org.assertj.examples;
 
-import static org.assertj.examples.data.EvilLevel.SUPER_EVIL;
+import static org.assertj.examples.data.Alignment.EVIL;
+import static org.assertj.examples.data.Alignment.SUPER_EVIL;
+import static org.assertj.examples.data.Race.ELF;
+import static org.assertj.examples.data.Race.HOBBIT;
+import static org.assertj.examples.data.Race.ORC;
 import static org.assertj.examples.data.Ring.dwarfRing;
 import static org.assertj.examples.data.Ring.manRing;
 import static org.assertj.examples.data.Ring.narya;
@@ -30,6 +34,8 @@ import static org.assertj.core.util.Lists.newArrayList;
 import java.util.Arrays;
 import java.util.Comparator;
 
+import org.assertj.examples.data.Alignment;
+import org.assertj.examples.data.Race;
 import org.assertj.examples.data.Ring;
 import org.assertj.examples.data.TolkienCharacter;
 import org.assertj.examples.data.movie.Movie;
@@ -157,7 +163,7 @@ public class ArrayAssertionsExamples extends AbstractAssertionsExamples {
   
   @Test
   public void filter_then_extract_assertion_example() {
-    Iterable<TolkienCharacter> badBadGuys = filter(orcsWithHobbitPrisoners).with("race.evilLevel", SUPER_EVIL).get();
+    Iterable<TolkienCharacter> badBadGuys = filter(orcsWithHobbitPrisoners).with("race.alignment", EVIL).get();
     
     // {@link Properties#from} now accepts {@link Iterable}s as input, easing its use with {@link Assertions#filter}
     assertThat(extractProperty("name").from(badBadGuys)).containsOnly("Guruk");

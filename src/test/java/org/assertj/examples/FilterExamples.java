@@ -14,8 +14,12 @@ package org.assertj.examples;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.filter.Filters.filter;
+import static org.assertj.examples.data.Race.HOBBIT;
+import static org.assertj.examples.data.Race.MAIA;
+import static org.assertj.examples.data.Race.MAN;
 
-import org.assertj.examples.data.Player;
+import org.assertj.examples.data.BasketBallPlayer;
+import org.assertj.examples.data.Race;
 import org.junit.Test;
 
 import org.assertj.core.api.Condition;
@@ -49,16 +53,16 @@ public class FilterExamples extends AbstractAssertionsExamples {
   @Test
   public void filter_on_condition_examples() {
     // having(condition) example
-    Condition<Player> mvpStats= new Condition<Player>() {
+    Condition<BasketBallPlayer> mvpStats= new Condition<BasketBallPlayer>() {
       @Override
-      public boolean matches(Player player) {
+      public boolean matches(BasketBallPlayer player) {
         return player.getPointsPerGame() > 20 && (player.getAssistsPerGame() >= 8 || player.getReboundsPerGame() >= 8);
       }
     };
     assertThat(filter(players).having(mvpStats).get()).containsOnly(rose, james);
     
     // being(condition) example : same condition can be applied but is renamed to be more readable
-    Condition<Player> potentialMvp= mvpStats;
+    Condition<BasketBallPlayer> potentialMvp= mvpStats;
     assertThat(filter(players).being(potentialMvp).get()).containsOnly(rose, james);
   }
 

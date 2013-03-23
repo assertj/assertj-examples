@@ -86,18 +86,22 @@
         <groupId>org.assertj</groupId>
         <artifactId>assertj-assertions-generator-maven-plugin</artifactId>
         <version>1.0.0-SNAPSHOT</version>
-        <executions>
-          <execution>
-            <goals>
-              <goal>generate-assertions</goal>
-            </goals>
-          </execution>
-        </executions>
+	     <!-- 
+	       <executions>
+	         <execution>
+	           <goals>
+	             <goal>generate-assertions</goal>
+	           </goals>
+	         </execution>
+	       </executions>
+	      -->
         <configuration>
           <packages>
             <param>org.assertj.examples.data</param>
           </packages>
-          <targetDir>target/assertj</targetDir>
+	     <!-- 
+          <targetDir>src/test/java</targetDir>
+	      -->
         </configuration>
       </plugin>
 

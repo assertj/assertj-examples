@@ -12,16 +12,20 @@
  */
 package org.assertj.examples;
 
-import static org.assertj.examples.data.Race.dwarf;
-import static org.assertj.examples.data.Race.elf;
-import static org.assertj.examples.data.Race.hobbit;
-import static org.assertj.examples.data.Race.maia;
-import static org.assertj.examples.data.Race.man;
-import static org.assertj.examples.data.Race.orc;
-import static org.assertj.examples.data.Ring.*;
-
-import static org.assertj.core.util.Lists.newArrayList;
 import static org.assertj.core.util.Dates.parse;
+import static org.assertj.core.util.Lists.newArrayList;
+import static org.assertj.examples.data.Race.DWARF;
+import static org.assertj.examples.data.Race.ELF;
+import static org.assertj.examples.data.Race.HOBBIT;
+import static org.assertj.examples.data.Race.MAIA;
+import static org.assertj.examples.data.Race.MAN;
+import static org.assertj.examples.data.Race.ORC;
+import static org.assertj.examples.data.Ring.dwarfRing;
+import static org.assertj.examples.data.Ring.manRing;
+import static org.assertj.examples.data.Ring.narya;
+import static org.assertj.examples.data.Ring.nenya;
+import static org.assertj.examples.data.Ring.oneRing;
+import static org.assertj.examples.data.Ring.vilya;
 
 import java.util.ArrayList;
 import java.util.Comparator;
@@ -30,6 +34,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.assertj.core.api.Condition;
 import org.assertj.examples.comparator.AbsValueComparator;
 import org.assertj.examples.comparator.AgeComparator;
 import org.assertj.examples.comparator.CaseInsensitiveCharacterComparator;
@@ -38,8 +43,7 @@ import org.assertj.examples.comparator.TolkienCharacterRaceNameComparator;
 import org.assertj.examples.comparator.YearAndMonthDateComparator;
 import org.assertj.examples.condition.PotentialMvpCondition;
 import org.assertj.examples.data.Name;
-import org.assertj.examples.data.Player;
-import org.assertj.examples.data.Race;
+import org.assertj.examples.data.BasketBallPlayer;
 import org.assertj.examples.data.Ring;
 import org.assertj.examples.data.TolkienCharacter;
 import org.assertj.examples.data.movie.Movie;
@@ -47,8 +51,6 @@ import org.junit.Before;
 import org.junit.BeforeClass;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
-import org.assertj.core.api.Condition;
 
 /**
  * 
@@ -69,12 +71,7 @@ public abstract class AbstractAssertionsExamples {
 
 
   // Some of the Lord of the Rings races :
-  protected static final Race HOBBIT = hobbit;
-  protected static final Race MAIA = maia;
-  protected static final Race MAN = man;
-  protected static final Race ELF = elf;
-  protected static final Race DWARF = dwarf;
-  protected static final Race ORC = orc;
+
 
 
   // Some of the Lord of the Rings characters :
@@ -90,7 +87,7 @@ public abstract class AbstractAssertionsExamples {
   protected final TolkienCharacter sauron = new TolkienCharacter("Sauron", 50000, MAIA);
   protected final TolkienCharacter galadriel = new TolkienCharacter("Legolas", 3000, ELF);
   protected final TolkienCharacter elrond = new TolkienCharacter("Legolas", 3000, ELF);
-  protected final TolkienCharacter guruk = new TolkienCharacter("Guruk", 20, orc);
+  protected final TolkienCharacter guruk = new TolkienCharacter("Guruk", 20, ORC);
   protected final List<TolkienCharacter> fellowshipOfTheRing = new ArrayList<TolkienCharacter>();
   protected final List<TolkienCharacter> orcsWithHobbitPrisoners = new ArrayList<TolkienCharacter>();
 
@@ -112,37 +109,42 @@ public abstract class AbstractAssertionsExamples {
   protected Comparator<Character> caseInsensitiveComparator = new CaseInsensitiveCharacterComparator();
   protected Comparator<Date> yearAndMonthComparator = new YearAndMonthDateComparator();
 
-  protected static Player rose;
-  protected static Player james;
-  protected static Player durant;
-  protected static Player noah;
-  protected static List<Player> players;
+  protected static BasketBallPlayer rose;
+  protected static BasketBallPlayer james;
+  protected static BasketBallPlayer durant;
+  protected static BasketBallPlayer noah;
+  protected static BasketBallPlayer tonyParker;
+  protected static List<BasketBallPlayer> players;
   protected static PotentialMvpCondition potentialMvp;
-  protected static Condition<Player> doubleDoubleStats;
+  protected static Condition<BasketBallPlayer> doubleDoubleStats;
 
   @BeforeClass
   public static void setUpOnce() {
-    rose = new Player(new Name("Derrick", "Rose"), "Chicago Bulls");
+    rose = new BasketBallPlayer(new Name("Derrick", "Rose"), "Chicago Bulls");
     rose.setAssistsPerGame(8);
     rose.setPointsPerGame(25);
     rose.setReboundsPerGame(5);
-    james = new Player(new Name("Lebron", "James"), "Miami Heat");
+    tonyParker = new BasketBallPlayer(new Name("Tony", "Parker"), "Spurs");
+    tonyParker.setAssistsPerGame(9);
+    tonyParker.setPointsPerGame(21);
+    tonyParker.setReboundsPerGame(5);
+    james = new BasketBallPlayer(new Name("Lebron", "James"), "Miami Heat");
     james.setAssistsPerGame(6);
     james.setPointsPerGame(27);
     james.setReboundsPerGame(8);
-    durant = new Player(new Name("Kevin", "Durant"), "OKC");
+    durant = new BasketBallPlayer(new Name("Kevin", "Durant"), "OKC");
     durant.setAssistsPerGame(4);
     durant.setPointsPerGame(30);
     durant.setReboundsPerGame(5);
-    noah = new Player(new Name("Joachim", "Noah"), "Chicago Bulls");
+    noah = new BasketBallPlayer(new Name("Joachim", "Noah"), "Chicago Bulls");
     noah.setAssistsPerGame(4);
     noah.setPointsPerGame(10);
     noah.setReboundsPerGame(11);
     players = newArrayList(rose, james, durant, noah);
     potentialMvp = new PotentialMvpCondition();
-    doubleDoubleStats = new Condition<Player>("double double stats") {
+    doubleDoubleStats = new Condition<BasketBallPlayer>("double double stats") {
       @Override
-      public boolean matches(Player player) {
+      public boolean matches(BasketBallPlayer player) {
         if (player.getPointsPerGame() >= 10 && player.getAssistsPerGame() >= 10) return true;
         if (player.getPointsPerGame() >= 10 && player.getReboundsPerGame() >= 10) return true;
         if (player.getAssistsPerGame() >= 10 && player.getReboundsPerGame() >= 10) return true;

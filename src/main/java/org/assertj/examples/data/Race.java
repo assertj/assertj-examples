@@ -12,10 +12,9 @@
  */
 package org.assertj.examples.data;
 
-import static org.assertj.examples.data.EvilLevel.AMBIVALENT;
-import static org.assertj.examples.data.EvilLevel.KIND;
-import static org.assertj.examples.data.EvilLevel.SUPER_EVIL;
-import static org.assertj.examples.data.EvilLevel.SUPER_KIND;
+import static org.assertj.examples.data.Alignment.EVIL;
+import static org.assertj.examples.data.Alignment.GOOD;
+import static org.assertj.examples.data.Alignment.NEUTRAL;
 
 /**
  * Race in Tolkien's Lord of the Rings.
@@ -25,16 +24,16 @@ import static org.assertj.examples.data.EvilLevel.SUPER_KIND;
  */
 public enum Race {
 
-  hobbit("Hobbit", false, SUPER_KIND), maia("Maia", true, KIND), man("Man", false, AMBIVALENT), elf("Elf", true, KIND), dwarf("Dwarf", false, KIND), orc("Orc", false, SUPER_EVIL);
+  HOBBIT("Hobbit", false, GOOD), MAIA("Maia", true, GOOD), MAN("Man", false, NEUTRAL), ELF("Elf", true, GOOD), DWARF("Dwarf", false, GOOD), ORC("Orc", false, EVIL);
 
   private final String name;
   private final boolean immortal;
-  private EvilLevel evilLevel;
+  private Alignment alignment;
 
-  Race(String name, boolean immortal, EvilLevel evilLevel) {
+  Race(String name, boolean immortal, Alignment alignment) {
     this.name = name;
     this.immortal = immortal;
-    this.evilLevel = evilLevel;
+    this.alignment = alignment;
   }
 
   public String getName() {
@@ -45,8 +44,8 @@ public enum Race {
     return immortal;
   }
 
-  public EvilLevel getEvilLevel() {
-    return evilLevel;
+  public Alignment getAlignment() {
+    return alignment;
   }
 
   @Override
