@@ -69,11 +69,6 @@ public abstract class AbstractAssertionsExamples {
     logger.info(ERROR_MESSAGE_EXAMPLE_FOR_ASSERTION, assertionContext, e.getMessage());
   }
 
-
-  // Some of the Lord of the Rings races :
-
-
-
   // Some of the Lord of the Rings characters :
   protected final TolkienCharacter frodo = new TolkienCharacter("Frodo", 33, HOBBIT);
   protected final TolkienCharacter sam = new TolkienCharacter("Sam", 38, HOBBIT);

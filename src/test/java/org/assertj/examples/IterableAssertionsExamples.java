@@ -12,6 +12,9 @@
  */
 package org.assertj.examples;
 
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.extractProperty;
+import static org.assertj.core.util.Lists.newArrayList;
 import static org.assertj.examples.data.Race.ELF;
 import static org.assertj.examples.data.Race.HOBBIT;
 import static org.assertj.examples.data.Race.ORC;
@@ -22,17 +25,13 @@ import static org.assertj.examples.data.Ring.nenya;
 import static org.assertj.examples.data.Ring.oneRing;
 import static org.assertj.examples.data.Ring.vilya;
 
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.extractProperty;
-import static org.assertj.core.util.Lists.newArrayList;
-
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Iterator;
 import java.util.List;
 import java.util.SortedSet;
 import java.util.TreeSet;
 
-import org.assertj.examples.data.Race;
 import org.assertj.examples.data.Ring;
 import org.assertj.examples.data.movie.Movie;
 import org.junit.Test;
@@ -187,6 +186,13 @@ public class IterableAssertionsExamples extends AbstractAssertionsExamples {
     powerfulRings.add(narya);
     assertThat(powerfulRings).containsAll(elvesRings);
 
+  }
+
+  @Test
+  public void iterator_assertion_example() {
+    // Iterable assertions also works if you give an Iterator as input.
+    Iterator<Ring> elvesRings = newArrayList(vilya, nenya, narya).iterator();
+    assertThat(elvesRings).isSubsetOf(ringsOfPower);
   }
 
 }
