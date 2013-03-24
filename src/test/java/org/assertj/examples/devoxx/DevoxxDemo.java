@@ -12,7 +12,7 @@
  */
 package org.assertj.examples.devoxx;
 
-//import static org.assertj.examples.devoxx.DevoxxDemoAssertions.assertThat;
+// import static org.assertj.examples.devoxx.DevoxxCustomAssertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.entry;
 import static org.assertj.core.api.Assertions.extractProperty;
@@ -36,7 +36,7 @@ import org.assertj.examples.data.Ring;
 import org.junit.Before;
 import org.junit.Test;
 
-public class DevoxxAssertionsDemo extends AbstractAssertionsExamples {
+public class DevoxxDemo extends AbstractAssertionsExamples {
 
   private List<Ring> elvesRings;
 
@@ -153,13 +153,13 @@ public class DevoxxAssertionsDemo extends AbstractAssertionsExamples {
                                        .isAfter(theFellowshipOfTheRing.getReleaseDate())
                                        .isBefore(theReturnOfTheKing.getReleaseDate());
   }
-  
+
   @Test
   public void use_generate_assertions() {
 
-    // use DevoxxDemoAssertions.assertThat static import instead of org.assertj.core.api.Assertions.assertThat;
+    // use DevoxxCustomAssertions.assertThat static import instead of org.assertj.core.api.Assertions.assertThat;
     // assertThat(tonyParker).hasTeam("Spurs");
-    
+
     // write assertion playsInSameTeamAs(player)
   }
 }

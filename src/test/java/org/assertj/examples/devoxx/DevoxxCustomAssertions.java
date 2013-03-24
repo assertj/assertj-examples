@@ -17,7 +17,7 @@ import org.assertj.examples.data.BasketBallPlayer;
 import org.assertj.examples.data.BasketBallPlayerAssert;
 
 // extending make all standard AssertJ assertions available.
-public class DevoxxDemoAssertions extends Assertions {
+public class DevoxxCustomAssertions extends Assertions {
 
   // add the custom assertions related to MyProject
 
