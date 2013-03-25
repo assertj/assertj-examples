@@ -12,13 +12,8 @@
  */
 package org.assertj.examples.custom;
 
-import org.assertj.examples.data.TolkienCharacter;
-
-import static java.lang.String.format;
-
 import org.assertj.core.api.AbstractAssert;
-import org.assertj.core.api.WritableAssertionInfo;
-import org.assertj.core.internal.Objects;
+import org.assertj.examples.data.TolkienCharacter;
 
 /**
  * A simple class to illustrate how to extend AssertJ assertions with custom ones to make assertions speicific to
@@ -66,10 +61,10 @@ public class TolkienCharacterAssert extends AbstractAssert<TolkienCharacterAsser
     // check that actual TolkienCharacter we want to make assertions on is not null.
     isNotNull();
 
-    // use existing WritableAssertionInfo to set a specific error message
-    WritableAssertionInfo info = getWritableAssertionInfo();
-    info.overridingErrorMessage(format("Expected character's name to be <%s> but was <%s>", name, actual.getName()));
-    Objects.instance().assertEqual(info, actual.getName(), name);
+    // check condition
+    if (!actual.getName().equals(name)) {
+      failWithMessage("Expected character's name to be <%s> but was <%s>", name, actual.getName());
+    }
 
     // return the current assertion for method chaining
     return this;
@@ -87,11 +82,11 @@ public class TolkienCharacterAssert extends AbstractAssert<TolkienCharacterAsser
     // check that actual TolkienCharacter we want to make assertions on is not null.
     isNotNull();
 
-    // use existing WritableAssertionInfo to set a specific error message
-    WritableAssertionInfo info = getWritableAssertionInfo();
-    info.overridingErrorMessage(format("Expected character's age to be <%s> but was <%s>", age, actual.getAge()));
-    Objects.instance().assertEqual(info, actual.getAge(), age);
-
+    // check condition
+    if (actual.getAge() != age) {
+      failWithMessage("Expected character's age to be <%s> but was <%s>", age, actual.getAge());
+    }
+    
     // return the current assertion for method chaining
     return this;
   }
