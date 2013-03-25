@@ -29,6 +29,13 @@ public class StringAssertionsExamples extends AbstractAssertionsExamples {
     assertThat("Frodo").startsWith("Fro").endsWith("do").hasSize(5);
     assertThat("Frodo").contains("rod").doesNotContain("fro");
     assertThat("Frodo").containsOnlyOnce("do");
+    // contains accepts multiple String to avoid chaining contains several times.
+    assertThat("Gandalf the grey").contains("alf", "grey");
+    try {
+      assertThat("Gandalf the grey").contains("alf", "grey", "wizard", "ring");
+    } catch (AssertionError e) {
+      logAssertionErrorMessage("String contains with several values", e);
+    }
 //    String bookDescription = "{ 'title':'Games of Thrones', 'author':'George Martin'}";
 //    assertThat(bookDescription).containsInOrder("{", "title", "Games of Thrones", "}");
 
