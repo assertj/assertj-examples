@@ -36,9 +36,16 @@ public class StringAssertionsExamples extends AbstractAssertionsExamples {
     } catch (AssertionError e) {
       logAssertionErrorMessage("String contains with several values", e);
     }
-//    String bookDescription = "{ 'title':'Games of Thrones', 'author':'George Martin'}";
-//    assertThat(bookDescription).containsInOrder("{", "title", "Games of Thrones", "}");
+    
+    String bookDescription = "{ 'title':'Games of Thrones', 'author':'George Martin'}";
+    assertThat(bookDescription).containsSequence("{", "title", "Games of Thrones", "}");
 
+    try {
+      assertThat(bookDescription).containsSequence("{", "title", "author", "Games of Thrones", "}");
+    } catch (AssertionError e) {
+      logAssertionErrorMessage("String containsSequence with incorrect order", e);
+    }
+    
     // you can ignore case for equals check
     assertThat("Frodo").isEqualToIgnoringCase("FROdO");
 
