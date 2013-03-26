@@ -13,16 +13,14 @@
 package org.assertj.examples.devoxx;
 
 import org.assertj.core.api.Assertions;
-import org.assertj.examples.data.BasketBallPlayer;
-import org.assertj.examples.data.BasketBallPlayerAssert;
 
 // extending make all standard AssertJ assertions available.
 public class DevoxxCustomAssertions extends Assertions {
 
   // add the custom assertions related to MyProject
 
-  public static BasketBallPlayerAssert assertThat(BasketBallPlayer actual) {
-    return new BasketBallPlayerAssert(actual);
-  }
+//  public static BasketBallPlayerAssert assertThat(BasketBallPlayer actual) {
+//    return new BasketBallPlayerAssert(actual);
+//  }
 
 }
