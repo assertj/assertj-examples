@@ -18,11 +18,6 @@ import static org.assertj.core.api.Assertions.entry;
 import static org.assertj.core.api.Assertions.extractProperty;
 import static org.assertj.core.util.Dates.parse;
 import static org.assertj.core.util.Lists.newArrayList;
-import static org.assertj.examples.data.Race.ELF;
-import static org.assertj.examples.data.Race.HOBBIT;
-import static org.assertj.examples.data.Race.ORC;
-import static org.assertj.examples.data.Ring.dwarfRing;
-import static org.assertj.examples.data.Ring.manRing;
 import static org.assertj.examples.data.Ring.narya;
 import static org.assertj.examples.data.Ring.nenya;
 import static org.assertj.examples.data.Ring.oneRing;
@@ -32,6 +27,8 @@ import java.util.Date;
 import java.util.List;
 
 import org.assertj.examples.AbstractAssertionsExamples;
+import org.assertj.examples.data.BasketBallPlayer;
+import org.assertj.examples.data.Name;
 import org.assertj.examples.data.Ring;
 import org.junit.Before;
 import org.junit.Test;
@@ -48,12 +45,16 @@ public class DevoxxDemo extends AbstractAssertionsExamples {
   }
 
   @Test
+  public void first_example() {
+
+    //assertThat("First Test")
+  }
+
+  @Test
   public void common_assertions_examples() {
 
-    assertThat("Test").containsIgnoringCase("test");
-
     // the most simple assertion
-    assertThat(frodo.age).isEqualTo(33);
+    assertThat(frodo.getAge()).isEqualTo(33).isLessThan(45);
     assertThat(frodo.getName()).isEqualTo("Frodo").isNotEqualTo("Frodon");
 
     assertThat(frodo).isIn(fellowshipOfTheRing);
@@ -88,15 +89,10 @@ public class DevoxxDemo extends AbstractAssertionsExamples {
                           .doesNotContainNull()
                           .doesNotHaveDuplicates();
 
-    // you can also check the start or end of your collection/iterable
-    Iterable<Ring> allRings = newArrayList(oneRing, vilya, nenya, narya, dwarfRing, manRing);
-    assertThat(allRings).startsWith(oneRing, vilya).endsWith(dwarfRing, manRing);
-    assertThat(allRings).containsAll(elvesRings);
-
     // to show an error message, let's replace narya by the one ring
     elvesRings.remove(narya);
     elvesRings.add(oneRing);
-    // assertThat(elvesRings).containsOnly(nenya, vilya, narya);
+    assertThat(elvesRings).containsOnly(nenya, vilya, narya);
   }
 
   @Test
@@ -105,10 +101,6 @@ public class DevoxxDemo extends AbstractAssertionsExamples {
     // extract simple property values having a java standard type
     assertThat(extractProperty("name").from(fellowshipOfTheRing)).contains("Frodo", "Gandalf", "Legolas")
                                                                  .doesNotContain("Sauron", "Elrond");
-
-    // extracting property works also with user's types (here Race)
-    assertThat(extractProperty("race").from(fellowshipOfTheRing)).contains(HOBBIT, ELF)
-                                                                 .doesNotContain(ORC);
 
     // extract nested property on Race
     assertThat(extractProperty("race.name").from(fellowshipOfTheRing)).contains("Hobbit", "Elf")
@@ -151,14 +143,22 @@ public class DevoxxDemo extends AbstractAssertionsExamples {
     assertThat(theTwoTowersReleaseDate).isEqualTo(parse("2002-12-18"))
                                        .isEqualTo("2002-12-18")
                                        .isAfter(theFellowshipOfTheRing.getReleaseDate())
-                                       .isBefore(theReturnOfTheKing.getReleaseDate());
+                                       .isBefore(theReturnOfTheKing.getReleaseDate())
+                                       .isBetween(theFellowshipOfTheRing.getReleaseDate(),
+                                                  theReturnOfTheKing.getReleaseDate());
   }
 
   @Test
-  public void use_generate_assertions() {
+  public void use_generated_custom_assertions() {
 
-    // use DevoxxCustomAssertions.assertThat static import instead of org.assertj.core.api.Assertions.assertThat;
-    // assertThat(tonyParker).hasTeam("Spurs");
+    // use DevoxxCustomAssertions.assertThat static import
+    
+    BasketBallPlayer tonyParker = new BasketBallPlayer(new Name("Tony", "Parker"), "Spurs");
+    tonyParker.setAssistsPerGame(9);
+    tonyParker.setPointsPerGame(21);
+    tonyParker.setReboundsPerGame(5);
+
+    // BasketBallPlayerAssert.assertThat(tonyParker).hasTeam("Bulls");
 
     // write assertion playsInSameTeamAs(player)
   }

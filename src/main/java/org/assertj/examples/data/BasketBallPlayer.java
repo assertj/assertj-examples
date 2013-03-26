@@ -14,6 +14,9 @@ package org.assertj.examples.data;
 
 import static java.lang.String.format;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * @author Joel Costigliola
  */
@@ -24,6 +27,7 @@ public class BasketBallPlayer {
   private int assistsPerGame;
   private int reboundsPerGame;
   private String team;
+  private List<String> previousTeams = new ArrayList<String>();
   private boolean rookie;
 
   public BasketBallPlayer() {}
@@ -79,6 +83,10 @@ public class BasketBallPlayer {
   
   public void setRookie(boolean rookie) {
     this.rookie = rookie;
+  }
+
+  public List<String> getPreviousTeams() {
+    return previousTeams;
   }
 
   @Override public String toString() {
