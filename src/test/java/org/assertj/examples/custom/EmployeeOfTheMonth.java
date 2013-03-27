@@ -12,20 +12,17 @@
  */
 package org.assertj.examples.custom;
 
-import static org.assertj.core.api.Assertions.assertThat;
+import ch.qos.logback.core.joran.spi.*;
 
-import org.assertj.core.api.AbstractAssert;
+public class EmployeeOfTheMonth extends Employee  {
 
+    private int month;
 
-public class HumanAssert<T extends HumanAssert<?,?>, A extends Human> extends AbstractAssert<T, A> {
-  public HumanAssert(A actual) {
-    super(actual, HumanAssert.class);
-  }
+    public int getMonth() {
+        return month;
+    }
 
-  public T hasName(String name) {
-    isNotNull();
-    assertThat(actual.name).isEqualTo(name);
-    return (T) this;
-  }
-
+    public void setMonth(int month) {
+        this.month = month;
+    }
 }
