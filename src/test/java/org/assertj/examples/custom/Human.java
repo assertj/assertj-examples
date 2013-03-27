@@ -14,4 +14,12 @@ package org.assertj.examples.custom;
 
 public class Human {
   public String name;
+
+  public String getName() {
+    return name;
+  }
+
+  public void setName(String name) {
+    this.name = name;
+  }
 }

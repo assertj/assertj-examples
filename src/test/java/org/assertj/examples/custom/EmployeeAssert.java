@@ -14,19 +14,17 @@ package org.assertj.examples.custom;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-public class EmployeeAssert extends HumanAssert<EmployeeAssert> {
+public class EmployeeAssert<T extends EmployeeAssert<?,?>, A extends Employee> extends HumanAssert<T,A> {
 
-  private final Employee actual;
 
-  public EmployeeAssert(Employee actual) {
+  public EmployeeAssert(A actual) {
     super(actual);
-    this.actual = actual;
   }
 
-  public EmployeeAssert hasJobTitle(String jobTitle) {
+  public T hasJobTitle(String jobTitle) {
     isNotNull();
     assertThat(actual.jobTitle).isEqualTo(jobTitle);
-    return this;
+    return (T) this;
   }
 
 }
