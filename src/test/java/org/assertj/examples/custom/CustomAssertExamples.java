@@ -12,11 +12,13 @@
  */
 package org.assertj.examples.custom;
 
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.examples.custom.MyProjectAssertions.assertThat;
 
-import org.assertj.examples.AbstractAssertionsExamples;
-import org.assertj.examples.data.*;
 import org.junit.Test;
+
+import org.assertj.examples.AbstractAssertionsExamples;
+import org.assertj.examples.data.TolkienCharacter;
 
 /**
  *
@@ -68,7 +70,7 @@ public class CustomAssertExamples extends AbstractAssertionsExamples {
     Employee employee = new Employee();
     employee.jobTitle = "CEO";
     employee.name = "John Smith";
-    assertThat(employee).hasJobTitle("CEO").hasName("John Smith");
+    assertThat(employee).hasJobTitle("CEO").hasName("John Smith").isEqualTo(employee);
     //assertThat(employee).hasName("John Smith").hasJobTitle("CEO");
 
     Human joe = new Human();
@@ -79,9 +81,8 @@ public class CustomAssertExamples extends AbstractAssertionsExamples {
     employeeOfTheMonth.setName("John Doe");
     employeeOfTheMonth.setMonth(1);
     employeeOfTheMonth.jobTitle = "Guru";
-    EmployeeOfTheMonthAssert.assertThat(employeeOfTheMonth).forMonth(1);
-    //EmployeeOfTheMonthAssert.assertThat(employeeOfTheMonth).forMonth(2);
-    EmployeeOfTheMonthAssert.assertThat(employeeOfTheMonth).as("").hasName("John Doe").forMonth(1).hasJobTitle("Guru");
+    EmployeeOfTheMonthAssert.assertThat(employeeOfTheMonth).forMonth(1).isEqualTo(employeeOfTheMonth);
+    EmployeeOfTheMonthAssert.assertThat(employeeOfTheMonth).isEqualTo(employeeOfTheMonth).as("").hasName("John Doe").forMonth(1).hasJobTitle("Guru");
 
 
 

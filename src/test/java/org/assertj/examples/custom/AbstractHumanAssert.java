@@ -12,16 +12,26 @@
  */
 package org.assertj.examples.custom;
 
+import org.assertj.core.api.AbstractAssert;
 
-public class EmployeeOfTheMonth extends Employee  {
+public class AbstractHumanAssert<S extends AbstractHumanAssert<S, A>, A extends Human> extends AbstractAssert<S, A> {
 
-    private int month;
+  public AbstractHumanAssert(A actual, Class<S> selfType) {
+    super(actual, selfType);
+  }
 
-    public int getMonth() {
-        return month;
+  public S hasName(String name) {
+    isNotNull();
+
+    // we overrides the default error message with a more explicit one
+    String errorMessage = "\nExpected name of:\n  <%s>\nto be:\n  <%s>\n but was:\n  <%s>";
+
+    // check
+    if (!actual.name.equals(name)) {
+      failWithMessage(errorMessage, actual, name, actual.name);
     }
 
-    public void setMonth(int month) {
-        this.month = month;
-    }
+    return myself;
+  }
+
 }

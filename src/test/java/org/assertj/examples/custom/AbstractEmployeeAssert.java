@@ -13,15 +13,25 @@
 package org.assertj.examples.custom;
 
 
-public class EmployeeOfTheMonth extends Employee  {
+public class AbstractEmployeeAssert<S extends AbstractEmployeeAssert<S, A>, A extends Employee>
+    extends AbstractHumanAssert<S, A> {
 
-    private int month;
+  public AbstractEmployeeAssert(A actual, Class<S> selfType) {
+    super(actual, selfType);
+  }
 
-    public int getMonth() {
-        return month;
+  public S hasJobTitle(String jobTitle) {
+    isNotNull();
+
+    // we overrides the default error message with a more explicit one
+    String errorMessage = "\nExpected jobTitle of:\n  <%s>\nto be:\n  <%s>\n but was:\n  <%s>";
+
+    // check
+    if (!actual.jobTitle.equals(jobTitle)) {
+      failWithMessage(errorMessage, actual, jobTitle, actual.jobTitle);
     }
+    
+    return myself;
+  }
 
-    public void setMonth(int month) {
-        this.month = month;
-    }
 }

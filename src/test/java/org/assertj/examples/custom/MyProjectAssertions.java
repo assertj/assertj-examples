@@ -38,4 +38,8 @@ public class MyProjectAssertions extends Assertions { // extending make all stan
     return new EmployeeAssert(actual);
   }
 
+  public static EmployeeOfTheMonthAssert assertThat(EmployeeOfTheMonth actual) {
+    return new EmployeeOfTheMonthAssert(actual);
+  }
+  
 }

@@ -12,25 +12,15 @@
  */
 package org.assertj.examples.custom;
 
-import org.assertj.core.api.*;
-import org.assertj.examples.data.*;
 
-public class EmployeeOfTheMonthAssert<T extends EmployeeOfTheMonthAssert<?,?>, A extends EmployeeOfTheMonth> extends EmployeeAssert<T,A> {
+public class EmployeeOfTheMonthAssert extends AbstractEmployeeOfTheMonthAssert<EmployeeOfTheMonthAssert, EmployeeOfTheMonth> {
 
-    public static <T extends EmployeeOfTheMonthAssert<?,?>, A extends EmployeeOfTheMonth> EmployeeOfTheMonthAssert<T,A> assertThat(A actual) {
-      return new EmployeeOfTheMonthAssert<T,A>(actual);
+    public static EmployeeOfTheMonthAssert assertThat(EmployeeOfTheMonth actual) {
+      return new EmployeeOfTheMonthAssert(actual);
     }
 
-    public EmployeeOfTheMonthAssert(A actual) {
-        super(actual);
-    }
-
-    public T forMonth(int month) {
-      isNotNull();
-      if (actual.getMonth() != month) {
-        failWithMessage("Expected month to be <%s> but was <%s>", month, actual.getMonth());
-      }
-      return (T) this;
+    public EmployeeOfTheMonthAssert(EmployeeOfTheMonth actual) {
+        super(actual, EmployeeOfTheMonthAssert.class);
     }
 
 }
