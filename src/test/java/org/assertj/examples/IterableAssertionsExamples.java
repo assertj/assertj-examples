@@ -1,13 +1,13 @@
 /**
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with
  * the License. You may obtain a copy of the License at
- *
+ * 
  * http://www.apache.org/licenses/LICENSE-2.0
- *
+ * 
  * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on
  * an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the
  * specific language governing permissions and limitations under the License.
- *
+ * 
  * Copyright 2012-2013 the original author or authors.
  */
 package org.assertj.examples;
@@ -35,7 +35,6 @@ import java.util.TreeSet;
 import org.assertj.examples.data.Ring;
 import org.assertj.examples.data.movie.Movie;
 import org.junit.Test;
-
 
 /**
  * Iterable (including Collection) assertions examples.<br>
@@ -98,13 +97,13 @@ public class IterableAssertionsExamples extends AbstractAssertionsExamples {
     } catch (AssertionError e) {
       logger.info(e.getMessage());
       assertThat(e)
-          .hasMessage(
-              "actual and expected have the same elements but not in the same order, at index 0 actual element was :\n<vilya>\n whereas expected element was :\n<nenya>\n");
+                   .hasMessage(
+                               "actual and expected have the same elements but not in the same order, at index 0 actual element was :\n<vilya>\n whereas expected element was :\n<nenya>\n");
     }
-    
+
     try {
-      List<String> z = newArrayList("a","a","a");       
-      assertThat(z).containsExactly("a","a");
+      List<String> z = newArrayList("a", "a", "a");
+      assertThat(z).containsExactly("a", "a");
     } catch (AssertionError e) {
       logger.info(e.getMessage());
     }
@@ -125,13 +124,14 @@ public class IterableAssertionsExamples extends AbstractAssertionsExamples {
       assertThat(newArrayList(gandalf, sam)).usingElementComparator(raceNameComparator).doesNotContain(sauron);
     } catch (AssertionError e) {
       assertThat(e)
-          .hasMessage(
-              "expecting\n"
-                  + "<[Character [name=Gandalf, race=Race [name=Maia, immortal=true], age=2020], Character [name=Sam, race=Race [name=Hobbit, immortal=false], age=38]]>\n"
-                  + " not to contain\n"
-                  + "<[Character [name=Sauron, race=Race [name=Maia, immortal=true], age=50000]]>\n" + " but found\n"
-                  + "<[Character [name=Sauron, race=Race [name=Maia, immortal=true], age=50000]]>\n"
-                  + " according to 'TolkienCharacterRaceNameComparator' comparator");
+                   .hasMessage(
+                               "expecting\n"
+                                   + "<[Character [name=Gandalf, race=Race [name=Maia, immortal=true], age=2020], Character [name=Sam, race=Race [name=Hobbit, immortal=false], age=38]]>\n"
+                                   + " not to contain\n"
+                                   + "<[Character [name=Sauron, race=Race [name=Maia, immortal=true], age=50000]]>\n"
+                                   + " but found\n"
+                                   + "<[Character [name=Sauron, race=Race [name=Maia, immortal=true], age=50000]]>\n"
+                                   + " according to 'TolkienCharacterRaceNameComparator' comparator");
     }
 
     // duplicates assertion honors custom comparator
@@ -141,12 +141,12 @@ public class IterableAssertionsExamples extends AbstractAssertionsExamples {
       assertThat(newArrayList(sam, gandalf, frodo)).usingElementComparator(raceNameComparator).doesNotHaveDuplicates();
     } catch (AssertionError e) {
       assertThat(e)
-          .hasMessage(
-              "found duplicate(s)\n"
-                  + "<[Character [name=Frodo, race=Race [name=Hobbit, immortal=false], age=33]]>\n"
-                  + " in\n"
-                  + "<[Character [name=Sam, race=Race [name=Hobbit, immortal=false], age=38], Character [name=Gandalf, race=Race [name=Maia, immortal=true], age=2020], Character [name=Frodo, race=Race [name=Hobbit, immortal=false], age=33]]>\n"
-                  + " according to 'TolkienCharacterRaceNameComparator' comparator");
+                   .hasMessage(
+                               "found duplicate(s)\n"
+                                   + "<[Character [name=Frodo, race=Race [name=Hobbit, immortal=false], age=33]]>\n"
+                                   + " in\n"
+                                   + "<[Character [name=Sam, race=Race [name=Hobbit, immortal=false], age=38], Character [name=Gandalf, race=Race [name=Maia, immortal=true], age=2020], Character [name=Frodo, race=Race [name=Hobbit, immortal=false], age=33]]>\n"
+                                   + " according to 'TolkienCharacterRaceNameComparator' comparator");
     }
   }
 
@@ -155,19 +155,38 @@ public class IterableAssertionsExamples extends AbstractAssertionsExamples {
 
     // extract simple property values having a java standard type
     assertThat(extractProperty("name", String.class).from(fellowshipOfTheRing)).contains("Boromir", "Gandalf", "Frodo",
-        "Legolas").doesNotContain("Sauron", "Elrond");
+                                                                                         "Legolas")
+                                                                               .doesNotContain("Sauron", "Elrond");
 
     // same extraction with an alternate syntax
     assertThat(extractProperty("name").ofType(String.class).from(fellowshipOfTheRing)).contains("Boromir", "Gandalf",
-        "Frodo", "Legolas").doesNotContain("Sauron", "Elrond");
+                                                                                                "Frodo", "Legolas")
+                                                                                      .doesNotContain("Sauron",
+                                                                                                      "Elrond");
 
     // extracting property works also with user's types (here Race)
     assertThat(extractProperty("race").from(fellowshipOfTheRing)).contains(HOBBIT, ELF).doesNotContain(ORC);
 
     // extract nested property on Race
     assertThat(extractProperty("race.name").from(fellowshipOfTheRing)).contains("Hobbit", "Elf").doesNotContain("Orc");
-  }
 
+    // same assertions but written with extracting()
+    
+    // extract simple property values having a java standard type
+    assertThat(fellowshipOfTheRing).extracting("name")
+                                   .contains("Boromir", "Gandalf", "Frodo", "Legolas")
+                                   .doesNotContain("Sauron", "Elrond");
+
+    // extracting property works also with user's types (here Race)
+    assertThat(fellowshipOfTheRing).extracting("race")
+                                   .contains(HOBBIT, ELF)
+                                   .doesNotContain(ORC);
+
+    // extract nested property on Race
+    assertThat(fellowshipOfTheRing).extracting("race.name")
+                                   .contains("Hobbit", "Elf")
+                                   .doesNotContain("Orc");
+  }
 
   @Test
   public void iterable_is_subset_of_assertion_example() {
