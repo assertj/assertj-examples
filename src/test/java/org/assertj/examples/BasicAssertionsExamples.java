@@ -17,14 +17,13 @@ import static java.lang.Integer.toHexString;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.examples.data.Race.HOBBIT;
 
+import org.junit.Test;
+
+import org.assertj.core.util.introspection.IntrospectionError;
 import org.assertj.examples.data.Person;
-import org.assertj.examples.data.Race;
 import org.assertj.examples.data.Ring;
 import org.assertj.examples.data.TolkienCharacter;
 import org.assertj.examples.data.movie.Movie;
-import org.junit.Test;
-
-import org.assertj.core.util.IntrospectionError;
 
 /**
  * Assertions available for all objects.
@@ -38,7 +37,7 @@ public class BasicAssertionsExamples extends AbstractAssertionsExamples {
   @Test
   public void isEqualTo_isNotEqualTo_assertions_examples() {
     // the most simple assertion
-    assertThat(frodo.getAge()).isEqualTo(33);
+    assertThat(frodo.age).isEqualTo(33);
     assertThat(frodo.getName()).isEqualTo("Frodo").isNotEqualTo("Frodon");
   }
 
@@ -54,9 +53,10 @@ public class BasicAssertionsExamples extends AbstractAssertionsExamples {
       assertThat(e).hasMessage("[check Frodo's name] expected:<'Frodo[]'> but was:<'Frodo[n]'>");
     }
     // but you still can overrides the error message if you have a better one :
+    System.out.println(String.format("Hey my name is Frodo not (%%)"));
     try {
       assertThat(frodo.getName()).as("check Frodo's name")
-          .overridingErrorMessage("Hey my name is Frodo not %s !", frodonName).isEqualTo("Frodo");
+          .overridingErrorMessage("Hey my name is Frodo not (%)").isEqualTo("Frodo");
     } catch (AssertionError e) {
       assertThat(e).hasMessage("[check Frodo's name] Hey my name is Frodo not Frodon !");
     }

@@ -83,8 +83,8 @@ public class TolkienCharacterAssert extends AbstractAssert<TolkienCharacterAsser
     isNotNull();
 
     // check condition
-    if (actual.getAge() != age) {
-      failWithMessage("Expected character's age to be <%s> but was <%s>", age, actual.getAge());
+    if (actual.age != age) {
+      failWithMessage("Expected character's age to be <%s> but was <%s>", age, actual.age);
     }
     
     // return the current assertion for method chaining

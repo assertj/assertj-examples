@@ -42,7 +42,7 @@ public class CustomAssertExamples extends AbstractAssertionsExamples {
     // - hasName comes from .MyProjectAssertions.assertThat(TolkienCharacter actual)
     assertThat(frodo).hasName("Frodo").hasAge(33).isNotEqualTo(merry);
     // - isEqualTo is accessible since MyProjectAssertions inherits from Assertions which provides Integer assertions.
-    assertThat(frodo.getAge()).isEqualTo(33);
+    assertThat(frodo.age).isEqualTo(33);
   }
 
   @Test

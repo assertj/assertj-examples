@@ -18,11 +18,10 @@ import static org.assertj.examples.data.Race.HOBBIT;
 import static org.assertj.examples.data.Race.MAIA;
 import static org.assertj.examples.data.Race.MAN;
 
-import org.assertj.examples.data.BasketBallPlayer;
-import org.assertj.examples.data.Race;
 import org.junit.Test;
 
 import org.assertj.core.api.Condition;
+import org.assertj.examples.data.BasketBallPlayer;
 
 /**
  * Iterable (including Collection) assertions examples.<br>

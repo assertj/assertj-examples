@@ -78,7 +78,7 @@ public abstract class AbstractAssertionsExamples {
   protected final TolkienCharacter gimli = new TolkienCharacter("Gimli", 139, DWARF);
   protected final TolkienCharacter legolas = new TolkienCharacter("Legolas", 1000, ELF);
   protected final TolkienCharacter aragorn = new TolkienCharacter("Aragorn", 87, MAN);
-  protected final TolkienCharacter boromir = new TolkienCharacter("Boromir", 87, MAN);
+  protected final TolkienCharacter boromir = new TolkienCharacter("Boromir", 37, MAN);
   protected final TolkienCharacter sauron = new TolkienCharacter("Sauron", 50000, MAIA);
   protected final TolkienCharacter galadriel = new TolkienCharacter("Legolas", 3000, ELF);
   protected final TolkienCharacter elrond = new TolkienCharacter("Legolas", 3000, ELF);

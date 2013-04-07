@@ -33,22 +33,22 @@ public class NumberAssertionsExamples extends AbstractAssertionsExamples {
   public void number_assertions_examples() throws Exception {
 
     // equals / no equals assertions
-    assertThat(sam.getAge()).isEqualTo(38);
-    assertThat(frodo.getAge()).isEqualTo(33).isNotEqualTo(sam.getAge());
+    assertThat(sam.age).isEqualTo(38);
+    assertThat(frodo.age).isEqualTo(33).isNotEqualTo(sam.age);
 
     // <= < > >= assertions
-    assertThat(sam.getAge()).isGreaterThan(frodo.getAge()).isGreaterThanOrEqualTo(38);
-    assertThat(frodo.getAge()).isLessThan(sam.getAge()).isLessThanOrEqualTo(33);
+    assertThat(sam.age).isGreaterThan(frodo.age).isGreaterThanOrEqualTo(38);
+    assertThat(frodo.age).isLessThan(sam.age).isLessThanOrEqualTo(33);
 
     // shortcuts for assertions : > 0, < 0 and == 0
-    assertThat(frodo.getAge() - frodo.getAge()).isZero();
-    assertThat(frodo.getAge() - sauron.getAge()).isNegative();
-    assertThat(gandalf.getAge() - frodo.getAge()).isPositive();
+    assertThat(frodo.age - frodo.age).isZero();
+    assertThat(frodo.age - sauron.age).isNegative();
+    assertThat(gandalf.age - frodo.age).isPositive();
     
-    assertThat(frodo.getAge() - frodo.getAge()).isNotNegative();
-    assertThat(frodo.getAge() - frodo.getAge()).isNotPositive();
-    assertThat(gandalf.getAge() - frodo.getAge()).isNotNegative();
-    assertThat(frodo.getAge() - sauron.getAge()).isNotPositive();
+    assertThat(frodo.age - frodo.age).isNotNegative();
+    assertThat(frodo.age - frodo.age).isNotPositive();
+    assertThat(gandalf.age - frodo.age).isNotNegative();
+    assertThat(frodo.age - sauron.age).isNotPositive();
   }
 
   @Test

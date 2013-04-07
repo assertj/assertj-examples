@@ -1,19 +1,24 @@
 /**
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with
  * the License. You may obtain a copy of the License at
- *
+ * 
  * http://www.apache.org/licenses/LICENSE-2.0
- *
+ * 
  * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on
  * an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the
  * specific language governing permissions and limitations under the License.
- *
+ * 
  * Copyright 2012-2013 the original author or authors.
  */
 package org.assertj.examples;
 
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.extractProperty;
+import static org.assertj.core.api.Assertions.filter;
+import static org.assertj.core.data.Index.atIndex;
+import static org.assertj.core.util.Arrays.array;
+import static org.assertj.core.util.Lists.newArrayList;
 import static org.assertj.examples.data.Alignment.EVIL;
-import static org.assertj.examples.data.Alignment.SUPER_EVIL;
 import static org.assertj.examples.data.Race.ELF;
 import static org.assertj.examples.data.Race.HOBBIT;
 import static org.assertj.examples.data.Race.ORC;
@@ -24,23 +29,14 @@ import static org.assertj.examples.data.Ring.nenya;
 import static org.assertj.examples.data.Ring.oneRing;
 import static org.assertj.examples.data.Ring.vilya;
 
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.extractProperty;
-import static org.assertj.core.api.Assertions.filter;
-import static org.assertj.core.data.Index.atIndex;
-import static org.assertj.core.util.Arrays.array;
-import static org.assertj.core.util.Lists.newArrayList;
-
 import java.util.Arrays;
 import java.util.Comparator;
 
-import org.assertj.examples.data.Alignment;
-import org.assertj.examples.data.Race;
+import org.junit.Test;
+
 import org.assertj.examples.data.Ring;
 import org.assertj.examples.data.TolkienCharacter;
 import org.assertj.examples.data.movie.Movie;
-import org.junit.Test;
-
 
 /**
  * Array assertions examples.
@@ -82,8 +78,8 @@ public class ArrayAssertionsExamples extends AbstractAssertionsExamples {
     assertThat(fellowshipOfTheRingArray).usingElementComparator(ageComparator).isSorted();
 
     // Uncomment when #131 is fixed
-     String[] arr = { "a", "b", "c" };
-     assertThat(arr).containsExactly("a", "b", "c");
+    String[] arr = { "a", "b", "c" };
+    assertThat(arr).containsExactly("a", "b", "c");
   }
 
   @Test
@@ -104,13 +100,13 @@ public class ArrayAssertionsExamples extends AbstractAssertionsExamples {
       assertThat(array(gandalf, sam)).usingElementComparator(ageComparator).isSorted();
     } catch (AssertionError e) {
       assertThat(e).hasMessage(
-          "group is not sorted according to 'AgeComparator' comparator because "
-              + "element 0:<Character [name=Gandalf, race=Race [name=Maia, immortal=true], age=2020]> "
-              + "is not less or equal than "
-              + "element 1:<Character [name=Sam, race=Race [name=Hobbit, immortal=false], age=38]>.\n"
-              + "group was:\n"
-              + "<[Character [name=Gandalf, race=Race [name=Maia, immortal=true], age=2020], "
-              + "Character [name=Sam, race=Race [name=Hobbit, immortal=false], age=38]]>");
+                               "group is not sorted according to 'AgeComparator' comparator because "
+                                   + "element 0:<Character [name=Gandalf, race=Race [name=Maia, immortal=true], age=2020]> "
+                                   + "is not less or equal than "
+                                   + "element 1:<Character [name=Sam, race=Race [name=Hobbit, immortal=false], age=38]>.\n"
+                                   + "group was:\n"
+                                   + "<[Character [name=Gandalf, race=Race [name=Maia, immortal=true], age=2020], "
+                                   + "Character [name=Sam, race=Race [name=Hobbit, immortal=false], age=38]]>");
     }
 
     // duplicates assertion honors custom comparator :
@@ -120,30 +116,53 @@ public class ArrayAssertionsExamples extends AbstractAssertionsExamples {
       assertThat(array(sam, gandalf, frodo)).usingElementComparator(raceNameComparator).doesNotHaveDuplicates();
     } catch (AssertionError e) {
       assertThat(e)
-          .hasMessage(
-              "found duplicate(s)\n"
-                  + "<[Character [name=Frodo, race=Race [name=Hobbit, immortal=false], age=33]]>\n"
-                  + " in\n"
-                  + "<[Character [name=Sam, race=Race [name=Hobbit, immortal=false], age=38], Character [name=Gandalf, race=Race [name=Maia, immortal=true], age=2020], Character [name=Frodo, race=Race [name=Hobbit, immortal=false], age=33]]>\n"
-                  + " according to 'TolkienCharacterRaceNameComparator' comparator");
+                   .hasMessage(
+                               "found duplicate(s)\n"
+                                   + "<[Character [name=Frodo, race=Race [name=Hobbit, immortal=false], age=33]]>\n"
+                                   + " in\n"
+                                   + "<[Character [name=Sam, race=Race [name=Hobbit, immortal=false], age=38], Character [name=Gandalf, race=Race [name=Maia, immortal=true], age=2020], Character [name=Frodo, race=Race [name=Hobbit, immortal=false], age=33]]>\n"
+                                   + " according to 'TolkienCharacterRaceNameComparator' comparator");
     }
   }
 
   @Test
-  public void assertions_on_collection_extracted_property_values_example() {
+  public void arra_assertions_on_extracted_values_example() {
     TolkienCharacter[] fellowshipOfTheRingArray = fellowshipOfTheRing.toArray(new TolkienCharacter[0]);
 
     // extract simple property value (having a java standard type)
-    assertThat(extractProperty("name").from(fellowshipOfTheRingArray)).contains("Boromir", "Gandalf", "Frodo", "Legolas")
-        .doesNotContain("Sauron", "Elrond");
+    assertThat(extractProperty("name").from(fellowshipOfTheRingArray)).contains("Boromir", "Gandalf", "Frodo",
+                                                                                "Legolas")
+                                                                      .doesNotContain("Sauron", "Elrond");
 
     // extracting property works also with user's types (here Race)
     assertThat(extractProperty("race").from(fellowshipOfTheRingArray)).contains(HOBBIT, ELF).doesNotContain(ORC);
 
     // extract nested property on Race
-    assertThat(extractProperty("race.name").from(fellowshipOfTheRingArray)).contains("Hobbit", "Elf").doesNotContain("Orc");
-  }
+    assertThat(extractProperty("race.name").from(fellowshipOfTheRingArray)).contains("Hobbit", "Elf")
+                                                                           .doesNotContain("Orc");
 
+    // same assertions but written with extracting(), it has the advantage of being able to extract field values as well
+    // as property values
+
+    // extract 'name' property values.
+    assertThat(fellowshipOfTheRing).extracting("name")
+                                   .contains("Boromir", "Gandalf", "Frodo", "Legolas")
+                                   .doesNotContain("Sauron", "Elrond");
+
+    // extract 'age' field values, it works because 'age' is public in TolkienCharacter class.
+    assertThat(fellowshipOfTheRing).extracting("age")
+                                   .contains(33, 38, 36);
+
+    // extracting works also with user's types (here Race),
+    assertThat(fellowshipOfTheRing).extracting("race")
+                                   .contains(HOBBIT, ELF)
+                                   .doesNotContain(ORC);
+
+    // extract nested property values on Race
+    assertThat(fellowshipOfTheRing).extracting("race.name")
+                                   .contains("Hobbit", "Elf")
+                                   .doesNotContain("Orc");
+  }
 
   @Test
   public void array_is_sorted_assertion_example() {
@@ -158,16 +177,16 @@ public class ArrayAssertionsExamples extends AbstractAssertionsExamples {
       }
     };
     assertThat(new Ring[] { manRing, dwarfRing, narya, nenya, vilya, oneRing }).isSortedAccordingTo(
-        increasingPowerRingComparator);
+                                                                                                    increasingPowerRingComparator);
   }
-  
+
   @Test
   public void filter_then_extract_assertion_example() {
     Iterable<TolkienCharacter> badBadGuys = filter(orcsWithHobbitPrisoners).with("race.alignment", EVIL).get();
-    
+
     // {@link Properties#from} now accepts {@link Iterable}s as input, easing its use with {@link Assertions#filter}
     assertThat(extractProperty("name").from(badBadGuys)).containsOnly("Guruk");
-    
+
   }
 
 }

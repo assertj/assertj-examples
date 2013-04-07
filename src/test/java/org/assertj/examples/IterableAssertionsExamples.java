@@ -32,9 +32,10 @@ import java.util.List;
 import java.util.SortedSet;
 import java.util.TreeSet;
 
+import org.junit.Test;
+
 import org.assertj.examples.data.Ring;
 import org.assertj.examples.data.movie.Movie;
-import org.junit.Test;
 
 /**
  * Iterable (including Collection) assertions examples.<br>
@@ -96,8 +97,7 @@ public class IterableAssertionsExamples extends AbstractAssertionsExamples {
       assertThat(elvesRings).containsExactly(nenya, vilya, narya);
     } catch (AssertionError e) {
       logger.info(e.getMessage());
-      assertThat(e)
-                   .hasMessage(
+      assertThat(e).hasMessage(
                                "actual and expected have the same elements but not in the same order, at index 0 actual element was :\n<vilya>\n whereas expected element was :\n<nenya>\n");
     }
 
@@ -123,8 +123,7 @@ public class IterableAssertionsExamples extends AbstractAssertionsExamples {
     try {
       assertThat(newArrayList(gandalf, sam)).usingElementComparator(raceNameComparator).doesNotContain(sauron);
     } catch (AssertionError e) {
-      assertThat(e)
-                   .hasMessage(
+      assertThat(e).hasMessage(
                                "expecting\n"
                                    + "<[Character [name=Gandalf, race=Race [name=Maia, immortal=true], age=2020], Character [name=Sam, race=Race [name=Hobbit, immortal=false], age=38]]>\n"
                                    + " not to contain\n"
@@ -151,11 +150,10 @@ public class IterableAssertionsExamples extends AbstractAssertionsExamples {
   }
 
   @Test
-  public void iterable_assertions_on_extracted_property_values_example() {
+  public void iterable_assertions_on_extracted_values_example() {
 
     // extract simple property values having a java standard type
-    assertThat(extractProperty("name", String.class).from(fellowshipOfTheRing)).contains("Boromir", "Gandalf", "Frodo",
-                                                                                         "Legolas")
+    assertThat(extractProperty("name", String.class).from(fellowshipOfTheRing)).contains("Boromir", "Gandalf", "Frodo")
                                                                                .doesNotContain("Sauron", "Elrond");
 
     // same extraction with an alternate syntax
@@ -165,24 +163,31 @@ public class IterableAssertionsExamples extends AbstractAssertionsExamples {
                                                                                                       "Elrond");
 
     // extracting property works also with user's types (here Race)
-    assertThat(extractProperty("race").from(fellowshipOfTheRing)).contains(HOBBIT, ELF).doesNotContain(ORC);
+    assertThat(extractProperty("race").from(fellowshipOfTheRing)).contains(HOBBIT, ELF)
+                                                                 .doesNotContain(ORC);
 
     // extract nested property on Race
-    assertThat(extractProperty("race.name").from(fellowshipOfTheRing)).contains("Hobbit", "Elf").doesNotContain("Orc");
+    assertThat(extractProperty("race.name").from(fellowshipOfTheRing)).contains("Hobbit", "Elf")
+                                                                      .doesNotContain("Orc");
 
-    // same assertions but written with extracting()
-    
-    // extract simple property values having a java standard type
+    // same assertions but written with extracting(), it has the advantage of being able to extract field values as well
+    // as property values
+
+    // extract 'name' property values.
     assertThat(fellowshipOfTheRing).extracting("name")
                                    .contains("Boromir", "Gandalf", "Frodo", "Legolas")
                                    .doesNotContain("Sauron", "Elrond");
 
-    // extracting property works also with user's types (here Race)
+    // extract 'age' field values, it works because 'age' is public in TolkienCharacter class.
+    assertThat(fellowshipOfTheRing).extracting("age")
+                                   .contains(33, 38, 36);
+
+    // extracting works also with user's types (here Race),
     assertThat(fellowshipOfTheRing).extracting("race")
                                    .contains(HOBBIT, ELF)
                                    .doesNotContain(ORC);
 
-    // extract nested property on Race
+    // extract nested property values on Race
     assertThat(fellowshipOfTheRing).extracting("race.name")
                                    .contains("Hobbit", "Elf")
                                    .doesNotContain("Orc");

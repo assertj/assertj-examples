@@ -24,8 +24,8 @@ import org.assertj.examples.data.TolkienCharacter;
  */
 public class AgeComparator implements Comparator<TolkienCharacter> {
   public int compare(TolkienCharacter tolkienCharacter1, TolkienCharacter tolkienCharacter2) {
-    Integer age1 = tolkienCharacter1.getAge();
-    return age1.compareTo(tolkienCharacter2.getAge());
+    Integer age1 = tolkienCharacter1.age;
+    return age1.compareTo(tolkienCharacter2.age);
   }
 
 }

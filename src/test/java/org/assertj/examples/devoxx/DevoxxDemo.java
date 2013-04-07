@@ -53,7 +53,7 @@ public class DevoxxDemo extends AbstractAssertionsExamples {
     assertThat("Test").containsIgnoringCase("test");
 
     // the most simple assertion
-    assertThat(frodo.getAge()).isEqualTo(33);
+    assertThat(frodo.age).isEqualTo(33);
     assertThat(frodo.getName()).isEqualTo("Frodo").isNotEqualTo("Frodon");
 
     assertThat(frodo).isIn(fellowshipOfTheRing);
