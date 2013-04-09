@@ -62,6 +62,7 @@ public class IterableAssertionsExamples extends AbstractAssertionsExamples {
     assertThat(newArrayList(frodo, null, sam)).containsNull();
     List<Object> newArrayList = newArrayList();
     assertThat(newArrayList).isEmpty();
+    assertThat(newArrayList).contains();
     assertThat(newArrayList).isNullOrEmpty();
     newArrayList = null;
     assertThat(newArrayList).isNullOrEmpty();

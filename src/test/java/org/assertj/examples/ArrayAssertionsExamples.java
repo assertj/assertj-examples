@@ -64,6 +64,7 @@ public class ArrayAssertionsExamples extends AbstractAssertionsExamples {
     assertThat(newArrayList(frodo, null, sam)).containsNull();
     Object[] array = array();
     assertThat(array).isEmpty();
+    assertThat(array).contains();
     assertThat(array).isNullOrEmpty();
     array = null;
     assertThat(array).isNullOrEmpty();
