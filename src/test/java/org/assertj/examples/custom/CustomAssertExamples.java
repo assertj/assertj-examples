@@ -12,8 +12,12 @@
  */
 package org.assertj.examples.custom;
 
+import static com.google.common.collect.Lists.newArrayList;
+
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.examples.custom.MyProjectAssertions.assertThat;
+
+import java.util.List;
 
 import org.junit.Test;
 
@@ -83,9 +87,20 @@ public class CustomAssertExamples extends AbstractAssertionsExamples {
     employeeOfTheMonth.jobTitle = "Guru";
     EmployeeOfTheMonthAssert.assertThat(employeeOfTheMonth).forMonth(1).isEqualTo(employeeOfTheMonth);
     EmployeeOfTheMonthAssert.assertThat(employeeOfTheMonth).isEqualTo(employeeOfTheMonth).as("").hasName("John Doe").forMonth(1).hasJobTitle("Guru");
-
-
-
   }
 
+  @Test
+  public void generics_limitation() {
+    Employee martin = new Employee("Martin Fowler");
+    Employee kent = new Employee("Kent Beck");
+    List<Employee> employees = newArrayList(martin, kent);
+    // now let's declare Martin as a Human (Employee inherits from Human
+    @SuppressWarnings("unused")
+    Human martinAsHuman = martin;
+    // this line compile
+    assertThat(employees).contains(kent, martin);
+    // this one does not compile because contains expect Employee not Human !
+    // assertThat(employees).contains(martinAsHuman);
+  }
+  
 }

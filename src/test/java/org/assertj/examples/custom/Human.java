@@ -22,4 +22,15 @@ public class Human {
   public void setName(String name) {
     this.name = name;
   }
+
+  public Human(String name) {
+    super();
+    this.name = name;
+  }
+
+  public Human() {
+    super();
+  }
+  
+  
 }
