@@ -14,6 +14,7 @@ package org.assertj.examples;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.extractProperty;
+import static org.assertj.core.api.Assertions.tuple;
 import static org.assertj.core.util.Lists.newArrayList;
 import static org.assertj.examples.data.Race.ELF;
 import static org.assertj.examples.data.Race.HOBBIT;
@@ -192,6 +193,22 @@ public class IterableAssertionsExamples extends AbstractAssertionsExamples {
     assertThat(fellowshipOfTheRing).extracting("race.name")
                                    .contains("Hobbit", "Elf")
                                    .doesNotContain("Orc");
+  }
+
+  @Test
+  public void iterable_assertions_on_several_extracted_values() {
+
+    // extract 'name' and 'age' values.
+    assertThat(fellowshipOfTheRing).extracting("name", "age")
+                                   .contains(tuple("Boromir", 37),
+                                             tuple("Sam", 38),
+                                             tuple("Legolas", 1000));
+
+    // extract 'name', 'age' and Race name values.
+    assertThat(fellowshipOfTheRing).extracting("name", "age", "race.name")
+                                   .contains(tuple("Boromir", 37, "Man"),
+                                             tuple("Sam", 38, "Hobbit"),
+                                             tuple("Legolas", 1000, "Elf"));
   }
 
   @Test
