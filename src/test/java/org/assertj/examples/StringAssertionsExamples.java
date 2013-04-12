@@ -80,9 +80,7 @@ public class StringAssertionsExamples extends AbstractAssertionsExamples {
       // failed assertion with specific comparator mention the comparison strategy to help interpreting the error
       assertThat("Frodo").usingComparator(caseInsensitiveStringComparator).startsWith("FROO");
     } catch (AssertionError e) {
-      assertThat(e).hasMessage(
-          "expecting\n" + "<'Frodo'>\n" + " to start with\n" + "<'FROO'>\n"
-              + " according to 'CaseInsensitiveStringComparator' comparator");
+      logAssertionErrorMessage("startsWith with custom comparator", e);
     }
   }
 

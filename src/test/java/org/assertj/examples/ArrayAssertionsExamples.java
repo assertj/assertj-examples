@@ -100,14 +100,7 @@ public class ArrayAssertionsExamples extends AbstractAssertionsExamples {
     try {
       assertThat(array(gandalf, sam)).usingElementComparator(ageComparator).isSorted();
     } catch (AssertionError e) {
-      assertThat(e).hasMessage(
-                               "group is not sorted according to 'AgeComparator' comparator because "
-                                   + "element 0:<Character [name=Gandalf, race=Race [name=Maia, immortal=true], age=2020]> "
-                                   + "is not less or equal than "
-                                   + "element 1:<Character [name=Sam, race=Race [name=Hobbit, immortal=false], age=38]>.\n"
-                                   + "group was:\n"
-                                   + "<[Character [name=Gandalf, race=Race [name=Maia, immortal=true], age=2020], "
-                                   + "Character [name=Sam, race=Race [name=Hobbit, immortal=false], age=38]]>");
+      logAssertionErrorMessage("isSorted with custom element comparator", e);
     }
 
     // duplicates assertion honors custom comparator :
@@ -116,13 +109,7 @@ public class ArrayAssertionsExamples extends AbstractAssertionsExamples {
     try {
       assertThat(array(sam, gandalf, frodo)).usingElementComparator(raceNameComparator).doesNotHaveDuplicates();
     } catch (AssertionError e) {
-      assertThat(e)
-                   .hasMessage(
-                               "found duplicate(s)\n"
-                                   + "<[Character [name=Frodo, race=Race [name=Hobbit, immortal=false], age=33]]>\n"
-                                   + " in\n"
-                                   + "<[Character [name=Sam, race=Race [name=Hobbit, immortal=false], age=38], Character [name=Gandalf, race=Race [name=Maia, immortal=true], age=2020], Character [name=Frodo, race=Race [name=Hobbit, immortal=false], age=33]]>\n"
-                                   + " according to 'TolkienCharacterRaceNameComparator' comparator");
+      logAssertionErrorMessage("doesNotHaveDuplicates with custom element comparator", e);
     }
   }
 

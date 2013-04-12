@@ -67,21 +67,14 @@ public class AssertionsWithCustomComparatorExamples extends AbstractAssertionsEx
     try {
       assertThat(frodo).usingComparator(raceNameComparator).isEqualTo(sauron);
     } catch (AssertionError e) {
-      assertThat(e).hasMessage("Expecting actual:\n" +
-          "<Character [name=Frodo, race=Race [name=Hobbit, immortal=false], age=33]>\n" +
-          " to be equal to \n"
-          + "<Character [name=Sauron, race=Race [name=Maia, immortal=true], age=50000]>\n"
-          + " according to 'TolkienCharacterRaceNameComparator' comparator but was not.");
+      logAssertionErrorMessage("isEqualTo with custom comparator", e);
     }
 
     // custom comparison by race : frodo IS equal to sam => isNotEqual must fail
     try {
       assertThat(frodo).usingComparator(raceNameComparator).isNotEqualTo(sam);
     } catch (AssertionError e) {
-      assertThat(e).hasMessage(
-          "<Character [name=Frodo, race=Race [name=Hobbit, immortal=false], age=33]> should not be equal to:"
-              + "<Character [name=Sam, race=Race [name=Hobbit, immortal=false], age=38]> "
-              + "according to 'TolkienCharacterRaceNameComparator' comparator");
+      logAssertionErrorMessage("isNotEqualTo with custom comparator", e);
     }
   }
 
@@ -98,14 +91,7 @@ public class AssertionsWithCustomComparatorExamples extends AbstractAssertionsEx
     try {
       assertThat(newArrayList(gandalf)).usingElementComparator(raceNameComparator).doesNotContain(sauron);
     } catch (AssertionError e) {
-      assertThat(e).hasMessage(
-          "expecting\n"
-              + "<[Character [name=Gandalf, race=Race [name=Maia, immortal=true], age=2020]]>\n"
-              + " not to contain\n"
-              + "<[Character [name=Sauron, race=Race [name=Maia, immortal=true], age=50000]]>\n"
-              + " but found\n"
-              + "<[Character [name=Sauron, race=Race [name=Maia, immortal=true], age=50000]]>\n"
-              + " according to 'TolkienCharacterRaceNameComparator' comparator");
+      logAssertionErrorMessage("doesNotContain with custom element comparator", e);
     }
 
     // duplicates assertion honors custom comparator
@@ -114,14 +100,7 @@ public class AssertionsWithCustomComparatorExamples extends AbstractAssertionsEx
     try {
       assertThat(newArrayList(sam, gandalf, frodo)).usingElementComparator(raceNameComparator).doesNotHaveDuplicates();
     } catch (AssertionError e) {
-      assertThat(e).hasMessage(
-          "found duplicate(s)\n" +
-              "<[Character [name=Frodo, race=Race [name=Hobbit, immortal=false], age=33]]>\n" +
-              " in\n" +
-              "<[Character [name=Sam, race=Race [name=Hobbit, immortal=false], age=38], "
-              + "Character [name=Gandalf, race=Race [name=Maia, immortal=true], age=2020], "
-              + "Character [name=Frodo, race=Race [name=Hobbit, immortal=false], age=33]]>\n" +
-              " according to 'TolkienCharacterRaceNameComparator' comparator");
+      logAssertionErrorMessage("doesNotHaveDuplicates with custom element comparator", e);
     }
   }
 
@@ -142,14 +121,7 @@ public class AssertionsWithCustomComparatorExamples extends AbstractAssertionsEx
     try {
       assertThat(array(gandalf, sam)).usingElementComparator(ageComparator).isSorted();
     } catch (AssertionError e) {
-      assertThat(e).hasMessage(
-          "group is not sorted according to 'AgeComparator' comparator because "
-              + "element 0:<Character [name=Gandalf, race=Race [name=Maia, immortal=true], age=2020]> "
-              + "is not less or equal than "
-              + "element 1:<Character [name=Sam, race=Race [name=Hobbit, immortal=false], age=38]>.\n"
-              + "group was:\n"
-              + "<[Character [name=Gandalf, race=Race [name=Maia, immortal=true], age=2020], "
-              + "Character [name=Sam, race=Race [name=Hobbit, immortal=false], age=38]]>");
+      logAssertionErrorMessage("isSorted with custom element comparator", e);
     }
 
     // duplicates assertion honors custom comparator :
@@ -158,14 +130,7 @@ public class AssertionsWithCustomComparatorExamples extends AbstractAssertionsEx
     try {
       assertThat(array(sam, gandalf, frodo)).usingElementComparator(raceNameComparator).doesNotHaveDuplicates();
     } catch (AssertionError e) {
-      assertThat(e).hasMessage(
-          "found duplicate(s)\n" +
-              "<[Character [name=Frodo, race=Race [name=Hobbit, immortal=false], age=33]]>\n" +
-              " in\n" +
-              "<[Character [name=Sam, race=Race [name=Hobbit, immortal=false], age=38], "
-              + "Character [name=Gandalf, race=Race [name=Maia, immortal=true], age=2020], "
-              + "Character [name=Frodo, race=Race [name=Hobbit, immortal=false], age=33]]>\n" +
-              " according to 'TolkienCharacterRaceNameComparator' comparator");
+      logAssertionErrorMessage("doesNotHaveDuplicates with custom element comparator", e);
     }
   }
 

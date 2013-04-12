@@ -125,14 +125,7 @@ public class IterableAssertionsExamples extends AbstractAssertionsExamples {
     try {
       assertThat(newArrayList(gandalf, sam)).usingElementComparator(raceNameComparator).doesNotContain(sauron);
     } catch (AssertionError e) {
-      assertThat(e).hasMessage(
-                               "expecting\n"
-                                   + "<[Character [name=Gandalf, race=Race [name=Maia, immortal=true], age=2020], Character [name=Sam, race=Race [name=Hobbit, immortal=false], age=38]]>\n"
-                                   + " not to contain\n"
-                                   + "<[Character [name=Sauron, race=Race [name=Maia, immortal=true], age=50000]]>\n"
-                                   + " but found\n"
-                                   + "<[Character [name=Sauron, race=Race [name=Maia, immortal=true], age=50000]]>\n"
-                                   + " according to 'TolkienCharacterRaceNameComparator' comparator");
+      logAssertionErrorMessage("doesNotContain with custom element comparator", e);
     }
 
     // duplicates assertion honors custom comparator
@@ -141,13 +134,7 @@ public class IterableAssertionsExamples extends AbstractAssertionsExamples {
     try {
       assertThat(newArrayList(sam, gandalf, frodo)).usingElementComparator(raceNameComparator).doesNotHaveDuplicates();
     } catch (AssertionError e) {
-      assertThat(e)
-                   .hasMessage(
-                               "found duplicate(s)\n"
-                                   + "<[Character [name=Frodo, race=Race [name=Hobbit, immortal=false], age=33]]>\n"
-                                   + " in\n"
-                                   + "<[Character [name=Sam, race=Race [name=Hobbit, immortal=false], age=38], Character [name=Gandalf, race=Race [name=Maia, immortal=true], age=2020], Character [name=Frodo, race=Race [name=Hobbit, immortal=false], age=33]]>\n"
-                                   + " according to 'TolkienCharacterRaceNameComparator' comparator");
+      logAssertionErrorMessage("doesNotHaveDuplicates with custom element comparator", e);
     }
   }
 
