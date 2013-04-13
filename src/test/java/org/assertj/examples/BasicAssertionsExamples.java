@@ -110,10 +110,7 @@ public class BasicAssertionsExamples extends AbstractAssertionsExamples {
     try {
       assertThat(actual).isEqualTo(expected);
     } catch (AssertionError e) {
-      assertThat(e).hasMessage(
-                               "expected:\n" + "<'Person[name=Jake] (Person@" + toHexString(expected.hashCode())
-                                   + ")'>\n" + " but was:\n"
-                                   + "<'Person[name=Jake] (Person@" + toHexString(actual.hashCode()) + ")'>");
+      logAssertionErrorMessage("isEqualTo differentiating expected and actual having same toString representation", e);
     }
   }
 

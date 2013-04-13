@@ -119,7 +119,7 @@ public class NumberAssertionsExamples extends AbstractAssertionsExamples {
     try {
       assertThat(8.1f).isEqualTo(8.0f, offset(0.1f));
     } catch (AssertionError e) {
-      assertThat(e).hasMessage("expecting <8.1f> to be close to <8.0f> within offset <0.1f> but offset was <0.10000038f>");
+      logAssertionErrorMessage("isEqualTo with offset", e);
     }
   }
 
