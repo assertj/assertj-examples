@@ -75,11 +75,19 @@ public class IterableAssertionsExamples extends AbstractAssertionsExamples {
     assertThat(allRings).containsAll(elvesRings);
 
     // to show an error message
-    // assertThat(elvesRings).containsAll(allRings);
+    try {
+      assertThat(elvesRings).containsAll(allRings);
+    } catch (AssertionError e) {
+      logAssertionErrorMessage("containsAll", e);
+    }
 
     List<Integer> testedList = newArrayList(1);
     List<Integer> referenceList = newArrayList(1, 2, 3);
-    assertThat(referenceList).containsSequence(testedList.toArray(new Integer[0]));
+    assertThat(referenceList).containsSequence(testedList.toArray(new Integer[testedList.size()]));
+
+    List<String> list = newArrayList("--option", "a=b", "--option", "c=d");
+    assertThat(list).containsSequence("--option", "c=d");
+
   }
 
   @Test

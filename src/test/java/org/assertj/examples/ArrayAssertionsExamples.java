@@ -81,6 +81,9 @@ public class ArrayAssertionsExamples extends AbstractAssertionsExamples {
     // Uncomment when #131 is fixed
     String[] arr = { "a", "b", "c" };
     assertThat(arr).containsExactly("a", "b", "c");
+
+    array = new String[] { "--option", "a=b", "--option", "c=d" };
+    assertThat(array).containsSequence("--option", "c=d");
   }
 
   @Test
