@@ -64,7 +64,6 @@ public class IterableAssertionsExamples extends AbstractAssertionsExamples {
       logAssertionErrorMessage("containsOnly", e);
     }
 
-
     // special check for null, empty collection or both
     assertThat(newArrayList(frodo, null, sam)).containsNull();
     List<Object> newArrayList = newArrayList();
@@ -235,6 +234,23 @@ public class IterableAssertionsExamples extends AbstractAssertionsExamples {
     // Iterable assertions also works if you give an Iterator as input.
     Iterator<Ring> elvesRings = newArrayList(vilya, nenya, narya).iterator();
     assertThat(elvesRings).isSubsetOf(ringsOfPower);
+  }
+
+  @Test
+  public void doesNotContainAnyElementsOf_assertion_example() {
+    // this assertion succeed :
+    List<String> actual = newArrayList("GIT", "CVS", "SOURCESAFE");
+    List<String> values = newArrayList("git", "cvs", "subversion");
+    assertThat(actual).doesNotContainAnyElementsOf(values);
+
+    // This one failed :
+    actual = newArrayList("GIT", "cvs", "SOURCESAFE");
+    values = newArrayList("git", "cvs", "subversion");
+    try {
+      assertThat(actual).doesNotContainAnyElementsOf(values);
+    } catch (AssertionError e) {
+      logAssertionErrorMessage("doesNotContainAnyElementsOf", e);
+    }
   }
 
 }

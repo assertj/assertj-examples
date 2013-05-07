@@ -12,8 +12,6 @@
  */
 package org.assertj.examples;
 
-import static java.lang.Integer.toHexString;
-
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.examples.data.Race.HOBBIT;
 
