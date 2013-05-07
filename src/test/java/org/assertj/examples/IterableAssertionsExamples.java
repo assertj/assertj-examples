@@ -58,6 +58,12 @@ public class IterableAssertionsExamples extends AbstractAssertionsExamples {
     // with containsOnly, all the elements must be present (but the order is not important)
     assertThat(elvesRings).containsOnly(nenya, vilya, narya);
     assertThat(elvesRings).doesNotContainNull().doesNotHaveDuplicates();
+    try {
+      assertThat(elvesRings).containsOnly(nenya, vilya, oneRing);
+    } catch (AssertionError e) {
+      logAssertionErrorMessage("containsOnly", e);
+    }
+
 
     // special check for null, empty collection or both
     assertThat(newArrayList(frodo, null, sam)).containsNull();
