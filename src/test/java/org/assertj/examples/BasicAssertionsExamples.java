@@ -37,6 +37,10 @@ public class BasicAssertionsExamples extends AbstractAssertionsExamples {
     // the most simple assertion
     assertThat(frodo.age).isEqualTo(33);
     assertThat(frodo.getName()).isEqualTo("Frodo").isNotEqualTo("Frodon");
+    // shows that we are no more limited by generics, if we had defined isEqualTo to take only the type of actual
+    // (TolkienCharacter) the assertion below would not have compiled
+    Object frodoAsObject = frodo;
+    assertThat(frodo).isEqualTo(frodoAsObject);
   }
 
   @Test
