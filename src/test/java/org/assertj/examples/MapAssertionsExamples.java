@@ -12,13 +12,13 @@
  */
 package org.assertj.examples;
 
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.entry;
+import static org.assertj.examples.data.Ring.manRing;
+import static org.assertj.examples.data.Ring.narya;
 import static org.assertj.examples.data.Ring.nenya;
 import static org.assertj.examples.data.Ring.oneRing;
 
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.entry;
-
-import org.assertj.examples.data.Ring;
 import org.junit.Test;
 
 /**
@@ -42,8 +42,9 @@ public class MapAssertionsExamples extends AbstractAssertionsExamples {
     assertThat(ringBearers).doesNotContainEntry(oneRing, aragorn);
     
     // Assertion on key
-    assertThat(ringBearers).containsKey(Ring.nenya);
-    assertThat(ringBearers).doesNotContainKey(Ring.manRing);
+    assertThat(ringBearers).containsKey(nenya);
+    assertThat(ringBearers).containsKeys(nenya, narya);
+    assertThat(ringBearers).doesNotContainKey(manRing);
     
     // Assertion on value
     assertThat(ringBearers).containsValue(frodo);
