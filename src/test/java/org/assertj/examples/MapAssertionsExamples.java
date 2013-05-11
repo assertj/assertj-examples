@@ -35,7 +35,11 @@ public class MapAssertionsExamples extends AbstractAssertionsExamples {
     
     // note the usage of Assertions.entry(key, value) synthetic sugar for better readability (similar to MapEntry.entry(key, value)). 
     assertThat(ringBearers).contains(entry(oneRing, frodo), entry(nenya, galadriel));
+    // same assertion but different way of expressing it : no entry call needed but no varargs support. 
+    assertThat(ringBearers).containsEntry(oneRing, frodo).containsEntry(nenya, galadriel);
+    // opposite of contains/containsEntry
     assertThat(ringBearers).doesNotContain(entry(oneRing, aragorn));
+    assertThat(ringBearers).doesNotContainEntry(oneRing, aragorn);
     
     // Assertion on key
     assertThat(ringBearers).containsKey(Ring.nenya);
