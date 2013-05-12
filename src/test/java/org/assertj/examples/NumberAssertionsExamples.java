@@ -39,6 +39,7 @@ public class NumberAssertionsExamples extends AbstractAssertionsExamples {
     // <= < > >= assertions
     assertThat(sam.age).isGreaterThan(frodo.age).isGreaterThanOrEqualTo(38);
     assertThat(frodo.age).isLessThan(sam.age).isLessThanOrEqualTo(33);
+    assertThat(sam.age).isBetween(frodo.age, gimli.age);
 
     // shortcuts for assertions : > 0, < 0 and == 0
     assertThat(frodo.age - frodo.age).isZero();
