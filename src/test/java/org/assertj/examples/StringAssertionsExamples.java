@@ -14,6 +14,8 @@ package org.assertj.examples;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+import java.util.Comparator;
+
 import org.junit.Test;
 
 /**
@@ -83,5 +85,29 @@ public class StringAssertionsExamples extends AbstractAssertionsExamples {
       logAssertionErrorMessage("startsWith with custom comparator", e);
     }
   }
+
+  @Test
+  public void charSequence_subclasses_assertions_examples() {
+    // StringBuilder have same assertions as String   
+    StringBuilder stringBuilder = new StringBuilder("Frodo");
+    assertThat(stringBuilder).startsWith("Fro").endsWith("do").hasSize(5);
+    assertThat(stringBuilder).contains("rod").doesNotContain("fro");
+    assertThat(stringBuilder).containsOnlyOnce("do");
+    
+    Comparator<CharSequence> caseInsensitiveComparator = new Comparator<CharSequence>() {
+      public int compare(CharSequence s1, CharSequence s2) {
+        return s1.toString().toLowerCase().compareTo(s2.toString().toLowerCase());
+      }
+    };
+    assertThat(stringBuilder).usingComparator(caseInsensitiveComparator).contains("fro").doesNotContain("don");
+    
+    // StringBuilder have same assertions as String   
+    StringBuffer stringBuffer = new StringBuffer("Frodo");
+    assertThat(stringBuffer).startsWith("Fro").endsWith("do").hasSize(5);
+    assertThat(stringBuffer).contains("rod").doesNotContain("fro");
+    assertThat(stringBuffer).containsOnlyOnce("do");
+    assertThat(stringBuffer).usingComparator(caseInsensitiveComparator).contains("fro").doesNotContain("don");
+  }
+
 
 }
