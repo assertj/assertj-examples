@@ -174,10 +174,59 @@ public class ArrayAssertionsExamples extends AbstractAssertionsExamples {
   @Test
   public void filter_then_extract_assertion_example() {
     Iterable<TolkienCharacter> badBadGuys = filter(orcsWithHobbitPrisoners).with("race.alignment", EVIL).get();
+    assertThat(badBadGuys).extracting("name").containsOnly("Guruk");
 
-    // {@link Properties#from} now accepts {@link Iterable}s as input, easing its use with {@link Assertions#filter}
-    assertThat(extractProperty("name").from(badBadGuys)).containsOnly("Guruk");
+  }
 
+  @Test
+  public void contains_exactly_for_basic_types_assertion_examples() {
+    // int
+    assertThat(new int[] { 1, 2, 3 }).containsExactly(1, 2, 3);
+    try {
+      assertThat(new int[] { 1, 2, 3 }).containsExactly(2, 1, 3);
+    } catch (AssertionError e) {
+      logAssertionErrorMessage("containsExactly for int array", e);
+    }
+
+    // long
+    assertThat(new long[] { 1, 2, 3 }).containsExactly(1, 2, 3);
+    try {
+      assertThat(new long[] { 1, 2, 3 }).containsExactly(2, 1, 3);
+    } catch (AssertionError e) {
+      logAssertionErrorMessage("containsExactly for long array", e);
+    }
+
+    // short
+    assertThat(new short[] { 1, 2, 3 }).containsExactly((short) 1, (short) 2, (short) 3);
+    try {
+      assertThat(new short[] { 1, 2, 3 }).containsExactly((short) 2, (short) 1, (short) 3);
+    } catch (AssertionError e) {
+      logAssertionErrorMessage("containsExactly for long array", e);
+    }
+
+    // byte
+    assertThat(new byte[] { 1, 2, 3 }).containsExactly((byte) 1, (byte) 2, (byte) 3);
+    try {
+      assertThat(new byte[] { 1, 2, 3 }).containsExactly((byte) 2, (byte) 1, (byte) 3);
+    } catch (AssertionError e) {
+      logAssertionErrorMessage("containsExactly for long array", e);
+    }
+
+    // float
+    assertThat(new float[] { 1, 2.0f, 3 }).containsExactly(1.0f, 2, 3);
+    try {
+      assertThat(new float[] { 1.0f, 2, 3 }).containsExactly(2.0f, 1, 3);
+    } catch (AssertionError e) {
+      logAssertionErrorMessage("containsExactly for float array", e);
+    }
+    
+    // double
+    assertThat(new double[] { 1.0, 2, 3 }).containsExactly(1.0, 2, 3);
+    try {
+      assertThat(new double[] { 1.0, 2, 3 }).containsExactly(2.0, 1, 3);
+    } catch (AssertionError e) {
+      logAssertionErrorMessage("containsExactly for double array", e);
+    }
   }
 
 }
