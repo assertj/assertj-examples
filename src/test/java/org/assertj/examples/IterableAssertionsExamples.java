@@ -253,4 +253,28 @@ public class IterableAssertionsExamples extends AbstractAssertionsExamples {
     }
   }
 
+  @Test
+  public void containsOnlyOnce_assertion_examples() {
+    // int
+    assertThat(newArrayList("Winter", "is", "coming")).containsOnlyOnce("Winter");
+    assertThat(newArrayList("Winter", "is", "coming")).containsOnlyOnce("coming", "Winter");
+    try {
+      assertThat(newArrayList("Aria", "Stark", "daughter", "of", "Ned", "Stark")).containsOnlyOnce("Stark");
+    } catch (AssertionError e) {
+      logAssertionErrorMessage("containsOnlyOnce for Iterable", e);
+    }
+
+    try {
+      assertThat(newArrayList("winter", "is", "coming")).containsOnlyOnce("Lannister");
+    } catch (AssertionError e) {
+      logAssertionErrorMessage("containsOnlyOnce for Iterable", e);
+    }
+
+    try {
+      assertThat(newArrayList("Aria", "Stark", "daughter", "of", "Ned", "Stark")).containsOnlyOnce("Stark", "Lannister", "Aria");
+    } catch (AssertionError e) {
+      logAssertionErrorMessage("containsOnlyOnce for Iterable", e);
+    }
+  }
+
 }

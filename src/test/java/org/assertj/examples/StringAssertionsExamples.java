@@ -31,6 +31,11 @@ public class StringAssertionsExamples extends AbstractAssertionsExamples {
     assertThat("Frodo").startsWith("Fro").endsWith("do").hasSize(5);
     assertThat("Frodo").contains("rod").doesNotContain("fro");
     assertThat("Frodo").containsOnlyOnce("do");
+    try {
+      assertThat("Frodo").containsOnlyOnce("o");
+    } catch (AssertionError e) {
+      logAssertionErrorMessage("String containsOnlyOnce", e);
+    }
     // contains accepts multiple String to avoid chaining contains several times.
     assertThat("Gandalf the grey").contains("alf", "grey");
     try {

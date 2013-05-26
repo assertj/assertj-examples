@@ -219,7 +219,7 @@ public class ArrayAssertionsExamples extends AbstractAssertionsExamples {
     } catch (AssertionError e) {
       logAssertionErrorMessage("containsExactly for float array", e);
     }
-    
+
     // double
     assertThat(new double[] { 1.0, 2, 3 }).containsExactly(1.0, 2, 3);
     try {
@@ -227,6 +227,34 @@ public class ArrayAssertionsExamples extends AbstractAssertionsExamples {
     } catch (AssertionError e) {
       logAssertionErrorMessage("containsExactly for double array", e);
     }
+  }
+
+  @Test
+  public void containsOnlyOnce_for_basic_types_assertion_examples() {
+    // int
+    assertThat(new int[] { 1, 2, 3 }).containsOnlyOnce(1);
+    assertThat(new int[] { 1, 2, 3 }).containsOnlyOnce(1, 2);
+    assertThat(new int[] { 1, 2, 3 }).containsOnlyOnce(1, 2, 3);
+    assertThat(new int[] { 1, 2, 3 }).containsOnlyOnce(3, 2, 3);
+    try {
+      assertThat(new int[] { 1, 2, 1 }).containsOnlyOnce(1);
+    } catch (AssertionError e) {
+      logAssertionErrorMessage("containsOnlyOnce for int array", e);
+    }
+
+    try {
+      assertThat(new int[] { 1, 2, 3 }).containsOnlyOnce(4);
+    } catch (AssertionError e) {
+      logAssertionErrorMessage("containsOnlyOnce for int array", e);
+    }
+
+    try {
+      assertThat(new int[] { 1, 2, 3, 3, 1 }).containsOnlyOnce(0, 1, 2, 3, 4, 5);
+    } catch (AssertionError e) {
+      logAssertionErrorMessage("containsOnlyOnce for int array", e);
+    }
+
+    assertThat(new char[] { 'a', 'b', 'c' }).containsOnlyOnce('a', 'b');
   }
 
 }
