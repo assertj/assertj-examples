@@ -34,6 +34,7 @@ import java.util.Comparator;
 
 import org.junit.Test;
 
+import org.assertj.examples.data.Race;
 import org.assertj.examples.data.Ring;
 import org.assertj.examples.data.TolkienCharacter;
 import org.assertj.examples.data.movie.Movie;
@@ -127,6 +128,11 @@ public class ArrayAssertionsExamples extends AbstractAssertionsExamples {
 
     // extracting property works also with user's types (here Race)
     assertThat(extractProperty("race").from(fellowshipOfTheRingArray)).contains(HOBBIT, ELF).doesNotContain(ORC);
+
+    // same assertion but specifying the type of the extracted values (here Race)
+    assertThat(fellowshipOfTheRingArray).extracting("race", Race.class)
+                                        .contains(HOBBIT, ELF)
+                                        .doesNotContain(ORC);
 
     // extract nested property on Race
     assertThat(extractProperty("race.name").from(fellowshipOfTheRingArray)).contains("Hobbit", "Elf")
