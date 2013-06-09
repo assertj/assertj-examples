@@ -1,13 +1,13 @@
 /**
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with
  * the License. You may obtain a copy of the License at
- *
+ * 
  * http://www.apache.org/licenses/LICENSE-2.0
- *
+ * 
  * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on
  * an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the
  * specific language governing permissions and limitations under the License.
- *
+ * 
  * Copyright 2012-2013 the original author or authors.
  */
 package org.assertj.examples;
@@ -16,7 +16,6 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 import org.assertj.core.internal.Failures;
 import org.junit.Test;
-
 
 /**
  * Exception assertions examples.
@@ -102,7 +101,8 @@ public class ExceptionAssertionsExamples extends AbstractAssertionsExamples {
     // at org.eclipse.jdt.internal.junit.runner.RemoteTestRunner.main(RemoteTestRunner.java:197)
 
     System.err.println("\n--------------- stack trace filtered -----------------");
-    Failures.instance().setRemoveAssertJRelatedElementsFromStackTrace(true); // TODO setRemoveAssertJRelatedElementsFromStackTrace
+    Failures.instance().setRemoveAssertJRelatedElementsFromStackTrace(true); // TODO
+                                                                             // setRemoveAssertJRelatedElementsFromStackTrace
     try {
       assertThat("Messi").isEqualTo("Ronaldo");
     } catch (AssertionError e) {
@@ -110,8 +110,9 @@ public class ExceptionAssertionsExamples extends AbstractAssertionsExamples {
       e.getStackTrace();
     }
   }
+
   // see below that elements :
-  
+
   // at org.assertj.core.error.ConstructorInvoker.newInstance(ConstructorInvoker.java:34)
   // at org.assertj.core.error.ShouldBeEqual.newComparisonFailure(ShouldBeEqual.java:180)
   // at org.assertj.core.error.ShouldBeEqual.comparisonFailure(ShouldBeEqual.java:171)
@@ -121,7 +122,7 @@ public class ExceptionAssertionsExamples extends AbstractAssertionsExamples {
   // at org.assertj.core.api.AbstractAssert.isEqualTo(AbstractAssert.java:86)
   // at
   // org.assertj.core.examples.ExceptionAssertionsExamples.stack_trace_filtering(ExceptionAssertionsExamples.java:56)
-  
+
   // don't appear in :
 
   // --------------- stack trace filtered -----------------
@@ -154,7 +155,6 @@ public class ExceptionAssertionsExamples extends AbstractAssertionsExamples {
   // at org.eclipse.jdt.internal.junit.runner.RemoteTestRunner.run(RemoteTestRunner.java:390)
   // at org.eclipse.jdt.internal.junit.runner.RemoteTestRunner.main(RemoteTestRunner.java:197)
 
-
   @Test
   public void exception_cause_assertion_examples() throws Exception {
 
@@ -166,6 +166,11 @@ public class ExceptionAssertionsExamples extends AbstractAssertionsExamples {
 
     // hasCauseExactlyInstanceOf will match only exact same type
     assertThat(throwable).hasCauseExactlyInstanceOf(NullPointerException.class);
+    try {
+      assertThat(throwable).hasCauseExactlyInstanceOf(RuntimeException.class);
+    } catch (AssertionError e) {
+      logAssertionErrorMessage("hasCauseExactlyInstanceOf", e);
+    }
 
     Throwable throwable_root = new Throwable(new IllegalStateException(new NullPointerException()));
 
