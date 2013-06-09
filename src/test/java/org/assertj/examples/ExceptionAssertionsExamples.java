@@ -153,4 +153,27 @@ public class ExceptionAssertionsExamples extends AbstractAssertionsExamples {
   // at org.eclipse.jdt.internal.junit.runner.RemoteTestRunner.runTests(RemoteTestRunner.java:683)
   // at org.eclipse.jdt.internal.junit.runner.RemoteTestRunner.run(RemoteTestRunner.java:390)
   // at org.eclipse.jdt.internal.junit.runner.RemoteTestRunner.main(RemoteTestRunner.java:197)
+
+
+  @Test
+  public void exception_cause_assertion_examples() throws Exception {
+
+    Throwable throwable = new Throwable(new NullPointerException());
+
+    // hasCauseInstanceOf will match inheritance.
+    assertThat(throwable).hasCauseInstanceOf(NullPointerException.class);
+    assertThat(throwable).hasCauseInstanceOf(RuntimeException.class);
+
+    // hasCauseExactlyInstanceOf will match only exact same type
+    assertThat(throwable).hasCauseExactlyInstanceOf(NullPointerException.class);
+
+    Throwable throwable_root = new Throwable(new IllegalStateException(new NullPointerException()));
+
+    // hasRootCauseInstanceOf will match inheritance
+    assertThat(throwable_root).hasRootCauseInstanceOf(NullPointerException.class);
+    assertThat(throwable_root).hasRootCauseInstanceOf(RuntimeException.class);
+
+    // hasRootCauseExactlyInstanceOf will match only exact same type
+    assertThat(throwable_root).hasRootCauseExactlyInstanceOf(NullPointerException.class);
+  }
 }
