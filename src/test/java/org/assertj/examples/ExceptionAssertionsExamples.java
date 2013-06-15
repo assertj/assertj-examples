@@ -14,8 +14,9 @@ package org.assertj.examples;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-import org.assertj.core.internal.Failures;
 import org.junit.Test;
+
+import org.assertj.core.api.Assertions;
 
 /**
  * Exception assertions examples.
@@ -53,7 +54,7 @@ public class ExceptionAssertionsExamples extends AbstractAssertionsExamples {
 
     // check the err output to see the difference between a classic and a filtered stack trace.
     System.err.println("--------------- stack trace not filtered -----------------");
-    Failures.instance().setRemoveAssertJRelatedElementsFromStackTrace(false);
+    Assertions.setRemoveAssertJRelatedElementsFromStackTrace(false);
     try {
       assertThat("Messi").isEqualTo("Ronaldo");
     } catch (AssertionError e) {
@@ -101,7 +102,7 @@ public class ExceptionAssertionsExamples extends AbstractAssertionsExamples {
     // at org.eclipse.jdt.internal.junit.runner.RemoteTestRunner.main(RemoteTestRunner.java:197)
 
     System.err.println("\n--------------- stack trace filtered -----------------");
-    Failures.instance().setRemoveAssertJRelatedElementsFromStackTrace(true); // TODO
+    Assertions.setRemoveAssertJRelatedElementsFromStackTrace(true); // TODO
                                                                              // setRemoveAssertJRelatedElementsFromStackTrace
     try {
       assertThat("Messi").isEqualTo("Ronaldo");
