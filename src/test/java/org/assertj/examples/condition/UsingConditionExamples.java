@@ -72,38 +72,7 @@ public class UsingConditionExamples extends AbstractAssertionsExamples {
     assertThat(newLinkedHashSet("Luke", "Yoda")).have(jediPower);
     assertThat(newLinkedHashSet("Leia", "Solo")).doNotHave(jediPower);
 
-    // areAtLeast & areNotAtLeast
-    assertThat(newLinkedHashSet("Luke", "Yoda", "Leia")).areAtLeast(2, jedi);
-    assertThat(newLinkedHashSet("Luke", "Yoda", "Obiwan")).areAtLeast(2, jedi);
-    assertThat(newLinkedHashSet("Luke", "Yoda", "Leia")).areNotAtLeast(1, jedi);
-    assertThat(newLinkedHashSet("Luke", "Solo", "Leia")).areNotAtLeast(1, jedi);
-
-    // haveAtLeast & doNotHaveAtLeast
-    assertThat(newLinkedHashSet("Luke", "Yoda", "Leia")).haveAtLeast(2, jediPower);
-    assertThat(newLinkedHashSet("Luke", "Yoda", "Obiwan")).haveAtLeast(2, jediPower);
-    assertThat(newLinkedHashSet("Luke", "Yoda", "Leia")).doNotHaveAtLeast(1, jediPower);
-    assertThat(newLinkedHashSet("Luke", "Solo", "Leia")).doNotHaveAtLeast(1, jediPower);
-
-    // areAtMost & areNotAtMost
-    assertThat(newLinkedHashSet("Luke", "Yoda", "Leia")).areAtMost(2, jedi);
-    assertThat(newLinkedHashSet("Luke", "Solo", "Leia")).areAtMost(2, jedi);
-    assertThat(newLinkedHashSet("Luke", "Yoda", "Leia")).areNotAtMost(1, jedi);
-    assertThat(newLinkedHashSet("Luke", "Yoda", "Obiwan")).areNotAtMost(1, jedi);
-
-    // haveAtMost & doNotHaveAtMost
-    assertThat(newLinkedHashSet("Luke", "Yoda", "Leia")).haveAtMost(2, jediPower);
-    assertThat(newLinkedHashSet("Luke", "Solo", "Leia")).haveAtMost(2, jediPower);
-    assertThat(newLinkedHashSet("Luke", "Yoda", "Leia")).doNotHaveAtMost(1, jediPower);
-    assertThat(newLinkedHashSet("Luke", "Yoda", "Obiwan")).doNotHaveAtMost(1, jediPower);
-
-    // areExactly & areNotExactly
-    assertThat(newLinkedHashSet("Luke", "Yoda", "Leia")).areExactly(2, jedi);
-    assertThat(newLinkedHashSet("Luke", "Yoda", "Leia")).areNotExactly(1, jedi);
-
-    // haveExactly & haveNotExactly
-    assertThat(newLinkedHashSet("Luke", "Yoda", "Leia")).haveExactly(2, jediPower);
-    assertThat(newLinkedHashSet("Luke", "Yoda", "Leia")).doNotHaveExactly(1, jediPower);
-  }
+   }
 
   @SuppressWarnings("unchecked")
   @Test

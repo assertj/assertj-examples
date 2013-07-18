@@ -53,24 +53,26 @@ public class JunitTestExample {
     System.out.println("@After - tearDown");
   }
 
-  @Test
+  // @Test
   public void testEmptyCollection() {
-    // given - a collection is created
+    // given - an empty collection is created
+    Collection<String> list = new ArrayList<String>();
 
     // then
-    assertThat(collection).isEmpty();
+    assertThat(list).isNotNull().isEmpty();
     System.out.println("@Test - testEmptyCollection");
   }
 
   @Test
   public void testOneItemCollection() {
-    // given - a collection is created
+    // given - an empty collection is created
     
     // when
     collection.add("itemA");
+    // collection.add("itemB");
     
     // then
-    assertThat(collection).hasSize(1).containsExactly("itemA");
+    assertThat(collection).as("test d'une collection").hasSize(1).containsExactly("itemA");
     System.out.println("@Test - testOneItemCollection");
   }
 }

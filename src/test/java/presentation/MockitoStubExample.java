@@ -80,7 +80,7 @@ public class MockitoStubExample {
 
   // another way of checking that the correct exception has been thrown
   @Test(expected = IllegalArgumentException.class)
-  public void throwExceptionOnSetLoginAndCheckWithJUNit() {
+  public void throw_exception_on_setLogin_and_check_with_JUNit() {
     // given
     User user = Mockito.mock(User.class);
     doThrow(new IllegalArgumentException("pas bien !")).when(user).setLogin("bad");

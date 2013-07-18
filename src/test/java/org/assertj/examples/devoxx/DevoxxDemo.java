@@ -54,7 +54,6 @@ public class DevoxxDemo extends AbstractAssertionsExamples {
   public void common_assertions_examples() {
 
     // the most simple assertion
-    assertThat(frodo.getAge()).isEqualTo(33).isLessThan(45);
     assertThat(frodo.getName()).isEqualTo("Frodo").isNotEqualTo("Frodon");
 
     assertThat(frodo).isIn(fellowshipOfTheRing);
