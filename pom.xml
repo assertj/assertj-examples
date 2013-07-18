@@ -1,22 +1,22 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd ">
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd ">
 
-  <modelVersion>4.0.0</modelVersion>
-  <groupId>org.assertj</groupId>
-  <artifactId>assertj-examples</artifactId>
-  <version>1.0.0</version>
-  <name>AssertJ Fluent Assertions examples</name>
+	<modelVersion>4.0.0</modelVersion>
+	<groupId>org.assertj</groupId>
+	<artifactId>assertj-examples</artifactId>
+	<version>1.0.0</version>
+	<name>AssertJ Fluent Assertions examples</name>
 
-  <scm>
-    <developerConnection>scm:git:git@github.com:joel-costigliola/assertj-examples.git</developerConnection>
-    <connection>scm:git:git://github.com/joel-costigliola/assertj-examples.git</connection>
-    <url>https://joel-costigliola@github.com/joel-costigliola/assertj-examples.git</url>
-  </scm>
+	<scm>
+		<developerConnection>scm:git:git@github.com:joel-costigliola/assertj-examples.git</developerConnection>
+		<connection>scm:git:git://github.com/joel-costigliola/assertj-examples.git</connection>
+		<url>https://joel-costigliola@github.com/joel-costigliola/assertj-examples.git</url>
+	</scm>
 
-  <prerequisites>
-    <maven>3.0.4</maven>
-  </prerequisites>
+	<prerequisites>
+		<maven>3.0.4</maven>
+	</prerequisites>
 
   <dependencies>
     <dependency>
@@ -28,7 +28,7 @@
     <dependency>
       <groupId>org.assertj</groupId>
       <artifactId>assertj-joda-time</artifactId>
-      <version>1.0.0</version>
+      <version>1.1.0</version>
       <scope>test</scope>
     </dependency>
     <dependency>
@@ -54,78 +54,77 @@
       <scope>test</scope>
     </dependency>
   </dependencies>
-
-  <build>
-    <plugins>
-      <plugin>
-        <groupId>org.assertj</groupId>
-        <artifactId>assertj-assertions-generator-maven-plugin</artifactId>
-        <version>1.0.0</version>
-        <configuration>
-          <packages>
-            <param>org.assertj.examples.data</param>
-          </packages>
-          <targetDir>src/test/java</targetDir>
-        </configuration>
-      </plugin>
-      <plugin>
-        <groupId>org.apache.maven.plugins</groupId>
-        <artifactId>maven-resources-plugin</artifactId>
-        <version>2.5</version>
-        <configuration>
-          <encoding>${project.build.sourceEncoding}</encoding>
-        </configuration>
-      </plugin>
-      <plugin>
-        <groupId>org.apache.maven.plugins</groupId>
-        <artifactId>maven-compiler-plugin</artifactId>
-        <version>2.5.1</version>
-        <configuration>
-          <source>1.6</source>
-          <target>1.6</target>
-          <encoding>${project.build.sourceEncoding}</encoding>
-        </configuration>
-      </plugin>
-      <plugin>
-        <groupId>org.apache.maven.plugins</groupId>
-        <artifactId>maven-surefire-plugin</artifactId>
-        <version>2.12</version>
-        <configuration>
-          <includes>
-            <include>**/*Examples.java</include>
-          </includes>
-          <argLine>-Xms128m -Xmx512m</argLine>
-        </configuration>
-      </plugin>
-      <plugin>
-        <groupId>com.mycila.maven-license-plugin</groupId>
-        <artifactId>maven-license-plugin</artifactId>
-        <version>1.9.0</version>
-        <configuration>
-          <!-- Template location -->
-          <header>licence-header.txt</header>
-          <properties>
-            <!-- Values to be substituted in template -->
-            <inceptionYear>2012</inceptionYear>
-            <currentYear>2013</currentYear>
-          </properties>
-          <strictCheck>true</strictCheck>
-          <includes>
-            <include>src/**</include>
-          </includes>
-        </configuration>
-        <executions>
-          <execution>
-            <phase>validate</phase>
-            <goals>
-              <goal>format</goal>
-            </goals>
-          </execution>
-        </executions>
-      </plugin>
-    </plugins>
-  </build>
-  <properties>
-    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-  </properties>
+	<build>
+		<plugins>
+			<plugin>
+				<groupId>org.assertj</groupId>
+				<artifactId>assertj-assertions-generator-maven-plugin</artifactId>
+				<version>1.0.0</version>
+				<configuration>
+					<packages>
+						<param>org.assertj.examples.data</param>
+					</packages>
+					<targetDir>src/test/java</targetDir>
+				</configuration>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-resources-plugin</artifactId>
+				<version>2.5</version>
+				<configuration>
+					<encoding>${project.build.sourceEncoding}</encoding>
+				</configuration>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-compiler-plugin</artifactId>
+				<version>2.5.1</version>
+				<configuration>
+					<source>1.6</source>
+					<target>1.6</target>
+					<encoding>${project.build.sourceEncoding}</encoding>
+				</configuration>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-surefire-plugin</artifactId>
+				<version>2.12</version>
+				<configuration>
+					<includes>
+						<include>**/*Examples.java</include>
+					</includes>
+					<argLine>-Xms128m -Xmx512m</argLine>
+				</configuration>
+			</plugin>
+			<plugin>
+				<groupId>com.mycila.maven-license-plugin</groupId>
+				<artifactId>maven-license-plugin</artifactId>
+				<version>1.9.0</version>
+				<configuration>
+					<!-- Template location -->
+					<header>licence-header.txt</header>
+					<properties>
+						<!-- Values to be substituted in template -->
+						<inceptionYear>2012</inceptionYear>
+						<currentYear>2013</currentYear>
+					</properties>
+					<strictCheck>true</strictCheck>
+					<includes>
+						<include>src/**</include>
+					</includes>
+				</configuration>
+				<executions>
+					<execution>
+						<phase>validate</phase>
+						<goals>
+							<goal>format</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
+		</plugins>
+	</build>
+	<properties>
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+	</properties>
 </project>
