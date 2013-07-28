@@ -107,6 +107,9 @@ public class IterableAssertionsExamples extends AbstractAssertionsExamples {
     elvesRingsSet.add(narya);
     assertThat(elvesRingsSet).containsExactly(vilya, nenya, narya);
 
+    // Expected values can be given by another Iterable.
+    assertThat(elvesRings).containsExactlyElementsOf(elvesRingsSet);
+
     try {
       // putting a different order would make the assertion fail :
       assertThat(elvesRings).containsExactly(nenya, vilya, narya);
@@ -122,6 +125,13 @@ public class IterableAssertionsExamples extends AbstractAssertionsExamples {
       logAssertionErrorMessage("containsExactly with same elements appearing several time", e);
     }
 
+    try {
+      // putting a different order would make the assertion fail :
+      assertThat(newArrayList(narya, vilya, nenya)).containsExactlyElementsOf(elvesRingsSet);
+    } catch (AssertionError e) {
+      logger.info(e.getMessage());
+      logAssertionErrorMessage("containsExactlyElementsOf with elements in different order", e);
+    }
   }
 
   @Test
