@@ -143,11 +143,11 @@ public class StringAssertionsExamples extends AbstractAssertionsExamples {
                             "  </ring>\n" +
                             "</bearer>\n" +
                             "</rings>";
-    assertThat(xmlWithNewLine).isXmlEqualTo(expectedXml);
+    assertThat(xmlWithNewLine).isXmlEqualTo(expectedXml); 
     assertThat(xmlWithNewLine).isXmlEqualTo(oneLineXml);
 
-    // use contentOf to compare your XML String with the content of an XML file.
-    assertThat(oneLineXml).isXmlEqualTo(contentOf(new File("src/test/resources/formatted.xml")));
+    // You can easily compare your XML String to the content of an XML file.
+    assertThat(oneLineXml).isXmlEqualToContentOf(new File("src/test/resources/formatted.xml"));
 
     // Since both actual and expected xml string are formatted as XML document, it is easy to see what were the differences.
     // here : bearer is not Sauron but should Frodo !
