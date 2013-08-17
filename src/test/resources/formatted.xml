@@ -1,0 +1,9 @@
+<rings>
+  <bearer>
+    <name>Frodo</name>
+    <ring>
+      <name>one ring</name>
+      <createdBy>Sauron</createdBy>
+    </ring>
+  </bearer>
+</rings>

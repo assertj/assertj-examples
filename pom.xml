@@ -114,6 +114,9 @@
           <includes>
             <include>src/**</include>
           </includes>
+          <excludes>
+            <exclude>src/test/resources/*.xml</exclude>
+          </excludes>
         </configuration>
         <executions>
           <execution>

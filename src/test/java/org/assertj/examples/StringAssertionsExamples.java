@@ -13,14 +13,16 @@
 package org.assertj.examples;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.contentOf;
 
+import java.io.File;
 import java.util.Comparator;
 
 import org.junit.Test;
 
 /**
  * String assertions specific examples
- * 
+ *
  * @author Joel Costigliola
  */
 public class StringAssertionsExamples extends AbstractAssertionsExamples {
@@ -43,16 +45,16 @@ public class StringAssertionsExamples extends AbstractAssertionsExamples {
     } catch (AssertionError e) {
       logAssertionErrorMessage("String contains with several values", e);
     }
-    
+
     String bookDescription = "{ 'title':'Games of Thrones', 'author':'George Martin'}";
     assertThat(bookDescription).containsSequence("{", "title", "Games of Thrones", "}");
-    
+
     try {
       assertThat(bookDescription).containsSequence("{", "title", "author", "Games of Thrones", "}");
     } catch (AssertionError e) {
       logAssertionErrorMessage("String containsSequence with incorrect order", e);
     }
-    
+
     // you can ignore case for equals check
     assertThat("Frodo").isEqualToIgnoringCase("FROdO");
 
@@ -93,25 +95,78 @@ public class StringAssertionsExamples extends AbstractAssertionsExamples {
 
   @Test
   public void charSequence_subclasses_assertions_examples() {
-    // StringBuilder have same assertions as String   
+    // StringBuilder have same assertions as String
     StringBuilder stringBuilder = new StringBuilder("Frodo");
     assertThat(stringBuilder).startsWith("Fro").endsWith("do").hasSize(5);
     assertThat(stringBuilder).contains("rod").doesNotContain("fro");
     assertThat(stringBuilder).containsOnlyOnce("do");
-    
+
     Comparator<CharSequence> caseInsensitiveComparator = new Comparator<CharSequence>() {
       public int compare(CharSequence s1, CharSequence s2) {
         return s1.toString().toLowerCase().compareTo(s2.toString().toLowerCase());
       }
     };
     assertThat(stringBuilder).usingComparator(caseInsensitiveComparator).contains("fro").doesNotContain("don");
-    
-    // StringBuilder have same assertions as String   
+
+    // StringBuilder have same assertions as String
     StringBuffer stringBuffer = new StringBuffer("Frodo");
     assertThat(stringBuffer).startsWith("Fro").endsWith("do").hasSize(5);
     assertThat(stringBuffer).contains("rod").doesNotContain("fro");
     assertThat(stringBuffer).containsOnlyOnce("do");
     assertThat(stringBuffer).usingComparator(caseInsensitiveComparator).contains("fro").doesNotContain("don");
+  }
+
+  @Test
+  public void xml_assertions_examples() {
+
+    String expectedXml = "<rings>\n" +
+                          "  <bearer>\n" +
+                          "    <name>Frodo</name>\n" +
+                          "    <ring>\n" +
+                          "      <name>one ring</name>\n" +
+                          "      <createdBy>Sauron</createdBy>\n" +
+                          "    </ring>\n" +
+                          "  </bearer>\n" +
+                          "</rings>";
+
+    // XML String don't need to be formatted, AssertJ will format both actual and expected string before comparison.
+    // Whatever how formatted your xml string is, isXmlEqualTo assertion is able to compare it with another xml String.
+    String oneLineXml = "<rings><bearer><name>Frodo</name><ring><name>one ring</name><createdBy>Sauron</createdBy></ring></bearer></rings>";
+    assertThat(oneLineXml).isXmlEqualTo(expectedXml);
+
+    String xmlWithNewLine = "<rings>\n" +
+                            "<bearer>   \n" +
+                            "  <name>Frodo</name>\n" +
+                            "  <ring>\n" +
+                            "    <name>one ring</name>\n" +
+                            "    <createdBy>Sauron</createdBy>\n" +
+                            "  </ring>\n" +
+                            "</bearer>\n" +
+                            "</rings>";
+    assertThat(xmlWithNewLine).isXmlEqualTo(expectedXml);
+    assertThat(xmlWithNewLine).isXmlEqualTo(oneLineXml);
+
+    // use contentOf to compare your XML String with the content of an XML file.
+    assertThat(oneLineXml).isXmlEqualTo(contentOf(new File("src/test/resources/formatted.xml")));
+
+    // Since both actual and expected xml string are formatted as XML document, it is easy to see what were the differences.
+    // here : bearer is not Sauron but should Frodo !
+    String unexpectedXml = "<rings>\n" +
+                           "<bearer>   \n" +
+                           "  <name>Sauron</name>\n" +
+                           "  <ring><name>one ring</name><createdBy>Sauron</createdBy></ring>\n" +
+                           "</bearer>\n" +
+                           "</rings>";
+    // uncomment to see how IDE compares the two XML string :
+    // assertThat(unexpectedXml).isXmlEqualTo(expectedXml);
+
+    // Log the error message, which is not "beautiful" since it is made for IDE comparison.
+    try {
+      assertThat(unexpectedXml).isXmlEqualTo(expectedXml);
+    } catch (AssertionError e) {
+      logAssertionErrorMessage("XML string comparison (isXmlEqualTo)", e);
+    }
+
   }
 
 
