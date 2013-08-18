@@ -15,7 +15,7 @@ package org.assertj.examples;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.extractProperty;
 import static org.assertj.core.api.Assertions.tuple;
-import static org.assertj.core.util.Lists.newArrayList;
+import static org.assertj.core.util.Lists.*;
 import static org.assertj.examples.data.Race.ELF;
 import static org.assertj.examples.data.Race.HOBBIT;
 import static org.assertj.examples.data.Race.ORC;
@@ -33,10 +33,9 @@ import java.util.List;
 import java.util.SortedSet;
 import java.util.TreeSet;
 
-import org.junit.Test;
-
 import org.assertj.examples.data.Ring;
 import org.assertj.examples.data.movie.Movie;
+import org.junit.Test;
 
 /**
  * Iterable (including Collection) assertions examples.<br>
@@ -165,59 +164,45 @@ public class IterableAssertionsExamples extends AbstractAssertionsExamples {
 
     // extract simple property values having a java standard type
     assertThat(extractProperty("name", String.class).from(fellowshipOfTheRing)).contains("Boromir", "Gandalf", "Frodo")
-                                                                               .doesNotContain("Sauron", "Elrond");
+        .doesNotContain("Sauron", "Elrond");
 
     // same extraction with an alternate syntax
     assertThat(extractProperty("name").ofType(String.class).from(fellowshipOfTheRing)).contains("Boromir", "Gandalf",
-                                                                                                "Frodo", "Legolas")
-                                                                                      .doesNotContain("Sauron",
-                                                                                                      "Elrond");
+        "Frodo", "Legolas").doesNotContain("Sauron", "Elrond");
 
     // extracting property works also with user's types (here Race)
-    assertThat(extractProperty("race").from(fellowshipOfTheRing)).contains(HOBBIT, ELF)
-                                                                 .doesNotContain(ORC);
+    assertThat(extractProperty("race").from(fellowshipOfTheRing)).contains(HOBBIT, ELF).doesNotContain(ORC);
 
     // extract nested property on Race
-    assertThat(extractProperty("race.name").from(fellowshipOfTheRing)).contains("Hobbit", "Elf")
-                                                                      .doesNotContain("Orc");
+    assertThat(extractProperty("race.name").from(fellowshipOfTheRing)).contains("Hobbit", "Elf").doesNotContain("Orc");
 
     // same assertions but written with extracting(), it has the advantage of being able to extract field values as well
     // as property values
 
     // extract 'name' property values.
-    assertThat(fellowshipOfTheRing).extracting("name")
-                                   .contains("Boromir", "Gandalf", "Frodo", "Legolas")
-                                   .doesNotContain("Sauron", "Elrond");
+    assertThat(fellowshipOfTheRing).extracting("name").contains("Boromir", "Gandalf", "Frodo", "Legolas")
+        .doesNotContain("Sauron", "Elrond");
 
     // extract 'age' field values, it works because 'age' is public in TolkienCharacter class.
-    assertThat(fellowshipOfTheRing).extracting("age")
-                                   .contains(33, 38, 36);
+    assertThat(fellowshipOfTheRing).extracting("age").contains(33, 38, 36);
 
     // extracting works also with user's types (here Race),
-    assertThat(fellowshipOfTheRing).extracting("race")
-                                   .contains(HOBBIT, ELF)
-                                   .doesNotContain(ORC);
+    assertThat(fellowshipOfTheRing).extracting("race").contains(HOBBIT, ELF).doesNotContain(ORC);
 
     // extract nested property values on Race
-    assertThat(fellowshipOfTheRing).extracting("race.name")
-                                   .contains("Hobbit", "Elf")
-                                   .doesNotContain("Orc");
+    assertThat(fellowshipOfTheRing).extracting("race.name").contains("Hobbit", "Elf").doesNotContain("Orc");
   }
 
   @Test
   public void iterable_assertions_on_several_extracted_values() {
 
     // extract 'name' and 'age' values.
-    assertThat(fellowshipOfTheRing).extracting("name", "age")
-                                   .contains(tuple("Boromir", 37),
-                                             tuple("Sam", 38),
-                                             tuple("Legolas", 1000));
+    assertThat(fellowshipOfTheRing).extracting("name", "age").contains(tuple("Boromir", 37), tuple("Sam", 38),
+        tuple("Legolas", 1000));
 
     // extract 'name', 'age' and Race name values.
-    assertThat(fellowshipOfTheRing).extracting("name", "age", "race.name")
-                                   .contains(tuple("Boromir", 37, "Man"),
-                                             tuple("Sam", 38, "Hobbit"),
-                                             tuple("Legolas", 1000, "Elf"));
+    assertThat(fellowshipOfTheRing).extracting("name", "age", "race.name").contains(tuple("Boromir", 37, "Man"),
+        tuple("Sam", 38, "Hobbit"), tuple("Legolas", 1000, "Elf"));
   }
 
   @Test
@@ -281,9 +266,22 @@ public class IterableAssertionsExamples extends AbstractAssertionsExamples {
     }
 
     try {
-      assertThat(newArrayList("Aria", "Stark", "daughter", "of", "Ned", "Stark")).containsOnlyOnce("Stark", "Lannister", "Aria");
+      assertThat(newArrayList("Aria", "Stark", "daughter", "of", "Ned", "Stark")).containsOnlyOnce("Stark",
+          "Lannister", "Aria");
     } catch (AssertionError e) {
       logAssertionErrorMessage("containsOnlyOnce for Iterable", e);
+    }
+  }
+
+  @Test
+  public void containsSubSequence_assertion_examples() {
+    assertThat(newArrayList("Batman", "is", "weaker", "than", "Superman", "but", "he", "is", "less", "annoying"))
+        .containsSubsequence("Superman", "is", "annoying");
+    assertThat(newArrayList("Breaking", "objects", "is", "pretty", "bad")).containsSubsequence("Breaking", "bad");
+    try {
+      assertThat(newArrayList("A", "B", "C", "D")).containsSubsequence("B", "A", "C");
+    } catch (AssertionError e) {
+      logAssertionErrorMessage("containsSubsequence for Iterable", e);
     }
   }
 

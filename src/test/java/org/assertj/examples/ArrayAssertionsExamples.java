@@ -85,6 +85,8 @@ public class ArrayAssertionsExamples extends AbstractAssertionsExamples {
 
     array = new String[] { "--option", "a=b", "--option", "c=d" };
     assertThat(array).containsSequence("--option", "c=d");
+    // containsSequence would fail but not containsSubsequence.
+    assertThat(array).containsSubsequence("a=b", "c=d");
   }
 
   @Test
@@ -229,7 +231,7 @@ public class ArrayAssertionsExamples extends AbstractAssertionsExamples {
     // double
     assertThat(new double[] { 1.0, 2, 3 }).containsExactly(1.0, 2, 3);
     try {
-      assertThat(new double[] { 1.0, 2, 3 }).containsExactly(2.0, 1, 3);
+      assertThat(new double[] { 1.0, 2, 3 }).containsExactly(2.0, 1.0, 3.0);
     } catch (AssertionError e) {
       logAssertionErrorMessage("containsExactly for double array", e);
     }
@@ -261,6 +263,18 @@ public class ArrayAssertionsExamples extends AbstractAssertionsExamples {
     }
 
     assertThat(new char[] { 'a', 'b', 'c' }).containsOnlyOnce('a', 'b');
+  }
+
+  @Test
+  public void containsSubSequence_assertion_examples() {
+    assertThat(new String[] {"Batman", "is", "weaker", "than", "Superman", "but", "he", "is", "less", "annoying"})
+      .containsSubsequence("Superman", "is", "annoying");
+    assertThat(new String[] {"Breaking", "objects", "is", "pretty", "bad"}).containsSubsequence("Breaking", "bad");
+    try {
+      assertThat(new String[] {"A", "B", "C", "D"}).containsSubsequence("B", "A", "C");
+    } catch (AssertionError e) {
+      logAssertionErrorMessage("containsSubsequence for Array", e);
+    }
   }
 
 }
