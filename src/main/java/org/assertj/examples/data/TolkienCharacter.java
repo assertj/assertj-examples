@@ -22,6 +22,7 @@ public class TolkienCharacter {
 
   private String name;
   private Race race;
+
   // public to test extract on field
   public int age;
 
@@ -44,8 +45,8 @@ public class TolkienCharacter {
     this.name = name;
   }
 
-  public void setRace(Race race) {
-    this.race = race;
+  public int getAge() {
+    return age;
   }
 
   public void setAge(int age) {

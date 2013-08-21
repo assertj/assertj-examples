@@ -45,14 +45,13 @@ public class BasicAssertionsExamples extends AbstractAssertionsExamples {
 
   @Test
   public void meaningful_error_with_test_description_example() {
-    String frodonName = "Frodon";
     try {
-      // set a bad name to Mr Frodo, just to see how nice is the assertion error message
-      frodo.setName(frodonName);
-      // you can specifiy a test description with as() method or describedAs()
-      assertThat(frodo.getName()).as("check Frodo's name").isEqualTo("Frodo");
+      // set a bad age to Mr Frodo, just to see how nice is the assertion error message
+      frodo.setAge(50);
+      // you can specify a test description with as() method or describedAs(), it supports String format args
+      assertThat(frodo.getAge()).as("check %s's age", frodo.getName()).isEqualTo(33);
     } catch (AssertionError e) {
-      assertThat(e).hasMessage("[check Frodo's name] expected:<'Frodo[]'> but was:<'Frodo[n]'>");
+      assertThat(e).hasMessage("[check Frodo's age] expected:<[33]> but was:<[50]>");
     }
     // but you still can overrides the error message if you have a better one :
     try {
