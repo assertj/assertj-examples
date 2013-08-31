@@ -15,13 +15,12 @@ package org.assertj.examples;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.examples.data.Race.HOBBIT;
 
-import org.junit.Test;
-
 import org.assertj.core.util.introspection.IntrospectionError;
 import org.assertj.examples.data.Person;
 import org.assertj.examples.data.Ring;
 import org.assertj.examples.data.TolkienCharacter;
 import org.assertj.examples.data.movie.Movie;
+import org.junit.Test;
 
 /**
  * Assertions available for all objects.
@@ -56,8 +55,7 @@ public class BasicAssertionsExamples extends AbstractAssertionsExamples {
     // but you still can overrides the error message if you have a better one :
     try {
       assertThat(frodo.getName()).as("check Frodo's name")
-                                 .overridingErrorMessage("Hey my name is Frodo not %s", frodo.getName())
-                                 .isEqualTo("Frodo");
+          .overridingErrorMessage("Hey my name is Frodo not %s", frodo.getName()).isEqualTo("Frodo");
     } catch (AssertionError e) {
       assertThat(e).hasMessage("[check Frodo's name] Hey my name is Frodo not Frodon");
     }
@@ -150,78 +148,73 @@ public class BasicAssertionsExamples extends AbstractAssertionsExamples {
     TolkienCharacter mysteriousHobbit = new TolkienCharacter(null, 33, HOBBIT);
 
     // ------------------------------------------------------------------------------------
-    // Lenient equality by ignoring null fields
+    // Lenient equality with field by field comparison
     // ------------------------------------------------------------------------------------
 
     // Frodo is still Frodo ...
-    assertThat(frodo).isLenientEqualsToByIgnoringNullFields(frodo);
-
-    // The mysteriousHobbit is the mysteriousHobbit
-    assertThat(mysteriousHobbit).isLenientEqualsToByIgnoringNullFields(mysteriousHobbit);
-
-    // Null fields in expected object are ignored, the mysteriousHobbit has null name
-    assertThat(frodo).isLenientEqualsToByIgnoringNullFields(mysteriousHobbit);
-    // ... But the lenient equality is not reversible !
-    try {
-      assertThat(mysteriousHobbit).isLenientEqualsToByIgnoringNullFields(frodo);
-    } catch (AssertionError e) {
-      assertThat(e)
-                   .hasMessage(
-                               "expected value <'Frodo'> in field <'name'> of <Character [name=null, race=Race [name=Hobbit, immortal=false], age=33]>.\n"
-                                   + "Comparison was performed on all fields");
-    }
-
-    // ------------------------------------------------------------------------------------
-    // Lenient equality by ignoring fields
-    // ------------------------------------------------------------------------------------
-
-    // Except name and age, frodo and sam both are hobbits, so they are lenient equals ignoring name and age
-    assertThat(frodo).isLenientEqualsToByIgnoringFields(sam, "name", "age");
-    // But not when just age is ignored
-    try {
-      assertThat(frodo).isLenientEqualsToByIgnoringFields(sam, "age");
-    } catch (AssertionError e) {
-      assertThat(e).hasMessage(
-                               "expected value <'Sam'> in field <'name'> of <Character [name=Frodo, race=Race [name=Hobbit, "
-                                   + "immortal=false], age=33]>.\n"
-                                   + "Comparison was performed on all fields but <['age']>");
-    }
-    // Null fields are not ignored, so when expected has null field, actual must have too
-    assertThat(mysteriousHobbit).isLenientEqualsToByIgnoringFields(mysteriousHobbit, "age");
-
-    // ------------------------------------------------------------------------------------
-    // Lenient equality by accepting fields
-    // ------------------------------------------------------------------------------------
-
-    // frodo and sam both are hobbits, so they are lenient equals on race
-    assertThat(frodo).isLenientEqualsToByAcceptingFields(sam, "race");
-    // but not when accepting name and race
-    try {
-      assertThat(frodo).isLenientEqualsToByAcceptingFields(sam, "name", "race");
-    } catch (AssertionError e) {
-      assertThat(e).hasMessage(
-                               "expected value <'Sam'> in field <'name'> of <Character [name=Frodo, race=Race [name=Hobbit, "
-                                   + "immortal=false], age=33]>.\n"
-                                   + "Comparison was performed on fields <['name', 'race']>");
-    }
-    // Null fields are not ignored, so when expected has null field, actual must have too
-    assertThat(mysteriousHobbit).isLenientEqualsToByAcceptingFields(mysteriousHobbit, "name");
-    // Accepted fields must exist
-    try {
-      assertThat(frodo).isLenientEqualsToByAcceptingFields(sam, "hairColor");
-    } catch (IntrospectionError e) {
-      assertThat(e).hasMessage("No getter for property 'hairColor' in org.assertj.examples.data.TolkienCharacter");
-    }
-  }
-
-  @Test
-  public void basic_assertions_with_comparing_fields_examples() {
+    assertThat(frodo).isEqualToComparingFieldByField(frodo);
 
     TolkienCharacter frodoClone = new TolkienCharacter("Frodo", 33, HOBBIT);
 
     // Frodo and his clone are equals by comparing fields
-    assertThat(frodo).isEqualsToByComparingFields(frodoClone);
+    assertThat(frodo).isEqualToComparingFieldByField(frodoClone);
 
+    // ------------------------------------------------------------------------------------
+    // Lenient equality when ignoring null fields of other object
+    // ------------------------------------------------------------------------------------
+
+    // Frodo is still Frodo ...
+    assertThat(frodo).isEqualToIgnoringNullFields(frodo);
+
+    // Null fields in expected object are ignored, the mysteriousHobbit has null name
+    assertThat(frodo).isEqualToIgnoringNullFields(mysteriousHobbit);
+    // ... But the lenient equality is not reversible !
+    try {
+      assertThat(mysteriousHobbit).isEqualToIgnoringNullFields(frodo);
+    } catch (AssertionError e) {
+      logAssertionErrorMessage("isEqualToIgnoringNullFields", e);
+    }
+
+    // ------------------------------------------------------------------------------------
+    // Lenient equality with field by field comparison expect specified fields
+    // ------------------------------------------------------------------------------------
+
+    // Except name and age, frodo and sam both are hobbits, so they are lenient equals ignoring name and age
+    assertThat(frodo).isEqualToIgnoringGivenFields(sam, "name", "age");
+
+    // But not when just age is ignored
+    try {
+      assertThat(frodo).isEqualToIgnoringGivenFields(sam, "age");
+    } catch (AssertionError e) {
+      logAssertionErrorMessage("isEqualToIgnoringGivenFields", e);
+    }
+
+    // Null fields are not ignored, so when expected has null field, actual must have too
+    assertThat(mysteriousHobbit).isEqualToIgnoringGivenFields(mysteriousHobbit, "age");
+
+    // ------------------------------------------------------------------------------------
+    // Lenient equality with field by field comparison on given fields only
+    // ------------------------------------------------------------------------------------
+
+    // frodo and sam both are hobbits, so they are lenient equals on race
+    assertThat(frodo).isEqualToComparingOnlyGivenFields(sam, "race");
+
+    // but not when accepting name and race
+    try {
+      assertThat(frodo).isEqualToComparingOnlyGivenFields(sam, "name", "race", "age");
+    } catch (AssertionError e) {
+      logAssertionErrorMessage("isEqualToComparingOnlyGivenFields", e);
+    }
+
+    // Null fields are not ignored, so when expected has null field, actual must have too
+    assertThat(mysteriousHobbit).isEqualToComparingOnlyGivenFields(mysteriousHobbit, "name");
+
+    // Specified fields must exist
+    try {
+      assertThat(frodo).isEqualToComparingOnlyGivenFields(sam, "hairColor");
+    } catch (IntrospectionError e) {
+      assertThat(e).hasMessage("No field 'hairColor' in class org.assertj.examples.data.TolkienCharacter");
+    }
   }
 
 }
