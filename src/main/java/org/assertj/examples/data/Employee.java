@@ -24,5 +24,13 @@ public class Employee extends Person {
   public String getCompany() {
     return company;
   }
+  
+  public static class Title {
+    private String position;
+    
+    public String getPosition() {
+      return position;
+    }
+  }
 
 }

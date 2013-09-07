@@ -12,6 +12,8 @@
  */
 package org.assertj.examples.data;
 
+import java.io.IOException;
+
 import static java.lang.String.format;
 
 /**
@@ -33,7 +35,7 @@ public class BasketBallPlayer {
     setTeam(team);
   }
 
-  public Name getName() {
+  public Name getName() throws IOException{
     return name;
   }
 
