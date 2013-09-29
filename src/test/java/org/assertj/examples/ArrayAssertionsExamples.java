@@ -29,6 +29,7 @@ import static org.assertj.examples.data.Ring.nenya;
 import static org.assertj.examples.data.Ring.oneRing;
 import static org.assertj.examples.data.Ring.vilya;
 
+import java.awt.Rectangle;
 import java.util.Arrays;
 import java.util.Comparator;
 
@@ -274,6 +275,20 @@ public class ArrayAssertionsExamples extends AbstractAssertionsExamples {
       assertThat(new String[] {"A", "B", "C", "D"}).containsSubsequence("B", "A", "C");
     } catch (AssertionError e) {
       logAssertionErrorMessage("containsSubsequence for Array", e);
+    }
+  }
+
+  @Test
+  public void containsOnlyOnce_assertion_should_not_require_objects_to_be_comparable() {
+    // Rectangles are not Comparable.
+    Rectangle r0 = new Rectangle(0, 0);
+    Rectangle r1 = new Rectangle(1, 1);
+    Rectangle r2 = new Rectangle(2, 2);
+    assertThat(new Rectangle[]{r1, r2, r2}).containsOnlyOnce(r1);
+    try {
+      assertThat(new Rectangle[]{r1, r2, r2}).containsOnlyOnce(r0, r1, r2);
+    } catch (AssertionError e) {
+      logAssertionErrorMessage("containsOnlyOnce", e);
     }
   }
 
