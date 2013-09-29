@@ -23,6 +23,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.atIndex;
 import static org.assertj.core.util.Lists.newArrayList;
 
+import java.awt.Rectangle;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.Comparator;
@@ -80,6 +81,20 @@ public class ListSpecificAssertionsExamples extends AbstractAssertionsExamples {
   public void iterable_is_subset_of_assertion_example() {
     Collection<Ring> elvesRings = newArrayList(vilya, nenya, narya);
     assertThat(elvesRings).isSubsetOf(ringsOfPower);
+  }
+
+  @Test
+  public void containsOnlyOnce_assertion_should_not_require_objects_to_be_comparable() {
+    // Rectangles are not Comparable.
+    Rectangle r0 = new Rectangle(0, 0);
+    Rectangle r1 = new Rectangle(1, 1);
+    Rectangle r2 = new Rectangle(2, 2);
+    assertThat(newArrayList(r1, r2, r2)).containsOnlyOnce(r1);
+    try {
+      assertThat(newArrayList(r1, r2, r2)).containsOnlyOnce(r0, r1, r2);
+    } catch (AssertionError e) {
+      logAssertionErrorMessage("containsOnlyOnce", e);
+    }
   }
 
 }
