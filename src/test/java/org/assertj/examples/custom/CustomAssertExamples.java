@@ -17,6 +17,7 @@ import static com.google.common.collect.Lists.newArrayList;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.examples.custom.MyProjectAssertions.assertThat;
 
+import java.io.IOException;
 import java.util.List;
 
 import org.junit.Test;
@@ -42,7 +43,7 @@ public class CustomAssertExamples extends AbstractAssertionsExamples {
     // Assertions and add an assertThat(TolkienCharacter) that build a TolkienCharacterAssert, then import statically
     // MyProjectAssertions.assertThat to have a unique entry point to all assertions : yours and the core ones.
 
-    // For exmaple, the assertions below are accesed from MyProjectAssertions :
+    // For example, the assertions below are accessed from MyProjectAssertions :
     // - hasName comes from .MyProjectAssertions.assertThat(TolkienCharacter actual)
     assertThat(frodo).hasName("Frodo").hasAge(33).isNotEqualTo(merry);
     // - isEqualTo is accessible since MyProjectAssertions inherits from Assertions which provides Integer assertions.
@@ -90,7 +91,7 @@ public class CustomAssertExamples extends AbstractAssertionsExamples {
   }
 
   @Test
-  public void generics_limitation() {
+  public void generics_limitation() throws IOException {
     Employee martin = new Employee("Martin Fowler");
     Employee kent = new Employee("Kent Beck");
     List<Employee> employees = newArrayList(martin, kent);

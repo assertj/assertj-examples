@@ -85,7 +85,13 @@ public class DateAssertionsExamples extends AbstractAssertionsExamples {
 
     Date date1 = parseDatetime("2003-04-26T13:01:02");
     Date date2 = parseDatetime("2003-04-26T13:01:03");
-    // assertThat(date1).isInSameSecondAs(date2); // would fail since date1 and are date2 are not in the same second
+    // would fail since date1 and are date2 are not in the same second
+    try {
+      assertThat(date1).isInSameSecondAs(date2);
+    } catch (AssertionError e) {
+      logAssertionErrorMessage("isInSameSecondAs date assertion", e);
+    }
+
     assertThat(date1).isInSameMinuteAs(date2);
     assertThat(date1).isInSameHourAs(date2);
     assertThat(date1).isInSameDayAs(date2);
@@ -108,6 +114,13 @@ public class DateAssertionsExamples extends AbstractAssertionsExamples {
     assertThat(date1).isWithinDayOfWeek(Calendar.SATURDAY);
     assertThat(date1).isWithinMonth(4);
     assertThat(date1).isWithinYear(2003);
+//    assertThat(date1).hasMillisecond(17);
+//    assertThat(date1).hasSecond(35);
+//    assertThat(date1).hasMinute(20);
+//    assertThat(date1).hasHourOfDay(13);
+//    assertThat(date1).hasDayOfWeek(Calendar.SATURDAY);
+//    assertThat(date1).hasMonth(4);
+//    assertThat(date1).hasYear(2003);
   }
 
   @Test

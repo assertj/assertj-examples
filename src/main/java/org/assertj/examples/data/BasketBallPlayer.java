@@ -12,6 +12,8 @@
  */
 package org.assertj.examples.data;
 
+import org.assertj.examples.exception.NameException;
+
 import java.io.IOException;
 
 import static java.lang.String.format;
@@ -28,14 +30,15 @@ public class BasketBallPlayer {
   private String team;
   private boolean rookie;
 
-  public BasketBallPlayer() {}
-
   public BasketBallPlayer(Name name, String team) {
     setName(name);
     setTeam(team);
   }
 
-  public Name getName() throws IOException{
+  public Name getName() throws NameException {
+    if (name == null) {
+      throw new NameException(name);
+    }
     return name;
   }
 
