@@ -15,6 +15,8 @@ package org.assertj.examples.data;
 import org.assertj.examples.exception.NameException;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 import static java.lang.String.format;
 
@@ -29,6 +31,8 @@ public class BasketBallPlayer {
   private int reboundsPerGame;
   private String team;
   private boolean rookie;
+  private List<BasketBallPlayer> teamMates = new ArrayList<BasketBallPlayer>();
+  private List<int[]> points = new ArrayList<int[]>();
 
   public BasketBallPlayer(Name name, String team) {
     setName(name);
@@ -84,6 +88,14 @@ public class BasketBallPlayer {
   
   public void setRookie(boolean rookie) {
     this.rookie = rookie;
+  }
+
+  public List<BasketBallPlayer> getTeamMates() {
+    return teamMates;
+  }
+
+  public List<int[]> getPoints() {
+    return points;
   }
 
   @Override public String toString() {

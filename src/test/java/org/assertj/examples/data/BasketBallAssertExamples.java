@@ -28,6 +28,6 @@ public class BasketBallAssertExamples extends AbstractAssertionsExamples {
   @Test
   public void basketBallPlayer_assertion_rethrow_getter_exception() throws NameException {
     // since BasketBallPlayer.getName throws NameException so does BasketBallPlayerAssert.hasName
-    BasketBallPlayerAssert.assertThat(rose).hasName(new Name("Derrick", "Rose"));
+    BasketBallPlayerAssert.assertThat(rose).hasName(new Name("Derrick", "Rose")).hasNoTeamMates();
   }
 }
