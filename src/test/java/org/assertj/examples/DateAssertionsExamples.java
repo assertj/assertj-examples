@@ -13,7 +13,12 @@
 package org.assertj.examples;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.util.Dates.*;
+import static org.assertj.core.util.Dates.monthOf;
+import static org.assertj.core.util.Dates.parse;
+import static org.assertj.core.util.Dates.parseDatetime;
+import static org.assertj.core.util.Dates.parseDatetimeWithMs;
+import static org.assertj.core.util.Dates.tomorrow;
+import static org.assertj.core.util.Dates.yesterday;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -21,26 +26,25 @@ import java.util.Calendar;
 import java.util.Date;
 
 import org.assertj.core.api.DateAssert;
-import org.junit.Test;
 
+import org.junit.Test;
 
 /**
  * Date assertions examples.<br>
- * 
+ *
  * @author Joel Costigliola
  */
 public class DateAssertionsExamples extends AbstractAssertionsExamples {
 
   @Test
   public void basic_date_assertions_examples() {
-    
     // isEqualTo, isAfter, isBefore assertions
     assertThat(theTwoTowers.getReleaseDate()).isEqualTo(parse("2002-12-18")).isEqualTo("2002-12-18")
-        .isAfter(theFellowshipOfTheRing.getReleaseDate()).isBefore(theReturnOfTheKing.getReleaseDate())
-        .isNotEqualTo(parse("2002-12-19")).isNotEqualTo("2002-12-19");
-    
+      .isAfter(theFellowshipOfTheRing.getReleaseDate()).isBefore(theReturnOfTheKing.getReleaseDate())
+      .isNotEqualTo(parse("2002-12-19")).isNotEqualTo("2002-12-19");
+
     assertThat(theTwoTowers.getReleaseDate()).isEqualTo(parse("2002-12-18")).isAfter("2002-12-17")
-        .isBefore("2002-12-19");
+      .isBefore("2002-12-19");
 
     assertThat(theReturnOfTheKing.getReleaseDate()).isBeforeYear(2004).isAfterYear(2001);
 
@@ -51,62 +55,126 @@ public class DateAssertionsExamples extends AbstractAssertionsExamples {
 
   @Test
   public void is_between_date_assertions_examples() {
-    
-    // various usage of isBetween assertion, 
-    // Note that isBetween(2002-12-17, 2002-12-19) includes start date but end date : 
-    assertThat(theTwoTowers.getReleaseDate()) // = 2002-12-18
-    .isBetween(theFellowshipOfTheRing.getReleaseDate(), theReturnOfTheKing.getReleaseDate())
-    .isBetween(parse("2002-12-17"), parse("2002-12-19")) // [2002-12-17, 2002-12-19[  
-    .isBetween("2002-12-17", "2002-12-19") // [2002-12-17, 2002-12-19[  
-    .isNotBetween("2002-12-17", "2002-12-18") // [2002-12-17, 2002-12-18[
-    .isBetween("2002-12-17", "2002-12-18", true, true); // [2002-12-17, 2002-12-18]
+    // various usage of isBetween assertion, the Two Towers release date being 2002-12-18
+    // Note that isBetween(2002-12-17, 2002-12-19) includes start date but end date :
+    assertThat(theTwoTowers.getReleaseDate())
+      .isBetween(theFellowshipOfTheRing.getReleaseDate(), theReturnOfTheKing.getReleaseDate())
+      .isBetween(parse("2002-12-17"), parse("2002-12-19")) // [2002-12-17, 2002-12-19[
+      .isBetween("2002-12-17", "2002-12-19") // [2002-12-17, 2002-12-19[
+      .isNotBetween("2002-12-17", "2002-12-18") // [2002-12-17, 2002-12-18[
+      .isBetween("2002-12-17", "2002-12-18", true, true); // [2002-12-17, 2002-12-18]
   }
-  
+
   @Test
   public void date_assertions_with_delta_examples() {
-    
     // equals assertion with delta
     Date date1 = new Date();
     Date date2 = new Date(date1.getTime() + 100);
     assertThat(date1).isCloseTo(date2, 100); // would not be true for delta of 99ms
   }
-  
+
   @Test
   public void is_today_in_the_future_or_in_the_past_assertions_examples() {
-    
     // some handy shortcuts :
     assertThat(theTwoTowers.getReleaseDate()).isInThePast();
     assertThat(new Date()).isToday();
     assertThat(theSilmarillion.getReleaseDate()).isInTheFuture();
   }
-  
-  @Test
-  public void is_in_the_same_moment_assertions_examples() {
 
-    Date date1 = parseDatetime("2003-04-26T13:01:02");
-    Date date2 = parseDatetime("2003-04-26T13:01:03");
-    // would fail since date1 and are date2 are not in the same second
+  @Test
+  public void is_in_the_same_second_assertions_examples() {
+    //let's see the isInSameSecondAs and isInSameSecondWindowAs in action and their difference
+    Date date1 = parseDatetimeWithMs("2003-01-01T12:00:01.000");
+    Date date2 = parseDatetimeWithMs("2003-01-01T12:00:01.250");
+    Date date3 = parseDatetimeWithMs("2003-01-01T12:00:00.999");
+
+    // succeeds because the all the time fields up to seconds are the same
+    assertThat(date1).isInSameSecondAs(date2);
+    // fails because seconds fields differ even though time difference is only 1ms !
     try {
-      assertThat(date1).isInSameSecondAs(date2);
+      assertThat(date1).isInSameSecondAs(date3);
     } catch (AssertionError e) {
       logAssertionErrorMessage("isInSameSecondAs date assertion", e);
     }
 
-    assertThat(date1).isInSameMinuteAs(date2);
-    assertThat(date1).isInSameHourAs(date2);
-    assertThat(date1).isInSameDayAs(date2);
-    assertThat(date1).isInSameMonthAs(date2);
-    assertThat(date1).isInSameYearAs(date2);
+    // succeeds because the time difference between dates < 1s
+    assertThat(date1).isInSameSecondWindowAs(date2);
+    assertThat(date1).isInSameSecondWindowAs(date3);
+    // fails because time difference between dates >= 1s
+    try {
+      assertThat(date1).isInSameSecondWindowAs(parseDatetimeWithMs("2003-01-01T12:00:02.000"));
+    } catch (AssertionError e) {
+      logAssertionErrorMessage("isInSameSecondWindowAs date assertion", e);
+    }
 
-    date1 = parse("2003-04-26");
+  }
+
+  @Test
+  public void is_in_the_same_minute_assertions_examples() {
+    //let's see the isInSameSecondAs and isInSameSecondWindowAs in action and their difference
+    Date date1 = parseDatetime("2003-01-01T12:01:00");
+    Date date2 = parseDatetime("2003-01-01T12:01:30");
+    Date date3 = parseDatetime("2003-01-01T12:00:59");
+
+    // succeeds because the all the time fields up to minutes are the same
+    assertThat(date1).isInSameMinuteAs(date2);
+    try {
+      // fails because minutes fields differ even though time difference is only 1s !
+      assertThat(date1).isInSameMinuteAs(date3);
+    } catch (AssertionError e) {
+      logAssertionErrorMessage("isInSameMinuteWindowAs date assertion", e);
+    }
+
+    // succeeds because date time difference < 1 min
+    assertThat(date1).isInSameMinuteWindowAs(date2);
+    assertThat(date1).isInSameMinuteWindowAs(date3);
+    try {
+      // fails because date time difference >= 1 min
+      assertThat(date1).isInSameMinuteWindowAs(parseDatetime("2003-01-01T12:02:00"));
+    } catch (AssertionError e) {
+      logAssertionErrorMessage("isInSameMinuteWindowAs date assertion", e);
+    }
+
+  }
+
+  @Test
+  public void is_in_the_same_hour_assertions_examples() {
+    //let's see the isInSameSecondAs and isInSameSecondWindowAs in action and their difference
+    Date date1 = parseDatetime("2003-01-01T12:00:00");
+    Date date2 = parseDatetime("2003-01-01T12:30:00");
+    Date date3 = parseDatetime("2003-01-01T11:59:59");
+    Date date4 = parseDatetime("2003-01-01T13:00:01");
+
+    // succeeds because the all the time fields up to hours are the same
+    assertThat(date1).isInSameHourAs(date2);
+    try {
+      assertThat(date1).isInSameHourAs(date3);
+    } catch (AssertionError e) {
+      logAssertionErrorMessage("isInSameHourAs date assertion", e);
+    }
+
+    // succeeds because time difference < 1h
+    assertThat(date1).isInSameHourWindowAs(date2);
+    assertThat(date1).isInSameHourWindowAs(date3);
+    try {
+      assertThat(date1).isInSameHourWindowAs(date4);
+    } catch (AssertionError e) {
+      logAssertionErrorMessage("isInSameHourWindowAs date assertion", e);
+    }
+  }
+
+  @Test
+  public void is_in_the_same_day_or_month_or_year_assertions_examples() {
+    Date date1 = parseDatetime("2003-04-26T23:17:00");
+    Date date2 = parseDatetime("2003-04-26T12:30:00");
+    assertThat(date1).isInSameDayAs(date2);
     assertThat(date1).isInSameMonthAs("2003-04-27");
     assertThat(date1).isInSameYearAs("2003-05-13");
   }
 
   @Test
   public void is_within_date_assertions_examples() {
-
-    Date date1 = new Date(parseDatetime("2003-04-26T13:20:35").getTime() + 17);
+    Date date1 = parseDatetimeWithMs("2003-04-26T13:20:35.017");
     assertThat(date1).isWithinMillisecond(17);
     assertThat(date1).isWithinSecond(35);
     assertThat(date1).isWithinMinute(20);
@@ -114,27 +182,26 @@ public class DateAssertionsExamples extends AbstractAssertionsExamples {
     assertThat(date1).isWithinDayOfWeek(Calendar.SATURDAY);
     assertThat(date1).isWithinMonth(4);
     assertThat(date1).isWithinYear(2003);
-//    assertThat(date1).hasMillisecond(17);
-//    assertThat(date1).hasSecond(35);
-//    assertThat(date1).hasMinute(20);
-//    assertThat(date1).hasHourOfDay(13);
-//    assertThat(date1).hasDayOfWeek(Calendar.SATURDAY);
-//    assertThat(date1).hasMonth(4);
-//    assertThat(date1).hasYear(2003);
+    // assertThat(date1).hasMillisecond(17);
+    // assertThat(date1).hasSecond(35);
+    // assertThat(date1).hasMinute(20);
+    // assertThat(date1).hasHourOfDay(13);
+    // assertThat(date1).hasDayOfWeek(Calendar.SATURDAY);
+    // assertThat(date1).hasMonth(4);
+    // assertThat(date1).hasYear(2003);
   }
 
   @Test
   public void date_assertions_with_date_represented_as_string() {
-    
-    // you can use date String representation (default is ISO format yyyy-MM-dd), we take care of parsing String as Date.
+    // You can use date String representation (default format is yyyy-MM-dd), we take care of parsing String as Date.
     assertThat(theTwoTowers.getReleaseDate()).isEqualTo("2002-12-18");
-    
+
     // but you can use custom date format if you prefer
     DateFormat userCustomDateFormat = new SimpleDateFormat("dd/MM/yyyy");
     assertThat(theTwoTowers.getReleaseDate()).withDateFormat(userCustomDateFormat).isEqualTo("18/12/2002");
     // once set, custom format is used for all following assertions !
     assertThat(theReturnOfTheKing.getReleaseDate()).isEqualTo("17/12/2003");
-    
+
     // you can easily get back to default ISO date format ...
     assertThat(theTwoTowers.getReleaseDate()).withIsoDateFormat().isEqualTo("2002-12-18");
     // ... which is then used for all following assertions
@@ -144,7 +211,7 @@ public class DateAssertionsExamples extends AbstractAssertionsExamples {
     DateAssert.useDateFormat(userCustomDateFormat);
     assertThat(theTwoTowers.getReleaseDate()).isEqualTo("18/12/2002");
     assertThat(theReturnOfTheKing.getReleaseDate()).isEqualTo("17/12/2003");
-    
+
     // switch back to Iso format
     DateAssert.useIsoDateFormat();
     assertThat(theTwoTowers.getReleaseDate()).isEqualTo("2002-12-18");
@@ -155,19 +222,17 @@ public class DateAssertionsExamples extends AbstractAssertionsExamples {
 
   @Test
   public void date_assertions_with_custom_comparison_examples() {
-    
-    // theTwoTowers.getReleaseDate() : 2002-12-18
-    assertThat(theTwoTowers.getReleaseDate()).usingComparator(yearAndMonthComparator)
-        .isEqualTo("2002-12-01").isEqualTo("2002-12-02") // same year and month
-        .isNotEqualTo("2002-11-18") // same year but different month
-        .isBetween("2002-12-01", "2002-12-10", true, true)
-        .isNotBetween("2002-12-01", "2002-12-10") // second date is excluded !
-        .isIn("2002-12-01") // ok same year and month
-        .isNotIn("2002-11-01", "2002-10-01"); // same year but different month
-
-    // build date away from today by one day (if we are at the end of the month we subtract one day, otherwise we add one)
+    // the Two Towers release date is 2002-12-18
+    assertThat(theTwoTowers.getReleaseDate()).usingComparator(yearAndMonthComparator).isEqualTo("2002-12-01")
+      .isEqualTo("2002-12-02") // same year and month
+      .isNotEqualTo("2002-11-18") // same year but different month
+      .isBetween("2002-12-01", "2002-12-10", true, true).isNotBetween("2002-12-01", "2002-12-10") // second date is
+                                                           // excluded !
+      .isIn("2002-12-01") // ok same year and month
+      .isNotIn("2002-11-01", "2002-10-01"); // same year but different month
+    // build date away from today by one day (subtract one day if we are at the end of the month, otherwise we add one)
     Date oneDayFromTodayInSameMonth = monthOf(tomorrow()) == monthOf(new Date()) ? tomorrow() : yesterday();
     assertThat(oneDayFromTodayInSameMonth).usingComparator(yearAndMonthComparator).isToday();
   }
-  
+
 }

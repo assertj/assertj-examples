@@ -22,7 +22,7 @@ import org.joda.time.LocalDateTime;
 import org.junit.Test;
 
 /**
- * Joda Time assertions example.
+ * Joda Time assertions examples.
  * 
  * @author Joel Costigliola
  */
@@ -87,7 +87,7 @@ public class JodaTimeAssertionsExamples extends AbstractAssertionsExamples {
 
   @Test
   public void date_time_comparison_with_precision_level_examples() {
-    // successfull assertions ignoring ...
+    // successful assertions ignoring ...
     // ... milliseconds
     DateTime dateTime1 = new DateTime(2000, 1, 1, 0, 0, 1, 0, UTC);
     DateTime dateTime2 = new DateTime(2000, 1, 1, 0, 0, 1, 456, UTC);
@@ -138,7 +138,7 @@ public class JodaTimeAssertionsExamples extends AbstractAssertionsExamples {
   
   @Test
   public void local_date_time_comparison_with_precision_level_examples() {
-    // successfull assertions ignoring ...
+    // successful assertions ignoring ...
     // ... milliseconds
     LocalDateTime localDateTime1 = new LocalDateTime(2000, 1, 1, 0, 0, 1, 0);
     LocalDateTime localDateTime2 = new LocalDateTime(2000, 1, 1, 0, 0, 1, 456);
