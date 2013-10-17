@@ -52,6 +52,8 @@ public class DateAssertionsExamples extends AbstractAssertionsExamples {
     // isIn isNotIn works with String based date parameter
     assertThat(theTwoTowers.getReleaseDate()).isIn("2002-12-17", "2002-12-18", "2002-12-19");
     assertThat(theTwoTowers.getReleaseDate()).isNotIn("2002-12-17", "2002-12-19");
+
+    assertThat(new Date(42)).hasTime(42);
   }
 
   @Test
@@ -71,7 +73,34 @@ public class DateAssertionsExamples extends AbstractAssertionsExamples {
     // equals assertion with delta
     Date date1 = new Date();
     Date date2 = new Date(date1.getTime() + 100);
-    assertThat(date1).isCloseTo(date2, 100); // would not be true for delta of 99ms
+    assertThat(date1).isCloseTo(date2, 100);
+
+    try {
+      assertThat(date1).isCloseTo(date2, 99);
+    } catch (AssertionError e) {
+      logAssertionErrorMessage("isCloseTo date assertion", e);
+    }
+  }
+
+  @Test
+  public void date_assertions_comparison_with_precision_level() {
+    // sets dates differing more and more from date1
+    Date date1 = parseDatetimeWithMs("2003-01-01T01:00:00.000");
+    Date date2 = parseDatetimeWithMs("2003-01-01T01:00:00.555");
+    Date date3 = parseDatetimeWithMs("2003-01-01T01:00:55.555");
+    Date date4 = parseDatetimeWithMs("2003-01-01T01:55:55.555");
+    Date date5 = parseDatetimeWithMs("2003-01-01T05:55:55.555");
+
+    assertThat(date1).isEqualToIgnoringMillis(date2);
+    assertThat(date1).isEqualToIgnoringSeconds(date3);
+    assertThat(date1).isEqualToIgnoringMinutes(date4);
+    assertThat(date1).isEqualToIgnoringHours(date5);
+
+    try {
+      assertThat(date1).isEqualToIgnoringMillis(date3);
+    } catch (AssertionError e) {
+      logAssertionErrorMessage("isEqualToIgnoringMillis", e);
+    }
   }
 
   @Test
@@ -236,8 +265,8 @@ public class DateAssertionsExamples extends AbstractAssertionsExamples {
     assertThat(theTwoTowers.getReleaseDate()).usingComparator(yearAndMonthComparator).isEqualTo("2002-12-01")
       .isEqualTo("2002-12-02") // same year and month
       .isNotEqualTo("2002-11-18") // same year but different month
-      .isBetween("2002-12-01", "2002-12-10", true, true).isNotBetween("2002-12-01", "2002-12-10") // second date is
-                                                           // excluded !
+      .isBetween("2002-12-01", "2002-12-10", true, true)
+      .isNotBetween("2002-12-01", "2002-12-10") // 2002-12-10 is excluded
       .isIn("2002-12-01") // ok same year and month
       .isNotIn("2002-11-01", "2002-10-01"); // same year but different month
     // build date away from today by one day (subtract one day if we are at the end of the month, otherwise we add one)
