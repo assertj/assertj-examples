@@ -1,13 +1,13 @@
 /**
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with
  * the License. You may obtain a copy of the License at
- * 
+ *
  * http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on
  * an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the
  * specific language governing permissions and limitations under the License.
- * 
+ *
  * Copyright 2012-2013 the original author or authors.
  */
 package org.assertj.examples;
@@ -35,11 +35,12 @@ import java.util.TreeSet;
 
 import org.assertj.examples.data.Ring;
 import org.assertj.examples.data.movie.Movie;
+
 import org.junit.Test;
 
 /**
  * Iterable (including Collection) assertions examples.<br>
- * 
+ *
  * @author Joel Costigliola
  */
 public class IterableAssertionsExamples extends AbstractAssertionsExamples {
@@ -162,26 +163,9 @@ public class IterableAssertionsExamples extends AbstractAssertionsExamples {
   @Test
   public void iterable_assertions_on_extracted_values_example() {
 
-    // extract simple property values having a java standard type
-    assertThat(extractProperty("name", String.class).from(fellowshipOfTheRing)).contains("Boromir", "Gandalf", "Frodo")
-        .doesNotContain("Sauron", "Elrond");
-
-    // same extraction with an alternate syntax
-    assertThat(extractProperty("name").ofType(String.class).from(fellowshipOfTheRing)).contains("Boromir", "Gandalf",
-        "Frodo", "Legolas").doesNotContain("Sauron", "Elrond");
-
-    // extracting property works also with user's types (here Race)
-    assertThat(extractProperty("race").from(fellowshipOfTheRing)).contains(HOBBIT, ELF).doesNotContain(ORC);
-
-    // extract nested property on Race
-    assertThat(extractProperty("race.name").from(fellowshipOfTheRing)).contains("Hobbit", "Elf").doesNotContain("Orc");
-
-    // same assertions but written with extracting(), it has the advantage of being able to extract field values as well
-    // as property values
-
     // extract 'name' property values.
     assertThat(fellowshipOfTheRing).extracting("name").contains("Boromir", "Gandalf", "Frodo", "Legolas")
-        .doesNotContain("Sauron", "Elrond");
+      .doesNotContain("Sauron", "Elrond");
 
     // extract 'age' field values, it works because 'age' is public in TolkienCharacter class.
     assertThat(fellowshipOfTheRing).extracting("age").contains(33, 38, 36);
@@ -191,6 +175,24 @@ public class IterableAssertionsExamples extends AbstractAssertionsExamples {
 
     // extract nested property values on Race
     assertThat(fellowshipOfTheRing).extracting("race.name").contains("Hobbit", "Elf").doesNotContain("Orc");
+
+    // same assertions but extracting properties fluently done outside assertions
+
+    // extract simple property values having a java standard type
+    assertThat(extractProperty("name", String.class).from(fellowshipOfTheRing)).contains("Boromir", "Gandalf", "Frodo")
+      .doesNotContain("Sauron", "Elrond");
+
+    // same extraction with an alternate syntax
+    assertThat(extractProperty("name").ofType(String.class).from(fellowshipOfTheRing)).contains("Boromir", "Gandalf",
+                                                                                                "Frodo", "Legolas")
+      .doesNotContain("Sauron", "Elrond");
+
+    // extracting property works also with user's types (here Race)
+    assertThat(extractProperty("race").from(fellowshipOfTheRing)).contains(HOBBIT, ELF).doesNotContain(ORC);
+
+    // extract nested property on Race
+    assertThat(extractProperty("race.name").from(fellowshipOfTheRing)).contains("Hobbit", "Elf").doesNotContain("Orc");
+
   }
 
   @Test
@@ -198,11 +200,12 @@ public class IterableAssertionsExamples extends AbstractAssertionsExamples {
 
     // extract 'name' and 'age' values.
     assertThat(fellowshipOfTheRing).extracting("name", "age").contains(tuple("Boromir", 37), tuple("Sam", 38),
-        tuple("Legolas", 1000));
+                                                                       tuple("Legolas", 1000));
 
     // extract 'name', 'age' and Race name values.
     assertThat(fellowshipOfTheRing).extracting("name", "age", "race.name").contains(tuple("Boromir", 37, "Man"),
-        tuple("Sam", 38, "Hobbit"), tuple("Legolas", 1000, "Elf"));
+                                                                                    tuple("Sam", 38, "Hobbit"),
+                                                                                    tuple("Legolas", 1000, "Elf"));
   }
 
   @Test
@@ -267,7 +270,7 @@ public class IterableAssertionsExamples extends AbstractAssertionsExamples {
 
     try {
       assertThat(newArrayList("Aria", "Stark", "daughter", "of", "Ned", "Stark")).containsOnlyOnce("Stark",
-          "Lannister", "Aria");
+                                                                                                   "Lannister", "Aria");
     } catch (AssertionError e) {
       logAssertionErrorMessage("containsOnlyOnce for Iterable", e);
     }
@@ -276,13 +279,22 @@ public class IterableAssertionsExamples extends AbstractAssertionsExamples {
   @Test
   public void containsSubSequence_assertion_examples() {
     assertThat(newArrayList("Batman", "is", "weaker", "than", "Superman", "but", "he", "is", "less", "annoying"))
-        .containsSubsequence("Superman", "is", "annoying");
+      .containsSubsequence("Superman", "is", "annoying");
     assertThat(newArrayList("Breaking", "objects", "is", "pretty", "bad")).containsSubsequence("Breaking", "bad");
     try {
       assertThat(newArrayList("A", "B", "C", "D")).containsSubsequence("B", "A", "C");
     } catch (AssertionError e) {
       logAssertionErrorMessage("containsSubsequence for Iterable", e);
     }
+  }
+
+  @Test
+  public void iterable_assertions_on_extracted_method_result_example() {
+
+    // extract results of calls to 'toString' method
+    assertThat(fellowshipOfTheRing).extractingResultOf("toString").contains("Frodo 33 years old Hobbit",
+                                                                            "Aragorn 87 years old Man");
+
   }
 
 }

@@ -13,18 +13,16 @@
 package org.assertj.examples.data;
 
 /**
- * 
  * A simple class to illustrate AssertJ assertions.
- * 
+ *
  * @author Joel Costigliola
  */
 public class TolkienCharacter {
 
-  private String name;
-  private Race race;
-
   // public to test extract on field
   public int age;
+  private String name;
+  private Race race;
 
   public TolkienCharacter(String name, int age, Race race) {
     super();
@@ -40,7 +38,7 @@ public class TolkienCharacter {
   public String getName() {
     return name;
   }
-  
+
   public void setName(String name) {
     this.name = name;
   }
@@ -81,7 +79,7 @@ public class TolkienCharacter {
 
   @Override
   public String toString() {
-    return "Character [name=" + name + ", race=" + race + ", age=" + age + "]";
+    return name + " " + age + " years old " + race.getName();
   }
 
 }
