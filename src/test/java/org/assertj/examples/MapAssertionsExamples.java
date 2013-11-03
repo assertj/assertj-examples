@@ -14,11 +14,12 @@ package org.assertj.examples;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.entry;
-import static org.assertj.examples.data.Ring.manRing;
-import static org.assertj.examples.data.Ring.narya;
-import static org.assertj.examples.data.Ring.nenya;
-import static org.assertj.examples.data.Ring.oneRing;
+import static org.assertj.examples.data.Ring.*;
 
+import java.util.LinkedHashMap;
+import java.util.Map;
+
+import org.assertj.examples.data.TolkienCharacter;
 import org.junit.Test;
 
 /**
@@ -54,6 +55,45 @@ public class MapAssertionsExamples extends AbstractAssertionsExamples {
     assertThat(ringBearers).isEmpty();
     assertThat(ringBearers).contains();
   }
-  
-  
+
+  @Test
+  public void map_contains_examples() throws Exception {
+
+    Map<String, TolkienCharacter> characters = new LinkedHashMap<>();
+    characters.put(frodo.getName(), frodo);
+    characters.put(galadriel.getName(), galadriel);
+    characters.put(gandalf.getName(), gandalf);
+    characters.put(sam.getName(), sam);
+
+    assertThat(characters).containsOnly(
+            entry(sam.getName(), sam),
+            entry(frodo.getName(), frodo),
+            entry(gandalf.getName(), gandalf),
+            entry(galadriel.getName(), galadriel));
+
+    try {
+      assertThat(characters).containsOnly(
+              entry(sam.getName(), sam),
+              entry(frodo.getName(), frodo),
+              entry(aragorn.getName(), aragorn));
+    } catch (AssertionError e) {
+      logAssertionErrorMessage("containsOnly with not found and not expected elements.", e);
+    }
+
+    assertThat(characters).containsExactly(
+            entry(frodo.getName(), frodo),
+            entry(galadriel.getName(), galadriel),
+            entry(gandalf.getName(), gandalf),
+            entry(sam.getName(), sam));
+
+    try {
+      assertThat(characters).containsExactly(
+              entry(frodo.getName(), frodo),
+              entry(sam.getName(), sam),
+              entry(gandalf.getName(), gandalf),
+              entry(galadriel.getName(), galadriel));
+    } catch (AssertionError e) {
+      logAssertionErrorMessage("containsExactly is disorder.", e);
+    }
+  }
 }
