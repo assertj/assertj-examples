@@ -188,7 +188,7 @@ public class ArrayAssertionsExamples extends AbstractAssertionsExamples {
   }
 
   @Test
-  public void contains_exactly_for_basic_types_assertion_examples() {
+  public void contains_exactly_for_primitive_types_assertion_examples() {
     // int
     assertThat(new int[] { 1, 2, 3 }).containsExactly(1, 2, 3);
     try {
@@ -239,7 +239,7 @@ public class ArrayAssertionsExamples extends AbstractAssertionsExamples {
   }
 
   @Test
-  public void containsOnlyOnce_for_basic_types_assertion_examples() {
+  public void containsOnlyOnce_for_primitive_types_assertion_examples() {
     // int
     assertThat(new int[] { 1, 2, 3 }).containsOnlyOnce(1);
     assertThat(new int[] { 1, 2, 3 }).containsOnlyOnce(1, 2);
@@ -268,11 +268,11 @@ public class ArrayAssertionsExamples extends AbstractAssertionsExamples {
 
   @Test
   public void containsSubSequence_assertion_examples() {
-    assertThat(new String[] {"Batman", "is", "weaker", "than", "Superman", "but", "he", "is", "less", "annoying"})
-      .containsSubsequence("Superman", "is", "annoying");
-    assertThat(new String[] {"Breaking", "objects", "is", "pretty", "bad"}).containsSubsequence("Breaking", "bad");
+    assertThat(new String[] { "Batman", "is", "weaker", "than", "Superman", "but", "he", "is", "less", "annoying" })
+                                                                                                                    .containsSubsequence("Superman", "is", "annoying");
+    assertThat(new String[] { "Breaking", "objects", "is", "pretty", "bad" }).containsSubsequence("Breaking", "bad");
     try {
-      assertThat(new String[] {"A", "B", "C", "D"}).containsSubsequence("B", "A", "C");
+      assertThat(new String[] { "A", "B", "C", "D" }).containsSubsequence("B", "A", "C");
     } catch (AssertionError e) {
       logAssertionErrorMessage("containsSubsequence for Array", e);
     }
@@ -284,12 +284,38 @@ public class ArrayAssertionsExamples extends AbstractAssertionsExamples {
     Rectangle r0 = new Rectangle(0, 0);
     Rectangle r1 = new Rectangle(1, 1);
     Rectangle r2 = new Rectangle(2, 2);
-    assertThat(new Rectangle[]{r1, r2, r2}).containsOnlyOnce(r1);
+    assertThat(new Rectangle[] { r1, r2, r2 }).containsOnlyOnce(r1);
     try {
-      assertThat(new Rectangle[]{r1, r2, r2}).containsOnlyOnce(r0, r1, r2);
+      assertThat(new Rectangle[] { r1, r2, r2 }).containsOnlyOnce(r0, r1, r2);
     } catch (AssertionError e) {
       logAssertionErrorMessage("containsOnlyOnce", e);
     }
+  }
+
+  @Test
+  public void hasSameSizeAs_assertion_examples() {
+    // comparing primitive arrays with primitive arrays
+    assertThat(new byte[] { 1, 2 }).hasSameSizeAs(new byte[] { 2, 3 });
+    assertThat(new byte[] { 1, 2 }).hasSameSizeAs(new int[] { 2, 3 });
+    // comparing primitive arrays with Object array
+    assertThat(new byte[] { 1, 2 }).hasSameSizeAs(new Byte[] { 2, 3 });
+    assertThat(new byte[] { 1, 2 }).hasSameSizeAs(new String[] { "1", "2" });
+    // comparing primitive arrays with Iterable
+    assertThat(new long[] { 1, 2, 3 }).hasSameSizeAs(newArrayList(vilya, nenya, narya));
+
+    // comparing Iterable with object array
+    assertThat(newArrayList(vilya, nenya, narya)).hasSameSizeAs(new Long[] { 1L, 2L, 3L });
+    // comparing Iterable with primitive array
+    assertThat(newArrayList(vilya, nenya, narya)).hasSameSizeAs(new long[] { 1, 2, 3 });
+    // comparing Iterable with Iterable
+    assertThat(newArrayList(vilya, nenya, narya)).hasSameSizeAs(newArrayList("vilya", "nenya", "narya"));
+
+    // comparing Object array with primitive arrays
+    assertThat(array(vilya, nenya, narya)).hasSameSizeAs(new long[] { 1, 2, 3 });
+    // comparing Object array with Iterable
+    assertThat(array(vilya, nenya, narya)).hasSameSizeAs(newArrayList(nenya, nenya, nenya));
+    // comparing Object array with Iterable
+    assertThat(array(vilya, nenya, narya)).hasSameSizeAs(array(nenya, nenya, nenya));
   }
 
 }
