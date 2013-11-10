@@ -143,7 +143,7 @@ public class StringAssertionsExamples extends AbstractAssertionsExamples {
                             "  </ring>\n" +
                             "</bearer>\n" +
                             "</rings>";
-    assertThat(xmlWithNewLine).isXmlEqualTo(expectedXml); 
+    assertThat(xmlWithNewLine).isXmlEqualTo(expectedXml);
     assertThat(xmlWithNewLine).isXmlEqualTo(oneLineXml);
 
     // You can easily compare your XML String to the content of an XML file.
