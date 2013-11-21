@@ -20,7 +20,7 @@ import org.assertj.core.api.Assertions;
 /**
  * A single entry point for all assertions, AssertJ standard assertions and MyProject custom assertions.
  * <p>
- * With  MyProjectAssertions.assertThat sttaic import, you will access all possible assertions (standard and custom ones)
+ * With  MyProjectAssertions.assertThat static import, you will access all possible assertions (standard and custom ones)
  */
 public class MyProjectAssertions extends Assertions { // extending make all standard AssertJ assertions available.
 
