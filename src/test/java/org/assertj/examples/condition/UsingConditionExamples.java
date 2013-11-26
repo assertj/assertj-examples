@@ -103,6 +103,8 @@ public class UsingConditionExamples extends AbstractAssertionsExamples {
     assertThat("Solo").has(not(jediPower));
     assertThat("Solo").doesNotHave(jediPower);
     assertThat("Solo").is(allOf(not(jedi), not(sith)));
+    assertThat("Solo").isNot(anyOf(jedi, sith));
+    assertThat("Solo").doesNotHave(anyOf(jediPower, sithPower));
   }
 
   private final Condition<String> jedi = new Condition<String>("jedi") {
