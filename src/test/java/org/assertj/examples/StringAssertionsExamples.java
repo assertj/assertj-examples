@@ -13,7 +13,6 @@
 package org.assertj.examples;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.contentOf;
 
 import java.io.File;
 import java.util.Comparator;

@@ -19,7 +19,6 @@ import org.junit.Test;
 
 public class SoftAssertionsExamples extends AbstractAssertionsExamples {
 
-
   @Test
   public void host_dinner_party_where_nobody_dies() {
     Mansion mansion = new Mansion();
