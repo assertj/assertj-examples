@@ -27,8 +27,4 @@ public class Team {
     return players;
   }
 
-  public void setPlayers(List<BasketBallPlayer> players) {
-    this.players = players;
-  }
-
 }

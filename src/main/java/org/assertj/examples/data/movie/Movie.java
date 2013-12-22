@@ -29,14 +29,6 @@ public class Movie {
     return title;
   }
   
-  public void setTitle(String title) {
-    this.title = title;
-  }
-  
-  public void setReleaseDate(Date releaseDate) {
-    this.releaseDate = releaseDate;
-  }
-
   public Date getReleaseDate() {
     return releaseDate;
   }

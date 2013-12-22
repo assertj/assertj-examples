@@ -58,11 +58,11 @@ public class FilterExamples extends AbstractAssertionsExamples {
         return player.getPointsPerGame() > 20 && (player.getAssistsPerGame() >= 8 || player.getReboundsPerGame() >= 8);
       }
     };
-    assertThat(filter(players).having(mvpStats).get()).containsOnly(rose, james);
+    assertThat(filter(basketBallPlayers).having(mvpStats).get()).containsOnly(rose, james);
     
     // being(condition) example : same condition can be applied but is renamed to be more readable
     Condition<BasketBallPlayer> potentialMvp= mvpStats;
-    assertThat(filter(players).being(potentialMvp).get()).containsOnly(rose, james);
+    assertThat(filter(basketBallPlayers).being(potentialMvp).get()).containsOnly(rose, james);
   }
 
 }

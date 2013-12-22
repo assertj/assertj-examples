@@ -12,13 +12,12 @@
  */
 package org.assertj.examples.data;
 
-import org.assertj.examples.exception.NameException;
+import static java.lang.String.format;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-import static java.lang.String.format;
+import org.assertj.examples.exception.NameException;
 
 /**
  * @author Joel Costigliola
@@ -32,7 +31,7 @@ public class BasketBallPlayer {
   private String team;
   private boolean rookie;
   private List<BasketBallPlayer> teamMates = new ArrayList<BasketBallPlayer>();
-  private List<int[]> points = new ArrayList<int[]>();
+  private List<int[]> points = new ArrayList<>();
 
   public BasketBallPlayer(Name name, String team) {
     setName(name);
@@ -41,7 +40,7 @@ public class BasketBallPlayer {
 
   public Name getName() throws NameException {
     if (name == null) {
-      throw new NameException(name);
+      throw new NameException(null);
     }
     return name;
   }

@@ -109,7 +109,7 @@ public abstract class AbstractAssertionsExamples {
   protected static BasketBallPlayer durant;
   protected static BasketBallPlayer noah;
   protected static BasketBallPlayer tonyParker;
-  protected static List<BasketBallPlayer> players;
+  protected static List<BasketBallPlayer> basketBallPlayers;
   protected static PotentialMvpCondition potentialMvp;
   protected static Condition<BasketBallPlayer> doubleDoubleStats;
 
@@ -135,7 +135,7 @@ public abstract class AbstractAssertionsExamples {
     noah.setAssistsPerGame(4);
     noah.setPointsPerGame(10);
     noah.setReboundsPerGame(11);
-    players = newArrayList(rose, james, durant, noah);
+    basketBallPlayers = newArrayList(rose, james, durant, noah);
     potentialMvp = new PotentialMvpCondition();
     doubleDoubleStats = new Condition<BasketBallPlayer>("double double stats") {
       @Override
