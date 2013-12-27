@@ -88,7 +88,7 @@ public abstract class AbstractAssertionsExamples {
 
   // Rings and their bearer
   protected final List<Ring> ringsOfPower = newArrayList(oneRing, vilya, nenya, narya, dwarfRing, manRing);
-  protected final Map<Ring, TolkienCharacter> ringBearers = new HashMap<Ring, TolkienCharacter>();
+  protected final Map<Ring, TolkienCharacter> ringBearers = new HashMap<>();
 
   // Lord of the Rings movies
   protected final Movie theFellowshipOfTheRing = new Movie("the fellowship of the Ring", parse("2001-12-19"));
