@@ -20,6 +20,7 @@
 
   <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    <neo4j.version>2.0.0</neo4j.version>
   </properties>
 
   <dependencies>
@@ -56,9 +57,14 @@
     <dependency>
       <groupId>org.neo4j</groupId>
       <artifactId>neo4j-kernel</artifactId>
-      <version>2.0.0-M06</version>
+      <version>${neo4j.version}</version>
       <type>test-jar</type>
       <scope>test</scope>
+    </dependency>
+    <dependency>
+      <groupId>org.neo4j</groupId>
+      <artifactId>neo4j-kernel</artifactId>
+      <version>${neo4j.version}</version>
     </dependency>
     <dependency>
       <groupId>com.google.guava</groupId>
