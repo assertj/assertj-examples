@@ -53,14 +53,14 @@ public class BasicAssertionsExamples extends AbstractAssertionsExamples {
     } catch (AssertionError e) {
       assertThat(e).hasMessage("[check Frodo's age] expected:<[33]> but was:<[50]>");
     }
-    // but you still can overrides the error message if you have a better one :
+    // but you still can override the error message if you have a better one :
     try {
       assertThat(frodo.getName()).as("check Frodo's name")
         .overridingErrorMessage("Hey my name is Frodo not %s", frodo.getName()).isEqualTo("Frodo");
     } catch (AssertionError e) {
       assertThat(e).hasMessage("[check Frodo's name] Hey my name is Frodo not Frodon");
     }
-    // if you still can overrides the error message if you have a better one :
+    // if you still can override the error message if you have a better one :
     try {
       assertThat(frodo.getName()).overridingErrorMessage("Hey my name is Frodo not (%)").isEqualTo("Frodo");
     } catch (AssertionError e) {
