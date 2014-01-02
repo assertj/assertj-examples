@@ -27,7 +27,7 @@ import java.util.Map;
 import static com.google.common.base.Splitter.on;
 import static com.google.common.collect.FluentIterable.from;
 import static com.google.common.collect.Maps.newHashMap;
-import static org.neo4j.helpers.collection.IteratorUtil.asIterable;
+import static java.lang.String.format;
 
 public class DragonBallGraph {
 
@@ -65,6 +65,45 @@ public class DragonBallGraph {
             }
             transaction.success();
             return disciples;
+        }
+    }
+
+    public Iterable<Relationship> fusions() {
+        try (Transaction transaction = graphDB.beginTx();
+             ResourceIterator<Relationship> relationships = cypherEngine.execute(
+                 "MATCH (:CHARACTER)-[fusions:IN_FUSION_WITH]-(:CHARACTER) RETURN fusions"
+             ).columnAs("fusions")) {
+
+            Collection<Relationship> fusions = new LinkedHashSet<>();
+            while (relationships.hasNext()) {
+                fusions.add(relationships.next());
+            }
+            transaction.success();
+            return fusions;
+        }
+    }
+
+    public Node findCharacter(String characterName) {
+        Map<String,Object> parameters = newHashMap();
+        parameters.put("name", characterName);
+        try (Transaction transaction = graphDB.beginTx();
+             ResourceIterator<Node> relationships = cypherEngine.execute(
+                 "MATCH (character:CHARACTER {name: {name}}) RETURN character",
+                 parameters
+             ).columnAs("character")) {
+
+            Collection<Node> characters = new LinkedHashSet<>();
+            while (relationships.hasNext()) {
+                characters.add(relationships.next());
+            }
+            if (characters.size() > 1) {
+                throw new IllegalStateException(format(
+                    "There should be only one character named <%s>",
+                    characterName
+                ));
+            }
+            transaction.success();
+            return characters.iterator().next();
         }
     }
 
