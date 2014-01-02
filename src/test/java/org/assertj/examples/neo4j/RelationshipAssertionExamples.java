@@ -50,25 +50,25 @@ public class RelationshipAssertionExamples extends Neo4jAssertionExamples {
                 .doesNotHaveType("HAS_WORKED_FOR")
                 .doesNotHaveType(DynamicRelationshipType.withName("HAS_WORKED_FOR"));
 
-            // you can test relationship start/end nodes
+            // you can benefit from all PropertyContainer assertions
+            // when you give a Relationship instance
             Relationship krillinPiccoloFusion = iterator.next();
             Node krillin = dragonBallGraph.findCharacter("Krillin");
             Node piccolo = dragonBallGraph.findCharacter("Piccolo");
 
             assertThat(krillinPiccoloFusion)
+                .hasPropertyKey("into")
+                .hasProperty("into", "Prilin")
+                .hasProperty("useless", true)
+                .doesNotHaveProperty("useless", false)
+                .doesNotHavePropertyKey("name")
+
+            // you can test relationship start/end nodes
                 .startsOrEndsWithNode(krillin)
                 .startsWithNode(krillin)
                 .startsOrEndsWithNode(piccolo)
                 .endsWithNode(piccolo);
 
-            // you can benefit from all PropertyContainer assertions
-            // when you give a Relationship instance
-            assertThat(krillinPiccoloFusion)
-                .hasPropertyKey("into")
-                .hasProperty("into", "Prilin")
-                .hasProperty("useless", true)
-                .doesNotHaveProperty("useless", false)
-                .doesNotHavePropertyKey("name");
 
             // and you can enjoy the same error message mechanism from assertj-core !
             try {

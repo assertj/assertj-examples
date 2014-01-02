@@ -31,22 +31,22 @@ public class NodeAssertionExamples extends Neo4jAssertionExamples {
             // you can enjoy the usual assertj-core assertions ;-)
             assertThat(disciples).hasSize(3);
 
-            // you can test against node labels: their String representation or
-            // the equivalent Label object
-            Node firstDisciple = disciples.iterator().next();
-            assertThat(firstDisciple)
-                .hasLabel("CHARACTER")
-                .hasLabel(DynamicLabel.label("HERO"))
-                .doesNotHaveLabel("VILLAIN")
-                .doesNotHaveLabel(DynamicLabel.label("MASTER"));
 
             // you can benefit from all PropertyContainer assertions
             // when you give a Node instance
+            Node firstDisciple = disciples.iterator().next();
             assertThat(firstDisciple)
                 .hasPropertyKey("name")
                 .hasProperty("name", "Son Goku")
                 .doesNotHavePropertyKey("firstName")
-                .doesNotHaveProperty("name", "Bulma");
+                .doesNotHaveProperty("name", "Bulma")
+
+            // you can test against node labels: their String representation or
+            // the equivalent Label object
+                .hasLabel("CHARACTER")
+                .hasLabel(DynamicLabel.label("HERO"))
+                .doesNotHaveLabel("VILLAIN")
+                .doesNotHaveLabel(DynamicLabel.label("MASTER"));
 
             // and you can enjoy the same error message mechanism from assertj-core !
             try {
