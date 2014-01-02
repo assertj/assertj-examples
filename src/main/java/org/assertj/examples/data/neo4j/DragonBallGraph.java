@@ -88,8 +88,8 @@ public class DragonBallGraph {
         parameters.put("name", characterName);
         try (Transaction transaction = graphDB.beginTx();
              ResourceIterator<Node> relationships = cypherEngine.execute(
-                 "MATCH (character:CHARACTER {name: {name}}) RETURN character",
-                 parameters
+                "MATCH (character:CHARACTER {name: {name}}) RETURN character",
+                parameters
              ).columnAs("character")) {
 
             Collection<Node> characters = new LinkedHashSet<>();
@@ -107,8 +107,46 @@ public class DragonBallGraph {
         }
     }
 
-    public GraphDatabaseService getGraphDB() {
-        return graphDB;
+    public Path findShortestPathBetween(String characterOne, String characterTwo) {
+        Map<String,Object> parameters = newHashMap();
+        parameters.put("name1", characterOne);
+        parameters.put("name2", characterTwo);
+        try (Transaction transaction = graphDB.beginTx()) {
+            Path path = cypherEngine.execute(
+                "MATCH (character1:CHARACTER {name: {name1}}), " +
+                      "(character2:CHARACTER {name: {name2}}), " +
+                      "path = shortestPath((character1)-[*..15]-(character2)) " +
+                "RETURN path",
+                parameters
+            ).<Path>columnAs("path").next();
+            transaction.success();
+            return path;
+        }
+    }
+
+    public Relationship findTrainingFrom(String characterName) {
+        Map<String,Object> parameters = newHashMap();
+        parameters.put("name", characterName);
+        try (Transaction transaction = graphDB.beginTx();
+            ResourceIterator<Relationship> relationships = cypherEngine.execute(
+                "MATCH (:CHARACTER {name: {name}})-[training:HAS_TRAINED_WITH]->(:MASTER) RETURN training",
+                parameters
+            ).columnAs("training")) {
+
+            LinkedList<Relationship> trainings = new LinkedList<>();
+            while (relationships.hasNext()) {
+                trainings.add(relationships.next());
+            }
+
+            if (trainings.size() > 1) {
+                throw new IllegalStateException(format(
+                    "There should be only one training involving character named <%s>",
+                    characterName
+                ));
+            }
+            transaction.success();
+            return trainings.iterator().next();
+        }
     }
 
     private Collection<String> statements(InputStreamReader reader) throws IOException {
