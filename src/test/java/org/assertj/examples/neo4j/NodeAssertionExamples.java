@@ -28,7 +28,7 @@ public class NodeAssertionExamples extends Neo4jAssertionExamples {
             // let us find the disciples of Master Roshi persisted in Neo4j
             Iterable<Node> disciples = dragonBallGraph.disciplesOf("Master Roshi");
 
-            // the usual assertj-core assertions ;-)
+            // you can enjoy the usual assertj-core assertions ;-)
             assertThat(disciples).hasSize(3);
 
             // you can test against node labels: their String representation or
@@ -40,7 +40,8 @@ public class NodeAssertionExamples extends Neo4jAssertionExamples {
                 .doesNotHaveLabel("VILLAIN")
                 .doesNotHaveLabel(DynamicLabel.label("MASTER"));
 
-            // you can benefit from all PropertyContainer assertions when you give a Node instance
+            // you can benefit from all PropertyContainer assertions
+            // when you give a Node instance
             assertThat(firstDisciple)
                 .hasPropertyKey("name")
                 .hasProperty("name", "Son Goku")

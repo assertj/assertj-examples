@@ -14,15 +14,13 @@ package org.assertj.examples.data.neo4j;
 
 import com.google.common.io.CharStreams;
 import org.neo4j.cypher.javacompat.ExecutionEngine;
-import org.neo4j.graphdb.GraphDatabaseService;
-import org.neo4j.graphdb.Node;
-import org.neo4j.graphdb.ResourceIterator;
-import org.neo4j.graphdb.Transaction;
+import org.neo4j.graphdb.*;
 
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.Collection;
+import java.util.LinkedHashSet;
 import java.util.LinkedList;
 import java.util.Map;
 
@@ -54,13 +52,14 @@ public class DragonBallGraph {
     public Iterable<Node> disciplesOf(String masterName) {
         Map<String,Object> parameters = newHashMap();
         parameters.put("name", masterName);
-        try (Transaction transaction = graphDB.beginTx()) {
+        try (Transaction transaction = graphDB.beginTx();
             ResourceIterator<Node> nodes = cypherEngine.execute(
-                "MATCH (disciples:CHARACTER)-[:HAS_TRAINED_WITH]->(:MASTER {name: 'Master Roshi'}) " +
-                "RETURN disciples"
-            ).columnAs("disciples");
+                "MATCH (disciples:CHARACTER)-[:HAS_TRAINED_WITH]->(:MASTER {name: {name}}) " +
+                "RETURN disciples",
+                parameters
+            ).columnAs("disciples")) {
 
-            LinkedList<Node> disciples = new LinkedList<>();
+            Collection<Node> disciples = new LinkedList<>();
             while (nodes.hasNext()) {
                 disciples.add(nodes.next());
             }
