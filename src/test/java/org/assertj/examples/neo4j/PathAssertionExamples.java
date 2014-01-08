@@ -13,7 +13,9 @@
 package org.assertj.examples.neo4j;
 
 import org.junit.Test;
+import org.neo4j.graphdb.Node;
 import org.neo4j.graphdb.Path;
+import org.neo4j.graphdb.Relationship;
 import org.neo4j.graphdb.Transaction;
 
 import static org.assertj.neo4j.api.Assertions.assertThat;
@@ -28,11 +30,14 @@ public class PathAssertionExamples extends Neo4jAssertionExamples {
 
           // you can test several Path properties such as length,
           // start/end node and last relationship
-          assertThat(bulmaToMasterRoshiPath)
+        final Node bulmaNode = dragonBallGraph.findCharacter("Bulma");
+        final Node masterRoshiNode = dragonBallGraph.findCharacter("Master Roshi");
+        final Relationship trainingFromSonGoku = dragonBallGraph.findTrainingFrom("Son Goku");
+        assertThat(bulmaToMasterRoshiPath)
               .hasLength(3)
-              .startsWithNode(dragonBallGraph.findCharacter("Bulma"))
-              .endsWithNode(dragonBallGraph.findCharacter("Master Roshi"))
-              .endsWithRelationship(dragonBallGraph.findTrainingFrom("Son Goku"))
+              .startsWithNode(bulmaNode)
+              .endsWithNode(masterRoshiNode)
+              .endsWithRelationship(trainingFromSonGoku)
 
           // you can enjoy the usual assertj-core assertions (Path is an Iterable) ;-)
               .doesNotContainNull();

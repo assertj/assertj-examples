@@ -31,7 +31,6 @@ public class NodeAssertionExamples extends Neo4jAssertionExamples {
             // you can enjoy the usual assertj-core assertions ;-)
             assertThat(disciples).hasSize(3);
 
-
             // you can benefit from all PropertyContainer assertions
             // when you give a Node instance
             Node firstDisciple = disciples.iterator().next();
@@ -66,6 +65,9 @@ public class NodeAssertionExamples extends Neo4jAssertionExamples {
             }
 
             tx.close();
+
+            // just check that we can use standard assertions along with Neo4j ones
+            assertThat("hello world").startsWith("hello");
         }
     }
 }
