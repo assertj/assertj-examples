@@ -14,6 +14,7 @@ package org.assertj.examples.data.neo4j;
 
 import com.google.common.io.CharStreams;
 import org.neo4j.cypher.javacompat.ExecutionEngine;
+import org.neo4j.cypher.javacompat.ExecutionResult;
 import org.neo4j.graphdb.*;
 
 import java.io.IOException;
@@ -50,14 +51,8 @@ public class DragonBallGraph {
     }
 
     public Iterable<Node> disciplesOf(String masterName) {
-        Map<String,Object> parameters = newHashMap();
-        parameters.put("name", masterName);
         try (Transaction transaction = graphDB.beginTx();
-            ResourceIterator<Node> nodes = cypherEngine.execute(
-                "MATCH (disciples:CHARACTER)-[:HAS_TRAINED_WITH]->(:MASTER {name: {name}}) " +
-                "RETURN disciples",
-                parameters
-            ).columnAs("disciples")) {
+            ResourceIterator<Node> nodes = discipleRowsOf(masterName).columnAs("disciples")) {
 
             Collection<Node> disciples = new LinkedList<>();
             while (nodes.hasNext()) {
@@ -68,7 +63,18 @@ public class DragonBallGraph {
         }
     }
 
-    public Iterable<Relationship> fusions() {
+  public ExecutionResult discipleRowsOf(String masterName) {
+    Map<String, Object> parameters = newHashMap();
+    parameters.put("name", masterName);
+
+    return cypherEngine.execute(
+        "MATCH (disciples:CHARACTER)-[:HAS_TRAINED_WITH]->(:MASTER {name: {name}}) " +
+        "RETURN disciples",
+        parameters
+    );
+  }
+
+  public Iterable<Relationship> fusions() {
         try (Transaction transaction = graphDB.beginTx();
              ResourceIterator<Relationship> relationships = cypherEngine.execute(
                  "MATCH (:CHARACTER)-[fusions:IN_FUSION_WITH]-(:CHARACTER) RETURN fusions"
@@ -129,8 +135,8 @@ public class DragonBallGraph {
         parameters.put("name", characterName);
         try (Transaction transaction = graphDB.beginTx();
             ResourceIterator<Relationship> relationships = cypherEngine.execute(
-                "MATCH (:CHARACTER {name: {name}})-[training:HAS_TRAINED_WITH]->(:MASTER) RETURN training",
-                parameters
+              "MATCH (:CHARACTER {name: {name}})-[training:HAS_TRAINED_WITH]->(:MASTER) RETURN training",
+              parameters
             ).columnAs("training")) {
 
             LinkedList<Relationship> trainings = new LinkedList<>();
