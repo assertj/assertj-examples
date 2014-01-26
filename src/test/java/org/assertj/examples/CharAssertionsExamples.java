@@ -44,4 +44,13 @@ public class CharAssertionsExamples extends AbstractAssertionsExamples {
     assertThat(new Character('a')).usingComparator(caseInsensitiveComparator).isEqualTo(new Character('A'));
   }
 
+  @Test
+  public void use_unicode_representation_in_error_messages() {
+    try {
+      assertThat('µ').asUnicode().isEqualTo('μ');
+    } catch (AssertionError e) {
+      logAssertionErrorMessage("asUnicode() for Char", e);
+    }
+  }
+
 }
