@@ -20,17 +20,27 @@ import static org.assertj.neo4j.api.Assertions.assertThat;
 
 public class ExecutionResultAssertionExamples extends Neo4jAssertionExamples {
 
-    @Test
-    public void execution_result_assertion_examples() {
-        try (Transaction tx = graphDB.beginTx()) {
-            // as in NodeAssertionExamples, let us find disciples of Master Roshi
-            // this time, however, the raw results will be returned
-            ExecutionResult result = dragonBallGraph.discipleRowsOf("Master Roshi");
+  @Test
+  public void execution_result_assertion_examples() {
+    try (Transaction tx = graphDB.beginTx()) {
+      // as in NodeAssertionExamples, let us find disciples of Master Roshi
+      // this time, however, the raw results will be returned
+      ExecutionResult result = dragonBallGraph.discipleRowsOf("Master Roshi");
 
-            // this is NOT an assertj-core assertion ;-)
-            assertThat(result).hasSize(3);
+      // this consumes the entire iterator wrapped by ExecutionResult
+      // therefore, you cannot chain this assertion with others
+      assertThat(result).hasSize(3);
 
-            tx.close();
-        }
+      // let us now find disciples of Master Shen
+      result = dragonBallGraph.discipleRowsOf("Master Shen");
+
+      // the following assertions can be chained
+      // *so long as* the specified index increases
+      assertThat(result)
+        .rowContainsColumns(0, "disciples", "master")
+        .rowContainsColumns(1, "disciples", "master");
+
+      tx.close();
     }
+  }
 }

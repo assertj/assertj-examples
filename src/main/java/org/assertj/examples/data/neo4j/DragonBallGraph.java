@@ -68,8 +68,8 @@ public class DragonBallGraph {
     parameters.put("name", masterName);
 
     return cypherEngine.execute(
-        "MATCH (disciples:CHARACTER)-[:HAS_TRAINED_WITH]->(:MASTER {name: {name}}) " +
-        "RETURN disciples",
+        "MATCH (disciples:CHARACTER)-[:HAS_TRAINED_WITH]->(master:MASTER {name: {name}}) " +
+        "RETURN disciples, master",
         parameters
     );
   }
