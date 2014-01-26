@@ -22,20 +22,20 @@ import java.io.IOException;
 
 public class Neo4jAssertionExamples {
 
-    protected static GraphDatabaseService graphDB;
-    protected static DragonBallGraph dragonBallGraph;
+  protected static GraphDatabaseService graphDB;
+  protected static DragonBallGraph dragonBallGraph;
 
-    @BeforeClass
-    public static void prepare_graph() throws IOException {
-        graphDB = new TestGraphDatabaseFactory().newImpermanentDatabase();
-        dragonBallGraph = new DragonBallGraph(graphDB);
-        dragonBallGraph.importGraph(
-            Neo4jAssertionExamples.class.getResourceAsStream("/dragonBall.cypher")
-        );
-    }
+  @BeforeClass
+  public static void prepare_graph() throws IOException {
+    graphDB = new TestGraphDatabaseFactory().newImpermanentDatabase();
+    dragonBallGraph = new DragonBallGraph(graphDB);
+    dragonBallGraph.importGraph(
+      Neo4jAssertionExamples.class.getResourceAsStream("/dragonBall.cypher")
+    );
+  }
 
-    @AfterClass
-    public static void cleanUp() {
-        graphDB.shutdown();
-    }
+  @AfterClass
+  public static void cleanUp() {
+    graphDB.shutdown();
+  }
 }

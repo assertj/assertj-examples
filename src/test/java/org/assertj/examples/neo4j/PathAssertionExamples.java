@@ -22,27 +22,27 @@ import static org.assertj.neo4j.api.Assertions.assertThat;
 
 public class PathAssertionExamples extends Neo4jAssertionExamples {
 
-   @Test
-   public void path_assertion_examples() {
-      try (Transaction tx = graphDB.beginTx()) {
-          // let us find the shortest path between Bulma and Master Roshi
-          Path bulmaToMasterRoshiPath = dragonBallGraph.findShortestPathBetween("Bulma", "Master Roshi");
+  @Test
+  public void path_assertion_examples() {
+    try (Transaction tx = graphDB.beginTx()) {
+      // let us find the shortest path between Bulma and Master Roshi
+      Path bulmaToMasterRoshiPath = dragonBallGraph.findShortestPathBetween("Bulma", "Master Roshi");
 
-          // you can test several Path properties such as length,
-          // start/end node and last relationship
-        final Node bulmaNode = dragonBallGraph.findCharacter("Bulma");
-        final Node masterRoshiNode = dragonBallGraph.findCharacter("Master Roshi");
-        final Relationship trainingFromSonGoku = dragonBallGraph.findTrainingFrom("Son Goku");
-        assertThat(bulmaToMasterRoshiPath)
-              .hasLength(3)
-              .startsWithNode(bulmaNode)
-              .endsWithNode(masterRoshiNode)
-              .endsWithRelationship(trainingFromSonGoku)
+      // you can test several Path properties such as length,
+      // start/end node and last relationship
+      final Node bulmaNode = dragonBallGraph.findCharacter("Bulma");
+      final Node masterRoshiNode = dragonBallGraph.findCharacter("Master Roshi");
+      final Relationship trainingFromSonGoku = dragonBallGraph.findTrainingFrom("Son Goku");
+      assertThat(bulmaToMasterRoshiPath)
+        .hasLength(3)
+        .startsWithNode(bulmaNode)
+        .endsWithNode(masterRoshiNode)
+        .endsWithRelationship(trainingFromSonGoku)
 
           // you can enjoy the usual assertj-core assertions (Path is an Iterable) ;-)
-              .doesNotContainNull();
+        .doesNotContainNull();
 
-          tx.close();
-      }
-   }
+      tx.close();
+    }
+  }
 }

@@ -28,80 +28,80 @@ import static org.assertj.neo4j.api.Assertions.assertThat;
 
 public class RelationshipAssertionExamples extends Neo4jAssertionExamples {
 
-    @Test
-    public void relationship_assertions_examples() {
-        try (Transaction tx = graphDB.beginTx()) {
-            // let us find the fusions between Dragon Ball characters persisted in Neo4j
-            Iterable<Relationship> fusions = dragonBallGraph.fusions();
+  @Test
+  public void relationship_assertions_examples() {
+    try (Transaction tx = graphDB.beginTx()) {
+      // let us find the fusions between Dragon Ball characters persisted in Neo4j
+      Iterable<Relationship> fusions = dragonBallGraph.fusions();
 
-            // you can enjoy the usual assertj-core assertions ;-)
-            assertThat(fusions).hasSize(4);
-            Iterable<Relationship> funnyFusions = filter(fusions, FUNNY_ONLY());
-            assertThat(funnyFusions).hasSize(2);
+      // you can enjoy the usual assertj-core assertions ;-)
+      assertThat(fusions).hasSize(4);
+      Iterable<Relationship> funnyFusions = filter(fusions, FUNNY_ONLY());
+      assertThat(funnyFusions).hasSize(2);
 
-            // you can chain assertions on relationship types: their String representation
-            // or the equivalent RelationshipType instance
-            Iterator<Relationship> iterator = funnyFusions.iterator();
-            Relationship veku = iterator.next();
+      // you can chain assertions on relationship types: their String representation
+      // or the equivalent RelationshipType instance
+      Iterator<Relationship> iterator = funnyFusions.iterator();
+      Relationship veku = iterator.next();
 
-            assertThat(veku)
-                .hasType("IN_FUSION_WITH")
-                .hasType(DynamicRelationshipType.withName("IN_FUSION_WITH"))
-                .doesNotHaveType("HAS_WORKED_FOR")
-                .doesNotHaveType(DynamicRelationshipType.withName("HAS_WORKED_FOR"));
+      assertThat(veku)
+        .hasType("IN_FUSION_WITH")
+        .hasType(DynamicRelationshipType.withName("IN_FUSION_WITH"))
+        .doesNotHaveType("HAS_WORKED_FOR")
+        .doesNotHaveType(DynamicRelationshipType.withName("HAS_WORKED_FOR"));
 
-            // you can benefit from all PropertyContainer assertions
-            // when you give a Relationship instance
-            Relationship krillinPiccoloFusion = iterator.next();
-            Node krillin = dragonBallGraph.findCharacter("Krillin");
-            Node piccolo = dragonBallGraph.findCharacter("Piccolo");
+      // you can benefit from all PropertyContainer assertions
+      // when you give a Relationship instance
+      Relationship krillinPiccoloFusion = iterator.next();
+      Node krillin = dragonBallGraph.findCharacter("Krillin");
+      Node piccolo = dragonBallGraph.findCharacter("Piccolo");
 
-            assertThat(krillinPiccoloFusion)
-                .hasPropertyKey("into")
-                .hasProperty("into", "Prilin")
-                .hasProperty("useless", true)
-                .doesNotHaveProperty("useless", false)
-                .doesNotHavePropertyKey("name")
+      assertThat(krillinPiccoloFusion)
+        .hasPropertyKey("into")
+        .hasProperty("into", "Prilin")
+        .hasProperty("useless", true)
+        .doesNotHaveProperty("useless", false)
+        .doesNotHavePropertyKey("name")
 
-            // you can test relationship start/end nodes
-                .startsOrEndsWithNode(krillin)
-                .startsWithNode(krillin)
-                .startsOrEndsWithNode(piccolo)
-                .endsWithNode(piccolo);
+          // you can test relationship start/end nodes
+        .startsOrEndsWithNode(krillin)
+        .startsWithNode(krillin)
+        .startsOrEndsWithNode(piccolo)
+        .endsWithNode(piccolo);
 
 
-            // and you can enjoy the same error message mechanism from assertj-core !
-            try {
-                assertThat(veku).as("[check %s's start/end node]", veku.getProperty("into"))
-                    .startsOrEndsWithNode(krillin);
-            }
-            catch (AssertionError ae) {
-                assertThat(ae).hasMessage("[[check Veku's start/end node]] \n" +
-                    "Expecting:\n" +
-                    "  <Relationship[19]>\n" +
-                    "to either start or end with node:\n" +
-                    "  <Node[6]>\n"
-                );
-            }
+      // and you can enjoy the same error message mechanism from assertj-core !
+      try {
+        assertThat(veku).as("[check %s's start/end node]", veku.getProperty("into"))
+          .startsOrEndsWithNode(krillin);
+      }
+      catch (AssertionError ae) {
+        assertThat(ae).hasMessage("[[check Veku's start/end node]] \n" +
+          "Expecting:\n" +
+          "  <Relationship[19]>\n" +
+          "to either start or end with node:\n" +
+          "  <Node[6]>\n"
+        );
+      }
 
-            tx.close();
-        }
+      tx.close();
+    }
+  }
+
+  static class UselessFusion implements Predicate<Relationship> {
+
+    private UselessFusion() {}
+
+    public static UselessFusion FUNNY_ONLY() {
+      return new UselessFusion();
     }
 
-    static class UselessFusion implements Predicate<Relationship> {
-
-        private UselessFusion() {}
-
-        public static UselessFusion FUNNY_ONLY() {
-            return new UselessFusion();
-        }
-
-        @Override
-        public boolean apply(Relationship input) {
-            if (input == null) {
-                return false;
-            }
-            return (boolean) input.getProperty("useless", Boolean.FALSE);
-        }
+    @Override
+    public boolean apply(Relationship input) {
+      if (input == null) {
+        return false;
+      }
+      return (boolean) input.getProperty("useless", Boolean.FALSE);
     }
+  }
 }
