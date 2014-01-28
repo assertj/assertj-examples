@@ -91,10 +91,11 @@ public abstract class AbstractAssertionsExamples {
   protected final Map<Ring, TolkienCharacter> ringBearers = new HashMap<>();
 
   // Lord of the Rings movies
-  protected final Movie theFellowshipOfTheRing = new Movie("the fellowship of the Ring", parse("2001-12-19"));
-  protected final Movie theTwoTowers = new Movie("the two Towers", parse("2002-12-18"));
-  protected final Movie theReturnOfTheKing = new Movie("the Return of the King", parse("2003-12-17"));
-  protected final Movie theSilmarillion = new Movie("the Silmarillion", parse("2030-01-01"));
+  protected final Movie theFellowshipOfTheRing = new Movie("the fellowship of the Ring", parse("2001-12-19"), "178 min");
+  protected final Movie theTwoTowers = new Movie("the two Towers", parse("2002-12-18"), "179 min");
+  protected final Movie theReturnOfTheKing = new Movie("the Return of the King", parse("2003-12-17"), "201 min");
+  protected final Movie theSilmarillion = new Movie("the Silmarillion", parse("2030-01-01"), "unknown");
+  protected final List<Movie> trilogy = newArrayList(theFellowshipOfTheRing, theTwoTowers, theReturnOfTheKing);
 
   // Various comparators
   protected Comparator<TolkienCharacter> ageComparator = new AgeComparator();
