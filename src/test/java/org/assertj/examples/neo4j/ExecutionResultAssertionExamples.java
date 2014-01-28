@@ -37,8 +37,8 @@ public class ExecutionResultAssertionExamples extends Neo4jAssertionExamples {
       // the following assertions can be chained
       // *so long as* the specified index increases
       assertThat(result)
-        .rowContainsColumns(0, "disciples", "master")
-        .rowContainsColumns(1, "disciples", "master");
+        .containsColumnNamesAtRow(0, "disciples", "master")
+        .containsColumnNamesAtRow(1, "disciples", "master");
 
       tx.close();
     }
