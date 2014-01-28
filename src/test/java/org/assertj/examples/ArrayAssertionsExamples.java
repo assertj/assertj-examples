@@ -30,6 +30,7 @@ import static org.assertj.examples.data.Ring.oneRing;
 import static org.assertj.examples.data.Ring.vilya;
 
 import java.awt.Rectangle;
+import java.io.UnsupportedEncodingException;
 import java.util.Arrays;
 import java.util.Comparator;
 
@@ -184,7 +185,6 @@ public class ArrayAssertionsExamples extends AbstractAssertionsExamples {
   public void filter_then_extract_assertion_example() {
     Iterable<TolkienCharacter> badBadGuys = filter(orcsWithHobbitPrisoners).with("race.alignment", EVIL).get();
     assertThat(badBadGuys).extracting("name").containsOnly("Guruk");
-
   }
 
   @Test
@@ -316,6 +316,20 @@ public class ArrayAssertionsExamples extends AbstractAssertionsExamples {
     assertThat(array(vilya, nenya, narya)).hasSameSizeAs(newArrayList(nenya, nenya, nenya));
     // comparing Object array with Iterable
     assertThat(array(vilya, nenya, narya)).hasSameSizeAs(array(nenya, nenya, nenya));
+  }
+
+  @Test
+  public void use_hexadecimal_representation_in_error_messages() throws UnsupportedEncodingException {
+    try {
+      assertThat(new Byte[]{0x10,0x20}).asHexadecimal().contains(new Byte[]{0x30});
+    } catch (AssertionError e) {
+      logAssertionErrorMessage("asHexadecimal for byte array", e);
+    }
+    try {
+      assertThat("zólc".getBytes()).asHexadecimal().contains("żółć".getBytes("ISO-8859-2"));
+    } catch (AssertionError e) {
+      logAssertionErrorMessage("asHexadecimal for byte array", e);
+    }
   }
 
 }

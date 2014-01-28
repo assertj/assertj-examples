@@ -28,7 +28,6 @@ public class StringAssertionsExamples extends AbstractAssertionsExamples {
 
   @Test
   public void string_assertions_examples() {
-
     assertThat("Frodo").startsWith("Fro").endsWith("do").hasSize(5);
     assertThat("Frodo").contains("rod").doesNotContain("fro");
     assertThat("Frodo").containsOnlyOnce("do");
@@ -166,6 +165,24 @@ public class StringAssertionsExamples extends AbstractAssertionsExamples {
       logAssertionErrorMessage("XML string comparison (isXmlEqualTo)", e);
     }
 
+  }
+
+  @Test
+  public void use_hexadecimal_representation_in_error_messages() {
+    try {
+      assertThat("µµµ").asHexadecimal().contains("μμμ");
+    } catch (AssertionError e) {
+      logAssertionErrorMessage("asHexadecimal() for String", e);
+    }
+  }
+
+  @Test
+  public void use_unicode_representation_in_error_messages() {
+    try {
+      assertThat("µµµ").asUnicode().contains("μμμ");
+    } catch (AssertionError e) {
+      logAssertionErrorMessage("asUnicode() for String", e);
+    }
   }
 
 

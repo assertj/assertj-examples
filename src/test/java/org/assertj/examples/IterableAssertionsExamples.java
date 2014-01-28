@@ -340,4 +340,24 @@ public class IterableAssertionsExamples extends AbstractAssertionsExamples {
     }
   }
 
+  @Test
+  public void use_hexadecimal_representation_in_error_messages() {
+    final List<Byte> bytes = newArrayList((byte)0x10, (byte) 0x20);
+    try {
+      assertThat(bytes).asHexadecimal().contains((byte)0x30);
+    } catch (AssertionError e) {
+      logAssertionErrorMessage("asHexadecimal for byte list", e);
+    }
+  }
+
+  @Test
+  public void use_binary_representation_in_error_messages() {
+    final List<Byte> bytes = newArrayList((byte)0x10, (byte) 0x20);
+    try {
+      assertThat(bytes).asBinary().contains((byte)0x30);
+    } catch (AssertionError e) {
+      logAssertionErrorMessage("asBinary for byte list", e);
+    }
+  }
+
 }

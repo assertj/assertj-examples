@@ -100,7 +100,7 @@ public class NumberAssertionsExamples extends AbstractAssertionsExamples {
     // With BigDecimal, 8.0 is not equals to 8.00 but it is if you use compareTo()
     assertThat(new BigDecimal("8.0")).isEqualByComparingTo(new BigDecimal("8.00"));
 
-    // The following won't work because it relies on equals methos
+    // The following won't work because it relies on equals methods
     // assertThat(new BigDecimal("8.0")).isGreaterThanOrEqualTo(new BigDecimal("8.00"));
     // To have a consistent comparison ignoring BigDecimal scale, switch of comparison strategy :
     Comparator<BigDecimal> bigDecimalComparator = new Comparator<BigDecimal>() {
@@ -121,6 +121,16 @@ public class NumberAssertionsExamples extends AbstractAssertionsExamples {
       assertThat(8.1f).isEqualTo(8.0f, offset(0.1f));
     } catch (AssertionError e) {
       logAssertionErrorMessage("isEqualTo with offset", e);
+    }
+  }
+
+  @Test
+  public void number_assertions_with_binary_representation_examples() {
+    assertThat(1).asBinary().isEqualTo(1);
+    try {
+      assertThat(1).asBinary().isEqualTo(2);
+    } catch (AssertionError e) {
+      logAssertionErrorMessage("isEqualTo with binary representation_", e);
     }
   }
 
