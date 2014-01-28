@@ -14,8 +14,9 @@ package org.assertj.examples;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.extractProperty;
+import static org.assertj.core.api.Assertions.failBecauseExceptionWasNotThrown;
 import static org.assertj.core.api.Assertions.tuple;
-import static org.assertj.core.util.Lists.*;
+import static org.assertj.core.util.Lists.newArrayList;
 import static org.assertj.examples.data.Race.ELF;
 import static org.assertj.examples.data.Race.HOBBIT;
 import static org.assertj.examples.data.Race.ORC;
@@ -33,10 +34,11 @@ import java.util.List;
 import java.util.SortedSet;
 import java.util.TreeSet;
 
+import org.assertj.core.util.introspection.FieldSupport;
+import org.assertj.core.util.introspection.IntrospectionError;
 import org.assertj.examples.data.Employee;
 import org.assertj.examples.data.Ring;
 import org.assertj.examples.data.TolkienCharacter;
-import org.assertj.examples.data.movie.Movie;
 
 import org.junit.Test;
 
@@ -52,7 +54,6 @@ public class IterableAssertionsExamples extends AbstractAssertionsExamples {
 
     // would work the same way with Iterable<Ring>,
     Iterable<Ring> elvesRings = newArrayList(vilya, nenya, narya);
-    Iterable<Movie> trilogy = newArrayList(theFellowshipOfTheRing, theTwoTowers, theReturnOfTheKing);
     assertThat(elvesRings).isNotEmpty().hasSize(3);
     assertThat(elvesRings).hasSameSizeAs(trilogy);
     assertThat(elvesRings).contains(nenya).doesNotContain(oneRing);
@@ -165,14 +166,14 @@ public class IterableAssertionsExamples extends AbstractAssertionsExamples {
   @Test
   public void iterable_assertions_on_extracted_values_example() {
 
-    // extract 'name' property values.
+    // extract 'name' property values
     assertThat(fellowshipOfTheRing).extracting("name").contains("Boromir", "Gandalf", "Frodo", "Legolas")
       .doesNotContain("Sauron", "Elrond");
 
-    // extract 'age' field values, it works because 'age' is public in TolkienCharacter class.
+    // extract 'age' field values
     assertThat(fellowshipOfTheRing).extracting("age").contains(33, 38, 36);
 
-    // extracting works also with user's types (here Race),
+    // extracting works also with user's types (here Race)
     assertThat(fellowshipOfTheRing).extracting("race").contains(HOBBIT, ELF).doesNotContain(ORC);
 
     // extract nested property values on Race
@@ -195,6 +196,25 @@ public class IterableAssertionsExamples extends AbstractAssertionsExamples {
     // extract nested property on Race
     assertThat(extractProperty("race.name").from(fellowshipOfTheRing)).contains("Hobbit", "Elf").doesNotContain("Orc");
 
+  }
+
+  @Test
+  public void iterable_assertions_on_extracted_private_fields_values_example() {
+
+    // extract private fields
+    assertThat(trilogy).extracting("duration").containsExactly("178 min", "179 min", "201 min");
+
+    // disable private field extraction
+    FieldSupport.setAllowExtractingPrivateFields(false);
+
+    try {
+      assertThat(trilogy).extracting("duration");
+      failBecauseExceptionWasNotThrown(IntrospectionError.class);
+    } catch (Exception ignore) {
+    } finally {
+      // back to default value
+      FieldSupport.setAllowExtractingPrivateFields(true);
+    }
   }
 
   @Test
