@@ -332,4 +332,13 @@ public class ArrayAssertionsExamples extends AbstractAssertionsExamples {
     }
   }
 
+  @Test
+  public void use_unicode_representation_in_error_messages() throws UnsupportedEncodingException {
+    try {
+      assertThat("a6c".toCharArray()).inUnicode().isEqualTo("abó".toCharArray());
+    } catch (AssertionError e) {
+      logAssertionErrorMessage("inUnicode for char array", e);
+    }
+  }
+
 }
