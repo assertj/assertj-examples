@@ -321,12 +321,12 @@ public class ArrayAssertionsExamples extends AbstractAssertionsExamples {
   @Test
   public void use_hexadecimal_representation_in_error_messages() throws UnsupportedEncodingException {
     try {
-      assertThat(new Byte[]{0x10,0x20}).asHexadecimal().contains(new Byte[]{0x30});
+      assertThat(new Byte[]{0x10,0x20}).inHexadecimal().contains(new Byte[]{0x30});
     } catch (AssertionError e) {
       logAssertionErrorMessage("asHexadecimal for byte array", e);
     }
     try {
-      assertThat("zólc".getBytes()).asHexadecimal().contains("żółć".getBytes("ISO-8859-2"));
+      assertThat("zólc".getBytes()).inHexadecimal().contains("żółć".getBytes("ISO-8859-2"));
     } catch (AssertionError e) {
       logAssertionErrorMessage("asHexadecimal for byte array", e);
     }

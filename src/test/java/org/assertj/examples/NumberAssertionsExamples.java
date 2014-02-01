@@ -126,9 +126,9 @@ public class NumberAssertionsExamples extends AbstractAssertionsExamples {
 
   @Test
   public void number_assertions_with_binary_representation_examples() {
-    assertThat(1).asBinary().isEqualTo(1);
+    assertThat(1).inBinary().isEqualTo(1);
     try {
-      assertThat(1).asBinary().isEqualTo(2);
+      assertThat(1).inBinary().isEqualTo(2);
     } catch (AssertionError e) {
       logAssertionErrorMessage("isEqualTo with binary representation_", e);
     }

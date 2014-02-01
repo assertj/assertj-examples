@@ -15,6 +15,7 @@ package org.assertj.examples;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import java.io.File;
+import java.io.UnsupportedEncodingException;
 import java.util.Comparator;
 
 import org.junit.Test;
@@ -168,9 +169,9 @@ public class StringAssertionsExamples extends AbstractAssertionsExamples {
   }
 
   @Test
-  public void use_hexadecimal_representation_in_error_messages() {
+  public void use_hexadecimal_representation_in_error_messages() throws UnsupportedEncodingException {
     try {
-      assertThat("µµµ").asHexadecimal().contains("μμμ");
+      assertThat("µµµ").inHexadecimal().contains("μμμ");
     } catch (AssertionError e) {
       logAssertionErrorMessage("asHexadecimal() for String", e);
     }
@@ -179,7 +180,7 @@ public class StringAssertionsExamples extends AbstractAssertionsExamples {
   @Test
   public void use_unicode_representation_in_error_messages() {
     try {
-      assertThat("µµµ").asUnicode().contains("μμμ");
+      assertThat("µµµ").inUnicode().contains("μμμ");
     } catch (AssertionError e) {
       logAssertionErrorMessage("asUnicode() for String", e);
     }

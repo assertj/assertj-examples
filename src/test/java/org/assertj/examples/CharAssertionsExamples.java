@@ -47,7 +47,7 @@ public class CharAssertionsExamples extends AbstractAssertionsExamples {
   @Test
   public void use_unicode_representation_in_error_messages() {
     try {
-      assertThat('µ').asUnicode().isEqualTo('μ');
+      assertThat('µ').inUnicode().isEqualTo('μ');
     } catch (AssertionError e) {
       logAssertionErrorMessage("asUnicode() for Char", e);
     }
