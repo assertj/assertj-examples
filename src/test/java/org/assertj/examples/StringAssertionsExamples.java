@@ -64,6 +64,9 @@ public class StringAssertionsExamples extends AbstractAssertionsExamples {
     assertThat("").isEmpty();
     assertThat("").isNullOrEmpty();
     assertThat("not empty").isNotEmpty();
+
+    // check size.
+    assertThat("C-3PO").hasSameSizeAs("R2-D2").hasSize(5);
   }
 
   @Test
