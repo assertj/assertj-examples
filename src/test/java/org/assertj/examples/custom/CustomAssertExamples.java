@@ -22,6 +22,8 @@ import java.util.List;
 
 import org.junit.Test;
 
+import org.assertj.core.api.SoftAssertionError;
+import org.assertj.core.api.SoftAssertions;
 import org.assertj.examples.AbstractAssertionsExamples;
 import org.assertj.examples.data.TolkienCharacter;
 
@@ -91,7 +93,7 @@ public class CustomAssertExamples extends AbstractAssertionsExamples {
   }
 
   @Test
-  public void generics_limitation() throws IOException {
+  public void generics_limitation() {
     Employee martin = new Employee("Martin Fowler");
     Employee kent = new Employee("Kent Beck");
     List<Employee> employees = newArrayList(martin, kent);
@@ -103,5 +105,24 @@ public class CustomAssertExamples extends AbstractAssertionsExamples {
     // this one does not compile because contains expect Employee not Human !
     // assertThat(employees).contains(martinAsHuman);
   }
-  
+
+  @Test
+  public void soft_custom_assertions_example() {
+    // basic object to test
+    String name = "Michael Jordan - Bulls";
+    // custom object to test
+    Employee kent = new Employee("Kent Beck");
+    kent.jobTitle = "TDD evangelist";
+
+    // use our own soft assertions inheriting from SoftAssertions
+    MyProjectSoftAssertions softly = new MyProjectSoftAssertions();
+    softly.assertThat(name).startsWith("Mike").contains("Lakers").endsWith("Chicago");
+    softly.assertThat(kent).hasName("Wes Anderson").hasJobTitle("Director");
+    try {
+      softly.assertAll();
+    } catch (SoftAssertionError e) {
+      logAssertionErrorMessage("SoftAssertion errors example", e);
+    }
+  }
+
 }

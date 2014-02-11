@@ -37,4 +37,16 @@ public class SoftAssertionsExamples extends AbstractAssertionsExamples {
       logAssertionErrorMessage("SoftAssertion errors example", e);
     }
   }
+
+  @Test
+  public void chained_soft_assertions_example() {
+    String name = "Michael Jordan - Bulls";
+    SoftAssertions softly = new SoftAssertions();
+    softly.assertThat(name).startsWith("Mike").contains("Lakers").endsWith("Chicago");
+    try {
+      softly.assertAll();
+    } catch (SoftAssertionError e) {
+      logAssertionErrorMessage("SoftAssertion errors example", e);
+    }
+  }
 }
