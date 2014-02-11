@@ -27,6 +27,8 @@ import java.util.Date;
 
 import org.assertj.core.api.Assertions;
 import org.assertj.core.api.DateAssert;
+import org.assertj.core.api.WritableAssertionInfo;
+import org.assertj.core.internal.Dates;
 
 import org.junit.Test;
 
@@ -54,6 +56,7 @@ public class DateAssertionsExamples extends AbstractAssertionsExamples {
     assertThat(theTwoTowers.getReleaseDate()).isNotIn("2002-12-17", "2002-12-19");
 
     assertThat(new Date(42)).hasTime(42);
+    assertThat(new Date(new Date().getTime() -1)).isInThePast();
   }
 
   @Test
