@@ -12,18 +12,26 @@
  */
 package org.assertj.examples;
 
-import org.assertj.examples.data.Mansion;
-import org.assertj.examples.data.service.GameService;
-import org.assertj.examples.data.service.TeamManager;
+import static com.google.common.collect.Lists.newArrayList;
+import static java.util.Arrays.asList;
+import static org.assertj.core.api.BDDAssertions.then;
+import static org.mockito.BDDMockito.given;
+
+import java.util.ArrayList;
+import java.util.List;
+
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 
-import static java.util.Arrays.asList;
-import static org.assertj.core.api.BDDAssertions.then;
-import static org.mockito.BDDMockito.given;
+import com.google.common.collect.Lists;
+
+import org.assertj.examples.data.BasketBallPlayer;
+import org.assertj.examples.data.Mansion;
+import org.assertj.examples.data.service.GameService;
+import org.assertj.examples.data.service.TeamManager;
 
 /**
  * BDD Style Assertions examples
@@ -50,7 +58,6 @@ public class BDDAssertionsExamples extends AbstractAssertionsExamples {
     boolean result = sut.play();
 
     then(result).isTrue();
-
   }
 
   @Test
@@ -69,8 +76,19 @@ public class BDDAssertionsExamples extends AbstractAssertionsExamples {
     then(mansion.candlestick()).isEqualTo("bent");
     then(mansion.colonel()).isEqualTo("well kempt");
     then(mansion.professor()).isEqualTo("bloodied and disheveled");
-
   }
 
+
+  @Test
+  public void bdd_assertions_examples() {
+    //given
+    List<BasketBallPlayer> bulls = new ArrayList<BasketBallPlayer>();
+
+    //when
+    bulls.add(rose);
+    bulls.add(noah);
+
+    then(bulls).contains(rose, noah).doesNotContain(james);
+  }
 
 }
