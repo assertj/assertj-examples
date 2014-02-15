@@ -34,7 +34,6 @@ import java.util.SortedSet;
 import java.util.TreeSet;
 
 import org.assertj.examples.data.Ring;
-
 import org.junit.Test;
 
 /**

@@ -18,6 +18,7 @@ public class Movie {
 
   private String title;
   private Date releaseDate;
+  @SuppressWarnings("unused")
   private String duration;
 
   public Movie(String title, Date releaseDate, String duration) {

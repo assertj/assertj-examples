@@ -12,16 +12,15 @@
  */
 package org.assertj.examples;
 
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.atIndex;
+import static org.assertj.core.util.Lists.newArrayList;
 import static org.assertj.examples.data.Ring.dwarfRing;
 import static org.assertj.examples.data.Ring.manRing;
 import static org.assertj.examples.data.Ring.narya;
 import static org.assertj.examples.data.Ring.nenya;
 import static org.assertj.examples.data.Ring.oneRing;
 import static org.assertj.examples.data.Ring.vilya;
-
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.atIndex;
-import static org.assertj.core.util.Lists.newArrayList;
 
 import java.awt.Rectangle;
 import java.util.Collection;

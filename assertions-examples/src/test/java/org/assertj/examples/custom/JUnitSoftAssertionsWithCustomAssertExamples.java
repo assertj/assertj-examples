@@ -12,11 +12,10 @@
  */
 package org.assertj.examples.custom;
 
+import org.assertj.examples.AbstractAssertionsExamples;
 import org.junit.Ignore;
 import org.junit.Rule;
 import org.junit.Test;
-
-import org.assertj.examples.AbstractAssertionsExamples;
 
 public class JUnitSoftAssertionsWithCustomAssertExamples extends AbstractAssertionsExamples {
 

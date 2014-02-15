@@ -14,13 +14,12 @@ package org.assertj.examples;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-import org.junit.Test;
-
 import org.assertj.examples.data.Employee;
 import org.assertj.examples.data.Magical;
 import org.assertj.examples.data.Person;
 import org.assertj.examples.data.Ring;
 import org.assertj.examples.data.TolkienCharacter;
+import org.junit.Test;
 
 /**
  * Class assertions specific examples

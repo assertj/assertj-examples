@@ -14,9 +14,8 @@ package org.assertj.examples;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-import org.junit.Test;
-
 import org.assertj.core.api.Assertions;
+import org.junit.Test;
 
 /**
  * Exception assertions examples.

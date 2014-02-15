@@ -12,9 +12,8 @@
  */
 package org.assertj.examples.custom;
 
-import org.assertj.examples.data.*;
-
 import org.assertj.core.api.Assertions;
+import org.assertj.examples.data.TolkienCharacter;
 
 
 /**

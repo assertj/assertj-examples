@@ -26,7 +26,6 @@ import java.util.Calendar;
 import java.util.Date;
 
 import org.assertj.core.api.Assertions;
-
 import org.junit.Test;
 
 /**
@@ -92,9 +91,13 @@ public class DateAssertionsExamples extends AbstractAssertionsExamples {
     Date date5 = parseDatetimeWithMs("2003-01-01T05:55:55.555");
 
     assertThat(date1).isEqualToIgnoringMillis(date2);
+    assertThat(date1).isInSameSecondAs(date2);
     assertThat(date1).isEqualToIgnoringSeconds(date3);
+    assertThat(date1).isInSameMinuteAs(date3);
     assertThat(date1).isEqualToIgnoringMinutes(date4);
+    assertThat(date1).isInSameHourAs(date4);
     assertThat(date1).isEqualToIgnoringHours(date5);
+    assertThat(date1).isInSameDayAs(date5);
 
     try {
       assertThat(date1).isEqualToIgnoringMillis(date3);
@@ -238,21 +241,21 @@ public class DateAssertionsExamples extends AbstractAssertionsExamples {
     assertThat(theReturnOfTheKing.getReleaseDate()).isEqualTo("17/12/2003");
 
     // you can easily get back to default date formats ...
-    assertThat(theTwoTowers.getReleaseDate()).withDefaultDateFormats().isEqualTo("2002-12-18");
+    assertThat(theTwoTowers.getReleaseDate()).withDefaultDateFormatsOnly().isEqualTo("2002-12-18");
     // ... which is then used for all following assertions
     assertThat(theReturnOfTheKing.getReleaseDate()).isEqualTo("2003-12-17");
     // another way of using custom date format by calling static method useDateFormat
-    Assertions.useDateFormat("dd/MM/yyyy");
+    Assertions.registerCustomDateFormat("dd/MM/yyyy");
     assertThat(theTwoTowers.getReleaseDate()).isEqualTo("18/12/2002");
     assertThat(theReturnOfTheKing.getReleaseDate()).isEqualTo("17/12/2003");
 
     // switch back to default date formats
-    Assertions.useIsoDateFormat();
+    Assertions.useDefaultDateFormatsOnly();
     assertThat(theTwoTowers.getReleaseDate()).isEqualTo("2002-12-18");
     assertThat(theReturnOfTheKing.getReleaseDate()).isEqualTo("2003-12-17");
 
     // you can switch back to default easily with one of
-    Assertions.useDefaultDateFormats();
+    Assertions.useDefaultDateFormatsOnly();
     assertThat(theTwoTowers.getReleaseDate()).isEqualTo("2002-12-18T00.00.00.000");
     // choose whatever approach suits you best !
   }

@@ -12,19 +12,19 @@
  */
 package org.assertj.examples.neo4j;
 
-import com.google.common.base.Predicate;
+import static com.google.common.collect.Iterables.filter;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.neo4j.api.Assertions.assertThat;
+
+import java.util.Iterator;
+
 import org.junit.Test;
 import org.neo4j.graphdb.DynamicRelationshipType;
 import org.neo4j.graphdb.Node;
 import org.neo4j.graphdb.Relationship;
 import org.neo4j.graphdb.Transaction;
 
-import java.util.Iterator;
-
-import static com.google.common.collect.Iterables.filter;
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.examples.neo4j.RelationshipAssertionExamples.UselessFusion.FUNNY_ONLY;
-import static org.assertj.neo4j.api.Assertions.assertThat;
+import com.google.common.base.Predicate;
 
 public class RelationshipAssertionExamples extends Neo4jAssertionExamples {
 
@@ -36,7 +36,7 @@ public class RelationshipAssertionExamples extends Neo4jAssertionExamples {
 
       // you can enjoy the usual assertj-core assertions ;-)
       assertThat(fusions).hasSize(4);
-      Iterable<Relationship> funnyFusions = filter(fusions, FUNNY_ONLY());
+      Iterable<Relationship> funnyFusions = filter(fusions, UselessFusion.FUNNY_ONLY());
       assertThat(funnyFusions).hasSize(2);
 
       // you can chain assertions on relationship types: their String representation

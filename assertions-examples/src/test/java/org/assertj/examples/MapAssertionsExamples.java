@@ -14,7 +14,10 @@ package org.assertj.examples;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.entry;
-import static org.assertj.examples.data.Ring.*;
+import static org.assertj.examples.data.Ring.manRing;
+import static org.assertj.examples.data.Ring.narya;
+import static org.assertj.examples.data.Ring.nenya;
+import static org.assertj.examples.data.Ring.oneRing;
 
 import java.util.LinkedHashMap;
 import java.util.Map;

@@ -14,6 +14,7 @@ package org.assertj.examples.exception;
 
 import org.assertj.examples.data.Name;
 
+@SuppressWarnings("serial")
 public class NameException extends Exception {
   public NameException(Name name) {
     super("Invalid name " + name);

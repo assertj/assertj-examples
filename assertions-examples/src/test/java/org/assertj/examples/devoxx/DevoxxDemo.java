@@ -31,6 +31,7 @@ import static org.assertj.examples.data.Ring.vilya;
 import java.util.Date;
 import java.util.List;
 
+import org.assertj.core.api.Condition;
 import org.assertj.examples.AbstractAssertionsExamples;
 import org.assertj.examples.data.Ring;
 import org.junit.Before;
@@ -50,7 +51,13 @@ public class DevoxxDemo extends AbstractAssertionsExamples {
   @Test
   public void common_assertions_examples() {
 
-    assertThat("Test").containsIgnoringCase("test");
+    assertThat("Test").containsIgnoringCase("te");
+    assertThat("Test").is(new Condition<String>("valid string") {
+        @Override
+        public boolean matches(String value) {
+           return value.startsWith("T") && value.endsWith("to");
+        }
+    });
 
     // the most simple assertion
     assertThat(frodo.age).isEqualTo(33);
