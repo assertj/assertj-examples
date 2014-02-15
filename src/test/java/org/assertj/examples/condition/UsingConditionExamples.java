@@ -111,8 +111,8 @@ public class UsingConditionExamples extends AbstractAssertionsExamples {
     private final Set<String> jedis = newLinkedHashSet("Luke", "Yoda", "Obiwan");
 
     @Override
-    public boolean matches(String value) {
-      return jedis.contains(value);
+    public boolean matches(String actual) {
+      return jedis.contains(actual);
     };
   };
 
@@ -120,8 +120,8 @@ public class UsingConditionExamples extends AbstractAssertionsExamples {
     private final Set<String> jedis = newLinkedHashSet("Luke", "Yoda", "Obiwan");
 
     @Override
-    public boolean matches(String value) {
-      return jedis.contains(value);
+    public boolean matches(String actual) {
+      return jedis.contains(actual);
     };
   };
 

@@ -10,23 +10,15 @@
  *
  * Copyright 2012-2014 the original author or authors.
  */
-package org.assertj.examples.devoxx;
+package org.assertj.examples.octo;
 
 // import static org.assertj.examples.devoxx.DevoxxCustomAssertions.assertThat;
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.entry;
-import static org.assertj.core.api.Assertions.extractProperty;
+
+import static org.assertj.core.api.Assertions.*;
 import static org.assertj.core.util.Dates.parse;
 import static org.assertj.core.util.Lists.newArrayList;
-import static org.assertj.examples.data.Race.ELF;
-import static org.assertj.examples.data.Race.HOBBIT;
-import static org.assertj.examples.data.Race.ORC;
-import static org.assertj.examples.data.Ring.dwarfRing;
-import static org.assertj.examples.data.Ring.manRing;
-import static org.assertj.examples.data.Ring.narya;
-import static org.assertj.examples.data.Ring.nenya;
-import static org.assertj.examples.data.Ring.oneRing;
-import static org.assertj.examples.data.Ring.vilya;
+import static org.assertj.examples.data.Race.*;
+import static org.assertj.examples.data.Ring.*;
 
 import java.util.Date;
 import java.util.List;
@@ -37,7 +29,7 @@ import org.assertj.examples.data.Ring;
 import org.junit.Before;
 import org.junit.Test;
 
-public class DevoxxDemo extends AbstractAssertionsExamples {
+public class OctoDemo extends AbstractAssertionsExamples {
 
   private List<Ring> elvesRings;
 
@@ -113,13 +105,13 @@ public class DevoxxDemo extends AbstractAssertionsExamples {
     assertThat(extractProperty("name").from(fellowshipOfTheRing)).contains("Frodo", "Gandalf", "Legolas")
                                                                  .doesNotContain("Sauron", "Elrond");
 
-    // extracting property works also with user's types (here Race)
-    assertThat(extractProperty("race").from(fellowshipOfTheRing)).contains(HOBBIT, ELF)
-                                                                 .doesNotContain(ORC);
-
     // extract nested property on Race
     assertThat(extractProperty("race.name").from(fellowshipOfTheRing)).contains("Hobbit", "Elf")
                                                                       .doesNotContain("Orc");
+    assertThat(fellowshipOfTheRing).extracting("race.name").contains("Hobbit", "Elf")
+                                                           .doesNotContain("Orc");
+
+     // TODO add extracting tuple
   }
 
   @Test
@@ -161,7 +153,19 @@ public class DevoxxDemo extends AbstractAssertionsExamples {
                                        .isBefore(theReturnOfTheKing.getReleaseDate());
   }
 
-  @Test
+   @Test
+   public void using_condition() {
+
+      assertThat("Test").containsIgnoringCase("te");
+      assertThat("Test").is(new Condition<String>("valid string") {
+         @Override
+         public boolean matches(String value) {
+            return value.startsWith("T") && value.endsWith("to");
+         }
+      });
+   }
+
+   @Test
   public void use_generate_assertions() {
 
     // use DevoxxCustomAssertions.assertThat static import instead of org.assertj.core.api.Assertions.assertThat;
