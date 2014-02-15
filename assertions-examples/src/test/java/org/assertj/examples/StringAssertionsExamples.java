@@ -15,7 +15,6 @@ package org.assertj.examples;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import java.io.File;
-import java.io.UnsupportedEncodingException;
 import java.util.Comparator;
 
 import org.junit.Test;

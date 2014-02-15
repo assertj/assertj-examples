@@ -24,7 +24,7 @@ public class TolkienCharacter {
   private String name;
   private Race race;
   // not accessible field to test that field by field comparison does not use it
-  @SuppressWarnings("UnusedDeclaration")
+  @SuppressWarnings("unused")
   private long notAccessibleField = System.currentTimeMillis();
 
   public TolkienCharacter(String name, int age, Race race) {
@@ -44,10 +44,6 @@ public class TolkienCharacter {
 
   public void setName(String name) {
     this.name = name;
-  }
-
-  public int getAge() {
-    return age;
   }
 
   public void setAge(int age) {

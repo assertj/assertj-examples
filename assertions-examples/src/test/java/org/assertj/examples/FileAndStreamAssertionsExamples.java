@@ -12,7 +12,8 @@
  */
 package org.assertj.examples;
 
-import org.junit.Test;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.contentOf;
 
 import java.io.BufferedWriter;
 import java.io.ByteArrayInputStream;
@@ -21,8 +22,7 @@ import java.io.FileOutputStream;
 import java.io.OutputStreamWriter;
 import java.nio.charset.Charset;
 
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.contentOf;
+import org.junit.Test;
 
 /**
  * File and stream usage examples.

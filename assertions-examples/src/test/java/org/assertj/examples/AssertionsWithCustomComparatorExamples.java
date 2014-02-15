@@ -14,8 +14,10 @@ package org.assertj.examples;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.util.Arrays.array;
+import static org.assertj.core.util.Dates.monthOf;
+import static org.assertj.core.util.Dates.tomorrow;
+import static org.assertj.core.util.Dates.yesterday;
 import static org.assertj.core.util.Lists.newArrayList;
-import static org.assertj.core.util.Dates.*;
 
 import java.math.BigDecimal;
 import java.util.Date;

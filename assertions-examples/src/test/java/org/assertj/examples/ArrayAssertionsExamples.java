@@ -33,12 +33,11 @@ import java.awt.Rectangle;
 import java.util.Arrays;
 import java.util.Comparator;
 
-import org.junit.Test;
-
 import org.assertj.examples.data.Race;
 import org.assertj.examples.data.Ring;
 import org.assertj.examples.data.TolkienCharacter;
 import org.assertj.examples.data.movie.Movie;
+import org.junit.Test;
 
 /**
  * Array assertions examples.

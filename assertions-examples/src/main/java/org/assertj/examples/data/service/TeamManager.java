@@ -12,9 +12,9 @@
  */
 package org.assertj.examples.data.service;
 
-import org.assertj.examples.data.BasketBallPlayer;
-
 import java.util.List;
+
+import org.assertj.examples.data.BasketBallPlayer;
 
 public interface TeamManager {
 
