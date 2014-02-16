@@ -123,6 +123,8 @@
             <include>**/*Examples.java</include>
           </includes>
           <argLine>-Xms128m -Xmx512m</argLine>
+          <!--<parallel>methods</parallel>-->
+          <!--<threadCount>4</threadCount>-->
         </configuration>
       </plugin>
       <plugin>
