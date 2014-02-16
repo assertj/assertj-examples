@@ -51,7 +51,7 @@
     <dependency>
       <groupId>org.assertj</groupId>
       <artifactId>assertj-neo4j</artifactId>
-      <version>1.1.0-SNAPSHOT</version>
+      <version>1.0.0</version>
       <scope>test</scope>
     </dependency>
     <dependency>
@@ -129,13 +129,17 @@
         <groupId>org.assertj</groupId>
         <artifactId>assertj-assertions-generator-maven-plugin</artifactId>
         <version>1.2.0</version>
-        <!--<executions>-->
-          <!--<execution>-->
-            <!--<goals>-->
-              <!--<goal>generate-assertions</goal>-->
-            <!--</goals>-->
-          <!--</execution>-->
-        <!--</executions>-->
+        <!--
+        To build assert-examples, we need to generating custom assertions every time.
+        In your project you can comment <executions>...</executions> to avoid generating custom assertions at every build
+        -->
+        <executions>
+          <execution>
+            <goals>
+              <goal>generate-assertions</goal>
+            </goals>
+          </execution>
+        </executions>
         <configuration>
           <packages>
             <param>org.assertj.examples.data</param>

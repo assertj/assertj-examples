@@ -14,7 +14,7 @@ package org.assertj.examples;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.offset;
-import static org.assertj.core.api.Assertions.within;
+// import static org.assertj.core.api.Assertions.within;
 
 import java.math.BigDecimal;
 import java.util.Comparator;
@@ -114,6 +114,7 @@ public class NumberAssertionsExamples extends AbstractAssertionsExamples {
         .isGreaterThanOrEqualTo(new BigDecimal("8.00"));
   }
 
+  /*
   @Test
   public void number_assertions_with_offset_examples() {
     assertThat(8.1).isEqualTo(8.0, offset(0.1));
@@ -142,7 +143,7 @@ public class NumberAssertionsExamples extends AbstractAssertionsExamples {
       logAssertionErrorMessage("BigDecimal isCloseTo within offset", e);
     }
   }
-
+*/
   @Test
   public void number_assertions_with_binary_representation_examples() {
     assertThat(1).inBinary().isEqualTo(1);

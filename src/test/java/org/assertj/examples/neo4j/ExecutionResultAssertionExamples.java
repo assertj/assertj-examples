@@ -20,6 +20,7 @@ import static org.assertj.neo4j.api.Assertions.assertThat;
 
 public class ExecutionResultAssertionExamples extends Neo4jAssertionExamples {
 
+  /*
   @Test
   public void execution_result_assertion_examples() {
     try (Transaction tx = graphDB.beginTx()) {
@@ -42,5 +43,7 @@ public class ExecutionResultAssertionExamples extends Neo4jAssertionExamples {
 
       tx.close();
     }
+
   }
+  */
 }

@@ -95,9 +95,13 @@ public class DateAssertionsExamples extends AbstractAssertionsExamples {
     Date date5 = parseDatetimeWithMs("2003-01-01T05:55:55.555");
 
     assertThat(date1).isEqualToIgnoringMillis(date2);
+    assertThat(date1).isInSameSecondAs(date2);
     assertThat(date1).isEqualToIgnoringSeconds(date3);
+    assertThat(date1).isInSameMinuteAs(date3);
     assertThat(date1).isEqualToIgnoringMinutes(date4);
+    assertThat(date1).isInSameHourAs(date4);
     assertThat(date1).isEqualToIgnoringHours(date5);
+    assertThat(date1).isInSameDayAs(date5);
 
     try {
       assertThat(date1).isEqualToIgnoringMillis(date3);

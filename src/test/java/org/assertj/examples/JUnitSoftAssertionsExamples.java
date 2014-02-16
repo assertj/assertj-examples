@@ -27,22 +27,6 @@ public class JUnitSoftAssertionsExamples extends AbstractAssertionsExamples {
   @Rule
   public final JUnitSoftAssertions softly = new JUnitSoftAssertions();
 
-  // comment the @Ignore to see the test failing with all the assertion error and not only the first one.
-  @Test
-  @Ignore
-  public void failing_junit_soft_assertions_example() {
-    Mansion mansion = new Mansion();
-    mansion.hostPotentiallyMurderousDinnerParty();
-    softly.assertThat(mansion.guests()).as("Living Guests").isEqualTo(7);
-    softly.assertThat(mansion.kitchen()).as("Kitchen").isEqualTo("clean");
-    softly.assertThat(mansion.library()).as("Library").isEqualTo("clean");
-    softly.assertThat(mansion.revolverAmmo()).as("Revolver Ammo").isEqualTo(6);
-    softly.assertThat(mansion.candlestick()).as("Candlestick").isEqualTo("pristine");
-    softly.assertThat(mansion.colonel()).as("Colonel").isEqualTo("well kempt");
-    softly.assertThat(mansion.professor()).as("Professor").isEqualTo("well kempt");
-    // no need to call softly.assertAll(); (as with SoftAssertions) error gathering is handled by the JUnit rule
-  }
-
   @Test
   public void successfull_soft_assertions_example() {
     Mansion mansion = new Mansion();
@@ -61,4 +45,21 @@ public class JUnitSoftAssertionsExamples extends AbstractAssertionsExamples {
 
     // no need to call softly.assertAll(); (as with SoftAssertions) error gathering is handled by the JUnit rule
   }
+
+  // comment the @Ignore to see the test failing with all the assertion error and not only the first one.
+  @Test
+  @Ignore
+  public void failing_junit_soft_assertions_example() {
+    Mansion mansion = new Mansion();
+    mansion.hostPotentiallyMurderousDinnerParty();
+    softly.assertThat(mansion.guests()).as("Living Guests").isEqualTo(7);
+    softly.assertThat(mansion.kitchen()).as("Kitchen").isEqualTo("clean");
+    softly.assertThat(mansion.library()).as("Library").isEqualTo("clean");
+    softly.assertThat(mansion.revolverAmmo()).as("Revolver Ammo").isEqualTo(6);
+    softly.assertThat(mansion.candlestick()).as("Candlestick").isEqualTo("pristine");
+    softly.assertThat(mansion.colonel()).as("Colonel").isEqualTo("well kempt");
+    softly.assertThat(mansion.professor()).as("Professor").isEqualTo("well kempt");
+    // no need to call softly.assertAll(); (as with SoftAssertions) error gathering is handled by the JUnit rule
+  }
+
 }
