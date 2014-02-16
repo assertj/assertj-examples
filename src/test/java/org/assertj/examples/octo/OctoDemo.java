@@ -53,7 +53,7 @@ public class OctoDemo extends AbstractAssertionsExamples {
   public void common_assertions_examples() {
 
     // the most simple assertion
-    assertThat(frodo.age).isEqualTo(33);
+    assertThat(frodo.age).isEqualTo(33).isGreaterThan(5);
 
     // chained assertions
     assertThat(frodo.getName()).isEqualTo("Frodo").isNotEqualTo("Frodon");
@@ -168,7 +168,7 @@ public class OctoDemo extends AbstractAssertionsExamples {
 
   @Test
   public void file_assertions() {
-    // SEE : CustomAssertExamples FileAndStreamAssertionsExamples
+    // SEE : FileAndStreamAssertionsExamples
   }
 
   @Test
