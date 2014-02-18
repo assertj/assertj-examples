@@ -64,9 +64,6 @@ public class StringAssertionsExamples extends AbstractAssertionsExamples {
     assertThat("").isEmpty();
     assertThat("").isNullOrEmpty();
     assertThat("not empty").isNotEmpty();
-
-    // check size.
-    assertThat("C-3PO").hasSameSizeAs("R2-D2").hasSize(5);
   }
 
   @Test
@@ -170,24 +167,5 @@ public class StringAssertionsExamples extends AbstractAssertionsExamples {
     }
 
   }
-
-  @Test
-  public void use_hexadecimal_representation_in_error_messages() throws UnsupportedEncodingException {
-    try {
-      assertThat("µµµ").inHexadecimal().contains("μμμ");
-    } catch (AssertionError e) {
-      logAssertionErrorMessage("asHexadecimal() for String", e);
-    }
-  }
-
-  @Test
-  public void use_unicode_representation_in_error_messages() {
-    try {
-      assertThat("µµµ").inUnicode().contains("μμμ");
-    } catch (AssertionError e) {
-      logAssertionErrorMessage("asUnicode() for String", e);
-    }
-  }
-
 
 }

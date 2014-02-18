@@ -14,8 +14,6 @@ package org.assertj.examples;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.extractProperty;
-import static org.assertj.core.api.Assertions.failBecauseExceptionWasNotThrown;
-import static org.assertj.core.api.Assertions.setAllowExtractingPrivateFields;
 import static org.assertj.core.api.Assertions.tuple;
 import static org.assertj.core.util.Lists.newArrayList;
 import static org.assertj.examples.data.Race.ELF;
@@ -35,10 +33,7 @@ import java.util.List;
 import java.util.SortedSet;
 import java.util.TreeSet;
 
-import org.assertj.core.util.introspection.IntrospectionError;
-import org.assertj.examples.data.Employee;
 import org.assertj.examples.data.Ring;
-import org.assertj.examples.data.TolkienCharacter;
 
 import org.junit.Test;
 
@@ -199,25 +194,6 @@ public class IterableAssertionsExamples extends AbstractAssertionsExamples {
   }
 
   @Test
-  public void iterable_assertions_on_extracted_private_fields_values_example() {
-
-    // extract private fields
-    assertThat(trilogy).extracting("duration").containsExactly("178 min", "179 min", "201 min");
-
-    // disable private field extraction
-    setAllowExtractingPrivateFields(false);
-
-    try {
-      assertThat(trilogy).extracting("duration");
-      failBecauseExceptionWasNotThrown(IntrospectionError.class);
-    } catch (Exception ignore) {
-    } finally {
-      // back to default value
-      setAllowExtractingPrivateFields(true);
-    }
-  }
-
-  @Test
   public void iterable_assertions_on_several_extracted_values() {
 
     // extract 'name' and 'age' values.
@@ -314,69 +290,6 @@ public class IterableAssertionsExamples extends AbstractAssertionsExamples {
     // extract results of calls to 'toString' method
     assertThat(fellowshipOfTheRing).extractingResultOf("toString").contains("Frodo 33 years old Hobbit",
                                                                             "Aragorn 87 years old Man");
-  }
-
-  @Test
-  public void iterable_assertions_comparing_elements_field_by_field_example() {
-    // this is useful if elements don't have a good equals method implementation.
-    Employee bill = new Employee("Bill", 60, "Micro$oft");
-    final List<Employee> micro$oftEmployees = newArrayList(bill);
-    Employee appleBill = new Employee("Bill", 60, "Apple");
-
-    // this assertion should fail as the company differs but it passes since Employee equals ignores company fields.
-    assertThat(micro$oftEmployees).contains(appleBill);
-
-    // let's make the assertion fails by comparing all Employee's fields instead of using equals.
-    try {
-      assertThat(micro$oftEmployees).usingFieldByFieldElementComparator().contains(appleBill);
-    } catch (AssertionError e) {
-      logAssertionErrorMessage("contains for Iterable using field by field element comparator", e);
-    }
-    // if we don't compare company, appleBill is equivalent to bill.
-    assertThat(micro$oftEmployees).usingElementComparatorIgnoringFields("company").contains(appleBill);
-
-    // if we compare only name and company, youngBill is equivalent to bill ...
-    Employee youngBill = new Employee("Bill", 25, "Micro$oft");
-    assertThat(micro$oftEmployees).usingElementComparatorOnFields("company").contains(youngBill);
-    // ... but not if we compare only age.
-    try {
-      assertThat(micro$oftEmployees).usingElementComparatorOnFields("age").contains(youngBill);
-    } catch (AssertionError e) {
-      logAssertionErrorMessage("contains for Iterable usingElementComparatorOnFields", e);
-    }
-
-    // another example with usingElementComparatorOnFields
-    TolkienCharacter frodo = new TolkienCharacter("Frodo", 33, HOBBIT);
-    TolkienCharacter sam = new TolkienCharacter("Sam", 38, HOBBIT);
-
-    // frodo and sam both are hobbits, so they are equals when comparing only race ...
-    assertThat(newArrayList(frodo)).usingElementComparatorOnFields("race").contains(sam);
-    // ... but not when comparing both name and race
-    try {
-      assertThat(newArrayList(frodo)).usingElementComparatorOnFields("name", "race").contains(sam);
-    } catch (AssertionError e) {
-      logAssertionErrorMessage("contains for Iterable usingElementComparatorOnFields", e);
-    }
-  }
-
-  @Test
-  public void use_hexadecimal_representation_in_error_messages() {
-    final List<Byte> bytes = newArrayList((byte)0x10, (byte) 0x20);
-    try {
-      assertThat(bytes).inHexadecimal().contains((byte)0x30);
-    } catch (AssertionError e) {
-      logAssertionErrorMessage("asHexadecimal for byte list", e);
-    }
-  }
-
-  @Test
-  public void use_binary_representation_in_error_messages() {
-    final List<Byte> bytes = newArrayList((byte)0x10, (byte) 0x20);
-    try {
-      assertThat(bytes).inBinary().contains((byte)0x30);
-    } catch (AssertionError e) {
-      logAssertionErrorMessage("asBinary for byte list", e);
-    }
   }
 
 }

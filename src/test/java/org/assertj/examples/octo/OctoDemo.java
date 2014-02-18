@@ -14,7 +14,6 @@ package org.assertj.examples.octo;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.tuple;
-import static org.assertj.core.api.BDDAssertions.then;
 import static org.assertj.core.util.Dates.parse;
 import static org.assertj.core.util.Lists.newArrayList;
 import static org.assertj.examples.data.Race.HOBBIT;
@@ -22,13 +21,11 @@ import static org.assertj.examples.data.Ring.*;
 import static org.assertj.guava.api.Assertions.assertThat;
 import static org.assertj.guava.api.Assertions.entry;
 
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
 import org.assertj.core.api.Condition;
 import org.assertj.examples.AbstractAssertionsExamples;
-import org.assertj.examples.data.BasketBallPlayer;
 import org.assertj.examples.data.Ring;
 import org.assertj.examples.data.TolkienCharacter;
 
@@ -188,19 +185,6 @@ public class OctoDemo extends AbstractAssertionsExamples {
 
     Multimap<String, String> emptyMultimap = ArrayListMultimap.create();
     assertThat(emptyMultimap).isEmpty();
-  }
-
-  @Test
-  public void bdd_assertions_examples() {
-    //given
-    List<BasketBallPlayer> bulls = new ArrayList<BasketBallPlayer>();
-
-    //when
-    bulls.add(rose);
-    bulls.add(noah);
-
-    // assertThat is replaced by then
-    then(bulls).contains(rose, noah).doesNotContain(james);
   }
 
   @Test

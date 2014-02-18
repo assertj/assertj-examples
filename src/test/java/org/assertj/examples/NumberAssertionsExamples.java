@@ -114,46 +114,6 @@ public class NumberAssertionsExamples extends AbstractAssertionsExamples {
         .isGreaterThanOrEqualTo(new BigDecimal("8.00"));
   }
 
-  /*
-  @Test
-  public void number_assertions_with_offset_examples() {
-    assertThat(8.1).isEqualTo(8.0, offset(0.1));
-    assertThat(8.1f).isEqualTo(8.2f, offset(0.1f));
-    try {
-      assertThat(8.1f).isEqualTo(8.0f, offset(0.1f));
-    } catch (AssertionError e) {
-      logAssertionErrorMessage("float isEqualTo with offset", e);
-    }
-
-    // same stuff with delta an alias for offset
-    assertThat(8.1).isCloseTo(8.0, within(0.1));
-    assertThat(8.2f).isCloseTo(8.0f, within(0.2f));
-    assertThat(new BigDecimal("8.1")).isCloseTo(new BigDecimal("8.0"), within(new BigDecimal("0.1")));
-    // just to see that the BigDecimal format does not have impact on the assertion
-    assertThat(new BigDecimal("8.1")).isCloseTo(new BigDecimal("8.00"), within(new BigDecimal("0.100")));
-    try {
-      assertThat(8.1f).isCloseTo(8.0f, within(0.1f));
-    } catch (AssertionError e) {
-      logAssertionErrorMessage("float isCloseTo within ", e);
-    }
-
-    try {
-      assertThat(new BigDecimal("8.1")).isCloseTo(new BigDecimal("8.0"), within(new BigDecimal("0.01")));
-    } catch (AssertionError e) {
-      logAssertionErrorMessage("BigDecimal isCloseTo within offset", e);
-    }
-  }
-*/
-  @Test
-  public void number_assertions_with_binary_representation_examples() {
-    assertThat(1).inBinary().isEqualTo(1);
-    try {
-      assertThat(1).inBinary().isEqualTo(2);
-    } catch (AssertionError e) {
-      logAssertionErrorMessage("isEqualTo with binary representation_", e);
-    }
-  }
-
 }
 
 
