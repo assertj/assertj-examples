@@ -68,61 +68,75 @@ public class OctoDemo extends AbstractAssertionsExamples {
   public void string_assertions_examples() {
 
     assertThat("Frodo").startsWith("Fro").endsWith("do").hasSize(5);
+    assertThat("Frodo").containsIgnoringCase("froo");
 
     assertThat("Frodo").contains("rod")
                        .doesNotContain("fro")
-                       .containsOnlyOnce("do");  // see javadoc 
+                       .containsOnlyOnce("do");  // see javadoc
 
     // you can ignore case for equals check
     assertThat("Frodo").isEqualToIgnoringCase("FROdO");
 
     // using regex
     assertThat("Frodo").matches("..o.o").doesNotMatch(".*d");
+
+
   }
 
-  @Test
-  public void iterable_assertions_examples() {
+   @Test
+   public void iterable_assertions_examples() {
 
-    assertThat(elvesRings).isNotEmpty()
-                          .hasSize(3)
-                          .contains(nenya)
-                          .doesNotContain(oneRing);
+      assertThat(elvesRings).isNotEmpty()
+                            .hasSize(3)
+                            .contains(oneRing, vilya)
+                            .doesNotContain(oneRing);
 
-    // with containsOnly, all the elements must be present (but the order is not important)
-    assertThat(elvesRings).containsOnly(nenya, vilya, narya)
-                          .doesNotContainNull()
-                          .doesNotHaveDuplicates();
+      // with containsOnly, all the elements must be present (but the order is not important)
+      assertThat(elvesRings).containsOnly(nenya, vilya, narya)
+                            .doesNotContainNull()
+                            .doesNotHaveDuplicates();
 
-    // you can also check the start or end of your collection/iterable
-    Iterable<Ring> allRings = newArrayList(oneRing, vilya, nenya, narya, dwarfRing, manRing);
-    assertThat(allRings).startsWith(oneRing, vilya).endsWith(dwarfRing, manRing);
-    assertThat(allRings).containsAll(elvesRings);
+      // you can also check the start or end of your collection/iterable
+      Iterable<Ring> allRings = newArrayList(oneRing, vilya, nenya, narya, dwarfRing, manRing);
+      assertThat(allRings).startsWith(oneRing, vilya).endsWith(dwarfRing, manRing);
+      assertThat(allRings).containsAll(elvesRings);
 
-    // to show an error message, let's replace narya by the one ring
-    elvesRings.remove(narya);
-    elvesRings.add(oneRing);
-    try {
-      assertThat(elvesRings).containsOnly(nenya, vilya, narya);
-    } catch (AssertionError e) {
-      logAssertionErrorMessage("containsOnly", e);
-    }
-  }
+      // to show an error message, let's replace narya by the one ring
+      elvesRings.remove(narya);
+      elvesRings.add(oneRing);
+      try {
+         assertThat(elvesRings).containsOnly(nenya, vilya, narya);
+      } catch (AssertionError e) {
+         logAssertionErrorMessage("containsOnly", e);
+      }
+   }
 
   @Test
   public void iterable_assertions_on_extracted_property_values_example() {
 
+    List<String> names = newArrayList();
+    for (TolkienCharacter tolkienCharacter : fellowshipOfTheRing) {
+      names.add(tolkienCharacter.getName());
+    }
+
+
     // extract simple property values having a java standard type
     assertThat(fellowshipOfTheRing).extracting("name").contains("Frodo", "Gandalf", "Legolas")
                                                       .doesNotContain("Sauron", "Elrond");
+
+    // extracting a public field
+    assertThat(fellowshipOfTheRing).extracting("age").contains(33, 38, 36);
 
     // extract nested property on Race
     assertThat(fellowshipOfTheRing).extracting("race.name").contains("Hobbit", "Elf")
                                                            .doesNotContain("Orc");
 
     // extract 'name', 'age' and Race name values.
-    assertThat(fellowshipOfTheRing).extracting("name", "race.name").contains(tuple("Boromir", "Man"),
-                                                                             tuple("Sam", "Hobbit"),
-                                                                             tuple("Legolas", "Elf"));
+    assertThat(fellowshipOfTheRing).extracting("name", "race.name")
+                                   .contains(tuple("Boromir", "Man"),
+                                             tuple("Sam", "Hobbit"),
+                                             tuple("Frodo", "Dwarf"),
+                                             tuple("Legolas", "Elf"));
   }
 
   @Test
@@ -148,7 +162,8 @@ public class OctoDemo extends AbstractAssertionsExamples {
                            .hasSize(4)
                            .contains(entry(oneRing, frodo), entry(nenya, galadriel))
                            .doesNotContain(entry(oneRing, aragorn))
-                           .containsKey(Ring.nenya)
+                           .containsKey(nenya)
+                           .containsKeys(narya, vilya)
                            .containsValue(frodo)
                            .doesNotContainValue(sam);
   }
@@ -193,7 +208,7 @@ public class OctoDemo extends AbstractAssertionsExamples {
   @Test
   public void bdd_assertions_examples() {
     //given
-    List<BasketBallPlayer> bulls = new ArrayList<BasketBallPlayer>();
+    List<BasketBallPlayer> bulls = new ArrayList<>();
 
     //when
     bulls.add(rose);

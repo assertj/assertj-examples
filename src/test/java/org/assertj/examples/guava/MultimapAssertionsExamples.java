@@ -34,14 +34,14 @@ public class MultimapAssertionsExamples extends AbstractAssertionsExamples {
   @Test
   public void multimap_assertions_examples() {
     
-    Multimap<String, String> actual = ArrayListMultimap.create();
-    actual.putAll("Lakers", newArrayList("Kobe Bryant", "Magic Johnson", "Kareem Abdul Jabbar"));
-    actual.putAll("Spurs", newArrayList("Tony Parker", "Tim Duncan", "Manu Ginobili"));
+    Multimap<String, String> nbaTeams = ArrayListMultimap.create();
+    nbaTeams.putAll("Lakers", newArrayList("Kobe Bryant", "Magic Johnson", "Kareem Abdul Jabbar"));
+    nbaTeams.putAll("Spurs", newArrayList("Tony Parker", "Tim Duncan", "Manu Ginobili"));
 
-    assertThat(actual).hasSize(6);
-    assertThat(actual).containsKeys("Lakers", "Spurs");
-    assertThat(actual).contains(entry("Lakers", "Kobe Bryant"), entry("Spurs", "Tim Duncan"));
-    assertThat(actual).containsValues("Kareem Abdul Jabbar", "Tony Parker");
+    assertThat(nbaTeams).hasSize(6);
+    assertThat(nbaTeams).containsKeys("Lakers", "Spurs");
+    assertThat(nbaTeams).contains(entry("Lakers", "Kobe Bryant"), entry("Spurs", "Tim Duncan"));
+    assertThat(nbaTeams).containsValues("Kareem Abdul Jabbar", "Tony Parker");
 
     Multimap<String, String> emptyMultimap = ArrayListMultimap.create();
     assertThat(emptyMultimap).isEmpty();
