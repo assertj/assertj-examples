@@ -238,25 +238,23 @@ public class DateAssertionsExamples extends AbstractAssertionsExamples {
     assertThat(theReturnOfTheKing.getReleaseDate()).isEqualTo("17/12/2003");
 
     // you can easily get back to default date formats ...
-    assertThat(theTwoTowers.getReleaseDate()).withDefaultDateFormatsOnly().isEqualTo("2002-12-18");
+    assertThat(theTwoTowers.getReleaseDate()).withDefaultDateFormats().isEqualTo("2002-12-18");
     // ... which is then used for all following assertions
     assertThat(theReturnOfTheKing.getReleaseDate()).isEqualTo("2003-12-17");
-    // but now the registered custom format are forgotten
-    try {
-      assertThat(theReturnOfTheKing.getReleaseDate()).isEqualTo("17/12/2003");
-    } catch (AssertionError e) {
-      assertThat(e).hasMessage("Failed to parse 17/12/2003 with any of these date formats: " +
-                               "[yyyy-MM-dd'T'HH:mm:ss.SSS, yyyy-MM-dd'T'HH:mm:ss, yyyy-MM-dd]");
-    }
-
-    // another way of using custom date format:
-    Assertions.registerCustomDateFormat("dd/MM/yyyy");
+    // another way of using custom date format by calling static method useDateFormat
+    Assertions.useDateFormat("dd/MM/yyyy");
     assertThat(theTwoTowers.getReleaseDate()).isEqualTo("18/12/2002");
     assertThat(theReturnOfTheKing.getReleaseDate()).isEqualTo("17/12/2003");
 
-    // default date formats can still be used
-    assertThat(theTwoTowers.getReleaseDate()).isEqualTo("2002-12-18T00.00.00.000");
+    // switch back to default date formats
+    Assertions.useIsoDateFormat();
+    assertThat(theTwoTowers.getReleaseDate()).isEqualTo("2002-12-18");
     assertThat(theReturnOfTheKing.getReleaseDate()).isEqualTo("2003-12-17");
+
+    // you can switch back to default easily with one of
+    Assertions.useDefaultDateFormats();
+    assertThat(theTwoTowers.getReleaseDate()).isEqualTo("2002-12-18T00.00.00.000");
+    // choose whatever approach suits you best !
   }
 
   @Test

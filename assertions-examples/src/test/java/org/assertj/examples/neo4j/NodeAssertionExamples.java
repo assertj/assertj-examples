@@ -58,9 +58,9 @@ public class NodeAssertionExamples extends Neo4jAssertionExamples {
           "Expecting:\n" +
           "  <Node[0]>\n" +
           "not to have property with key:\n" +
-          "  <\"name\">\n" +
+          "  <'name'>\n" +
           "and value:\n" +
-          "  <\"Son Goku\">\n" +
+          "  <'Son Goku'>\n" +
           "but actually found such property ");
       }
 
