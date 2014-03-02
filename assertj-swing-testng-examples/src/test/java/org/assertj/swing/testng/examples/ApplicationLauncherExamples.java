@@ -5,8 +5,8 @@ import static org.assertj.swing.testng.util.Assumptions.assumeThat;
 
 import org.assertj.swing.aut.main.SystemPropertiesStore;
 import org.assertj.swing.aut.util.SystemPropertiesUtil;
-import org.assertj.swing.launcher.ApplicationLauncher;
 import org.assertj.swing.testng.SwingTestNGExamples;
+import org.assertj.swing.launcher.ApplicationLauncher;
 import org.testng.annotations.Test;
 
 /** Tests that you can run an application with AssertJ - without UI. */
