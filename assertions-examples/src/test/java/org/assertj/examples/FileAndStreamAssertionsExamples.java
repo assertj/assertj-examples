@@ -12,8 +12,7 @@
  */
 package org.assertj.examples;
 
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.contentOf;
+import org.junit.Test;
 
 import java.io.BufferedWriter;
 import java.io.ByteArrayInputStream;
@@ -22,7 +21,8 @@ import java.io.FileOutputStream;
 import java.io.OutputStreamWriter;
 import java.nio.charset.Charset;
 
-import org.junit.Test;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.contentOf;
 
 /**
  * File and stream usage examples.
@@ -58,10 +58,48 @@ public class FileAndStreamAssertionsExamples extends AbstractAssertionsExamples 
     // compare content with a binary array
     binaryContent = "La Vérité Est Ailleurs".getBytes(turkishCharset.name());
     assertThat(xFileWithTurkishCharset).hasBinaryContent(binaryContent);
-  }
-  
-  @Test
 
+    File xFileWithExtension = writeFile("xFile.secret", "The Truth Is Out There");
+    assertThat(xFileWithExtension)
+            .hasParent("target")
+            .hasParent(new File("target"))
+            .hasExtension("secret")
+            .hasName("xFile.secret");
+            
+    assertThat(new File("/")).hasNoParent();
+  }
+
+  @Test
+  public void file_assertions_error_examples() throws Exception {
+    File xFile = writeFile("xFile", "The Truth Is Out There");
+    File xFileWithExtension = writeFile("xFile.secret", "The Truth Is Out There");
+
+    try {
+      assertThat(xFileWithExtension).hasParent("xDirectory");
+    } catch (AssertionError e) {
+      logAssertionErrorMessage("file with unexpected parent.", e);
+    }
+
+    try {
+      assertThat(xFileWithExtension).hasExtension("png");
+    } catch (AssertionError e) {
+      logAssertionErrorMessage("file with unexpected extension.", e);
+    }
+
+    try {
+      assertThat(xFile).hasExtension("secret");
+    } catch (AssertionError e) {
+      logAssertionErrorMessage("file without extension.", e);
+    }
+
+    try {
+      assertThat(xFileWithExtension).hasName("xFile");
+    } catch (AssertionError e) {
+      logAssertionErrorMessage("file with unexpected name.", e);
+    }
+  }
+
+  @Test
   public void stream_assertions_examples() throws Exception {
     assertThat(streamFrom("string")).hasContentEqualTo(streamFrom("string"));
   }
