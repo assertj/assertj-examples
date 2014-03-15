@@ -66,7 +66,7 @@ public class FileAndStreamAssertionsExamples extends AbstractAssertionsExamples 
             .hasExtension("secret")
             .hasName("xFile.secret");
             
-    assertThat(new File("/")).hasParent((File) null);
+    assertThat(new File("/")).hasNoParent();
   }
 
   @Test
