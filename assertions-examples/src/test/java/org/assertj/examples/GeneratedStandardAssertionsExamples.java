@@ -26,7 +26,7 @@ public class GeneratedStandardAssertionsExamples extends AbstractAssertionsExamp
   @Test
   public void generated_bdd_assertions_example() throws NameException {
     // use the generated assertions
-    assertThat(rose).hasName(new Name("Derrick", "Rose")).hasNoTeamMates();
+    assertThat(rose).hasName(new Name("Derrick", "Rose")).hasTeamMates(noah);
     
     // 
     Team bulls = new Team(newArrayList(rose, noah));

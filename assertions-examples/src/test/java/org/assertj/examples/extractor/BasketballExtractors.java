@@ -10,22 +10,22 @@
  *
  * Copyright 2012-2014 the original author or authors.
  */
-package org.assertj.examples;
+package org.assertj.examples.extractor;
 
-import static org.assertj.BddAssertions.then;
+import java.util.List;
 
-import org.junit.Test;
+import org.assertj.core.api.iterable.Extractor;
+import org.assertj.examples.data.BasketBallPlayer;
 
-import org.assertj.examples.data.Name;
-import org.assertj.examples.exception.NameException;
 
-public class GeneratedBddAssertionsExamples extends AbstractAssertionsExamples {
-
-  @Test
-  public void generated_bdd_assertions_example() throws NameException {
-    // use the generated BDD assertions
-    // Given Derrick Rose basket ball player
-    then(rose).hasName(new Name("Derrick", "Rose")).hasTeamMates(noah);
-  }
+public class BasketballExtractors {
+	BasketballExtractors() {
+		
+	}
+	
+	public static Extractor<BasketBallPlayer, List<BasketBallPlayer>> teammates() {
+		return new BasketBallTeammatesExtractor();
+		
+	}
 
 }

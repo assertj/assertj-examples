@@ -10,22 +10,16 @@
  *
  * Copyright 2012-2014 the original author or authors.
  */
-package org.assertj.examples;
+package org.assertj.examples.extractor;
 
-import static org.assertj.BddAssertions.then;
+import org.assertj.core.api.iterable.Extractor;
+import org.assertj.examples.data.TolkienCharacter;
 
-import org.junit.Test;
+class TolkienCharacterAgeExtractor implements Extractor<TolkienCharacter, Integer> {
 
-import org.assertj.examples.data.Name;
-import org.assertj.examples.exception.NameException;
-
-public class GeneratedBddAssertionsExamples extends AbstractAssertionsExamples {
-
-  @Test
-  public void generated_bdd_assertions_example() throws NameException {
-    // use the generated BDD assertions
-    // Given Derrick Rose basket ball player
-    then(rose).hasName(new Name("Derrick", "Rose")).hasTeamMates(noah);
-  }
+	@Override
+	public Integer extract(TolkienCharacter input) {
+		return input.age;
+	}
 
 }

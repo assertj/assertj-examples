@@ -27,6 +27,8 @@ import static org.assertj.examples.data.Ring.narya;
 import static org.assertj.examples.data.Ring.nenya;
 import static org.assertj.examples.data.Ring.oneRing;
 import static org.assertj.examples.data.Ring.vilya;
+import static org.assertj.examples.extractor.BasketballExtractors.*;
+import static org.assertj.examples.extractor.TolkienCharactersExtractors.*;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -400,5 +402,23 @@ public class IterableAssertionsExamples extends AbstractAssertionsExamples {
       logAssertionErrorMessage("asBinary for byte list", e);
     }
   }
+
+	@Test
+	public void iterable_assertions_on_extracted_value_examples() throws Exception {
+		// extract 'age' field values
+		assertThat(fellowshipOfTheRing).extracting(age()).contains(33, 38, 36);
+
+		// extracting works also with user's types (here Race)
+		assertThat(fellowshipOfTheRing).extracting(race()).contains(HOBBIT, ELF).doesNotContain(ORC);
+
+		// extract 'name' and 'age' values.
+		assertThat(fellowshipOfTheRing).extracting(ageAndRace()).contains(tuple(33, HOBBIT), tuple(38, HOBBIT),
+				tuple(1000, ELF));
+	}
+
+	@Test
+	public void iterable_assertions_on_flat_extraced_values_examples() throws Exception {
+		assertThat(newArrayList(noah, james)).flatExtracting(teammates()).contains(dwayne, rose);
+	}
 
 }

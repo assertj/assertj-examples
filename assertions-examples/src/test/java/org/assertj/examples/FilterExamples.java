@@ -43,26 +43,26 @@ public class FilterExamples extends AbstractAssertionsExamples {
     // you can apply different comparison
     assertThat(filter(fellowshipOfTheRing).with("race").notIn(HOBBIT, MAN).get()).containsOnly(gandalf, gimli, legolas);
     assertThat(filter(fellowshipOfTheRing).with("race").in(MAIA, MAN).get()).containsOnly(gandalf, boromir, aragorn);
-    assertThat(filter(fellowshipOfTheRing).with("race").notEqualsTo(HOBBIT).get()).contains(gandalf, boromir, aragorn, gimli,
-                                                                                            legolas);
-    // you can chain multiple filter criteria 
+    assertThat(filter(fellowshipOfTheRing).with("race").notEqualsTo(HOBBIT).get()).contains(gandalf, boromir, aragorn,
+                                                                                            gimli, legolas);
+    // you can chain multiple filter criteria
     assertThat(filter(fellowshipOfTheRing).with("race").equalsTo(MAN).and("name").notEqualsTo("Boromir").get()).contains(aragorn);
   }
 
   @Test
   public void filter_on_condition_examples() {
     // having(condition) example
-    Condition<BasketBallPlayer> mvpStats= new Condition<BasketBallPlayer>() {
+    Condition<BasketBallPlayer> mvpStats = new Condition<BasketBallPlayer>() {
       @Override
       public boolean matches(BasketBallPlayer player) {
         return player.getPointsPerGame() > 20 && (player.getAssistsPerGame() >= 8 || player.getReboundsPerGame() >= 8);
       }
     };
-    assertThat(filter(basketBallPlayers).having(mvpStats).get()).containsOnly(rose, james);
-    
+    assertThat(filter(basketBallPlayers).having(mvpStats).get()).containsOnly(rose, james, dwayne);
+
     // being(condition) example : same condition can be applied but is renamed to be more readable
-    Condition<BasketBallPlayer> potentialMvp= mvpStats;
-    assertThat(filter(basketBallPlayers).being(potentialMvp).get()).containsOnly(rose, james);
+    Condition<BasketBallPlayer> potentialMvp = mvpStats;
+    assertThat(filter(basketBallPlayers).being(potentialMvp).get()).containsOnly(rose, james, dwayne);
   }
 
 }
