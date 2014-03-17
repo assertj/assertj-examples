@@ -72,7 +72,7 @@ public class DragonBallGraph {
   }
 
   public Iterable<Relationship> fusions() {
-    try (Transaction transaction = graphDB.beginTx();
+    try (Transaction tx = graphDB.beginTx();
         ResourceIterator<Relationship> relationships = cypherEngine.execute(
             "MATCH (:CHARACTER)-[fusions:IN_FUSION_WITH]-(:CHARACTER) RETURN fusions").columnAs("fusions")) {
 
@@ -80,8 +80,18 @@ public class DragonBallGraph {
       while (relationships.hasNext()) {
         fusions.add(relationships.next());
       }
-      transaction.success();
+      tx.success();
       return fusions;
+    }
+  }
+
+  public ResourceIterator<String> fusionCharactersIterator() {
+    try (Transaction tx = graphDB.beginTx()) {
+      ResourceIterator<String> relationships = cypherEngine.execute(
+          "MATCH (:CHARACTER)-[fusions:IN_FUSION_WITH]-(:CHARACTER) RETURN fusions.into").columnAs("fusions.into");
+
+      tx.success();
+      return relationships;
     }
   }
 
