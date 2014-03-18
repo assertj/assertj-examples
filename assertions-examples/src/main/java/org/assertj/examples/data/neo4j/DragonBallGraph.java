@@ -88,7 +88,7 @@ public class DragonBallGraph {
   public ResourceIterator<String> fusionCharactersIterator() {
     try (Transaction tx = graphDB.beginTx()) {
       ResourceIterator<String> relationships = cypherEngine.execute(
-          "MATCH (:CHARACTER)-[fusions:IN_FUSION_WITH]-(:CHARACTER) RETURN fusions.into").columnAs("fusions.into");
+          "MATCH (:CHARACTER)-[fusions:IN_FUSION_WITH]-(:CHARACTER) RETURN DISTINCT fusions.into ORDER BY fusions.into").columnAs("fusions.into");
 
       tx.success();
       return relationships;
