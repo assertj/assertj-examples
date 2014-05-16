@@ -16,10 +16,7 @@ import static org.assertj.examples.data.BddAssertions.then;
 
 import org.junit.Test;
 
-import org.assertj.core.api.SoftAssertionError;
-import org.assertj.examples.data.BddAssertions;
 import org.assertj.examples.data.Name;
-import org.assertj.examples.data.SoftAssertions;
 import org.assertj.examples.exception.NameException;
 
 public class GeneratedBddAssertionsExamples extends AbstractAssertionsExamples {

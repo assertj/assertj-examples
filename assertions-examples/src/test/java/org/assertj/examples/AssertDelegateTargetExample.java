@@ -24,6 +24,7 @@ public class AssertDelegateTargetExample {
 
   // given a class
   public class MyButton extends JButton {
+    private static final long serialVersionUID = 1L;
     private boolean blinking;
 
     public boolean isBlinking() { return this.blinking; }

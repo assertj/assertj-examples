@@ -13,7 +13,6 @@
 package org.assertj.examples.custom;
 
 import org.assertj.core.api.JUnitSoftAssertions;
-import org.assertj.core.api.SoftAssertions;
 import org.assertj.examples.data.TolkienCharacter;
 
 

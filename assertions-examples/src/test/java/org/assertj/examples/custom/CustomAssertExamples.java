@@ -17,13 +17,11 @@ import static com.google.common.collect.Lists.newArrayList;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.examples.custom.MyProjectAssertions.assertThat;
 
-import java.io.IOException;
 import java.util.List;
 
 import org.junit.Test;
 
 import org.assertj.core.api.SoftAssertionError;
-import org.assertj.core.api.SoftAssertions;
 import org.assertj.examples.AbstractAssertionsExamples;
 import org.assertj.examples.data.TolkienCharacter;
 
