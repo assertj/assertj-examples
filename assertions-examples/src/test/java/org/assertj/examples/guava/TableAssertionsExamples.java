@@ -44,6 +44,12 @@ public class TableAssertionsExamples extends AbstractAssertionsExamples {
                           .containsColumns("Palme d'Or", "Best picture Oscar", "Goldene Bär")
                           .containsRows(1970, 1994, 2000, 2008, 2011);
 
+    try {
+      assertThat(bestMovies).containsValues("toto");
+    } catch (AssertionError e) {
+      logAssertionErrorMessage("hasRowCount", e);
+    }
+
   }
 
 }
