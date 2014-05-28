@@ -10,14 +10,32 @@
  *
  * Copyright 2012-2014 the original author or authors.
  */
-package org.assertj.examples.exception;
+package org.assertj.examples.data;
 
-import org.assertj.examples.data.Name;
+public class Book {
 
-public class NameException extends Exception {
-  private static final long serialVersionUID = 1L;
+  private Title title;
 
-  public NameException(Name name) {
-    super("Invalid name " + name);
+  public Book(String title) {
+
+    this.title = new Title(title);
   }
+  
+  public Title getTitle() {
+    return title;
+  }
+
+  public static class Title {
+    private String title;
+
+    public Title(String title) {
+      super();
+      this.title = title;
+    }
+
+    public String getTitle() {
+      return title;
+    }
+  }
+
 }
