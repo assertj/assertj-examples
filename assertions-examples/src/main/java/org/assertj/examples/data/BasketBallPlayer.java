@@ -25,6 +25,8 @@ import org.assertj.examples.exception.NameException;
 public class BasketBallPlayer {
 
   private Name name;
+  public double size;
+  private float weight;
   private int pointsPerGame;
   private int assistsPerGame;
   private int reboundsPerGame;
@@ -47,6 +49,14 @@ public class BasketBallPlayer {
 
   public void setName(Name name) {
     this.name = name;
+  }
+  
+  public float getWeight() {
+    return weight;
+  }
+  
+  public void setWeight(float weight) {
+    this.weight = weight;
   }
   
   public int getPointsPerGame() {
