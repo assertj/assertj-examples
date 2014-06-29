@@ -142,9 +142,11 @@
           <packages>
             <param>org.assertj.examples.data</param>
           </packages>
+          <hierarchical>true</hierarchical> 
           <!-- <targetDir>src/test/java</targetDir> 
           <entryPointClassPackage>a.b.c</entryPointClassPackage>
--->
+          -->
+
         </configuration>
       </plugin>
       <plugin>
