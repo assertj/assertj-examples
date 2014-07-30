@@ -59,7 +59,9 @@ public class IterableAssertionsExamples extends AbstractAssertionsExamples {
     assertThat(elvesRings).contains(nenya).doesNotContain(oneRing);
 
     // with containsOnly, all the elements must be present (but the order is not important)
-    assertThat(elvesRings).containsOnly(nenya, vilya, narya);
+    assertThat(elvesRings).containsOnly(nenya, vilya, narya)
+                          .containsOnly(vilya, nenya, narya)
+                          .containsOnlyElementsOf(elvesRings);
     assertThat(elvesRings).doesNotContainNull().doesNotHaveDuplicates();
     try {
       assertThat(elvesRings).containsOnly(nenya, vilya, oneRing);
