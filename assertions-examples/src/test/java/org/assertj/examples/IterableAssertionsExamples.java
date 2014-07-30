@@ -253,8 +253,14 @@ public class IterableAssertionsExamples extends AbstractAssertionsExamples {
   @Test
   public void iterator_assertion_example() {
     // Iterable assertions also works if you give an Iterator as input.
-    Iterator<Ring> elvesRings = newArrayList(vilya, nenya, narya).iterator();
-    assertThat(elvesRings).isSubsetOf(ringsOfPower);
+    Iterator<Ring> elvesRingsIterator = newArrayList(vilya, nenya, narya).iterator();
+    // elvesRingsIterator is only consumed when needed which is not the case with null/notNull assertion
+    assertThat(elvesRingsIterator).isNotNull();
+    assertThat(elvesRingsIterator.hasNext()).as("iterator is not consumed").isTrue();
+    // elvesRingsIterator is consumed when needed but only once, you can then chain assertion
+    assertThat(elvesRingsIterator).isSubsetOf(ringsOfPower).contains(nenya, narya);
+    // elvesRingsIterator is consumed ...
+    assertThat(elvesRingsIterator.hasNext()).as("iterator is consumed").isFalse();
   }
 
   @Test
