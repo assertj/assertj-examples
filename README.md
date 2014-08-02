@@ -1,8 +1,13 @@
 ## AssertJ examples
 
-The **master** branch represents examples with the latest released version of AssertJ modules => you should be able to build it with `mvn install` command.
+The **master** branch contains examples with the latest released version of AssertJ modules => you should be able to build it with `mvn install` command.
 
-The **with-latest-snapshot-versions** branch represents examples with the on going development version (maven snapshot) => you must build the dependent snapshot version before.
+There are several branches that contain examples for the ongoing development versions of AssertJ modules. That means you have to build the according AssertJ module by your own before new features compile. The following table contains these special branches that are merged into the master each time the module is released.
+
+| Branch                        | Modules                                    |
+| ----------------------------- | ------------------------------------------ |
+| with-latest-snapshot-versions | Core + all modules without specific branch |
+| with-latest-swing-snapshot    | Swing                                      |
 
 ### AssertJ assertions examples
 
