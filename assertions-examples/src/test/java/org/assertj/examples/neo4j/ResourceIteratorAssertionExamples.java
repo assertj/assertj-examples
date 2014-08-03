@@ -23,25 +23,23 @@ public class ResourceIteratorAssertionExamples extends Neo4jAssertionExamples {
   @Test
   public void resource_iterator_assertion_examples() {
     try (Transaction tx = graphDB.beginTx()) {
-        // let us find the character names created from fusions
-        ResourceIterator<String> fusionsIterator = dragonBallGraph.fusionCharactersIterator();
+      // let us find the character names created from fusions
+      ResourceIterator<String> fusionsIterator = dragonBallGraph.fusionCharactersIterator();
 
-        // this consumes the entire iterator
-        // therefore, you cannot chain this assertion with others
-        assertThat(fusionsIterator).hasSize(4);
+      // this consumes the entire iterator
+      // therefore, you cannot chain this assertion with others
+      assertThat(fusionsIterator).hasSize(4);
 
-        // let us call again the same method to get a brand new resource iterator
-        fusionsIterator = dragonBallGraph.fusionCharactersIterator();
+      // let us call again the same method to get a brand new resource iterator
+      fusionsIterator = dragonBallGraph.fusionCharactersIterator();
 
-        // the following assertions can be chained
-        // *so long as* the specified index increases
-        assertThat(fusionsIterator)
-                .containsAtRow(0, "Gogeta")
-                .containsAtRow(1, "Prilin")
-                .containsAtRow(2, "Tiencha")
-                .containsAtRow(3, "Veku");
-
-        tx.close();
+      // the following assertions can be chained
+      // *so long as* the specified index increases
+      assertThat(fusionsIterator).containsAtRow(0, "Gogeta")
+                                 .containsAtRow(1, "Prilin")
+                                 .containsAtRow(2, "Tiencha")
+                                 .containsAtRow(3, "Veku");
+      tx.close();
     }
   }
 }
