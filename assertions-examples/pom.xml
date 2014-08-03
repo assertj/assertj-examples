@@ -45,7 +45,7 @@
     <dependency>
       <groupId>org.assertj</groupId>
       <artifactId>assertj-guava</artifactId>
-      <version>1.1.0</version>
+      <version>1.2.0</version>
       <scope>test</scope>
     </dependency>
     <dependency>
@@ -64,7 +64,7 @@
     <dependency>
       <groupId>com.google.guava</groupId>
       <artifactId>guava</artifactId>
-      <version>15.0</version>
+      <version>17.0</version>
     </dependency>
     <dependency>
       <groupId>joda-time</groupId>
