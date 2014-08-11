@@ -130,7 +130,7 @@
       <plugin>
         <groupId>org.assertj</groupId>
         <artifactId>assertj-assertions-generator-maven-plugin</artifactId>
-        <version>1.3.0-SNAPSHOT</version>
+        <version>1.3.0</version>
         <executions>
           <execution>
             <goals>
@@ -144,9 +144,7 @@
           </packages>
           <hierarchical>true</hierarchical> 
           <!-- <targetDir>src/test/java</targetDir> 
-          <entryPointClassPackage>a.b.c</entryPointClassPackage>
           -->
-
         </configuration>
       </plugin>
       <plugin>
