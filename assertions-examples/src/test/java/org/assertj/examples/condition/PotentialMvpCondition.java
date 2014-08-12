@@ -30,6 +30,6 @@ public class PotentialMvpCondition extends Condition<BasketBallPlayer> {
   @Override
   public boolean matches(BasketBallPlayer player) {
     return player.getPointsPerGame() > 20 && (player.getAssistsPerGame() >= 8 || player.getReboundsPerGame() >= 8);
-  };
+  }
 
 }
