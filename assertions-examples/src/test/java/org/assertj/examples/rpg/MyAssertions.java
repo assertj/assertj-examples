@@ -12,16 +12,6 @@
  */
 package org.assertj.examples.rpg;
 
-public class Item {
-  
-  private boolean magic;
-  
-  public Item(boolean magic) {
-    this.magic = magic;
-  }
-
-  public boolean isMagic() {
-    return magic;
-  }
-
+public class MyAssertions {
+  // empty : just used to test that generator does not generate assertions for Assertions classes
 }

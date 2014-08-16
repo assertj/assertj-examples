@@ -12,16 +12,11 @@
  */
 package org.assertj.examples.rpg;
 
-public class Item {
-  
-  private boolean magic;
-  
-  public Item(boolean magic) {
-    this.magic = magic;
+public class Wand extends Item {
+
+  public Wand() {
+    super(true);
   }
 
-  public boolean isMagic() {
-    return magic;
-  }
-
+  
 }
