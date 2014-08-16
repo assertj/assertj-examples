@@ -1,6 +1,6 @@
 #!/bin/bash
 
-rsync -av ../../test/java/org/assertj/swing/junit/examples/ ../../../../assertj-swing-testng-examples/src/test/java/org/assertj/swing/testng/examples
+rsync -av --delete ../../test/java/org/assertj/swing/junit/examples/ ../../../../assertj-swing-testng-examples/src/test/java/org/assertj/swing/testng/examples
 
 for example in `find ../../../../assertj-swing-testng-examples/src/test/java/org/assertj/swing/testng/examples -type f -name *.java`
 do
