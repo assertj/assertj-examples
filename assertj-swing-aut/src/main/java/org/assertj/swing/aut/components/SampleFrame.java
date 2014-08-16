@@ -15,6 +15,11 @@ public abstract class SampleFrame extends JFrame {
     setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
   }
 
+  public SampleFrame(String name) {
+    this();
+    setName(name);
+  }
+
   public void setMiglayout(LC layout, AC columns, AC rows) {
     setLayout(new MigLayout(layout, columns, rows));
   }

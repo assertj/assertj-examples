@@ -10,6 +10,8 @@ public class MainFrame extends SampleFrame {
   private static final long serialVersionUID = 1L;
 
   public MainFrame(String name) {
+    super("main");
+    setTitle("News: " + getTitle());
     setMiglayout(new LC().wrapAfter(1), new AC().align("center"), new AC());
 
     add(newLabel("name", "The user has the name: '" + name + "'"));

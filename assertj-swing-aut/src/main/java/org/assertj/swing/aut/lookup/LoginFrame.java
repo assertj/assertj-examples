@@ -12,6 +12,7 @@ import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JTextField;
+import javax.swing.SwingUtilities;
 
 import net.miginfocom.layout.AC;
 import net.miginfocom.layout.LC;
@@ -35,8 +36,7 @@ public class LoginFrame extends SampleFrame {
       @Override
       public void actionPerformed(ActionEvent e) {
         LoginFrame.this.dispose();
-        JFrame frame = new MainFrame(textField.getText());
-        frame.setVisible(true);
+        login(textField);
       }
     });
 
@@ -47,5 +47,30 @@ public class LoginFrame extends SampleFrame {
     add(loginButton);
 
     pack();
+  }
+
+  private void login(final JTextField textField) {
+    // simulate database interaction
+    new Thread(new Runnable() {
+
+      @Override
+      public void run() {
+        try {
+          Thread.sleep(1000);
+        } catch (InterruptedException e1) {
+          e1.printStackTrace();
+        }
+        // show the great application
+        SwingUtilities.invokeLater(new Runnable() {
+
+          @Override
+          public void run() {
+            JFrame frame = new MainFrame(textField.getText());
+            frame.setVisible(true);
+          }
+        });
+      }
+    }).start();
+    ;
   }
 }

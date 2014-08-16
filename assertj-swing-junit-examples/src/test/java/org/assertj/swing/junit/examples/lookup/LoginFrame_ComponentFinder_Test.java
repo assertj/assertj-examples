@@ -41,9 +41,11 @@ public class LoginFrame_ComponentFinder_Test extends SwingJUnitExamples {
   }
 
   @Test
-  public void shouldFindNewButtonWithFinderWithNewAWTHierarchy() {
+  public void shouldFindNewButtonWithFinderWithNewAWTHierarchy() throws InterruptedException {
     ComponentFinder finder = BasicComponentFinder.finderWithNewAwtHierarchy();
     window.button("login").click();
+    // wait until frame is active (> 1s)
+    Thread.sleep(1500);
     finder.findByName("pw", true);
   }
 
