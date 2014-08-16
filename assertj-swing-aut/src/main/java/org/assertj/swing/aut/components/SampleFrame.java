@@ -6,7 +6,7 @@ import net.miginfocom.layout.AC;
 import net.miginfocom.layout.LC;
 import net.miginfocom.swing.MigLayout;
 
-public class SampleFrame extends JFrame {
+public abstract class SampleFrame extends JFrame {
 
   private static final long serialVersionUID = 1L;
 
