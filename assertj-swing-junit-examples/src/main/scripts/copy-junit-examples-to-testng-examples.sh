@@ -20,4 +20,5 @@ do
   # the annotations
   perl -i -p -e 'undef $/; s/\@After([^C])/\@AfterMethod\1/g' "${example}"
   perl -i -p -e 'undef $/; s/\@Before([^C])/\@BeforeMethod\1/g' "${example}"
+  perl -i -p -e 'undef $/; s/\@Test\(expected/\@Test(expectedExceptions/g' "${example}"
 done
