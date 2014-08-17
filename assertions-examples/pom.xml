@@ -130,7 +130,7 @@
       <plugin>
         <groupId>org.assertj</groupId>
         <artifactId>assertj-assertions-generator-maven-plugin</artifactId>
-        <version>1.3.0</version>
+        <version>1.4.0</version>
         <!--
         To build assert-examples, we need to generating custom assertions every time.
         In your project you can comment <executions>...</executions> to avoid generating custom assertions at every build
@@ -145,8 +145,22 @@
         <configuration>
           <packages>
             <param>org.assertj.examples.data</param>
+            <param>com.google.common.net</param>
           </packages>
+          <hierarchical>true</hierarchical>
           <targetDir>src/test/java</targetDir>
+          <entryPointClassPackage>org.assertj.examples.data</entryPointClassPackage>
+          <!-- 
+          <includes>
+            <param>org\.assertj\.examples\.rpg.*</param>
+          </includes>
+           -->
+          <excludes>
+            <param>.*google.*HostSpecifier</param>
+            <param>.*google.*Headers</param>
+            <param>.*google.*MediaType</param>
+            <param>.*google.*Escaper.*</param>
+          </excludes>
         </configuration>
       </plugin>
       <plugin>
