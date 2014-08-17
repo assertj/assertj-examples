@@ -131,7 +131,7 @@ public class UsingConditionExamples extends AbstractAssertionsExamples {
     @Override
     public boolean matches(String value) {
       return siths.contains(value);
-    };
+    }
   };
 
   private final Condition<String> sithPower = new Condition<String>("sith power") {
@@ -140,7 +140,7 @@ public class UsingConditionExamples extends AbstractAssertionsExamples {
     @Override
     public boolean matches(String value) {
       return siths.contains(value);
-    };
+    }
   };
 
 }
