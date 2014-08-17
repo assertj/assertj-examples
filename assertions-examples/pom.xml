@@ -146,7 +146,7 @@
           <packages>
             <param>org.assertj.examples.data</param>
           </packages>
-          <!-- <targetDir>src/test/java</targetDir> -->
+          <targetDir>src/test/java</targetDir>
         </configuration>
       </plugin>
       <plugin>
