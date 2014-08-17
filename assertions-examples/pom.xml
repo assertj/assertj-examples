@@ -155,9 +155,9 @@
             <param>.*google.*HostSpecifier</param>
             <param>.*google.*Headers</param>
             <param>.*google.*MediaType</param>
-            <param>.*google.*Escaper</param>
+            <param>.*google.*Escaper.*</param>
           </excludes>
-          <!-- <targetDir>src/test/java</targetDir> -->
+          <targetDir>src/test/java</targetDir>
         </configuration>
       </plugin>
       <plugin>

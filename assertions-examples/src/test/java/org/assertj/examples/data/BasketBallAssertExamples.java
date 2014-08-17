@@ -18,8 +18,13 @@ import org.junit.Test;
 
 /**
  * 
- * Shows some example of a generated custom assertion class: {@link org.assertj.examples.custom.TolkienCharacterAssert}
- * that allows us to make assertions specific to {@link org.assertj.examples.data.TolkienCharacter}.
+ * Shows some example of a custom assertion class: {@link org.assertj.examples.custom.TolkienCharacterAssert} that
+ * allows us to make assertions specific to {@link org.assertj.examples.data.TolkienCharacter}.
+ * <p>
+ * YOU NEED TO GENERATE ASSERTIONS FOR THID CLASS TO COMPILE, YOU NEED TO EXECUTE THE FOLLOWING COMMAND : 
+ * <pre>
+ * mvn clean install
+ * </pre>
  * 
  * @author Joel Costigliola
  */
