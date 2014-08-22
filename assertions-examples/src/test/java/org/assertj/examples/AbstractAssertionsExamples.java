@@ -110,6 +110,7 @@ public abstract class AbstractAssertionsExamples {
   protected static BasketBallPlayer durant;
   protected static BasketBallPlayer noah;
   protected static BasketBallPlayer tonyParker;
+  protected static BasketBallPlayer dwayne;
   protected static List<BasketBallPlayer> basketBallPlayers;
   protected static PotentialMvpCondition potentialMvp;
   protected static Condition<BasketBallPlayer> doubleDoubleStats;
@@ -128,6 +129,10 @@ public abstract class AbstractAssertionsExamples {
     james.setAssistsPerGame(6);
     james.setPointsPerGame(27);
     james.setReboundsPerGame(8);
+    dwayne = new BasketBallPlayer(new Name("Dwayne", "Wade"), "Miami Heat");
+    dwayne.setAssistsPerGame(16);
+    dwayne.setPointsPerGame(55);
+    dwayne.setReboundsPerGame(16);
     durant = new BasketBallPlayer(new Name("Kevin", "Durant"), "OKC");
     durant.setAssistsPerGame(4);
     durant.setPointsPerGame(30);
@@ -136,7 +141,14 @@ public abstract class AbstractAssertionsExamples {
     noah.setAssistsPerGame(4);
     noah.setPointsPerGame(10);
     noah.setReboundsPerGame(11);
-    basketBallPlayers = newArrayList(rose, james, durant, noah);
+    
+    noah.getTeamMates().add(rose);
+    rose.getTeamMates().add(noah);
+    
+    dwayne.getTeamMates().add(james);
+    james.getTeamMates().add(dwayne);
+    
+    basketBallPlayers = newArrayList(rose, james, dwayne, durant, noah);
     potentialMvp = new PotentialMvpCondition();
     doubleDoubleStats = new Condition<BasketBallPlayer>("double double stats") {
       @Override
