@@ -63,8 +63,8 @@ public class MapAssertionsExamples extends AbstractAssertionsExamples {
     assertThat(ringBearers).containsValue(frodo);
     assertThat(ringBearers).doesNotContainValue(sam);
     
+    assertThat(ringBearers).hasSameSizeAs(ringBearers);
     ringBearers.clear();
-//    assertThat(ringBearers).hasSameSizeAs(ringBearers).isEmpty(); // #213
     assertThat(ringBearers).contains();
   }
 
