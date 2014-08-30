@@ -130,7 +130,7 @@
       <plugin>
         <groupId>org.assertj</groupId>
         <artifactId>assertj-assertions-generator-maven-plugin</artifactId>
-        <version>1.4.0-SNAPSHOT</version>
+        <version>1.4.1-SNAPSHOT</version>
         <executions>
           <execution>
             <goals>
@@ -157,13 +157,12 @@
             <param>.*google.*MediaType</param>
             <param>.*google.*Escaper.*</param>
           </excludes>
-          <targetDir>src/test/java</targetDir>
         </configuration>
       </plugin>
       <plugin>
         <groupId>org.codehaus.mojo</groupId>
         <artifactId>build-helper-maven-plugin</artifactId>
-        <version>1.8</version>
+        <version>1.9</version>
         <executions>
           <execution>
             <id>add-source</id>
