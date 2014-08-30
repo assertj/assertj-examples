@@ -10,22 +10,13 @@
  *
  * Copyright 2012-2014 the original author or authors.
  */
-package org.assertj.examples;
+package org.assertj.examples.data.bug27;
 
-import static org.assertj.BddAssertions.then;
+import java.util.Iterator;
 
-import org.junit.Test;
+public class MyModelClass {
+  private MyIteratorWrapper iterator;
 
-import org.assertj.examples.data.Name;
-import org.assertj.examples.exception.NameException;
-
-public class GeneratedBddAssertionsExamples extends AbstractAssertionsExamples {
-
-  @Test
-  public void generated_bdd_assertions_example() throws NameException {
-    // use the generated BDD assertions
-    // Given Derrick Rose basket ball player
-    then(rose).hasName(new Name("Derrick", "Rose")).hasNoTeamMates();
+  public static class MyBean {
   }
-
 }

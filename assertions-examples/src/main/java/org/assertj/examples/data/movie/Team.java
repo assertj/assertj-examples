@@ -10,22 +10,22 @@
  *
  * Copyright 2012-2014 the original author or authors.
  */
-package org.assertj.examples;
+package org.assertj.examples.data.movie;
 
-import static org.assertj.BddAssertions.then;
+import java.util.List;
 
-import org.junit.Test;
+// another Team class to test generated assertion can make the difference between the Team classes.
+public class Team {
 
-import org.assertj.examples.data.Name;
-import org.assertj.examples.exception.NameException;
+  private List<String> actors;
 
-public class GeneratedBddAssertionsExamples extends AbstractAssertionsExamples {
+  public Team(List<String> actors) {
+    super();
+    this.actors = actors;
+  }
 
-  @Test
-  public void generated_bdd_assertions_example() throws NameException {
-    // use the generated BDD assertions
-    // Given Derrick Rose basket ball player
-    then(rose).hasName(new Name("Derrick", "Rose")).hasNoTeamMates();
+  public List<String> getActors() {
+    return actors;
   }
 
 }

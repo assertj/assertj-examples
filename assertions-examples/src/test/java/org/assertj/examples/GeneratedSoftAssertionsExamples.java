@@ -16,7 +16,7 @@ import org.junit.Test;
 
 import org.assertj.core.api.SoftAssertionError;
 import org.assertj.examples.data.Name;
-import org.assertj.examples.data.SoftAssertions;
+import org.assertj.SoftAssertions;
 import org.assertj.examples.exception.NameException;
 
 public class GeneratedSoftAssertionsExamples extends AbstractAssertionsExamples {

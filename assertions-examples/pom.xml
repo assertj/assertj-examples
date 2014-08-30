@@ -145,7 +145,7 @@
             <param>com.google.common.net</param>
           </packages>
           <hierarchical>true</hierarchical>
-          <entryPointClassPackage>org.assertj.examples.data</entryPointClassPackage>
+          <entryPointClassPackage>org.assertj</entryPointClassPackage>
           <!-- 
           <includes>
             <param>org\.assertj\.examples\.rpg.*</param>
