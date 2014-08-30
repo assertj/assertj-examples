@@ -61,9 +61,16 @@ public class IterableAssertionsExamples extends AbstractAssertionsExamples {
     // with containsOnly, all the elements must be present (but the order is not important)
     assertThat(elvesRings).containsOnly(nenya, vilya, narya)
                           .containsOnly(vilya, nenya, narya)
-                          .containsOnlyElementsOf(elvesRings);
+                          .containsOnlyElementsOf(newArrayList(nenya, narya, vilya, nenya))
+                          .hasSameElementsAs(newArrayList(nenya, narya, vilya, nenya));
     assertThat(elvesRings).doesNotContainNull().doesNotHaveDuplicates();
+
+    Iterable<Ring> duplicatedElvesRings = newArrayList(vilya, nenya, narya, vilya, nenya, narya);
+    assertThat(elvesRings).hasSameElementsAs(duplicatedElvesRings)
+                          .containsOnlyElementsOf(duplicatedElvesRings);
+
     try {
+      assertThat(elvesRings).containsOnlyElementsOf(newArrayList(vilya, nenya, vilya, oneRing));
       assertThat(elvesRings).containsOnly(nenya, vilya, oneRing);
     } catch (AssertionError e) {
       logAssertionErrorMessage("containsOnly", e);
@@ -170,7 +177,7 @@ public class IterableAssertionsExamples extends AbstractAssertionsExamples {
 
     // extract 'name' property values
     assertThat(fellowshipOfTheRing).extracting("name").contains("Boromir", "Gandalf", "Frodo", "Legolas")
-      .doesNotContain("Sauron", "Elrond");
+                                   .doesNotContain("Sauron", "Elrond");
 
     // extract 'age' field values
     assertThat(fellowshipOfTheRing).extracting("age").contains(33, 38, 36);
@@ -185,12 +192,13 @@ public class IterableAssertionsExamples extends AbstractAssertionsExamples {
 
     // extract simple property values having a java standard type
     assertThat(extractProperty("name", String.class).from(fellowshipOfTheRing)).contains("Boromir", "Gandalf", "Frodo")
-      .doesNotContain("Sauron", "Elrond");
+                                                                               .doesNotContain("Sauron", "Elrond");
 
     // same extraction with an alternate syntax
     assertThat(extractProperty("name").ofType(String.class).from(fellowshipOfTheRing)).contains("Boromir", "Gandalf",
                                                                                                 "Frodo", "Legolas")
-      .doesNotContain("Sauron", "Elrond");
+                                                                                      .doesNotContain("Sauron",
+                                                                                                      "Elrond");
 
     // extracting property works also with user's types (here Race)
     assertThat(extractProperty("race").from(fellowshipOfTheRing)).contains(HOBBIT, ELF).doesNotContain(ORC);
@@ -308,7 +316,9 @@ public class IterableAssertionsExamples extends AbstractAssertionsExamples {
   @Test
   public void containsSubSequence_assertion_examples() {
     assertThat(newArrayList("Batman", "is", "weaker", "than", "Superman", "but", "he", "is", "less", "annoying"))
-      .containsSubsequence("Superman", "is", "annoying");
+                                                                                                                 .containsSubsequence("Superman",
+                                                                                                                                      "is",
+                                                                                                                                      "annoying");
     assertThat(newArrayList("Breaking", "objects", "is", "pretty", "bad")).containsSubsequence("Breaking", "bad");
     try {
       assertThat(newArrayList("A", "B", "C", "D")).containsSubsequence("B", "A", "C");
@@ -369,9 +379,9 @@ public class IterableAssertionsExamples extends AbstractAssertionsExamples {
 
   @Test
   public void use_hexadecimal_representation_in_error_messages() {
-    final List<Byte> bytes = newArrayList((byte)0x10, (byte) 0x20);
+    final List<Byte> bytes = newArrayList((byte) 0x10, (byte) 0x20);
     try {
-      assertThat(bytes).inHexadecimal().contains((byte)0x30);
+      assertThat(bytes).inHexadecimal().contains((byte) 0x30);
     } catch (AssertionError e) {
       logAssertionErrorMessage("asHexadecimal for byte list", e);
     }
@@ -379,9 +389,9 @@ public class IterableAssertionsExamples extends AbstractAssertionsExamples {
 
   @Test
   public void use_binary_representation_in_error_messages() {
-    final List<Byte> bytes = newArrayList((byte)0x10, (byte) 0x20);
+    final List<Byte> bytes = newArrayList((byte) 0x10, (byte) 0x20);
     try {
-      assertThat(bytes).inBinary().contains((byte)0x30);
+      assertThat(bytes).inBinary().contains((byte) 0x30);
     } catch (AssertionError e) {
       logAssertionErrorMessage("asBinary for byte list", e);
     }
