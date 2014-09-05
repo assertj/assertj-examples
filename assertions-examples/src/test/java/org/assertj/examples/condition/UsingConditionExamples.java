@@ -20,10 +20,10 @@ import static org.assertj.core.util.Sets.newLinkedHashSet;
 
 import java.util.Set;
 
-import org.assertj.examples.AbstractAssertionsExamples;
-import org.junit.Test;
-
 import org.assertj.core.api.Condition;
+import org.assertj.examples.AbstractAssertionsExamples;
+import org.assertj.examples.data.BasketBallPlayer;
+import org.junit.Test;
 
 public class UsingConditionExamples extends AbstractAssertionsExamples {
 
@@ -34,6 +34,8 @@ public class UsingConditionExamples extends AbstractAssertionsExamples {
     assertThat(rose).is(potentialMvp);
     assertThat(james).is(potentialMvp);
     assertThat(noah).isNot(potentialMvp);
+    Set<BasketBallPlayer> bullsPlayers = newLinkedHashSet(noah, rose);
+    assertThat(bullsPlayers).haveAtLeastOne(potentialMvp);
   }
 
   @Test
