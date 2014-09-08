@@ -238,6 +238,10 @@ public class IterableAssertionsExamples extends AbstractAssertionsExamples {
     assertThat(fellowshipOfTheRing).extracting("name", "age", "race.name").contains(tuple("Boromir", 37, "Man"),
                                                                                     tuple("Sam", 38, "Hobbit"),
                                                                                     tuple("Legolas", 1000, "Elf"));
+    // extract 'name', 'age' and Race name values.
+    TolkienCharacter unknown = new TolkienCharacter("unknown", 100, null);
+    assertThat(newArrayList(sam, unknown)).extracting("name", "age", "race.name").contains(tuple("Sam", 38, "Hobbit"),
+                                                                                           tuple("unknown", 100, null));
   }
 
   @Test
