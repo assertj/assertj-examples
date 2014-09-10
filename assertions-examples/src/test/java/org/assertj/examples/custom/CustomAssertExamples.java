@@ -13,14 +13,13 @@
 package org.assertj.examples.custom;
 
 import static com.google.common.collect.Lists.newArrayList;
-
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.examples.custom.MyProjectAssertions.assertThat;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 import org.junit.Test;
-
 import org.assertj.core.api.SoftAssertionError;
 import org.assertj.examples.AbstractAssertionsExamples;
 import org.assertj.examples.data.TolkienCharacter;
@@ -121,6 +120,11 @@ public class CustomAssertExamples extends AbstractAssertionsExamples {
     } catch (SoftAssertionError e) {
       logAssertionErrorMessage("SoftAssertion errors example", e);
     }
+  }
+
+  @Test
+  public void extending_core_assertions() {
+    assertThat(BigDecimal.ONE).isOne().isNotZero().isOne();
   }
 
 }
