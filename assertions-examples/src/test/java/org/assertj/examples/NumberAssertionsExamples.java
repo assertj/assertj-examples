@@ -101,17 +101,9 @@ public class NumberAssertionsExamples extends AbstractAssertionsExamples {
     // With BigDecimal, 8.0 is not equals to 8.00 but it is if you use compareTo()
     assertThat(new BigDecimal("8.0")).isEqualByComparingTo(new BigDecimal("8.00"));
 
-    // The following won't work because it relies on equals methods
-    // assertThat(new BigDecimal("8.0")).isGreaterThanOrEqualTo(new BigDecimal("8.00"));
-    // To have a consistent comparison ignoring BigDecimal scale, switch of comparison strategy :
-    Comparator<BigDecimal> bigDecimalComparator = new Comparator<BigDecimal>() {
-      public int compare(BigDecimal bigDecimal1, BigDecimal bigDecimal2) {
-        return bigDecimal1.compareTo(bigDecimal2);
-      }
-    };
-    assertThat(new BigDecimal("8.0")).usingComparator(bigDecimalComparator)
-        .isEqualTo(new BigDecimal("8.00"))
-        .isGreaterThanOrEqualTo(new BigDecimal("8.00"));
+    // isGreaterThanOrEqualTo uses compareTo semantics
+    assertThat(new BigDecimal("8.0")).isGreaterThanOrEqualTo(new BigDecimal("8.00"));
+    assertThat(new BigDecimal("8.1")).isGreaterThanOrEqualTo(new BigDecimal("8.10"));
   }
 
   @Test
