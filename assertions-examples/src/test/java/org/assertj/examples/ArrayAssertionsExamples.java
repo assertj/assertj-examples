@@ -37,7 +37,6 @@ import java.util.Arrays;
 import java.util.Comparator;
 
 import org.junit.Test;
-
 import org.assertj.core.util.introspection.IntrospectionError;
 import org.assertj.examples.data.Race;
 import org.assertj.examples.data.Ring;
@@ -363,5 +362,14 @@ public class ArrayAssertionsExamples extends AbstractAssertionsExamples {
       setAllowExtractingPrivateFields(true);
     }
   }
+  
+  @Test
+  public void array_assertions_testing_elements_type() throws Exception {
+	  Number[] numbers = { 2, 6L, 8.0 };
+	  assertThat(numbers).hasAtLeastOneElementOfType(Long.class);
+	  assertThat(numbers).hasOnlyElementsOfType(Number.class);
+  }
+  
+  
 
 }
