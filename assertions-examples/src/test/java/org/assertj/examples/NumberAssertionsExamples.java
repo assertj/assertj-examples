@@ -17,7 +17,6 @@ import static org.assertj.core.api.Assertions.offset;
 import static org.assertj.core.api.Assertions.within;
 
 import java.math.BigDecimal;
-import java.util.Comparator;
 
 import org.assertj.examples.comparator.AbsValueComparator;
 import org.junit.Test;

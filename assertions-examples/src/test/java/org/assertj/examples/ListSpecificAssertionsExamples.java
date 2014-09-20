@@ -53,8 +53,11 @@ public class ListSpecificAssertionsExamples extends AbstractAssertionsExamples {
 
     // You can check that a newArrayList is sorted
     Collections.sort(fellowshipOfTheRing, ageComparator);
-    assertThat(fellowshipOfTheRing).isSortedAccordingTo(ageComparator);
+    assertThat(fellowshipOfTheRing).contains(frodo).isSortedAccordingTo(ageComparator);
     assertThat(fellowshipOfTheRing).usingElementComparator(ageComparator).isSorted();
+    
+    // You can use iterable assertion and after that list specific ones
+    assertThat(fellowshipOfTheRing).contains(frodo).contains(frodo, atIndex(1));
 
     // enum order = order of declaration = ring power
     assertThat(newArrayList(oneRing, vilya, nenya, narya, dwarfRing, manRing)).isSorted();
