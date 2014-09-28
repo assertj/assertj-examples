@@ -165,7 +165,9 @@ public class IterableAssertionsExamples extends AbstractAssertionsExamples {
 
 	// duplicates assertion honors custom comparator
 	assertThat(fellowshipOfTheRing).doesNotHaveDuplicates();
-	assertThat(newArrayList(sam, gandalf)).usingElementComparator(raceNameComparator).doesNotHaveDuplicates();
+	assertThat(newArrayList(sam, gandalf)).usingElementComparator(raceNameComparator)
+	                                      .doesNotHaveDuplicates()
+	                                      .isEqualTo(newArrayList(frodo, gandalf));
 	try {
 	  assertThat(newArrayList(sam, gandalf, frodo)).usingElementComparator(raceNameComparator).doesNotHaveDuplicates();
 	} catch (AssertionError e) {
@@ -416,7 +418,7 @@ public class IterableAssertionsExamples extends AbstractAssertionsExamples {
   }
 
   @Test
-  public void iterable_assertions_on_flat_extraced_values_examples() throws Exception {
+  public void iterable_assertions_on_flat_extracted_values_examples() throws Exception {
 	assertThat(newArrayList(noah, james)).flatExtracting(teammates()).contains(dwayne, rose);
   }
 
@@ -430,4 +432,41 @@ public class IterableAssertionsExamples extends AbstractAssertionsExamples {
 	assertThat(numbers).hasOnlyElementsOfType(Long.class);
   }
 
+  @Test
+  public void test_bug_236() throws Exception {
+	List<Foo> list1 = newArrayList(new Foo("id", 1));
+	List<Foo> list2 = newArrayList(new Foo("id", 2));
+	assertThat(list1).usingElementComparatorOnFields("id").isEqualTo(list2);
+	assertThat(list1).usingElementComparatorIgnoringFields("bar").isEqualTo(list2);
+	try {
+	  assertThat(list1).usingFieldByFieldElementComparator().isEqualTo(list2);
+	} catch (AssertionError e) {
+	  logAssertionErrorMessage("asBinary for byte list", e);
+	}
+  }
+
+  public static class Foo {
+	private String id;
+	private int bar;
+
+	public String getId() {
+	  return id;
+	}
+
+	public int getBar() {
+	  return bar;
+	}
+
+	public Foo(String id, int bar) {
+	  super();
+	  this.id = id;
+	  this.bar = bar;
+	}
+
+	@Override
+    public String toString() {
+	  return "Foo [id=" + id + ", bar=" + bar + "]";
+    }
+  }
+  
 }
