@@ -66,7 +66,6 @@ public class NumberAssertionsExamples extends AbstractAssertionsExamples {
     assertThat(new int[] { -1, 2, 3 }).usingElementComparator(absValueComparator).contains(1, 2, -3);
   }
 
-
   @Test
   public void assertion_error_with_message_differentiating_double_and_float() {
 

@@ -200,6 +200,8 @@ public class BasicAssertionsExamples extends AbstractAssertionsExamples {
 
     // frodo and sam both are hobbits, so they are lenient equals on race
     assertThat(frodo).isEqualToComparingOnlyGivenFields(sam, "race");
+    // nested fields are supported
+    assertThat(frodo).isEqualToComparingOnlyGivenFields(sam, "race.name");
 
     // but not when accepting name and race
     try {
@@ -215,7 +217,7 @@ public class BasicAssertionsExamples extends AbstractAssertionsExamples {
     try {
       assertThat(frodo).isEqualToComparingOnlyGivenFields(sam, "hairColor");
     } catch (IntrospectionError e) {
-      assertThat(e).hasMessage("No field 'hairColor' in class org.assertj.examples.data.TolkienCharacter");
+      logger.info("isEqualToComparingOnlyGivenFields InstrospectionError message : {}", e.getMessage());
     }
   }
 
