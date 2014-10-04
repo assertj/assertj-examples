@@ -376,6 +376,7 @@ public class IterableAssertionsExamples extends AbstractAssertionsExamples {
 
 	// frodo and sam both are hobbits, so they are equals when comparing only race ...
 	assertThat(newArrayList(frodo)).usingElementComparatorOnFields("race").contains(sam);
+	assertThat(newArrayList(frodo)).usingElementComparatorOnFields("race").isEqualTo(newArrayList(sam));
 	// ... but not when comparing both name and race
 	try {
 	  assertThat(newArrayList(frodo)).usingElementComparatorOnFields("name", "race").contains(sam);
@@ -424,16 +425,35 @@ public class IterableAssertionsExamples extends AbstractAssertionsExamples {
 
   @Test
   public void iterable_assertions_testing_elements_type() throws Exception {
-	List<Long> numbers = newArrayList();
-	numbers.add(1L);
-	numbers.add(2L);
-	assertThat(numbers).hasAtLeastOneElementOfType(Long.class);
+	List<Long> numbers = newArrayList(1L, 2L);
 	assertThat(numbers).hasOnlyElementsOfType(Number.class);
 	assertThat(numbers).hasOnlyElementsOfType(Long.class);
+
+	@SuppressWarnings("unchecked")
+    List<? extends Object> mixed = newArrayList("string", 1L);
+	assertThat(mixed).hasAtLeastOneElementOfType(String.class);
   }
 
   @Test
-  public void test_bug_236() throws Exception {
+  public void test_issue_245() throws Exception {
+	Foo foo1 = new Foo("id", 1);
+	foo1._f2 = "foo1";
+	Foo foo2 = new Foo("id", 2);
+	foo2._f2 = "foo1";
+	List<Foo> list1 = newArrayList(foo1);
+	List<Foo> list2 = newArrayList(foo2);
+	assertThat(list1).usingElementComparatorOnFields("_f2").isEqualTo(list2);
+	assertThat(list1).usingElementComparatorOnFields("id").isEqualTo(list2);
+	assertThat(list1).usingElementComparatorIgnoringFields("bar").isEqualTo(list2);
+	try {
+	  assertThat(list1).usingFieldByFieldElementComparator().isEqualTo(list2);
+	} catch (AssertionError e) {
+	  logAssertionErrorMessage("asBinary for byte list", e);
+	}
+  }
+
+  @Test
+  public void test_issue_236() throws Exception {
 	List<Foo> list1 = newArrayList(new Foo("id", 1));
 	List<Foo> list2 = newArrayList(new Foo("id", 2));
 	assertThat(list1).usingElementComparatorOnFields("id").isEqualTo(list2);
@@ -444,10 +464,11 @@ public class IterableAssertionsExamples extends AbstractAssertionsExamples {
 	  logAssertionErrorMessage("asBinary for byte list", e);
 	}
   }
-
+  
   public static class Foo {
 	private String id;
 	private int bar;
+	public String _f2;
 
 	public String getId() {
 	  return id;

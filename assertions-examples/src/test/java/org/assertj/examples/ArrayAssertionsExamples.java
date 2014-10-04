@@ -370,6 +370,4 @@ public class ArrayAssertionsExamples extends AbstractAssertionsExamples {
 	  assertThat(numbers).hasOnlyElementsOfType(Number.class);
   }
   
-  
-
 }

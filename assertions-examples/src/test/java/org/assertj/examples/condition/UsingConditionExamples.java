@@ -16,8 +16,10 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.condition.AllOf.allOf;
 import static org.assertj.core.condition.AnyOf.anyOf;
 import static org.assertj.core.condition.Not.not;
+import static org.assertj.core.util.Lists.newArrayList;
 import static org.assertj.core.util.Sets.newLinkedHashSet;
 
+import java.util.List;
 import java.util.Set;
 
 import org.assertj.core.api.Condition;
@@ -34,7 +36,7 @@ public class UsingConditionExamples extends AbstractAssertionsExamples {
     assertThat(rose).is(potentialMvp);
     assertThat(james).is(potentialMvp);
     assertThat(noah).isNot(potentialMvp);
-    Set<BasketBallPlayer> bullsPlayers = newLinkedHashSet(noah, rose);
+    List<BasketBallPlayer> bullsPlayers = newArrayList(noah, rose);
     assertThat(bullsPlayers).haveAtLeastOne(potentialMvp);
   }
 
@@ -75,10 +77,12 @@ public class UsingConditionExamples extends AbstractAssertionsExamples {
     assertThat(newLinkedHashSet("Leia", "Solo")).doNotHave(jediPower);
 
     // areAtLeast & areNotAtLeast
+    assertThat(newLinkedHashSet("Luke", "Yoda", "Leia")).areAtLeastOne(jedi);
     assertThat(newLinkedHashSet("Luke", "Yoda", "Leia")).areAtLeast(2, jedi);
     assertThat(newLinkedHashSet("Luke", "Yoda", "Obiwan")).areAtLeast(2, jedi);
 
     // haveAtLeast & doNotHaveAtLeast
+    assertThat(newLinkedHashSet("Luke", "Leia")).haveAtLeastOne(jediPower);
     assertThat(newLinkedHashSet("Luke", "Yoda", "Leia")).haveAtLeast(2, jediPower);
     assertThat(newLinkedHashSet("Luke", "Yoda", "Obiwan")).haveAtLeast(2, jediPower);
 
