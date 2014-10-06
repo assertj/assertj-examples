@@ -33,7 +33,7 @@
     <dependency>
       <groupId>org.assertj</groupId>
       <artifactId>assertj-core</artifactId>
-      <version>1.7.0-SNAPSHOT</version>
+      <version>1.7.0</version>
       <scope>test</scope>
     </dependency>
     <dependency>
@@ -130,7 +130,7 @@
       <plugin>
         <groupId>org.assertj</groupId>
         <artifactId>assertj-assertions-generator-maven-plugin</artifactId>
-        <version>1.4.1-SNAPSHOT</version>
+        <version>1.4.1</version>
         <executions>
           <execution>
             <goals>
@@ -146,17 +146,14 @@
           </packages>
           <hierarchical>true</hierarchical>
           <entryPointClassPackage>org.assertj</entryPointClassPackage>
-          <!-- 
-          <includes>
-            <param>org\.assertj\.examples\.rpg.*</param>
-          </includes>
-           -->
+          <!-- <includes> <param>org\.assertj\.examples\.rpg.*</param> </includes> -->
           <excludes>
             <param>.*google.*HostSpecifier</param>
             <param>.*google.*Headers</param>
             <param>.*google.*MediaType</param>
             <param>.*google.*Escaper.*</param>
           </excludes>
+          <targetDir>src/test/generated-assertions</targetDir>
         </configuration>
       </plugin>
       <plugin>
@@ -173,7 +170,7 @@
             <configuration>
               <sources>
                 <!-- must be = assertj-assertions-generator-maven-plugin.targetDir -->
-                <source>target/generated-test-sources/assertj-assertions</source>
+                <source>src/test/generated-assertions</source>
               </sources>
             </configuration>
           </execution>
@@ -251,7 +248,7 @@
                   <pluginExecutionFilter>
                     <groupId>org.assertj</groupId>
                     <artifactId>assertj-assertions-generator-maven-plugin</artifactId>
-                    <versionRange>[1.3.0-SNAPSHOT,)</versionRange>
+                    <versionRange>[1.3.0,)</versionRange>
                     <goals>
                       <goal>generate-assertions</goal>
                     </goals>
