@@ -11,7 +11,11 @@
 		</attributes>
 	</classpathentry>
 	<classpathentry kind="var" path="M2_REPO/asm/asm/3.3.1/asm-3.3.1.jar"/>
-	<classpathentry kind="var" path="M2_REPO/org/assertj/assertj-core/1.7.0-SNAPSHOT/assertj-core-1.7.0-SNAPSHOT.jar" sourcepath="M2_REPO/org/assertj/assertj-core/1.7.0-SNAPSHOT/assertj-core-1.7.0-SNAPSHOT-sources.jar"/>
+	<classpathentry kind="var" path="M2_REPO/org/assertj/assertj-core/1.7.0/assertj-core-1.7.0.jar" sourcepath="M2_REPO/org/assertj/assertj-core/1.7.0/assertj-core-1.7.0-sources.jar">
+		<attributes>
+			<attribute name="javadoc_location" value="jar:file:/home/joel/.m2/repository/org/assertj/assertj-core/1.7.0/assertj-core-1.7.0-javadoc.jar!/"/>
+		</attributes>
+	</classpathentry>
 	<classpathentry kind="var" path="M2_REPO/org/assertj/assertj-joda-time/1.1.0/assertj-joda-time-1.1.0.jar" sourcepath="M2_REPO/org/assertj/assertj-joda-time/1.1.0/assertj-joda-time-1.1.0-sources.jar">
 		<attributes>
 			<attribute name="javadoc_location" value="jar:file:/home/joel/.m2/repository/org/assertj/assertj-joda-time/1.1.0/assertj-joda-time-1.1.0-javadoc.jar!/"/>
@@ -27,7 +31,11 @@
 			<attribute name="javadoc_location" value="jar:file:/home/joel/.m2/repository/com/google/guava/guava/17.0/guava-17.0-javadoc.jar!/"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry kind="var" path="M2_REPO/org/assertj/assertj-neo4j/1.1.0-SNAPSHOT/assertj-neo4j-1.1.0-SNAPSHOT.jar" sourcepath="M2_REPO/org/assertj/assertj-neo4j/1.1.0-SNAPSHOT/assertj-neo4j-1.1.0-SNAPSHOT-sources.jar"/>
+	<classpathentry kind="var" path="M2_REPO/org/assertj/assertj-neo4j/1.0.0/assertj-neo4j-1.0.0.jar" sourcepath="M2_REPO/org/assertj/assertj-neo4j/1.0.0/assertj-neo4j-1.0.0-sources.jar">
+		<attributes>
+			<attribute name="javadoc_location" value="jar:file:/home/joel/.m2/repository/org/assertj/assertj-neo4j/1.0.0/assertj-neo4j-1.0.0-javadoc.jar!/"/>
+		</attributes>
+	</classpathentry>
 	<classpathentry kind="var" path="M2_REPO/org/neo4j/neo4j-kernel/2.0.0/neo4j-kernel-2.0.0-tests.jar" sourcepath="M2_REPO/org/neo4j/neo4j-kernel/2.0.0/neo4j-kernel-2.0.0-test-sources.jar"/>
 	<classpathentry kind="var" path="M2_REPO/org/apache/geronimo/specs/geronimo-jta_1.1_spec/1.1.1/geronimo-jta_1.1_spec-1.1.1.jar" sourcepath="M2_REPO/org/apache/geronimo/specs/geronimo-jta_1.1_spec/1.1.1/geronimo-jta_1.1_spec-1.1.1-sources.jar">
 		<attributes>
