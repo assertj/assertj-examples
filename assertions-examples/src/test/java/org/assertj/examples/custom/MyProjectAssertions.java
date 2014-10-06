@@ -12,6 +12,8 @@
  */
 package org.assertj.examples.custom;
 
+import java.math.BigDecimal;
+
 import org.assertj.core.api.Assertions;
 import org.assertj.examples.data.TolkienCharacter;
 
@@ -39,6 +41,10 @@ public class MyProjectAssertions extends Assertions { // extending make all stan
 
   public static EmployeeOfTheMonthAssert assertThat(EmployeeOfTheMonth actual) {
     return new EmployeeOfTheMonthAssert(actual);
+  }
+  
+  public static MyBigDecimalAssert assertThat(BigDecimal actual) {
+    return new MyBigDecimalAssert(actual);
   }
   
 }

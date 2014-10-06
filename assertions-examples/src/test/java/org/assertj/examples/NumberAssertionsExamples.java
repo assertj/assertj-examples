@@ -17,7 +17,6 @@ import static org.assertj.core.api.Assertions.offset;
 import static org.assertj.core.api.Assertions.within;
 
 import java.math.BigDecimal;
-import java.util.Comparator;
 
 import org.assertj.examples.comparator.AbsValueComparator;
 import org.junit.Test;
@@ -67,7 +66,6 @@ public class NumberAssertionsExamples extends AbstractAssertionsExamples {
     assertThat(new int[] { -1, 2, 3 }).usingElementComparator(absValueComparator).contains(1, 2, -3);
   }
 
-
   @Test
   public void assertion_error_with_message_differentiating_double_and_float() {
 
@@ -101,17 +99,9 @@ public class NumberAssertionsExamples extends AbstractAssertionsExamples {
     // With BigDecimal, 8.0 is not equals to 8.00 but it is if you use compareTo()
     assertThat(new BigDecimal("8.0")).isEqualByComparingTo(new BigDecimal("8.00"));
 
-    // The following won't work because it relies on equals methods
-    // assertThat(new BigDecimal("8.0")).isGreaterThanOrEqualTo(new BigDecimal("8.00"));
-    // To have a consistent comparison ignoring BigDecimal scale, switch of comparison strategy :
-    Comparator<BigDecimal> bigDecimalComparator = new Comparator<BigDecimal>() {
-      public int compare(BigDecimal bigDecimal1, BigDecimal bigDecimal2) {
-        return bigDecimal1.compareTo(bigDecimal2);
-      }
-    };
-    assertThat(new BigDecimal("8.0")).usingComparator(bigDecimalComparator)
-        .isEqualTo(new BigDecimal("8.00"))
-        .isGreaterThanOrEqualTo(new BigDecimal("8.00"));
+    // isGreaterThanOrEqualTo uses compareTo semantics
+    assertThat(new BigDecimal("8.0")).isGreaterThanOrEqualTo(new BigDecimal("8.00"));
+    assertThat(new BigDecimal("8.1")).isGreaterThanOrEqualTo(new BigDecimal("8.10"));
   }
 
   @Test

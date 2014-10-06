@@ -14,10 +14,12 @@ package org.assertj.examples;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.entry;
+import static org.assertj.examples.data.Ring.dwarfRing;
 import static org.assertj.examples.data.Ring.manRing;
 import static org.assertj.examples.data.Ring.narya;
 import static org.assertj.examples.data.Ring.nenya;
 import static org.assertj.examples.data.Ring.oneRing;
+import static org.assertj.examples.data.Ring.vilya;
 
 import java.util.LinkedHashMap;
 import java.util.Map;
@@ -48,14 +50,21 @@ public class MapAssertionsExamples extends AbstractAssertionsExamples {
     // Assertion on key
     assertThat(ringBearers).containsKey(nenya);
     assertThat(ringBearers).containsKeys(nenya, narya);
+    assertThat(ringBearers).containsOnlyKeys(nenya, narya, vilya, oneRing);
     assertThat(ringBearers).doesNotContainKey(manRing);
+    
+    try {
+      assertThat(ringBearers).containsOnlyKeys(nenya, narya, dwarfRing);
+    } catch (AssertionError e) {
+      logAssertionErrorMessage("containsOnlyKeys with not found and not expected keys.", e);
+    }    
     
     // Assertion on value
     assertThat(ringBearers).containsValue(frodo);
     assertThat(ringBearers).doesNotContainValue(sam);
     
+    assertThat(ringBearers).hasSameSizeAs(ringBearers);
     ringBearers.clear();
-    assertThat(ringBearers).isEmpty();
     assertThat(ringBearers).contains();
   }
 

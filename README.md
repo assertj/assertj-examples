@@ -18,11 +18,13 @@ AssertJ examples is divided in two : assertions-examples (core, guava and joda a
 Please have a look at **[assertions examples sources](assertions-examples/src/test/java/org/assertj/examples)**.
 
 The **master** branch contains examples with the latest released version of AssertJ modules, you can build it with `mvn clean install` command.
+In your IDE, add `src/test/generated-assertions` to the project java sources if you IDE shows errors/missing classes.
+This folder is where custom assertions classes are generated, it shows what you have with the maven assertions generator plugin. 
 
 Building **with-latest-snapshot-versions** is a little more complicated :
 - you need to build the needed SNAPSHOT dependencies before - most probably assertj-core and maybe other modules. 
 - run `mvn clean install` in `assertj-examples/assertions-examples`.
-- In your IDE, add `target/generated-test-sources` to the project java sources if you IDE shows errors/missing classes.  
+- In your IDE, add `src/test/generated-assertions` to the project java sources if you IDE shows errors/missing classes.  
 
 ### AssertJ-Swing examples
 

@@ -38,7 +38,7 @@ public class JUnitSoftAssertionsWithCustomAssertExamples extends AbstractAsserti
     // basic object to test
     String name = "Michael Jordan - Bulls";
     // custom object to test
-    Employee kent = new Employee("Kent Beck");
+    Employee kent = new Employee("Kent Beck"); 
     kent.jobTitle = "TDD evangelist";
 
     // use our own soft assertions based on JUnit rule

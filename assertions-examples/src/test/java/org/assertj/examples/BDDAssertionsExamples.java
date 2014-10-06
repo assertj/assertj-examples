@@ -19,15 +19,16 @@ import static org.mockito.BDDMockito.given;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.assertj.examples.data.BasketBallPlayer;
-import org.assertj.examples.data.Mansion;
-import org.assertj.examples.data.service.GameService;
-import org.assertj.examples.data.service.TeamManager;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
+
+import org.assertj.examples.data.BasketBallPlayer;
+import org.assertj.examples.data.Mansion;
+import org.assertj.examples.data.service.GameService;
+import org.assertj.examples.data.service.TeamManager;
 
 /**
  * BDD Style Assertions examples

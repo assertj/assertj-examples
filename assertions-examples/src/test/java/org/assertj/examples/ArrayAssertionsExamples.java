@@ -14,6 +14,8 @@ package org.assertj.examples;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.extractProperty;
+import static org.assertj.core.api.Assertions.failBecauseExceptionWasNotThrown;
+import static org.assertj.core.api.Assertions.setAllowExtractingPrivateFields;
 import static org.assertj.core.api.Assertions.filter;
 import static org.assertj.core.data.Index.atIndex;
 import static org.assertj.core.util.Arrays.array;
@@ -30,14 +32,16 @@ import static org.assertj.examples.data.Ring.oneRing;
 import static org.assertj.examples.data.Ring.vilya;
 
 import java.awt.Rectangle;
+import java.io.UnsupportedEncodingException;
 import java.util.Arrays;
 import java.util.Comparator;
 
+import org.junit.Test;
+import org.assertj.core.util.introspection.IntrospectionError;
 import org.assertj.examples.data.Race;
 import org.assertj.examples.data.Ring;
 import org.assertj.examples.data.TolkienCharacter;
 import org.assertj.examples.data.movie.Movie;
-import org.junit.Test;
 
 /**
  * Array assertions examples.
@@ -316,4 +320,54 @@ public class ArrayAssertionsExamples extends AbstractAssertionsExamples {
     assertThat(array(vilya, nenya, narya)).hasSameSizeAs(array(nenya, nenya, nenya));
   }
 
+  @Test
+  public void use_hexadecimal_representation_in_error_messages() throws UnsupportedEncodingException {
+    try {
+      assertThat(new Byte[]{0x10,0x20}).inHexadecimal().contains(new Byte[]{0x30});
+    } catch (AssertionError e) {
+      logAssertionErrorMessage("asHexadecimal for byte array", e);
+    }
+    try {
+      assertThat("zólc".getBytes()).inHexadecimal().contains("żółć".getBytes("ISO-8859-2"));
+    } catch (AssertionError e) {
+      logAssertionErrorMessage("asHexadecimal for byte array", e);
+    }
+  }
+
+  @Test
+  public void use_unicode_representation_in_error_messages() throws UnsupportedEncodingException {
+    try {
+      assertThat("a6c".toCharArray()).inUnicode().isEqualTo("abó".toCharArray());
+    } catch (AssertionError e) {
+      logAssertionErrorMessage("inUnicode for char array", e);
+    }
+  }
+
+  @Test
+  public void iterable_assertions_on_extracted_private_fields_values_example() {
+
+    // extract private fields
+    final Object[] trilogyArray = trilogy.toArray();
+    assertThat(trilogyArray).extracting("duration").containsExactly("178 min", "179 min", "201 min");
+
+    // disable private field extraction
+    setAllowExtractingPrivateFields(false);
+
+    try {
+      assertThat(trilogyArray).extracting("duration");
+      failBecauseExceptionWasNotThrown(IntrospectionError.class);
+    } catch (Exception ignore) {
+    } finally {
+      // back to default value
+      setAllowExtractingPrivateFields(true);
+    }
+  }
+  
+  @Test
+  public void array_assertions_testing_elements_type() throws Exception {
+	  Number[] numbers = { 2, 6L, 8.0 };
+	  assertThat(numbers).hasAtLeastOneElementOfType(Long.class);
+	  assertThat(numbers).hasOnlyElementsOfType(Number.class);
+  }
+  
 }

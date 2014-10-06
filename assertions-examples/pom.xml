@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://maven.apache.org/POM/4.0.0"
-         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd ">
+  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd ">
 
   <modelVersion>4.0.0</modelVersion>
   <groupId>org.assertj</groupId>
@@ -33,7 +33,7 @@
     <dependency>
       <groupId>org.assertj</groupId>
       <artifactId>assertj-core</artifactId>
-      <version>1.6.1</version>
+      <version>1.7.0</version>
       <scope>test</scope>
     </dependency>
     <dependency>
@@ -79,7 +79,7 @@
     <dependency>
       <groupId>ch.qos.logback</groupId>
       <artifactId>logback-classic</artifactId>
-      <version>1.0.9</version>
+      <version>1.0.13</version>
     </dependency>
     <dependency>
       <groupId>junit</groupId>
@@ -123,18 +123,14 @@
             <include>**/*Examples.java</include>
           </includes>
           <argLine>-Xms128m -Xmx512m</argLine>
-          <!--<parallel>methods</parallel>-->
-          <!--<threadCount>4</threadCount>-->
+          <!--<parallel>methods</parallel> -->
+          <!--<threadCount>4</threadCount> -->
         </configuration>
       </plugin>
       <plugin>
         <groupId>org.assertj</groupId>
         <artifactId>assertj-assertions-generator-maven-plugin</artifactId>
-        <version>1.4.0</version>
-        <!--
-        To build assert-examples, we need to generating custom assertions every time.
-        In your project you can comment <executions>...</executions> to avoid generating custom assertions at every build
-        -->
+        <version>1.4.1</version>
         <executions>
           <execution>
             <goals>
@@ -144,29 +140,26 @@
         </executions>
         <configuration>
           <packages>
+            <param>org.assertj.examples.rpg</param>
             <param>org.assertj.examples.data</param>
             <param>com.google.common.net</param>
           </packages>
           <hierarchical>true</hierarchical>
-          <targetDir>src/test/java</targetDir>
-          <entryPointClassPackage>org.assertj.examples.data</entryPointClassPackage>
-          <!-- 
-          <includes>
-            <param>org\.assertj\.examples\.rpg.*</param>
-          </includes>
-           -->
+          <entryPointClassPackage>org.assertj</entryPointClassPackage>
+          <!-- <includes> <param>org\.assertj\.examples\.rpg.*</param> </includes> -->
           <excludes>
             <param>.*google.*HostSpecifier</param>
             <param>.*google.*Headers</param>
             <param>.*google.*MediaType</param>
             <param>.*google.*Escaper.*</param>
           </excludes>
+          <targetDir>src/test/generated-assertions</targetDir>
         </configuration>
       </plugin>
       <plugin>
         <groupId>org.codehaus.mojo</groupId>
         <artifactId>build-helper-maven-plugin</artifactId>
-        <version>1.8</version>
+        <version>1.9</version>
         <executions>
           <execution>
             <id>add-source</id>
@@ -177,7 +170,7 @@
             <configuration>
               <sources>
                 <!-- must be = assertj-assertions-generator-maven-plugin.targetDir -->
-                <source>target/generated-test-sources/assertj-assertions</source>
+                <source>src/test/generated-assertions</source>
               </sources>
             </configuration>
           </execution>

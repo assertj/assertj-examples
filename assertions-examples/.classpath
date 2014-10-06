@@ -1,0 +1,150 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<classpath>
+	<classpathentry including="**/*.java" kind="src" output="target/test-classes" path="src/test/java"/>
+	<classpathentry kind="src" path="src/test/generated-assertions"/>
+	<classpathentry excluding="**/*.java" kind="src" output="target/test-classes" path="src/test/resources"/>
+	<classpathentry including="**/*.java" kind="src" path="src/main/java"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
+	<classpathentry kind="var" path="M2_REPO/cglib/cglib/2.2.2/cglib-2.2.2.jar" sourcepath="M2_REPO/cglib/cglib/2.2.2/cglib-2.2.2-sources.jar">
+		<attributes>
+			<attribute name="javadoc_location" value="jar:file:/home/joel/.m2/repository/cglib/cglib/2.2.2/cglib-2.2.2-javadoc.jar!/"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="var" path="M2_REPO/asm/asm/3.3.1/asm-3.3.1.jar"/>
+	<classpathentry kind="var" path="M2_REPO/org/assertj/assertj-core/1.7.0/assertj-core-1.7.0.jar" sourcepath="M2_REPO/org/assertj/assertj-core/1.7.0/assertj-core-1.7.0-sources.jar">
+		<attributes>
+			<attribute name="javadoc_location" value="jar:file:/home/joel/.m2/repository/org/assertj/assertj-core/1.7.0/assertj-core-1.7.0-javadoc.jar!/"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="var" path="M2_REPO/org/assertj/assertj-joda-time/1.1.0/assertj-joda-time-1.1.0.jar" sourcepath="M2_REPO/org/assertj/assertj-joda-time/1.1.0/assertj-joda-time-1.1.0-sources.jar">
+		<attributes>
+			<attribute name="javadoc_location" value="jar:file:/home/joel/.m2/repository/org/assertj/assertj-joda-time/1.1.0/assertj-joda-time-1.1.0-javadoc.jar!/"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="var" path="M2_REPO/org/assertj/assertj-guava/1.2.0/assertj-guava-1.2.0.jar" sourcepath="M2_REPO/org/assertj/assertj-guava/1.2.0/assertj-guava-1.2.0-sources.jar">
+		<attributes>
+			<attribute name="javadoc_location" value="jar:file:/home/joel/.m2/repository/org/assertj/assertj-guava/1.2.0/assertj-guava-1.2.0-javadoc.jar!/"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="var" path="M2_REPO/com/google/guava/guava/17.0/guava-17.0.jar" sourcepath="M2_REPO/com/google/guava/guava/17.0/guava-17.0-sources.jar">
+		<attributes>
+			<attribute name="javadoc_location" value="jar:file:/home/joel/.m2/repository/com/google/guava/guava/17.0/guava-17.0-javadoc.jar!/"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="var" path="M2_REPO/org/assertj/assertj-neo4j/1.0.0/assertj-neo4j-1.0.0.jar" sourcepath="M2_REPO/org/assertj/assertj-neo4j/1.0.0/assertj-neo4j-1.0.0-sources.jar">
+		<attributes>
+			<attribute name="javadoc_location" value="jar:file:/home/joel/.m2/repository/org/assertj/assertj-neo4j/1.0.0/assertj-neo4j-1.0.0-javadoc.jar!/"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="var" path="M2_REPO/org/neo4j/neo4j-kernel/2.0.0/neo4j-kernel-2.0.0-tests.jar" sourcepath="M2_REPO/org/neo4j/neo4j-kernel/2.0.0/neo4j-kernel-2.0.0-test-sources.jar"/>
+	<classpathentry kind="var" path="M2_REPO/org/apache/geronimo/specs/geronimo-jta_1.1_spec/1.1.1/geronimo-jta_1.1_spec-1.1.1.jar" sourcepath="M2_REPO/org/apache/geronimo/specs/geronimo-jta_1.1_spec/1.1.1/geronimo-jta_1.1_spec-1.1.1-sources.jar">
+		<attributes>
+			<attribute name="javadoc_location" value="jar:file:/home/joel/.m2/repository/org/apache/geronimo/specs/geronimo-jta_1.1_spec/1.1.1/geronimo-jta_1.1_spec-1.1.1-javadoc.jar!/"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="var" path="M2_REPO/joda-time/joda-time/2.3/joda-time-2.3.jar" sourcepath="M2_REPO/joda-time/joda-time/2.3/joda-time-2.3-sources.jar">
+		<attributes>
+			<attribute name="javadoc_location" value="jar:file:/home/joel/.m2/repository/joda-time/joda-time/2.3/joda-time-2.3-javadoc.jar!/"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="var" path="M2_REPO/org/neo4j/neo4j/2.0.0/neo4j-2.0.0.jar" sourcepath="M2_REPO/org/neo4j/neo4j/2.0.0/neo4j-2.0.0-sources.jar">
+		<attributes>
+			<attribute name="javadoc_location" value="jar:file:/home/joel/.m2/repository/org/neo4j/neo4j/2.0.0/neo4j-2.0.0-javadoc.jar!/"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="var" path="M2_REPO/org/neo4j/neo4j-kernel/2.0.0/neo4j-kernel-2.0.0.jar" sourcepath="M2_REPO/org/neo4j/neo4j-kernel/2.0.0/neo4j-kernel-2.0.0-sources.jar">
+		<attributes>
+			<attribute name="javadoc_location" value="jar:file:/home/joel/.m2/repository/org/neo4j/neo4j-kernel/2.0.0/neo4j-kernel-2.0.0-javadoc.jar!/"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="var" path="M2_REPO/org/neo4j/neo4j-lucene-index/2.0.0/neo4j-lucene-index-2.0.0.jar" sourcepath="M2_REPO/org/neo4j/neo4j-lucene-index/2.0.0/neo4j-lucene-index-2.0.0-sources.jar">
+		<attributes>
+			<attribute name="javadoc_location" value="jar:file:/home/joel/.m2/repository/org/neo4j/neo4j-lucene-index/2.0.0/neo4j-lucene-index-2.0.0-javadoc.jar!/"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="var" path="M2_REPO/org/apache/lucene/lucene-core/3.6.2/lucene-core-3.6.2.jar" sourcepath="M2_REPO/org/apache/lucene/lucene-core/3.6.2/lucene-core-3.6.2-sources.jar">
+		<attributes>
+			<attribute name="javadoc_location" value="jar:file:/home/joel/.m2/repository/org/apache/lucene/lucene-core/3.6.2/lucene-core-3.6.2-javadoc.jar!/"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="var" path="M2_REPO/org/neo4j/neo4j-graph-algo/2.0.0/neo4j-graph-algo-2.0.0.jar" sourcepath="M2_REPO/org/neo4j/neo4j-graph-algo/2.0.0/neo4j-graph-algo-2.0.0-sources.jar">
+		<attributes>
+			<attribute name="javadoc_location" value="jar:file:/home/joel/.m2/repository/org/neo4j/neo4j-graph-algo/2.0.0/neo4j-graph-algo-2.0.0-javadoc.jar!/"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="var" path="M2_REPO/org/neo4j/neo4j-udc/2.0.0/neo4j-udc-2.0.0.jar" sourcepath="M2_REPO/org/neo4j/neo4j-udc/2.0.0/neo4j-udc-2.0.0-sources.jar">
+		<attributes>
+			<attribute name="javadoc_location" value="jar:file:/home/joel/.m2/repository/org/neo4j/neo4j-udc/2.0.0/neo4j-udc-2.0.0-javadoc.jar!/"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="var" path="M2_REPO/org/neo4j/neo4j-graph-matching/2.0.0/neo4j-graph-matching-2.0.0.jar" sourcepath="M2_REPO/org/neo4j/neo4j-graph-matching/2.0.0/neo4j-graph-matching-2.0.0-sources.jar">
+		<attributes>
+			<attribute name="javadoc_location" value="jar:file:/home/joel/.m2/repository/org/neo4j/neo4j-graph-matching/2.0.0/neo4j-graph-matching-2.0.0-javadoc.jar!/"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="var" path="M2_REPO/org/neo4j/neo4j-cypher/2.0.0/neo4j-cypher-2.0.0.jar" sourcepath="M2_REPO/org/neo4j/neo4j-cypher/2.0.0/neo4j-cypher-2.0.0-sources.jar">
+		<attributes>
+			<attribute name="javadoc_location" value="jar:file:/home/joel/.m2/repository/org/neo4j/neo4j-cypher/2.0.0/neo4j-cypher-2.0.0-javadoc.jar!/"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="var" path="M2_REPO/org/neo4j/neo4j-cypher-commons/2.0.0/neo4j-cypher-commons-2.0.0.jar" sourcepath="M2_REPO/org/neo4j/neo4j-cypher-commons/2.0.0/neo4j-cypher-commons-2.0.0-sources.jar">
+		<attributes>
+			<attribute name="javadoc_location" value="jar:file:/home/joel/.m2/repository/org/neo4j/neo4j-cypher-commons/2.0.0/neo4j-cypher-commons-2.0.0-javadoc.jar!/"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="var" path="M2_REPO/com/googlecode/concurrentlinkedhashmap/concurrentlinkedhashmap-lru/1.3.1/concurrentlinkedhashmap-lru-1.3.1.jar" sourcepath="M2_REPO/com/googlecode/concurrentlinkedhashmap/concurrentlinkedhashmap-lru/1.3.1/concurrentlinkedhashmap-lru-1.3.1-sources.jar">
+		<attributes>
+			<attribute name="javadoc_location" value="jar:file:/home/joel/.m2/repository/com/googlecode/concurrentlinkedhashmap/concurrentlinkedhashmap-lru/1.3.1/concurrentlinkedhashmap-lru-1.3.1-javadoc.jar!/"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="var" path="M2_REPO/org/scala-lang/scala-library/2.10.3/scala-library-2.10.3.jar" sourcepath="M2_REPO/org/scala-lang/scala-library/2.10.3/scala-library-2.10.3-sources.jar">
+		<attributes>
+			<attribute name="javadoc_location" value="jar:file:/home/joel/.m2/repository/org/scala-lang/scala-library/2.10.3/scala-library-2.10.3-javadoc.jar!/"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="var" path="M2_REPO/org/neo4j/neo4j-cypher-compiler-1.9/2.0.0/neo4j-cypher-compiler-1.9-2.0.0.jar" sourcepath="M2_REPO/org/neo4j/neo4j-cypher-compiler-1.9/2.0.0/neo4j-cypher-compiler-1.9-2.0.0-sources.jar">
+		<attributes>
+			<attribute name="javadoc_location" value="jar:file:/home/joel/.m2/repository/org/neo4j/neo4j-cypher-compiler-1.9/2.0.0/neo4j-cypher-compiler-1.9-2.0.0-javadoc.jar!/"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="var" path="M2_REPO/org/neo4j/neo4j-cypher-compiler-2.0/2.0.0/neo4j-cypher-compiler-2.0-2.0.0.jar" sourcepath="M2_REPO/org/neo4j/neo4j-cypher-compiler-2.0/2.0.0/neo4j-cypher-compiler-2.0-2.0.0-sources.jar">
+		<attributes>
+			<attribute name="javadoc_location" value="jar:file:/home/joel/.m2/repository/org/neo4j/neo4j-cypher-compiler-2.0/2.0.0/neo4j-cypher-compiler-2.0-2.0.0-javadoc.jar!/"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="var" path="M2_REPO/org/parboiled/parboiled-scala_2.10/1.1.6/parboiled-scala_2.10-1.1.6.jar" sourcepath="M2_REPO/org/parboiled/parboiled-scala_2.10/1.1.6/parboiled-scala_2.10-1.1.6-sources.jar">
+		<attributes>
+			<attribute name="javadoc_location" value="jar:file:/home/joel/.m2/repository/org/parboiled/parboiled-scala_2.10/1.1.6/parboiled-scala_2.10-1.1.6-javadoc.jar!/"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="var" path="M2_REPO/org/parboiled/parboiled-core/1.1.6/parboiled-core-1.1.6.jar" sourcepath="M2_REPO/org/parboiled/parboiled-core/1.1.6/parboiled-core-1.1.6-sources.jar">
+		<attributes>
+			<attribute name="javadoc_location" value="jar:file:/home/joel/.m2/repository/org/parboiled/parboiled-core/1.1.6/parboiled-core-1.1.6-javadoc.jar!/"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="var" path="M2_REPO/org/neo4j/neo4j-jmx/2.0.0/neo4j-jmx-2.0.0.jar" sourcepath="M2_REPO/org/neo4j/neo4j-jmx/2.0.0/neo4j-jmx-2.0.0-sources.jar">
+		<attributes>
+			<attribute name="javadoc_location" value="jar:file:/home/joel/.m2/repository/org/neo4j/neo4j-jmx/2.0.0/neo4j-jmx-2.0.0-javadoc.jar!/"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="var" path="M2_REPO/ch/qos/logback/logback-classic/1.0.13/logback-classic-1.0.13.jar" sourcepath="M2_REPO/ch/qos/logback/logback-classic/1.0.13/logback-classic-1.0.13-sources.jar">
+		<attributes>
+			<attribute name="javadoc_location" value="jar:file:/home/joel/.m2/repository/ch/qos/logback/logback-classic/1.0.13/logback-classic-1.0.13-javadoc.jar!/"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="var" path="M2_REPO/ch/qos/logback/logback-core/1.0.13/logback-core-1.0.13.jar"/>
+	<classpathentry kind="var" path="M2_REPO/org/slf4j/slf4j-api/1.7.5/slf4j-api-1.7.5.jar"/>
+	<classpathentry kind="var" path="M2_REPO/junit/junit/4.10/junit-4.10.jar"/>
+	<classpathentry kind="var" path="M2_REPO/org/hamcrest/hamcrest-core/1.1/hamcrest-core-1.1.jar"/>
+	<classpathentry kind="var" path="M2_REPO/org/mockito/mockito-core/1.9.5/mockito-core-1.9.5.jar" sourcepath="M2_REPO/org/mockito/mockito-core/1.9.5/mockito-core-1.9.5-sources.jar">
+		<attributes>
+			<attribute name="javadoc_location" value="jar:file:/home/joel/.m2/repository/org/mockito/mockito-core/1.9.5/mockito-core-1.9.5-javadoc.jar!/"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="var" path="M2_REPO/org/objenesis/objenesis/1.0/objenesis-1.0.jar" sourcepath="M2_REPO/org/objenesis/objenesis/1.0/objenesis-1.0-sources.jar">
+		<attributes>
+			<attribute name="javadoc_location" value="jar:file:/home/joel/.m2/repository/org/objenesis/objenesis/1.0/objenesis-1.0-javadoc.jar!/"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="output" path="target/classes"/>
+</classpath>

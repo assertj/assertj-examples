@@ -12,11 +12,12 @@
  */
 package org.assertj.examples;
 
-import org.assertj.core.api.JUnitSoftAssertions;
-import org.assertj.examples.data.Mansion;
 import org.junit.Ignore;
 import org.junit.Rule;
 import org.junit.Test;
+
+import org.assertj.core.api.JUnitSoftAssertions;
+import org.assertj.examples.data.Mansion;
 
 public class JUnitSoftAssertionsExamples extends AbstractAssertionsExamples {
 
@@ -31,7 +32,7 @@ public class JUnitSoftAssertionsExamples extends AbstractAssertionsExamples {
     softly.assertThat(mansion.guests()).as("Living Guests").isEqualTo(6);
     softly.assertThat(mansion.kitchen()).as("Kitchen").isEqualTo("clean");
     softly.assertThat(mansion.library()).as("Library").isEqualTo("messy");
-    softly.assertThat(mansion.revolverAmmo()).as("Revolver Ammo").isEqualTo(6);
+    softly.assertThat(mansion.revolverAmmo()).as("Revolver Ammo").isEqualTo(6); 
     softly.assertThat(mansion.candlestick()).as("Candlestick").isEqualTo("bent");
     softly.assertThat(mansion.colonel()).as("Colonel").isEqualTo("well kempt");
     softly.assertThat(mansion.professor()).as("Professor").isEqualTo("bloodied and disheveled");

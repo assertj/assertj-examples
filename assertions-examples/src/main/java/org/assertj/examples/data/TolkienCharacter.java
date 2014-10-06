@@ -78,7 +78,7 @@ public class TolkienCharacter {
 
   @Override
   public String toString() {
-    return name + " " + age + " years old " + race.getName();
+    return name + " " + age + " years old " + (race != null ? race.getName() : "unknown race");
   }
 
 }
