@@ -2,7 +2,6 @@ package org.assertj.examples.data;
 
 import org.assertj.core.api.AbstractAssert;
 import org.assertj.core.api.Assertions;
-import org.assertj.examples.exception.NameException;
 
 
 /**
@@ -46,9 +45,9 @@ public abstract class AbstractBasketBallPlayerAssert<S extends AbstractBasketBal
    * @param name the given name to compare the actual BasketBallPlayer's name to.
    * @return this assertion object.
    * @throws AssertionError - if the actual BasketBallPlayer's name is not equal to the given one.
-   * @throws NameException if actual.getName() throws one.
+   * @throws org.assertj.examples.exception.NameException if actual.getName() throws one.
    */
-  public S hasName(Name name) throws NameException {
+  public S hasName(Name name) throws org.assertj.examples.exception.NameException {
     // check that actual BasketBallPlayer we want to make assertions on is not null.
     isNotNull();
 

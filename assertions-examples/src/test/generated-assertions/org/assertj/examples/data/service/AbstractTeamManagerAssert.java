@@ -1,7 +1,6 @@
 package org.assertj.examples.data.service;
 
 import org.assertj.core.api.AbstractAssert;
-import org.assertj.examples.data.BasketBallPlayer;
 
 
 /**
@@ -18,16 +17,16 @@ public abstract class AbstractTeamManagerAssert<S extends AbstractTeamManagerAss
   }
 
   /**
-   * Verifies that the actual TeamManager's players contains the given BasketBallPlayer elements.
+   * Verifies that the actual TeamManager's players contains the given org.assertj.examples.data.BasketBallPlayer elements.
    * @param players the given elements that should be contained in actual TeamManager's players.
    * @return this assertion object.
-   * @throws AssertionError if the actual TeamManager's players does not contain all given BasketBallPlayer elements.
+   * @throws AssertionError if the actual TeamManager's players does not contain all given org.assertj.examples.data.BasketBallPlayer elements.
    */
-  public S hasPlayers(BasketBallPlayer... players) {
+  public S hasPlayers(org.assertj.examples.data.BasketBallPlayer... players) {
     // check that actual TeamManager we want to make assertions on is not null.
     isNotNull();
 
-    // check that given BasketBallPlayer varargs is not null.
+    // check that given org.assertj.examples.data.BasketBallPlayer varargs is not null.
     if (players == null) throw new AssertionError("Expecting players parameter not to be null.");
     
     // check with standard error message, to set another message call: info.overridingErrorMessage("my error message");

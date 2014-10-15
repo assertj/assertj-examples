@@ -10,14 +10,15 @@
  *
  * Copyright 2012-2014 the original author or authors.
  */
-package org.assertj.examples.data.bug26;
+package org.assertj.examples.data;
 
-import java.util.ArrayList;
+// used in test - getters implemntation don't matter
+public class ClassUsingDifferentClassesWithSameName {
+  public Team getTeam() {
+	return null;
+  }
 
-import org.assertj.examples.data.movie.Movie;
-
-public class WithGenericListType {
-
-  public Iterable<? extends Movie> movies = new ArrayList<Movie>();
-  
+  public org.assertj.examples.data.movie.Team getMovieTeam() {
+	return null;
+  }
 }

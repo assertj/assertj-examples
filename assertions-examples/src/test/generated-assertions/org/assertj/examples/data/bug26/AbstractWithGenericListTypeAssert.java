@@ -1,7 +1,6 @@
 package org.assertj.examples.data.bug26;
 
 import org.assertj.core.api.AbstractAssert;
-import org.assertj.examples.data.movie.Movie;
 
 
 /**
@@ -18,16 +17,16 @@ public abstract class AbstractWithGenericListTypeAssert<S extends AbstractWithGe
   }
 
   /**
-   * Verifies that the actual WithGenericListType's movies contains the given Movie elements.
+   * Verifies that the actual WithGenericListType's movies contains the given org.assertj.examples.data.movie.Movie elements.
    * @param movies the given elements that should be contained in actual WithGenericListType's movies.
    * @return this assertion object.
-   * @throws AssertionError if the actual WithGenericListType's movies does not contain all given Movie elements.
+   * @throws AssertionError if the actual WithGenericListType's movies does not contain all given org.assertj.examples.data.movie.Movie elements.
    */
-  public S hasMovies(Movie... movies) {
+  public S hasMovies(org.assertj.examples.data.movie.Movie... movies) {
     // check that actual WithGenericListType we want to make assertions on is not null.
     isNotNull();
 
-    // check that given Movie varargs is not null.
+    // check that given org.assertj.examples.data.movie.Movie varargs is not null.
     if (movies == null) throw new AssertionError("Expecting movies parameter not to be null.");
     
     // check with standard error message, to set another message call: info.overridingErrorMessage("my error message");

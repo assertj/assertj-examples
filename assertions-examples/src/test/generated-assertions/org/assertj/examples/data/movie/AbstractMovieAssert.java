@@ -1,6 +1,5 @@
 package org.assertj.examples.data.movie;
 
-import java.util.Date;
 import org.assertj.core.api.AbstractAssert;
 
 
@@ -23,7 +22,7 @@ public abstract class AbstractMovieAssert<S extends AbstractMovieAssert<S, A>, A
    * @return this assertion object.
    * @throws AssertionError - if the actual Movie's releaseDate is not equal to the given one.
    */
-  public S hasReleaseDate(Date releaseDate) {
+  public S hasReleaseDate(java.util.Date releaseDate) {
     // check that actual Movie we want to make assertions on is not null.
     isNotNull();
 
@@ -31,7 +30,7 @@ public abstract class AbstractMovieAssert<S extends AbstractMovieAssert<S, A>, A
     String assertjErrorMessage = "\nExpected releaseDate of:\n  <%s>\nto be:\n  <%s>\nbut was:\n  <%s>";
     
     // null safe check
-    Date actualReleaseDate = actual.getReleaseDate();
+    java.util.Date actualReleaseDate = actual.getReleaseDate();
     if (!org.assertj.core.util.Objects.areEqual(actualReleaseDate, releaseDate)) {
       failWithMessage(assertjErrorMessage, actual, releaseDate, actualReleaseDate);
     }
