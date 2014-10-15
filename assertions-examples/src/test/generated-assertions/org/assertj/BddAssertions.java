@@ -37,6 +37,16 @@ public class BddAssertions {
   }
 
   /**
+   * Creates a new instance of <code>{@link java.nio.file.PathAssert}</code>.
+   *
+   * @param actual the actual value.
+   * @return the created assertion object.
+   */
+  public static java.nio.file.PathAssert then(java.nio.file.Path actual) {
+    return new java.nio.file.PathAssert(actual);
+  }
+
+  /**
    * Creates a new instance of <code>{@link org.assertj.examples.data.AlignmentAssert}</code>.
    *
    * @param actual the actual value.
@@ -74,6 +84,16 @@ public class BddAssertions {
    */
   public static org.assertj.examples.data.BookTitleAssert then(org.assertj.examples.data.Book.Title actual) {
     return new org.assertj.examples.data.BookTitleAssert(actual);
+  }
+
+  /**
+   * Creates a new instance of <code>{@link org.assertj.examples.data.ClassUsingDifferentClassesWithSameNameAssert}</code>.
+   *
+   * @param actual the actual value.
+   * @return the created assertion object.
+   */
+  public static org.assertj.examples.data.ClassUsingDifferentClassesWithSameNameAssert then(org.assertj.examples.data.ClassUsingDifferentClassesWithSameName actual) {
+    return new org.assertj.examples.data.ClassUsingDifferentClassesWithSameNameAssert(actual);
   }
 
   /**

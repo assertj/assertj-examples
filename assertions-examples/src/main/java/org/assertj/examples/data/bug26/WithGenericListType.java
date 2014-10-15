@@ -13,7 +13,6 @@
 package org.assertj.examples.data.bug26;
 
 import java.util.ArrayList;
-import java.util.List;
 
 import org.assertj.examples.data.movie.Movie;
 

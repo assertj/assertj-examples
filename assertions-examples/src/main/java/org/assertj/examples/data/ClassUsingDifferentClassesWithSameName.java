@@ -10,24 +10,15 @@
  *
  * Copyright 2012-2014 the original author or authors.
  */
-package org.assertj.examples.data.bug27;
+package org.assertj.examples.data;
 
-import java.util.Iterator;
-
-@SuppressWarnings("rawtypes")
-public class MyIteratorWrapper implements Iterator {
-
-    @Override
-    public boolean hasNext() {
-      return false;
-    }
-
-    @Override
-    public Object next() {
-      return null;
-    }
-
-    @Override
-    public void remove() {
-    }
+// used in test - getters implemntation don't matter
+public class ClassUsingDifferentClassesWithSameName {
+  public Team getTeam() {
+	return null;
   }
+
+  public org.assertj.examples.data.movie.Team getMovieTeam() {
+	return null;
+  }
+}

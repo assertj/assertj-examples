@@ -12,9 +12,9 @@
  */
 package org.assertj.examples.data.bug27;
 
-import java.util.Iterator;
 
 public class MyModelClass {
+  @SuppressWarnings("unused")
   private MyIteratorWrapper iterator;
 
   public static class MyBean {

@@ -130,7 +130,7 @@
       <plugin>
         <groupId>org.assertj</groupId>
         <artifactId>assertj-assertions-generator-maven-plugin</artifactId>
-        <version>1.4.1</version>
+        <version>1.4.2-SNAPSHOT</version>
         <executions>
           <execution>
             <goals>
@@ -144,6 +144,9 @@
             <param>org.assertj.examples.data</param>
             <param>com.google.common.net</param>
           </packages>
+          <classes>
+            <param>java.nio.file.Path</param>
+          </classes>
           <hierarchical>true</hierarchical>
           <entryPointClassPackage>org.assertj</entryPointClassPackage>
           <!-- <includes> <param>org\.assertj\.examples\.rpg.*</param> </includes> -->
@@ -194,6 +197,7 @@
           </includes>
           <excludes>
             <exclude>src/test/resources/*.xml</exclude>
+            <exclude>src/test/generated-assertions/**</exclude>
           </excludes>
         </configuration>
         <executions>
