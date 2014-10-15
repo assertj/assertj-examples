@@ -95,6 +95,28 @@ public class TableAssertionExamples extends AbstractAssertionsExamples {
   }
 
   /**
+   * This example shows the inclusion of columns in table.
+   */
+  @Test
+  public void table_inclusion_examples() {
+    Table table = new Table(dataSource, "members", new String[] {"id", "name", "firstname"}, null);
+
+    assertThat(table).hasColumnsSize(3);
+    assertThat(table).row().hasSize(3);
+  }
+
+  /**
+   * This example shows the exclusion of columns in table.
+   */
+  @Test
+  public void table_exclusion_examples() {
+    Table table = new Table(dataSource, "members", null, new String[] {"id", "name", "firstname"});
+
+    assertThat(table).hasColumnsSize(3)
+        .row().hasSize(3);
+  }
+
+  /**
    * This example shows that the numeric value can be test with text.
    */
   @Test
