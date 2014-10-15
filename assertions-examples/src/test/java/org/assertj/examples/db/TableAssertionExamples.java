@@ -17,6 +17,7 @@ import static org.assertj.db.api.Assertions.assertThat;
 import org.assertj.db.api.ValueType;
 import org.assertj.db.type.DateTimeValue;
 import org.assertj.db.type.DateValue;
+import org.assertj.db.type.Source;
 import org.assertj.db.type.Table;
 import org.assertj.db.type.TimeValue;
 import org.junit.Test;
@@ -52,7 +53,8 @@ public class TableAssertionExamples extends AbstractAssertionsExamples {
    */
   @Test
   public void basic_column_table_assertion_examples() {
-    Table table = new Table(dataSource, "members");
+    Source source = new Source("jdbc:h2:mem:test;DB_CLOSE_DELAY=-1", "user", "password");
+    Table table = new Table(source, "members");
 
     assertThat(table).column("name")
         .haveValuesEqualTo("Hewson", "Evans", "Clayton", "Mullen");
@@ -113,7 +115,8 @@ public class TableAssertionExamples extends AbstractAssertionsExamples {
    */
   @Test
   public void numeric_table_assertion_examples() {
-    Table table = new Table(dataSource, "members");
+    Source source = new Source("jdbc:h2:mem:test;DB_CLOSE_DELAY=-1", "user", "password");
+    Table table = new Table(source, "members");
 
     assertThat(table).row(1)
         .value("size").isNotZero()
@@ -146,7 +149,8 @@ public class TableAssertionExamples extends AbstractAssertionsExamples {
    */
   @Test
   public void type_table_assertion_examples() {
-    Table table = new Table(dataSource, "albums");
+    Source source = new Source("jdbc:h2:mem:test;DB_CLOSE_DELAY=-1", "user", "password");
+    Table table = new Table(source, "albums");
 
     assertThat(table).row(3)
         .value().isNumber()
@@ -179,7 +183,8 @@ public class TableAssertionExamples extends AbstractAssertionsExamples {
    */
   @Test
   public void date_table_assertion_examples() {
-    Table table = new Table(dataSource, "members");
+    Source source = new Source("jdbc:h2:mem:test;DB_CLOSE_DELAY=-1", "user", "password");
+    Table table = new Table(source, "members");
 
     // Compare date to date or date in string format
     assertThat(table).row(1)
