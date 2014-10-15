@@ -14,8 +14,11 @@ package org.assertj.examples.db;
 
 import static org.assertj.db.api.Assertions.assertThat;
 
+import org.assertj.db.api.ValueType;
+import org.assertj.db.type.DateTimeValue;
 import org.assertj.db.type.DateValue;
 import org.assertj.db.type.Table;
+import org.assertj.db.type.TimeValue;
 import org.junit.Test;
 
 public class TableAssertionExamples extends AbstractAssertionsExamples {
@@ -45,6 +48,35 @@ public class TableAssertionExamples extends AbstractAssertionsExamples {
   }
 
   /**
+   * This example shows a simple case of test on column.
+   */
+  @Test
+  public void basic_column_table_assertion_examples() {
+    Table table = new Table(dataSource, "members");
+
+    assertThat(table).column("name")
+        .haveValuesEqualTo("Hewson", "Evans", "Clayton", "Mullen");
+  }
+
+  /**
+   * This example shows a simple case of test on row.
+   */
+  @Test
+  public void basic_row_table_assertion_examples() {
+    Table table = new Table(dataSource, "members");
+
+    assertThat(table).row(1)
+        .haveValuesEqualTo(2, "Evans", "David Howell", "The Edge", DateValue.of(1961, 8, 8), 1.77)
+        .haveValuesEqualTo("2", "Evans", "David Howell", "The Edge", "1961-08-08", "1.77");
+
+    Table table1 = new Table(dataSource, "albums");
+
+    assertThat(table1).row()
+        .haveValuesEqualTo(1, DateValue.of(1980, 10, 20), "Boy", 12, TimeValue.of(0, 42, 17), null)
+        .haveValuesEqualTo("1", "1980-10-20", "Boy", "12", "00:42:17", null);
+  }
+
+  /**
    * This example shows how test the size.
    */
   @Test
@@ -68,16 +100,82 @@ public class TableAssertionExamples extends AbstractAssertionsExamples {
     Table table = new Table(dataSource, "members");
 
     assertThat(table).row(1)
-        .value("size").isEqualTo("1.77");
+        .value("size").isEqualTo("1.77").isNotEqualTo("1.78");
 
     Table table1 = new Table(dataSource, "albums");
 
     assertThat(table1).row(14)
-        .value("numberofsongs").isEqualTo("11");
+        .value("numberofsongs").isEqualTo("11").isNotEqualTo("12");
+  }
+
+  /**
+   * This example shows tests on numeric values.
+   */
+  @Test
+  public void numeric_table_assertion_examples() {
+    Table table = new Table(dataSource, "members");
+
+    assertThat(table).row(1)
+        .value("size").isNotZero()
+            .isGreaterThan(1.5).isGreaterThanOrEqualTo(1.77)
+            .isLessThan(2).isLessThanOrEqualTo(1.77);
+
+    Table table1 = new Table(dataSource, "albums");
+
+    assertThat(table1).row(14)
+        .value("numberofsongs").isNotZero()
+            .isGreaterThan(10).isGreaterThanOrEqualTo(11)
+            .isLessThan(11.5).isLessThanOrEqualTo(11);
+  }
+
+  /**
+   * This example shows boolean assertions.
+   */
+  @Test
+  public void boolean_table_assertion_examples() {
+    Table table = new Table(dataSource, "albums");
+
+    assertThat(table).column("live")
+        .value(3).isTrue()
+        .value().isNull()
+        .value().isEqualTo(true).isNotEqualTo(false);
+  }
+
+  /**
+   * This example shows type assertions.
+   */
+  @Test
+  public void type_table_assertion_examples() {
+    Table table = new Table(dataSource, "albums");
+
+    assertThat(table).row(3)
+        .value().isNumber()
+        .value().isDate().isOfAnyOfTypes(ValueType.DATE, ValueType.NUMBER)
+        .value().isText()
+        .value().isNumber().isOfType(ValueType.NUMBER)
+        .value().isTime()
+        .value().isBoolean();
+  }
+
+  /**
+   * This example shows type assertions on column.
+   */
+  @Test
+  public void colum_type_table_assertion_examples() {
+    Table table = new Table(dataSource, "albums");
+
+    assertThat(table)
+        .column().isNumber(false)
+        .column().isDate(false).isOfAnyOfTypes(ValueType.DATE, ValueType.NUMBER)
+        .column().isText(false)
+        .column().isNumber(false).isOfType(ValueType.NUMBER, false)
+        .column().isTime(false)
+        .column().isBoolean(true);
   }
 
   /**
    * This example shows possible assertions on the date.
+   * In this example, we can see that the assertions are 
    */
   @Test
   public void date_table_assertion_examples() {
@@ -85,7 +183,11 @@ public class TableAssertionExamples extends AbstractAssertionsExamples {
 
     // Compare date to date or date in string format
     assertThat(table).row(1)
-        .value("birthdate").isEqualTo("1961-08-08")
+        .value("birthdate")
+            .isEqualTo(DateValue.of(1961, 8, 8))
+            .isEqualTo("1961-08-08")
+            .isNotEqualTo("1968-08-09")
+            .isNotEqualTo(DateValue.of(1961, 8, 9))
             .isAfter("1961-08-07")
             .isAfter(DateValue.of(1961, 8, 7))
             .isBefore("1961-08-09")
@@ -97,14 +199,18 @@ public class TableAssertionExamples extends AbstractAssertionsExamples {
 
     // Compare date to date/time or date/time in string format
     assertThat(table).row(1)
-        .value("birthdate").isEqualTo("1961-08-08T00:00")
+        .value("birthdate")
+            .isEqualTo(DateTimeValue.of(DateValue.of(1961, 8, 8), TimeValue.of(0, 0, 0)))
+            .isEqualTo("1961-08-08T00:00")
+            .isNotEqualTo("1961-08-08T00:00:01")
+            .isNotEqualTo(DateTimeValue.of(DateValue.of(1961, 8, 8), TimeValue.of(0, 0, 1)))
             .isAfter("1961-08-07T23:59")
             .isAfter(DateTimeValue.of(DateValue.of(1961, 8, 7)))
             .isBefore("1961-08-08T00:00:01")
-            .isBefore(DateTimeValue.of(DateValue.of(1961, 8, 8), TimeValue(0, 0, 1)))
+            .isBefore(DateTimeValue.of(DateValue.of(1961, 8, 8), TimeValue.of(0, 0, 1)))
             .isAfterOrEqualTo("1961-08-08T00:00")
             .isAfterOrEqualTo(DateValue.of(1961, 8, 7))
             .isBeforeOrEqualTo("1961-08-08T00:00:00.000000000")
-            .isBeforeOrEqualTo(DateTimeValue.of(DateValue.of(1961, 8, 9), TimeValue(0, 0, 1, 6, 3)));
+            .isBeforeOrEqualTo(DateTimeValue.of(DateValue.of(1961, 8, 9), TimeValue.of(0, 0, 1, 3)));
   }
 }
