@@ -4,6 +4,7 @@ import static org.assertj.db.api.Assertions.assertThat;
 
 import org.assertj.db.type.DateValue;
 import org.assertj.db.type.Request;
+import org.assertj.db.type.Source;
 import org.assertj.db.type.TimeValue;
 import org.junit.Test;
 
@@ -13,7 +14,7 @@ public class RequestAssertionExamples extends AbstractAssertionsExamples {
    * This example shows a simple case of test.
    */
   @Test
-  public void basic_table_assertion_examples() {
+  public void basic_request_assertion_examples() {
     Request request = new Request(dataSource, "select * from albums");
 
     // On the values of a column by using the name of the column
@@ -44,4 +45,18 @@ public class RequestAssertionExamples extends AbstractAssertionsExamples {
         .value().isNull();
   }
 
+  /**
+   * This example shows a simple case of test on column.
+   */
+  @Test
+  public void basic_column_request_assertion_examples() {
+    Source source = new Source("jdbc:h2:mem:test;DB_CLOSE_DELAY=-1", "user", "password");
+    Table table = new Table(source, "select * from albums");
+
+    assertThat(table).column("title")
+        .haveValuesEqualTo("Boy", "October", "War", "Under a Blood Red Sky", 
+            "The Unforgettable Fire", "Wide Awake in America", "The Joshua Tree", 
+            "Rattle and Hum", "Achtung Baby", "Zooropa", "Pop", "All That You Can't Leave Behind"
+            "How to Dismantle an Atomic Bomb", "No Line on the Horizon", "Songs of Innocence");
+  }
 }
