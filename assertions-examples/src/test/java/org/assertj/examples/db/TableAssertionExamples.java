@@ -102,7 +102,8 @@ public class TableAssertionExamples extends AbstractAssertionsExamples {
     Table table = new Table(dataSource, "members", new String[] {"id", "name", "firstname"}, null);
 
     assertThat(table).hasColumnsSize(3);
-    assertThat(table).row().hasSize(3);
+    assertThat(table).row().hasSize(3)
+        .haveValuesEqualTo(1, "Hewson", "Paul David");
   }
 
   /**
@@ -113,7 +114,8 @@ public class TableAssertionExamples extends AbstractAssertionsExamples {
     Table table = new Table(dataSource, "members", null, new String[] {"id", "name", "firstname"});
 
     assertThat(table).hasColumnsSize(3)
-        .row().hasSize(3);
+        .row().hasSize(3)
+            .haveValuesEqualTo("Bono", "1960-05-10", 1.75);
   }
 
   /**
