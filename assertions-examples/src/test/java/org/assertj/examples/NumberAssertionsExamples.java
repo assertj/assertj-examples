@@ -114,7 +114,7 @@ public class NumberAssertionsExamples extends AbstractAssertionsExamples {
       logAssertionErrorMessage("float isEqualTo with offset", e);
     }
 
-    // same stuff with delta an alias for offset
+    // same stuff using within instead of offset
     assertThat(8.1).isCloseTo(8.0, within(0.1));
     assertThat(8.2f).isCloseTo(8.0f, within(0.2f));
     assertThat(new BigDecimal("8.1")).isCloseTo(new BigDecimal("8.0"), within(new BigDecimal("0.1")));
