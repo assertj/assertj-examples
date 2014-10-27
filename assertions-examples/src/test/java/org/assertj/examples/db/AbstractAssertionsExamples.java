@@ -35,7 +35,7 @@ public class AbstractAssertionsExamples {
     "insert into members values (1, 'Hewson', 'Paul David', 'Bono', PARSEDATETIME('10/05/1960', 'dd/MM/yyyy'), 1.75);",
     "insert into members values (2, 'Evans', 'David Howell', 'The Edge', PARSEDATETIME('08/08/1961', 'dd/MM/yyyy'), 1.77);",
     "insert into members values (3, 'Clayton', 'Adam', null, PARSEDATETIME('13/03/1960', 'dd/MM/yyyy'), 1.78);",
-    "insert into members values (4, 'Mullen', 'Mullen', null, PARSEDATETIME('31/10/1961', 'dd/MM/yyyy'), 1.7);",
+    "insert into members values (4, 'Mullen', 'Larry', null, PARSEDATETIME('31/10/1961', 'dd/MM/yyyy'), 1.7);",
   };
   private static final String ALBUMS_CREATE_REQUEST = "create table albums(id number primary key, release date not null, title varchar not null, numberofsongs int, duration time, live boolean);";
   private static final String[] ALBUMS_INSERT_REQUESTS = {
