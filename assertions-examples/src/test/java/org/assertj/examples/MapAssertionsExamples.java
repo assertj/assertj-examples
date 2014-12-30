@@ -37,21 +37,23 @@ public class MapAssertionsExamples extends AbstractAssertionsExamples {
   @Test
   public void map_assertions_examples() {
     // ringBearers is a Map of TolkienCharacter indexed by the Ring they are wearing.
-    assertThat(ringBearers).isNotEmpty().hasSize(4);
+    assertThat(ringBearers).isNotEmpty().hasSize(4); 
     
     // note the usage of Assertions.entry(key, value) synthetic sugar for better readability (similar to MapEntry.entry(key, value)). 
     assertThat(ringBearers).contains(entry(oneRing, frodo), entry(nenya, galadriel));
     // same assertion but different way of expressing it : no entry call needed but no varargs support. 
     assertThat(ringBearers).containsEntry(oneRing, frodo).containsEntry(nenya, galadriel);
     // opposite of contains/containsEntry
-    assertThat(ringBearers).doesNotContain(entry(oneRing, aragorn));
+    assertThat(ringBearers).doesNotContain(entry(oneRing, sauron), entry(nenya, aragorn));
     assertThat(ringBearers).doesNotContainEntry(oneRing, aragorn);
     
     // Assertion on key
     assertThat(ringBearers).containsKey(nenya);
     assertThat(ringBearers).containsKeys(nenya, narya);
+    assertThat(ringBearers).containsValues(frodo, galadriel);
     assertThat(ringBearers).containsOnlyKeys(nenya, narya, vilya, oneRing);
     assertThat(ringBearers).doesNotContainKey(manRing);
+    assertThat(ringBearers).doesNotContainKeys(manRing, dwarfRing);
     
     try {
       assertThat(ringBearers).containsOnlyKeys(nenya, narya, dwarfRing);
@@ -77,7 +79,7 @@ public class MapAssertionsExamples extends AbstractAssertionsExamples {
     characters.put(gandalf.getName(), gandalf);
     characters.put(sam.getName(), sam);
 
-    assertThat(characters).containsOnly(
+    assertThat(characters).containsOnly( 
             entry(sam.getName(), sam),
             entry(frodo.getName(), frodo),
             entry(gandalf.getName(), gandalf),
