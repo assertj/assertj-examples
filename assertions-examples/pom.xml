@@ -45,7 +45,7 @@
     <dependency>
       <groupId>org.assertj</groupId>
       <artifactId>assertj-guava</artifactId>
-      <version>1.2.0</version>
+      <version>1.3.0-SNAPSHOT</version>
       <scope>test</scope>
     </dependency>
     <dependency>
@@ -130,7 +130,7 @@
       <plugin>
         <groupId>org.assertj</groupId>
         <artifactId>assertj-assertions-generator-maven-plugin</artifactId>
-        <version>1.4.2-SNAPSHOT</version>
+        <version>1.5.0</version>
         <executions>
           <execution>
             <goals>
@@ -146,10 +146,15 @@
           </packages>
           <classes>
             <param>java.nio.file.Path</param>
+            <param>com.fake.UnknownClass</param>
           </classes>
           <hierarchical>true</hierarchical>
           <entryPointClassPackage>org.assertj</entryPointClassPackage>
-          <!-- <includes> <param>org\.assertj\.examples\.rpg.*</param> </includes> -->
+          <!-- 
+          <includes>
+            <param>org\.assertj\.examples\.rpg.*</param>
+          </includes>
+           -->
           <excludes>
             <param>.*google.*HostSpecifier</param>
             <param>.*google.*Headers</param>
@@ -158,7 +163,10 @@
             <param>.*Examples.*</param>
           </excludes>
           <targetDir>src/test/generated-assertions</targetDir>
-          <generateSoftAssertions>false</generateSoftAssertions>
+          <generateAssertions>true</generateAssertions>
+          <generateBddAssertions>true</generateBddAssertions>
+          <generateSoftAssertions>true</generateSoftAssertions>
+          <generateJUnitSoftAssertions>true</generateJUnitSoftAssertions>
         </configuration>
       </plugin>
       <plugin>
