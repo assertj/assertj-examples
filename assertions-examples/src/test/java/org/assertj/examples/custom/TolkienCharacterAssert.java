@@ -13,6 +13,8 @@
 package org.assertj.examples.custom;
 
 import org.assertj.core.api.AbstractAssert;
+import org.assertj.core.util.Objects;
+import org.assertj.examples.data.Race;
 import org.assertj.examples.data.TolkienCharacter;
 
 /**
@@ -70,6 +72,30 @@ public class TolkienCharacterAssert extends AbstractAssert<TolkienCharacterAsser
     return this;
   }
 
+  /**
+   * Verifies that the actual TolkienCharacter's race is equal to the given one.
+   * @param race the given race to compare the actual TolkienCharacter's race to.
+   * @return this assertion object.
+   * @throws AssertionError - if the actual TolkienCharacter's race is not equal to the given one.
+   */
+  public TolkienCharacterAssert hasRace(Race race) {
+    // check that actual TolkienCharacter we want to make assertions on is not null.
+    isNotNull();
+
+    // overrides the default error message with a more explicit one
+    String assertjErrorMessage = "\nExpected race of:\n  <%s>\nto be:\n  <%s>\nbut was:\n  <%s>";
+    
+    // null safe check
+    Race actualRace = actual.getRace();
+    if (!Objects.areEqual(actualRace, race)) {
+      failWithMessage(assertjErrorMessage, actual, race, actualRace);
+    }
+
+    // return the current assertion for method chaining
+    return this;
+  }
+
+ 
   // another specific assertion
   /**
    * Verifies that the actual TolkienCharacter's age is equal to the given one.
