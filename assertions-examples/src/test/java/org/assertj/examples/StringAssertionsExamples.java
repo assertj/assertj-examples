@@ -54,7 +54,8 @@ public class StringAssertionsExamples extends AbstractAssertionsExamples {
     }
 
     // you can ignore case for equals check
-    assertThat("Frodo").isEqualToIgnoringCase("FROdO");
+    assertThat("Frodo").isEqualToIgnoringCase("FROdO").hasSameSizeAs("12345");
+    assertThat("Frodo".length()).isGreaterThan("Sam".length());
 
     // using regex
     assertThat("Frodo").matches("..o.o").doesNotMatch(".*d");
@@ -166,5 +167,30 @@ public class StringAssertionsExamples extends AbstractAssertionsExamples {
     }
 
   }
+
+  @Test
+  public void use_hexadecimal_representation_in_error_messages() throws UnsupportedEncodingException {
+    try {
+      assertThat("µµµ").inHexadecimal().contains("μμμ");
+    } catch (AssertionError e) {
+      logAssertionErrorMessage("asHexadecimal() for String", e);
+    }
+  }
+
+  @Test
+  public void use_unicode_representation_in_error_messages() {
+    try {
+      assertThat("µµµ").inUnicode().contains("μμμ");
+    } catch (AssertionError e) {
+      logAssertionErrorMessage("asUnicode() for String", e);
+    }
+  }
+
+  @Test
+  public void switch_to_String_assertion() {
+    Object title = "Game of Thrones";
+    assertThat(title).asString().endsWith("ones");
+  }
+  
 
 }
