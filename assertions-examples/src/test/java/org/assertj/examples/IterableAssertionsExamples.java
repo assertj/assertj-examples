@@ -54,7 +54,7 @@ public class IterableAssertionsExamples extends AbstractAssertionsExamples {
   public void iterable_basic_assertions_examples() {
 
 	// would work the same way with Iterable<Ring>,
-	Iterable<Ring> elvesRings = newArrayList(vilya, nenya, narya);
+	Iterable<? extends Ring> elvesRings = newArrayList(vilya, nenya, narya);
 	assertThat(elvesRings).isNotEmpty().hasSize(3);
 	assertThat(elvesRings).hasSameSizeAs(trilogy);
 	assertThat(elvesRings).contains(nenya).doesNotContain(oneRing);
@@ -429,7 +429,6 @@ public class IterableAssertionsExamples extends AbstractAssertionsExamples {
 	assertThat(numbers).hasOnlyElementsOfType(Number.class);
 	assertThat(numbers).hasOnlyElementsOfType(Long.class);
 
-	@SuppressWarnings("unchecked")
     List<? extends Object> mixed = newArrayList("string", 1L);
 	assertThat(mixed).hasAtLeastOneElementOfType(String.class);
   }
