@@ -86,6 +86,12 @@ public class ListSpecificAssertionsExamples extends AbstractAssertionsExamples {
   }
 
   @Test
+  public void switch_to_List_assertion() {
+    Object elvesRings = newArrayList(nenya, vilya, narya);
+    assertThat(elvesRings).asList().contains(nenya, atIndex(0));
+  }
+  
+  @Test
   public void containsOnlyOnce_assertion_should_not_require_objects_to_be_comparable() {
     // Rectangles are not Comparable.
     Rectangle r0 = new Rectangle(0, 0);
