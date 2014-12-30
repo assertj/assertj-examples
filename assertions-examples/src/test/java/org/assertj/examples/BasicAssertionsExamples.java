@@ -16,7 +16,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.examples.data.Race.HOBBIT;
 
 import org.junit.Test;
-
+import org.assertj.core.api.Assertions;
 import org.assertj.core.util.introspection.IntrospectionError;
 import org.assertj.examples.data.Person;
 import org.assertj.examples.data.Ring;
@@ -158,7 +158,8 @@ public class BasicAssertionsExamples extends AbstractAssertionsExamples {
 
     TolkienCharacter frodoClone = new TolkienCharacter("Frodo", 33, HOBBIT);
 
-    // Frodo and his clone are equals by comparing fields
+    // Frodo and his clone are equals by comparing fields (if we ignore private fields without getter)
+    Assertions.setAllowComparingPrivateFields(false);
     assertThat(frodo).isEqualToComparingFieldByField(frodoClone);
 
     // ------------------------------------------------------------------------------------
@@ -219,6 +220,7 @@ public class BasicAssertionsExamples extends AbstractAssertionsExamples {
     } catch (IntrospectionError e) {
       logger.info("isEqualToComparingOnlyGivenFields InstrospectionError message : {}", e.getMessage());
     }
+    Assertions.setAllowComparingPrivateFields(true);
   }
-
+  
 }
