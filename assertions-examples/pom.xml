@@ -32,8 +32,8 @@
     </dependency>
     <dependency>
       <groupId>org.assertj</groupId>
-      <artifactId>assertj-core</artifactId>
-      <version>2.0.0-SNAPSHOT</version>
+      <artifactId>assertj-core-java8</artifactId>
+      <version>1.0.0m1</version>
       <scope>test</scope>
     </dependency>
     <dependency>
@@ -109,8 +109,8 @@
         <artifactId>maven-compiler-plugin</artifactId>
         <version>2.5.1</version>
         <configuration>
-          <source>1.7</source>
-          <target>1.7</target>
+          <source>1.8</source>
+          <target>1.8</target>
           <encoding>${project.build.sourceEncoding}</encoding>
         </configuration>
       </plugin>
