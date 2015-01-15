@@ -37,7 +37,8 @@ public class ComparableAssertionsExamples extends AbstractAssertionsExamples {
     } catch (AssertionError e) {
       logAssertionErrorMessage("isGreaterThan for generic", e);
     }
-
+    // just to show that we can use ObjectAssert assertion:
+    assertThat(goodRating).isEqualToComparingFieldByField(new Rating(8));
   }
 
   private static class Rating implements Comparable<Rating> {
