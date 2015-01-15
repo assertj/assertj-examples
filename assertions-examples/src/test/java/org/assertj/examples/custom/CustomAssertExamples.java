@@ -61,7 +61,7 @@ public class CustomAssertExamples extends AbstractAssertionsExamples {
 	  assertThat(sam).hasName("Sam");
 	} catch (AssertionError e) {
 	  // As we are defining custom assertion, we can set meaningful assertion error message, like this one :
-	  assertThat(e).hasMessage("Expected character's name to be <\"Sam\"> but was <\"Sammy\">");
+	  assertThat(e).hasMessage("Expected character's name to be <Sam> but was <Sammy>");
 	}
 
 	// show that the user description is honored.
@@ -69,7 +69,7 @@ public class CustomAssertExamples extends AbstractAssertionsExamples {
 	  assertThat(sam).as("check name").hasName("Sam");
 	} catch (AssertionError e) {
 	  // As we are defining custom assertion, we can set meaningful assertion error message, like this one :
-	  assertThat(e).hasMessage("[check name] Expected character's name to be <\"Sam\"> but was <\"Sammy\">");
+	  assertThat(e).hasMessage("[check name] Expected character's name to be <Sam> but was <Sammy>");
 	}
   }
 
