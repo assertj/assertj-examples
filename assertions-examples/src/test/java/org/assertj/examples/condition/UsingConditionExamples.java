@@ -53,12 +53,22 @@ public class UsingConditionExamples extends AbstractAssertionsExamples {
     }
   }
 
-  @SuppressWarnings("unchecked")
   @Test
   public void anyOf_condition_example() {
     assertThat("Vader").is(anyOf(jedi, sith));
   }
 
+  @Test
+  public void condition_with_supertype_example() {
+	assertThat("string").is(new Condition<Object>() {
+
+	  @Override
+      public boolean matches(Object value) {
+	    return value instanceof String;
+      }
+	});
+  }
+  
   @Test
   public void condition_example_on_multiple_elements() {
     // are & areNot
@@ -101,7 +111,6 @@ public class UsingConditionExamples extends AbstractAssertionsExamples {
     assertThat(newLinkedHashSet("Luke", "Yoda", "Leia")).haveExactly(2, jediPower);
   }
 
-  @SuppressWarnings("unchecked")
   @Test
   public void has_not_condition_example() {
     assertThat("Yoda").has(jediPower);
