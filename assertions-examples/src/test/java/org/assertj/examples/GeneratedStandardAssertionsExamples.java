@@ -30,7 +30,13 @@ public class GeneratedStandardAssertionsExamples extends AbstractAssertionsExamp
     
     // 
     Team bulls = new Team(newArrayList(rose, noah));
-    assertThat(bulls).hasPlayers(rose, noah);
+    assertThat(bulls).as("bulls players").hasPlayers(rose, noah);
+    
+    try {
+	  assertThat(bulls).as("bulls players").hasPlayers(rose, noah, james);
+    } catch (AssertionError e) {
+      AbstractAssertionsExamples.logger.info(e.getMessage());
+    }
     
     // use other Team class 
     org.assertj.examples.data.movie.Team lotr = new org.assertj.examples.data.movie.Team(newArrayList("vigo mortensen", "elijah wood"));
