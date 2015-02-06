@@ -12,7 +12,8 @@
  */
 package org.assertj.examples;
 
-import org.junit.Test;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.contentOf;
 
 import java.io.BufferedWriter;
 import java.io.ByteArrayInputStream;
@@ -21,8 +22,7 @@ import java.io.FileOutputStream;
 import java.io.OutputStreamWriter;
 import java.nio.charset.Charset;
 
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.contentOf;
+import org.junit.Test;
 
 /**
  * File and stream usage examples.
@@ -50,11 +50,11 @@ public class FileAndStreamAssertionsExamples extends AbstractAssertionsExamples 
     Charset turkishCharset = Charset.forName("windows-1254");
     File xFileWithTurkishCharset = writeFile("xFileWithTurkishCharset", "La Vérité Est Ailleurs", turkishCharset);
     assertThat(xFileWithTurkishCharset).usingCharset(turkishCharset).hasContent("La Vérité Est Ailleurs");
-
+    
     // compare content with a binary array
     byte[] binaryContent = "The Truth Is Out There".getBytes();
     assertThat(xFile).hasBinaryContent(binaryContent);
-
+    
     // compare content with a binary array
     binaryContent = "La Vérité Est Ailleurs".getBytes(turkishCharset.name());
     assertThat(xFileWithTurkishCharset).hasBinaryContent(binaryContent);
