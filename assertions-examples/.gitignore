@@ -3,3 +3,9 @@
 .DS_Store
 .idea
 /*.iml
+somefile
+somefile.txt
+symlink-to-somefile.txt
+symlinkToExistingFile
+symlinkToNonExistentPath
+
