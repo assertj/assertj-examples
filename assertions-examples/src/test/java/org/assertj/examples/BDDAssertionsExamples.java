@@ -88,4 +88,16 @@ public class BDDAssertionsExamples extends AbstractAssertionsExamples {
     then(bulls).contains(rose, noah).doesNotContain(james);
   }
 
+  @Test
+  public void bdd_soft_assertions_examples() {
+	//given
+	List<BasketBallPlayer> bulls = new ArrayList<BasketBallPlayer>();
+	
+	//when
+	bulls.add(rose);
+	bulls.add(noah);
+	
+	then(bulls).contains(rose, noah).doesNotContain(james);
+  }
+  
 }
