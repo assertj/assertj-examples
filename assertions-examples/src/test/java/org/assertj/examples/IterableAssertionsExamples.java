@@ -251,6 +251,11 @@ public class IterableAssertionsExamples extends AbstractAssertionsExamples {
   public void iterable_is_subset_of_assertion_example() {
 	Collection<Ring> elvesRings = newArrayList(vilya, nenya, narya);
 	assertThat(elvesRings).isSubsetOf(ringsOfPower);
+	try {
+	  assertThat(elvesRings).isSubsetOf(newArrayList(nenya, narya));
+	} catch (AssertionError e) {
+	  logAssertionErrorMessage("isSubsetOf", e);
+	}
   }
 
   @Test
