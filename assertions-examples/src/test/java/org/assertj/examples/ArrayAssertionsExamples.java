@@ -36,12 +36,12 @@ import java.io.UnsupportedEncodingException;
 import java.util.Arrays;
 import java.util.Comparator;
 
-import org.junit.Test;
 import org.assertj.core.util.introspection.IntrospectionError;
 import org.assertj.examples.data.Race;
 import org.assertj.examples.data.Ring;
 import org.assertj.examples.data.TolkienCharacter;
 import org.assertj.examples.data.movie.Movie;
+import org.junit.Test;
 
 /**
  * Array assertions examples.
@@ -59,12 +59,17 @@ public class ArrayAssertionsExamples extends AbstractAssertionsExamples {
     assertThat(elvesRings).hasSameSizeAs(trilogy);
     assertThat(elvesRings).hasSameSizeAs(newArrayList(trilogy));
     assertThat(elvesRings).contains(nenya).doesNotContain(oneRing);
+    assertThat(elvesRings).containsExactly(vilya, nenya, narya);
+    assertThat(elvesRings).containsExactlyElementsOf(newArrayList(vilya, nenya, narya));
 
     // you can check element at a given index (we use Index.atIndex(int) synthetic sugar for better readability).
     assertThat(elvesRings).contains(vilya, atIndex(0)).contains(nenya, atIndex(1)).contains(narya, atIndex(2));
     // with containsOnly, all the elements must be present (but the order is not important)
     assertThat(elvesRings).containsOnly(nenya, vilya, narya);
+    assertThat(elvesRings).containsOnlyElementsOf(newArrayList(nenya, vilya, narya));
+    assertThat(elvesRings).hasSameElementsAs(newArrayList(nenya, vilya, narya));
     assertThat(elvesRings).doesNotContainNull().doesNotHaveDuplicates();
+    assertThat(elvesRings).doesNotContainAnyElementsOf(newArrayList(oneRing, manRing, dwarfRing));
     // special check for null, empty collection or both
     assertThat(newArrayList(frodo, null, sam)).containsNull();
     Object[] array = array();
@@ -369,5 +374,17 @@ public class ArrayAssertionsExamples extends AbstractAssertionsExamples {
 	  assertThat(numbers).hasAtLeastOneElementOfType(Long.class);
 	  assertThat(numbers).hasOnlyElementsOfType(Number.class);
   }
+ 
+  @Test
+  public void iterable_is_subset_of_assertion_example() {
+    Ring[] elvesRings = array(vilya, nenya, narya);
+	assertThat(elvesRings).isSubsetOf(ringsOfPower);
+	try {
+	  assertThat(elvesRings).isSubsetOf(newArrayList(nenya, narya));
+	} catch (AssertionError e) {
+	  logAssertionErrorMessage("isSubsetOf", e);
+	}
+  }
+
   
 }
