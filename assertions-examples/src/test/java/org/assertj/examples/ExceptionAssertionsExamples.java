@@ -159,8 +159,10 @@ public class ExceptionAssertionsExamples extends AbstractAssertionsExamples {
   @Test
   public void exception_cause_assertion_examples() throws Exception {
 
-    Throwable throwable = new Throwable(new NullPointerException());
+    Throwable throwable = new Throwable(new NullPointerException("boom"));
 
+    assertThat(throwable).hasCause(new NullPointerException("boom"));
+    
     // hasCauseInstanceOf will match inheritance.
     assertThat(throwable).hasCauseInstanceOf(NullPointerException.class);
     assertThat(throwable).hasCauseInstanceOf(RuntimeException.class);
