@@ -27,7 +27,7 @@ public abstract class AbstractBookAssert<S extends AbstractBookAssert<S, A>, A e
     isNotNull();
 
     // overrides the default error message with a more explicit one
-    String assertjErrorMessage = "\nExpected title of:\n  <%s>\nto be:\n  <%s>\nbut was:\n  <%s>";
+    String assertjErrorMessage = "\nExpecting title of:\n  <%s>\nto be:\n  <%s>\nbut was:\n  <%s>";
     
     // null safe check
     Book.Title actualTitle = actual.getTitle();

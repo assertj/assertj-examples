@@ -15,9 +15,12 @@ package org.assertj.examples;
 import static com.google.common.collect.Lists.newArrayList;
 import static org.assertj.Assertions.assertThat;
 
+import java.util.Date;
+
 import org.assertj.examples.data.Name;
 import org.assertj.examples.data.Team;
 import org.assertj.examples.data.bug26.WithGenericListType;
+import org.assertj.examples.data.movie.Movie;
 import org.assertj.examples.exception.NameException;
 import org.junit.Test;
 
@@ -26,11 +29,11 @@ public class GeneratedStandardAssertionsExamples extends AbstractAssertionsExamp
   @Test
   public void generated_bdd_assertions_example() throws NameException {
     // use the generated assertions
-    assertThat(rose).hasName(new Name("Derrick", "Rose")).hasTeamMates(noah);
+    assertThat(rose).hasName(new Name("Derrick", "Rose")).hasTeamMates(noah).hasOnlyTeamMates(noah);
     
     // 
     Team bulls = new Team(newArrayList(rose, noah));
-    assertThat(bulls).as("bulls players").hasPlayers(rose, noah);
+    assertThat(bulls).as("bulls players").hasPlayers(rose, noah).doesNotHavePlayers(james);
     
     try {
 	  assertThat(bulls).as("bulls players").hasPlayers(rose, noah, james);
@@ -45,7 +48,17 @@ public class GeneratedStandardAssertionsExamples extends AbstractAssertionsExamp
     WithGenericListType test =  new WithGenericListType();
     assertThat(test).hasNoMovies();
     test.movies = newArrayList(theFellowshipOfTheRing);
-    assertThat(test).hasMovies(theFellowshipOfTheRing);
+    assertThat(test).hasOnlyMovies(theFellowshipOfTheRing)
+                    .doesNotHaveMovies(theTwoTowers);
+
+    try {
+      Movie movie = new Movie("boom", new Date(), "1h");
+      movie = null;
+      assertThat(movie).as("can be given ?").canBeGiven();
+    } catch (AssertionError e) {
+      AbstractAssertionsExamples.logger.info(e.getMessage());
+    }
+
   }
 
 }

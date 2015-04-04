@@ -27,10 +27,51 @@ public abstract class AbstractTeamAssert<S extends AbstractTeamAssert<S, A>, A e
     isNotNull();
 
     // check that given BasketBallPlayer varargs is not null.
-    if (players == null) throw new AssertionError("Expecting players parameter not to be null.");
+    if (players == null) failWithMessage("Expecting players parameter not to be null.");
     
     // check with standard error message, to set another message call: info.overridingErrorMessage("my error message");
     Iterables.instance().assertContains(info, actual.getPlayers(), players);
+
+    // return the current assertion for method chaining
+    return myself;
+  }
+
+  /**
+   * Verifies that the actual Team's players contains <b>only<b> the given BasketBallPlayer elements and nothing else in whatever order.
+   * @param players the given elements that should be contained in actual Team's players.
+   * @return this assertion object.
+   * @throws AssertionError if the actual Team's players does not contain all given BasketBallPlayer elements.
+   */
+  public S hasOnlyPlayers(BasketBallPlayer... players) {
+    // check that actual Team we want to make assertions on is not null.
+    isNotNull();
+
+    // check that given BasketBallPlayer varargs is not null.
+    if (players == null) failWithMessage("Expecting players parameter not to be null.");
+    
+    // check with standard error message, to set another message call: info.overridingErrorMessage("my error message");
+    Iterables.instance().assertContainsOnly(info, actual.getPlayers(), players);
+
+    // return the current assertion for method chaining
+    return myself;
+  }
+
+  /**
+   * Verifies that the actual Team's players does not contain the given BasketBallPlayer elements.
+   *
+   * @param players the given elements that should not be in actual Team's players.
+   * @return this assertion object.
+   * @throws AssertionError if the actual Team's players does not contain all given BasketBallPlayer elements.
+   */
+  public S doesNotHavePlayers(BasketBallPlayer... players) {
+    // check that actual Team we want to make assertions on is not null.
+    isNotNull();
+
+    // check that given BasketBallPlayer varargs is not null.
+    if (players == null) failWithMessage("Expecting players parameter not to be null.");
+    
+    // check with standard error message (use overridingErrorMessage before contains to set your own message).
+    Iterables.instance().assertDoesNotContain(info, actual.getPlayers(), players);
 
     // return the current assertion for method chaining
     return myself;
@@ -46,7 +87,7 @@ public abstract class AbstractTeamAssert<S extends AbstractTeamAssert<S, A>, A e
     isNotNull();
 
     // we override the default error message with a more explicit one
-    String assertjErrorMessage = "\nExpected :\n  <%s>\nnot to have players but had :\n  <%s>";
+    String assertjErrorMessage = "\nExpecting :\n  <%s>\nnot to have players but had :\n  <%s>";
     
     // check
     if (actual.getPlayers().iterator().hasNext()) {

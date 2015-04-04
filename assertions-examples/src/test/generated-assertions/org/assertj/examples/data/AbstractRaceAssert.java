@@ -27,7 +27,7 @@ public abstract class AbstractRaceAssert<S extends AbstractRaceAssert<S, A>, A e
     isNotNull();
 
     // overrides the default error message with a more explicit one
-    String assertjErrorMessage = "\nExpected alignment of:\n  <%s>\nto be:\n  <%s>\nbut was:\n  <%s>";
+    String assertjErrorMessage = "\nExpecting alignment of:\n  <%s>\nto be:\n  <%s>\nbut was:\n  <%s>";
     
     // null safe check
     Alignment actualAlignment = actual.getAlignment();
@@ -50,7 +50,7 @@ public abstract class AbstractRaceAssert<S extends AbstractRaceAssert<S, A>, A e
     isNotNull();
 
     // overrides the default error message with a more explicit one
-    String assertjErrorMessage = "\nExpected name of:\n  <%s>\nto be:\n  <%s>\nbut was:\n  <%s>";
+    String assertjErrorMessage = "\nExpecting name of:\n  <%s>\nto be:\n  <%s>\nbut was:\n  <%s>";
     
     // null safe check
     String actualName = actual.getName();
@@ -73,7 +73,7 @@ public abstract class AbstractRaceAssert<S extends AbstractRaceAssert<S, A>, A e
 
     // check
     if (!actual.immortal) {
-      failWithMessage("\nExpected actual Race to be immortal but was not.");
+      failWithMessage("\nExpecting that actual Race is immortal but is not.");
     }
     
     // return the current assertion for method chaining
@@ -91,7 +91,7 @@ public abstract class AbstractRaceAssert<S extends AbstractRaceAssert<S, A>, A e
 
     // check
     if (actual.immortal) {
-      failWithMessage("\nExpected actual Race not to be immortal but was.");
+      failWithMessage("\nExpecting that actual Race is not immortal but is.");
     }
     
     // return the current assertion for method chaining

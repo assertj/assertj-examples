@@ -27,10 +27,51 @@ public abstract class AbstractWithGenericListTypeAssert<S extends AbstractWithGe
     isNotNull();
 
     // check that given org.assertj.examples.data.movie.Movie varargs is not null.
-    if (movies == null) throw new AssertionError("Expecting movies parameter not to be null.");
+    if (movies == null) failWithMessage("Expecting movies parameter not to be null.");
     
     // check with standard error message, to set another message call: info.overridingErrorMessage("my error message");
     Iterables.instance().assertContains(info, actual.movies, movies);
+
+    // return the current assertion for method chaining
+    return myself;
+  }
+
+  /**
+   * Verifies that the actual WithGenericListType's movies contains <b>only<b> the given org.assertj.examples.data.movie.Movie elements and nothing else in whatever order.
+   * @param movies the given elements that should be contained in actual WithGenericListType's movies.
+   * @return this assertion object.
+   * @throws AssertionError if the actual WithGenericListType's movies does not contain all given org.assertj.examples.data.movie.Movie elements.
+   */
+  public S hasOnlyMovies(org.assertj.examples.data.movie.Movie... movies) {
+    // check that actual WithGenericListType we want to make assertions on is not null.
+    isNotNull();
+
+    // check that given org.assertj.examples.data.movie.Movie varargs is not null.
+    if (movies == null) failWithMessage("Expecting movies parameter not to be null.");
+    
+    // check with standard error message, to set another message call: info.overridingErrorMessage("my error message");
+    Iterables.instance().assertContainsOnly(info, actual.movies, movies);
+
+    // return the current assertion for method chaining
+    return myself;
+  }
+
+  /**
+   * Verifies that the actual WithGenericListType's movies does not contain the given org.assertj.examples.data.movie.Movie elements.
+   *
+   * @param movies the given elements that should not be in actual WithGenericListType's movies.
+   * @return this assertion object.
+   * @throws AssertionError if the actual WithGenericListType's movies does not contain all given org.assertj.examples.data.movie.Movie elements.
+   */
+  public S doesNotHaveMovies(org.assertj.examples.data.movie.Movie... movies) {
+    // check that actual WithGenericListType we want to make assertions on is not null.
+    isNotNull();
+
+    // check that given org.assertj.examples.data.movie.Movie varargs is not null.
+    if (movies == null) failWithMessage("Expecting movies parameter not to be null.");
+    
+    // check with standard error message (use overridingErrorMessage before contains to set your own message).
+    Iterables.instance().assertDoesNotContain(info, actual.movies, movies);
 
     // return the current assertion for method chaining
     return myself;
@@ -46,7 +87,7 @@ public abstract class AbstractWithGenericListTypeAssert<S extends AbstractWithGe
     isNotNull();
 
     // we override the default error message with a more explicit one
-    String assertjErrorMessage = "\nExpected :\n  <%s>\nnot to have movies but had :\n  <%s>";
+    String assertjErrorMessage = "\nExpecting :\n  <%s>\nnot to have movies but had :\n  <%s>";
     
     // check
     if (actual.movies.iterator().hasNext()) {

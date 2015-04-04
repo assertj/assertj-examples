@@ -27,7 +27,7 @@ public abstract class AbstractEmployeeTitleAssert<S extends AbstractEmployeeTitl
     isNotNull();
 
     // overrides the default error message with a more explicit one
-    String assertjErrorMessage = "\nExpected position of:\n  <%s>\nto be:\n  <%s>\nbut was:\n  <%s>";
+    String assertjErrorMessage = "\nExpecting position of:\n  <%s>\nto be:\n  <%s>\nbut was:\n  <%s>";
     
     // null safe check
     String actualPosition = actual.getPosition();

@@ -26,7 +26,7 @@ public abstract class AbstractEmployeeAssert<S extends AbstractEmployeeAssert<S,
     isNotNull();
 
     // overrides the default error message with a more explicit one
-    String assertjErrorMessage = "\nExpected company of:\n  <%s>\nto be:\n  <%s>\nbut was:\n  <%s>";
+    String assertjErrorMessage = "\nExpecting company of:\n  <%s>\nto be:\n  <%s>\nbut was:\n  <%s>";
     
     // null safe check
     String actualCompany = actual.getCompany();
