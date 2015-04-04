@@ -27,7 +27,7 @@ public abstract class AbstractNameAssert<S extends AbstractNameAssert<S, A>, A e
     isNotNull();
 
     // overrides the default error message with a more explicit one
-    String assertjErrorMessage = "\nExpected first of:\n  <%s>\nto be:\n  <%s>\nbut was:\n  <%s>";
+    String assertjErrorMessage = "\nExpecting first of:\n  <%s>\nto be:\n  <%s>\nbut was:\n  <%s>";
     
     // null safe check
     String actualFirst = actual.getFirst();
@@ -50,7 +50,7 @@ public abstract class AbstractNameAssert<S extends AbstractNameAssert<S, A>, A e
     isNotNull();
 
     // overrides the default error message with a more explicit one
-    String assertjErrorMessage = "\nExpected last of:\n  <%s>\nto be:\n  <%s>\nbut was:\n  <%s>";
+    String assertjErrorMessage = "\nExpecting last of:\n  <%s>\nto be:\n  <%s>\nbut was:\n  <%s>";
     
     // null safe check
     String actualLast = actual.getLast();

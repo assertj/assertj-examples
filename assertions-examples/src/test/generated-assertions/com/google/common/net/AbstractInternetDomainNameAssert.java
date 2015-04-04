@@ -16,9 +16,81 @@ public abstract class AbstractInternetDomainNameAssert<S extends AbstractInterne
   }
 
   /**
-   * Verifies that the actual InternetDomainName is publicSuffix.
+   * Verifies that the actual InternetDomainName has parent.
    * @return this assertion object.
-   * @throws AssertionError - if the actual InternetDomainName is not publicSuffix.
+   * @throws AssertionError - if the actual InternetDomainName does not have parent.
+   */
+  public S hasParent() {
+    // check that actual InternetDomainName we want to make assertions on is not null.
+    isNotNull();
+
+    // check
+    if (!actual.hasParent()) {
+      failWithMessage("\nExpecting that actual InternetDomainName has parent but does not have.");
+    }
+    
+    // return the current assertion for method chaining
+    return myself;
+  }
+
+  /**
+   * Verifies that the actual InternetDomainName does not have parent.
+   * @return this assertion object.
+   * @throws AssertionError - if the actual InternetDomainName has parent.
+   */
+  public S doesNotHaveParent() {
+    // check that actual InternetDomainName we want to make assertions on is not null.
+    isNotNull();
+
+    // check
+    if (actual.hasParent()) {
+      failWithMessage("\nExpecting that actual InternetDomainName does not have parent but has.");
+    }
+    
+    // return the current assertion for method chaining
+    return myself;
+  }
+
+  /**
+   * Verifies that the actual InternetDomainName has public suffix.
+   * @return this assertion object.
+   * @throws AssertionError - if the actual InternetDomainName does not have public suffix.
+   */
+  public S hasPublicSuffix() {
+    // check that actual InternetDomainName we want to make assertions on is not null.
+    isNotNull();
+
+    // check
+    if (!actual.hasPublicSuffix()) {
+      failWithMessage("\nExpecting that actual InternetDomainName has public suffix but does not have.");
+    }
+    
+    // return the current assertion for method chaining
+    return myself;
+  }
+
+  /**
+   * Verifies that the actual InternetDomainName does not have public suffix.
+   * @return this assertion object.
+   * @throws AssertionError - if the actual InternetDomainName has public suffix.
+   */
+  public S doesNotHavePublicSuffix() {
+    // check that actual InternetDomainName we want to make assertions on is not null.
+    isNotNull();
+
+    // check
+    if (actual.hasPublicSuffix()) {
+      failWithMessage("\nExpecting that actual InternetDomainName does not have public suffix but has.");
+    }
+    
+    // return the current assertion for method chaining
+    return myself;
+  }
+
+  /**
+   * Verifies that the actual InternetDomainName is public suffix.
+   * @return this assertion object.
+   * @throws AssertionError - if the actual InternetDomainName is not public suffix.
    */
   public S isPublicSuffix() {
     // check that actual InternetDomainName we want to make assertions on is not null.
@@ -26,7 +98,7 @@ public abstract class AbstractInternetDomainNameAssert<S extends AbstractInterne
 
     // check
     if (!actual.isPublicSuffix()) {
-      failWithMessage("\nExpected actual InternetDomainName to be publicSuffix but was not.");
+      failWithMessage("\nExpecting that actual InternetDomainName is public suffix but is not.");
     }
     
     // return the current assertion for method chaining
@@ -34,9 +106,9 @@ public abstract class AbstractInternetDomainNameAssert<S extends AbstractInterne
   }
 
   /**
-   * Verifies that the actual InternetDomainName is not publicSuffix.
+   * Verifies that the actual InternetDomainName is not public suffix.
    * @return this assertion object.
-   * @throws AssertionError - if the actual InternetDomainName is publicSuffix.
+   * @throws AssertionError - if the actual InternetDomainName is public suffix.
    */
   public S isNotPublicSuffix() {
     // check that actual InternetDomainName we want to make assertions on is not null.
@@ -44,7 +116,7 @@ public abstract class AbstractInternetDomainNameAssert<S extends AbstractInterne
 
     // check
     if (actual.isPublicSuffix()) {
-      failWithMessage("\nExpected actual InternetDomainName not to be publicSuffix but was.");
+      failWithMessage("\nExpecting that actual InternetDomainName is not public suffix but is.");
     }
     
     // return the current assertion for method chaining
@@ -52,9 +124,9 @@ public abstract class AbstractInternetDomainNameAssert<S extends AbstractInterne
   }
 
   /**
-   * Verifies that the actual InternetDomainName is topPrivateDomain.
+   * Verifies that the actual InternetDomainName is top private domain.
    * @return this assertion object.
-   * @throws AssertionError - if the actual InternetDomainName is not topPrivateDomain.
+   * @throws AssertionError - if the actual InternetDomainName is not top private domain.
    */
   public S isTopPrivateDomain() {
     // check that actual InternetDomainName we want to make assertions on is not null.
@@ -62,7 +134,7 @@ public abstract class AbstractInternetDomainNameAssert<S extends AbstractInterne
 
     // check
     if (!actual.isTopPrivateDomain()) {
-      failWithMessage("\nExpected actual InternetDomainName to be topPrivateDomain but was not.");
+      failWithMessage("\nExpecting that actual InternetDomainName is top private domain but is not.");
     }
     
     // return the current assertion for method chaining
@@ -70,9 +142,9 @@ public abstract class AbstractInternetDomainNameAssert<S extends AbstractInterne
   }
 
   /**
-   * Verifies that the actual InternetDomainName is not topPrivateDomain.
+   * Verifies that the actual InternetDomainName is not top private domain.
    * @return this assertion object.
-   * @throws AssertionError - if the actual InternetDomainName is topPrivateDomain.
+   * @throws AssertionError - if the actual InternetDomainName is top private domain.
    */
   public S isNotTopPrivateDomain() {
     // check that actual InternetDomainName we want to make assertions on is not null.
@@ -80,7 +152,7 @@ public abstract class AbstractInternetDomainNameAssert<S extends AbstractInterne
 
     // check
     if (actual.isTopPrivateDomain()) {
-      failWithMessage("\nExpected actual InternetDomainName not to be topPrivateDomain but was.");
+      failWithMessage("\nExpecting that actual InternetDomainName is not top private domain but is.");
     }
     
     // return the current assertion for method chaining
@@ -88,9 +160,9 @@ public abstract class AbstractInternetDomainNameAssert<S extends AbstractInterne
   }
 
   /**
-   * Verifies that the actual InternetDomainName is underPublicSuffix.
+   * Verifies that the actual InternetDomainName is under public suffix.
    * @return this assertion object.
-   * @throws AssertionError - if the actual InternetDomainName is not underPublicSuffix.
+   * @throws AssertionError - if the actual InternetDomainName is not under public suffix.
    */
   public S isUnderPublicSuffix() {
     // check that actual InternetDomainName we want to make assertions on is not null.
@@ -98,7 +170,7 @@ public abstract class AbstractInternetDomainNameAssert<S extends AbstractInterne
 
     // check
     if (!actual.isUnderPublicSuffix()) {
-      failWithMessage("\nExpected actual InternetDomainName to be underPublicSuffix but was not.");
+      failWithMessage("\nExpecting that actual InternetDomainName is under public suffix but is not.");
     }
     
     // return the current assertion for method chaining
@@ -106,9 +178,9 @@ public abstract class AbstractInternetDomainNameAssert<S extends AbstractInterne
   }
 
   /**
-   * Verifies that the actual InternetDomainName is not underPublicSuffix.
+   * Verifies that the actual InternetDomainName is not under public suffix.
    * @return this assertion object.
-   * @throws AssertionError - if the actual InternetDomainName is underPublicSuffix.
+   * @throws AssertionError - if the actual InternetDomainName is under public suffix.
    */
   public S isNotUnderPublicSuffix() {
     // check that actual InternetDomainName we want to make assertions on is not null.
@@ -116,7 +188,7 @@ public abstract class AbstractInternetDomainNameAssert<S extends AbstractInterne
 
     // check
     if (actual.isUnderPublicSuffix()) {
-      failWithMessage("\nExpected actual InternetDomainName not to be underPublicSuffix but was.");
+      failWithMessage("\nExpecting that actual InternetDomainName is not under public suffix but is.");
     }
     
     // return the current assertion for method chaining

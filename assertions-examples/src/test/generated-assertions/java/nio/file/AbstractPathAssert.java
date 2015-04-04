@@ -17,42 +17,6 @@ public abstract class AbstractPathAssert<S extends AbstractPathAssert<S, A>, A e
   }
 
   /**
-   * Verifies that the actual Path is absolute.
-   * @return this assertion object.
-   * @throws AssertionError - if the actual Path is not absolute.
-   */
-  public S isAbsolute() {
-    // check that actual Path we want to make assertions on is not null.
-    isNotNull();
-
-    // check
-    if (!actual.isAbsolute()) {
-      failWithMessage("\nExpected actual Path to be absolute but was not.");
-    }
-    
-    // return the current assertion for method chaining
-    return myself;
-  }
-
-  /**
-   * Verifies that the actual Path is not absolute.
-   * @return this assertion object.
-   * @throws AssertionError - if the actual Path is absolute.
-   */
-  public S isNotAbsolute() {
-    // check that actual Path we want to make assertions on is not null.
-    isNotNull();
-
-    // check
-    if (actual.isAbsolute()) {
-      failWithMessage("\nExpected actual Path not to be absolute but was.");
-    }
-    
-    // return the current assertion for method chaining
-    return myself;
-  }
-
-  /**
    * Verifies that the actual Path's fileName is equal to the given one.
    * @param fileName the given fileName to compare the actual Path's fileName to.
    * @return this assertion object.
@@ -63,7 +27,7 @@ public abstract class AbstractPathAssert<S extends AbstractPathAssert<S, A>, A e
     isNotNull();
 
     // overrides the default error message with a more explicit one
-    String assertjErrorMessage = "\nExpected fileName of:\n  <%s>\nto be:\n  <%s>\nbut was:\n  <%s>";
+    String assertjErrorMessage = "\nExpecting fileName of:\n  <%s>\nto be:\n  <%s>\nbut was:\n  <%s>";
     
     // null safe check
     Path actualFileName = actual.getFileName();
@@ -86,7 +50,7 @@ public abstract class AbstractPathAssert<S extends AbstractPathAssert<S, A>, A e
     isNotNull();
 
     // overrides the default error message with a more explicit one
-    String assertjErrorMessage = "\nExpected fileSystem of:\n  <%s>\nto be:\n  <%s>\nbut was:\n  <%s>";
+    String assertjErrorMessage = "\nExpecting fileSystem of:\n  <%s>\nto be:\n  <%s>\nbut was:\n  <%s>";
     
     // null safe check
     FileSystem actualFileSystem = actual.getFileSystem();
@@ -109,7 +73,7 @@ public abstract class AbstractPathAssert<S extends AbstractPathAssert<S, A>, A e
     isNotNull();
 
     // overrides the default error message with a more explicit one
-    String assertjErrorMessage = "\nExpected nameCount of:\n  <%s>\nto be:\n  <%s>\nbut was:\n  <%s>";
+    String assertjErrorMessage = "\nExpecting nameCount of:\n  <%s>\nto be:\n  <%s>\nbut was:\n  <%s>";
     
     // check
     int actualNameCount = actual.getNameCount();
@@ -132,7 +96,7 @@ public abstract class AbstractPathAssert<S extends AbstractPathAssert<S, A>, A e
     isNotNull();
 
     // overrides the default error message with a more explicit one
-    String assertjErrorMessage = "\nExpected parent of:\n  <%s>\nto be:\n  <%s>\nbut was:\n  <%s>";
+    String assertjErrorMessage = "\nExpecting parent of:\n  <%s>\nto be:\n  <%s>\nbut was:\n  <%s>";
     
     // null safe check
     Path actualParent = actual.getParent();
@@ -155,7 +119,7 @@ public abstract class AbstractPathAssert<S extends AbstractPathAssert<S, A>, A e
     isNotNull();
 
     // overrides the default error message with a more explicit one
-    String assertjErrorMessage = "\nExpected root of:\n  <%s>\nto be:\n  <%s>\nbut was:\n  <%s>";
+    String assertjErrorMessage = "\nExpecting root of:\n  <%s>\nto be:\n  <%s>\nbut was:\n  <%s>";
     
     // null safe check
     Path actualRoot = actual.getRoot();
@@ -163,6 +127,42 @@ public abstract class AbstractPathAssert<S extends AbstractPathAssert<S, A>, A e
       failWithMessage(assertjErrorMessage, actual, root, actualRoot);
     }
 
+    // return the current assertion for method chaining
+    return myself;
+  }
+
+  /**
+   * Verifies that the actual Path is absolute.
+   * @return this assertion object.
+   * @throws AssertionError - if the actual Path is not absolute.
+   */
+  public S isAbsolute() {
+    // check that actual Path we want to make assertions on is not null.
+    isNotNull();
+
+    // check
+    if (!actual.isAbsolute()) {
+      failWithMessage("\nExpecting that actual Path is absolute but is not.");
+    }
+    
+    // return the current assertion for method chaining
+    return myself;
+  }
+
+  /**
+   * Verifies that the actual Path is not absolute.
+   * @return this assertion object.
+   * @throws AssertionError - if the actual Path is absolute.
+   */
+  public S isNotAbsolute() {
+    // check that actual Path we want to make assertions on is not null.
+    isNotNull();
+
+    // check
+    if (actual.isAbsolute()) {
+      failWithMessage("\nExpecting that actual Path is not absolute but is.");
+    }
+    
     // return the current assertion for method chaining
     return myself;
   }

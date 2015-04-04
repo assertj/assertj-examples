@@ -15,4 +15,40 @@ public abstract class AbstractMyIteratorWrapperAssert<S extends AbstractMyIterat
     super(actual, selfType);
   }
 
+  /**
+   * Verifies that the actual MyIteratorWrapper has next.
+   * @return this assertion object.
+   * @throws AssertionError - if the actual MyIteratorWrapper does not have next.
+   */
+  public S hasNext() {
+    // check that actual MyIteratorWrapper we want to make assertions on is not null.
+    isNotNull();
+
+    // check
+    if (!actual.hasNext()) {
+      failWithMessage("\nExpecting that actual MyIteratorWrapper has next but does not have.");
+    }
+    
+    // return the current assertion for method chaining
+    return myself;
+  }
+
+  /**
+   * Verifies that the actual MyIteratorWrapper does not have next.
+   * @return this assertion object.
+   * @throws AssertionError - if the actual MyIteratorWrapper has next.
+   */
+  public S doesNotHaveNext() {
+    // check that actual MyIteratorWrapper we want to make assertions on is not null.
+    isNotNull();
+
+    // check
+    if (actual.hasNext()) {
+      failWithMessage("\nExpecting that actual MyIteratorWrapper does not have next but has.");
+    }
+    
+    // return the current assertion for method chaining
+    return myself;
+  }
+
 }
