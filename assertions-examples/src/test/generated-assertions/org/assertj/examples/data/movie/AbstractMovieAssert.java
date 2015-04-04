@@ -17,6 +17,42 @@ public abstract class AbstractMovieAssert<S extends AbstractMovieAssert<S, A>, A
   }
 
   /**
+   * Verifies that the actual Movie can be given.
+   * @return this assertion object.
+   * @throws AssertionError - if the actual Movie cannot be given.
+   */
+  public S canBeGiven() {
+    // check that actual Movie we want to make assertions on is not null.
+    isNotNull();
+
+    // check
+    if (!actual.canBeGiven()) {
+      failWithMessage("\nExpecting that actual Movie can be given but cannot.");
+    }
+    
+    // return the current assertion for method chaining
+    return myself;
+  }
+
+  /**
+   * Verifies that the actual Movie cannot be given.
+   * @return this assertion object.
+   * @throws AssertionError - if the actual Movie can be given.
+   */
+  public S cannotBeGiven() {
+    // check that actual Movie we want to make assertions on is not null.
+    isNotNull();
+
+    // check
+    if (actual.canBeGiven()) {
+      failWithMessage("\nExpecting that actual Movie cannot be given but can.");
+    }
+    
+    // return the current assertion for method chaining
+    return myself;
+  }
+
+  /**
    * Verifies that the actual Movie's releaseDate is equal to the given one.
    * @param releaseDate the given releaseDate to compare the actual Movie's releaseDate to.
    * @return this assertion object.
@@ -27,7 +63,7 @@ public abstract class AbstractMovieAssert<S extends AbstractMovieAssert<S, A>, A
     isNotNull();
 
     // overrides the default error message with a more explicit one
-    String assertjErrorMessage = "\nExpected releaseDate of:\n  <%s>\nto be:\n  <%s>\nbut was:\n  <%s>";
+    String assertjErrorMessage = "\nExpecting releaseDate of:\n  <%s>\nto be:\n  <%s>\nbut was:\n  <%s>";
     
     // null safe check
     java.util.Date actualReleaseDate = actual.getReleaseDate();
@@ -50,7 +86,7 @@ public abstract class AbstractMovieAssert<S extends AbstractMovieAssert<S, A>, A
     isNotNull();
 
     // overrides the default error message with a more explicit one
-    String assertjErrorMessage = "\nExpected title of:\n  <%s>\nto be:\n  <%s>\nbut was:\n  <%s>";
+    String assertjErrorMessage = "\nExpecting title of:\n  <%s>\nto be:\n  <%s>\nbut was:\n  <%s>";
     
     // null safe check
     String actualTitle = actual.getTitle();
@@ -58,6 +94,78 @@ public abstract class AbstractMovieAssert<S extends AbstractMovieAssert<S, A>, A
       failWithMessage(assertjErrorMessage, actual, title, actualTitle);
     }
 
+    // return the current assertion for method chaining
+    return myself;
+  }
+
+  /**
+   * Verifies that the actual Movie can be copied.
+   * @return this assertion object.
+   * @throws AssertionError - if the actual Movie cannot be copied.
+   */
+  public S canBeCopied() {
+    // check that actual Movie we want to make assertions on is not null.
+    isNotNull();
+
+    // check
+    if (!actual.canBeCopied) {
+      failWithMessage("\nExpecting that actual Movie can be copied but cannot.");
+    }
+    
+    // return the current assertion for method chaining
+    return myself;
+  }
+
+  /**
+   * Verifies that the actual Movie cannot be copied.
+   * @return this assertion object.
+   * @throws AssertionError - if the actual Movie can be copied.
+   */
+  public S cannotBeCopied() {
+    // check that actual Movie we want to make assertions on is not null.
+    isNotNull();
+
+    // check
+    if (actual.canBeCopied) {
+      failWithMessage("\nExpecting that actual Movie cannot be copied but can.");
+    }
+    
+    // return the current assertion for method chaining
+    return myself;
+  }
+
+  /**
+   * Verifies that the actual Movie is xrated.
+   * @return this assertion object.
+   * @throws AssertionError - if the actual Movie is not xrated.
+   */
+  public S isXrated() {
+    // check that actual Movie we want to make assertions on is not null.
+    isNotNull();
+
+    // check
+    if (!actual.xrated) {
+      failWithMessage("\nExpecting that actual Movie is xrated but is not.");
+    }
+    
+    // return the current assertion for method chaining
+    return myself;
+  }
+
+  /**
+   * Verifies that the actual Movie is not xrated.
+   * @return this assertion object.
+   * @throws AssertionError - if the actual Movie is xrated.
+   */
+  public S isNotXrated() {
+    // check that actual Movie we want to make assertions on is not null.
+    isNotNull();
+
+    // check
+    if (actual.xrated) {
+      failWithMessage("\nExpecting that actual Movie is not xrated but is.");
+    }
+    
     // return the current assertion for method chaining
     return myself;
   }

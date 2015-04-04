@@ -29,7 +29,7 @@ public abstract class AbstractBasketBallPlayerAssert<S extends AbstractBasketBal
     isNotNull();
 
     // overrides the default error message with a more explicit one
-    String assertjErrorMessage = "\nExpected assistsPerGame of:\n  <%s>\nto be:\n  <%s>\nbut was:\n  <%s>";
+    String assertjErrorMessage = "\nExpecting assistsPerGame of:\n  <%s>\nto be:\n  <%s>\nbut was:\n  <%s>";
     
     // check
     int actualAssistsPerGame = actual.getAssistsPerGame();
@@ -53,7 +53,7 @@ public abstract class AbstractBasketBallPlayerAssert<S extends AbstractBasketBal
     isNotNull();
 
     // overrides the default error message with a more explicit one
-    String assertjErrorMessage = "\nExpected name of:\n  <%s>\nto be:\n  <%s>\nbut was:\n  <%s>";
+    String assertjErrorMessage = "\nExpecting name of:\n  <%s>\nto be:\n  <%s>\nbut was:\n  <%s>";
     
     // null safe check
     Name actualName = actual.getName();
@@ -76,10 +76,51 @@ public abstract class AbstractBasketBallPlayerAssert<S extends AbstractBasketBal
     isNotNull();
 
     // check that given int[] varargs is not null.
-    if (points == null) throw new AssertionError("Expecting points parameter not to be null.");
+    if (points == null) failWithMessage("Expecting points parameter not to be null.");
     
     // check with standard error message, to set another message call: info.overridingErrorMessage("my error message");
     Iterables.instance().assertContains(info, actual.getPoints(), points);
+
+    // return the current assertion for method chaining
+    return myself;
+  }
+
+  /**
+   * Verifies that the actual BasketBallPlayer's points contains <b>only<b> the given int[] elements and nothing else in whatever order.
+   * @param points the given elements that should be contained in actual BasketBallPlayer's points.
+   * @return this assertion object.
+   * @throws AssertionError if the actual BasketBallPlayer's points does not contain all given int[] elements.
+   */
+  public S hasOnlyPoints(int[]... points) {
+    // check that actual BasketBallPlayer we want to make assertions on is not null.
+    isNotNull();
+
+    // check that given int[] varargs is not null.
+    if (points == null) failWithMessage("Expecting points parameter not to be null.");
+    
+    // check with standard error message, to set another message call: info.overridingErrorMessage("my error message");
+    Iterables.instance().assertContainsOnly(info, actual.getPoints(), points);
+
+    // return the current assertion for method chaining
+    return myself;
+  }
+
+  /**
+   * Verifies that the actual BasketBallPlayer's points does not contain the given int[] elements.
+   *
+   * @param points the given elements that should not be in actual BasketBallPlayer's points.
+   * @return this assertion object.
+   * @throws AssertionError if the actual BasketBallPlayer's points does not contain all given int[] elements.
+   */
+  public S doesNotHavePoints(int[]... points) {
+    // check that actual BasketBallPlayer we want to make assertions on is not null.
+    isNotNull();
+
+    // check that given int[] varargs is not null.
+    if (points == null) failWithMessage("Expecting points parameter not to be null.");
+    
+    // check with standard error message (use overridingErrorMessage before contains to set your own message).
+    Iterables.instance().assertDoesNotContain(info, actual.getPoints(), points);
 
     // return the current assertion for method chaining
     return myself;
@@ -95,7 +136,7 @@ public abstract class AbstractBasketBallPlayerAssert<S extends AbstractBasketBal
     isNotNull();
 
     // we override the default error message with a more explicit one
-    String assertjErrorMessage = "\nExpected :\n  <%s>\nnot to have points but had :\n  <%s>";
+    String assertjErrorMessage = "\nExpecting :\n  <%s>\nnot to have points but had :\n  <%s>";
     
     // check
     if (actual.getPoints().iterator().hasNext()) {
@@ -118,7 +159,7 @@ public abstract class AbstractBasketBallPlayerAssert<S extends AbstractBasketBal
     isNotNull();
 
     // overrides the default error message with a more explicit one
-    String assertjErrorMessage = "\nExpected pointsPerGame of:\n  <%s>\nto be:\n  <%s>\nbut was:\n  <%s>";
+    String assertjErrorMessage = "\nExpecting pointsPerGame of:\n  <%s>\nto be:\n  <%s>\nbut was:\n  <%s>";
     
     // check
     int actualPointsPerGame = actual.getPointsPerGame();
@@ -141,7 +182,7 @@ public abstract class AbstractBasketBallPlayerAssert<S extends AbstractBasketBal
     isNotNull();
 
     // overrides the default error message with a more explicit one
-    String assertjErrorMessage = "\nExpected reboundsPerGame of:\n  <%s>\nto be:\n  <%s>\nbut was:\n  <%s>";
+    String assertjErrorMessage = "\nExpecting reboundsPerGame of:\n  <%s>\nto be:\n  <%s>\nbut was:\n  <%s>";
     
     // check
     int actualReboundsPerGame = actual.getReboundsPerGame();
@@ -149,42 +190,6 @@ public abstract class AbstractBasketBallPlayerAssert<S extends AbstractBasketBal
       failWithMessage(assertjErrorMessage, actual, reboundsPerGame, actualReboundsPerGame);
     }
 
-    // return the current assertion for method chaining
-    return myself;
-  }
-
-  /**
-   * Verifies that the actual BasketBallPlayer is rookie.
-   * @return this assertion object.
-   * @throws AssertionError - if the actual BasketBallPlayer is not rookie.
-   */
-  public S isRookie() {
-    // check that actual BasketBallPlayer we want to make assertions on is not null.
-    isNotNull();
-
-    // check
-    if (!actual.isRookie()) {
-      failWithMessage("\nExpected actual BasketBallPlayer to be rookie but was not.");
-    }
-    
-    // return the current assertion for method chaining
-    return myself;
-  }
-
-  /**
-   * Verifies that the actual BasketBallPlayer is not rookie.
-   * @return this assertion object.
-   * @throws AssertionError - if the actual BasketBallPlayer is rookie.
-   */
-  public S isNotRookie() {
-    // check that actual BasketBallPlayer we want to make assertions on is not null.
-    isNotNull();
-
-    // check
-    if (actual.isRookie()) {
-      failWithMessage("\nExpected actual BasketBallPlayer not to be rookie but was.");
-    }
-    
     // return the current assertion for method chaining
     return myself;
   }
@@ -200,7 +205,7 @@ public abstract class AbstractBasketBallPlayerAssert<S extends AbstractBasketBal
     isNotNull();
 
     // overrides the default error message with a more explicit one
-    String assertjErrorMessage = "\nExpected team of:\n  <%s>\nto be:\n  <%s>\nbut was:\n  <%s>";
+    String assertjErrorMessage = "\nExpecting team of:\n  <%s>\nto be:\n  <%s>\nbut was:\n  <%s>";
     
     // null safe check
     String actualTeam = actual.getTeam();
@@ -223,10 +228,51 @@ public abstract class AbstractBasketBallPlayerAssert<S extends AbstractBasketBal
     isNotNull();
 
     // check that given BasketBallPlayer varargs is not null.
-    if (teamMates == null) throw new AssertionError("Expecting teamMates parameter not to be null.");
+    if (teamMates == null) failWithMessage("Expecting teamMates parameter not to be null.");
     
     // check with standard error message, to set another message call: info.overridingErrorMessage("my error message");
     Iterables.instance().assertContains(info, actual.getTeamMates(), teamMates);
+
+    // return the current assertion for method chaining
+    return myself;
+  }
+
+  /**
+   * Verifies that the actual BasketBallPlayer's teamMates contains <b>only<b> the given BasketBallPlayer elements and nothing else in whatever order.
+   * @param teamMates the given elements that should be contained in actual BasketBallPlayer's teamMates.
+   * @return this assertion object.
+   * @throws AssertionError if the actual BasketBallPlayer's teamMates does not contain all given BasketBallPlayer elements.
+   */
+  public S hasOnlyTeamMates(BasketBallPlayer... teamMates) {
+    // check that actual BasketBallPlayer we want to make assertions on is not null.
+    isNotNull();
+
+    // check that given BasketBallPlayer varargs is not null.
+    if (teamMates == null) failWithMessage("Expecting teamMates parameter not to be null.");
+    
+    // check with standard error message, to set another message call: info.overridingErrorMessage("my error message");
+    Iterables.instance().assertContainsOnly(info, actual.getTeamMates(), teamMates);
+
+    // return the current assertion for method chaining
+    return myself;
+  }
+
+  /**
+   * Verifies that the actual BasketBallPlayer's teamMates does not contain the given BasketBallPlayer elements.
+   *
+   * @param teamMates the given elements that should not be in actual BasketBallPlayer's teamMates.
+   * @return this assertion object.
+   * @throws AssertionError if the actual BasketBallPlayer's teamMates does not contain all given BasketBallPlayer elements.
+   */
+  public S doesNotHaveTeamMates(BasketBallPlayer... teamMates) {
+    // check that actual BasketBallPlayer we want to make assertions on is not null.
+    isNotNull();
+
+    // check that given BasketBallPlayer varargs is not null.
+    if (teamMates == null) failWithMessage("Expecting teamMates parameter not to be null.");
+    
+    // check with standard error message (use overridingErrorMessage before contains to set your own message).
+    Iterables.instance().assertDoesNotContain(info, actual.getTeamMates(), teamMates);
 
     // return the current assertion for method chaining
     return myself;
@@ -242,7 +288,7 @@ public abstract class AbstractBasketBallPlayerAssert<S extends AbstractBasketBal
     isNotNull();
 
     // we override the default error message with a more explicit one
-    String assertjErrorMessage = "\nExpected :\n  <%s>\nnot to have teamMates but had :\n  <%s>";
+    String assertjErrorMessage = "\nExpecting :\n  <%s>\nnot to have teamMates but had :\n  <%s>";
     
     // check
     if (actual.getTeamMates().iterator().hasNext()) {
@@ -270,12 +316,48 @@ public abstract class AbstractBasketBallPlayerAssert<S extends AbstractBasketBal
     float actualWeight = actual.getWeight();
     
     // overrides the default error message with a more explicit one
-    String assertjErrorMessage = String.format("\nExpected weight:\n  <%s>\nto be close to:\n  <%s>\nby less than <%s> but difference was <%s>",
+    String assertjErrorMessage = String.format("\nExpecting weight:\n  <%s>\nto be close to:\n  <%s>\nby less than <%s> but difference was <%s>",
                                                actualWeight, weight, offset, Math.abs(weight - actualWeight));
     
     // check
     Assertions.assertThat(actualWeight).overridingErrorMessage(assertjErrorMessage).isCloseTo(weight, Assertions.within(offset));
 
+    // return the current assertion for method chaining
+    return myself;
+  }
+
+  /**
+   * Verifies that the actual BasketBallPlayer is rookie.
+   * @return this assertion object.
+   * @throws AssertionError - if the actual BasketBallPlayer is not rookie.
+   */
+  public S isRookie() {
+    // check that actual BasketBallPlayer we want to make assertions on is not null.
+    isNotNull();
+
+    // check
+    if (!actual.isRookie()) {
+      failWithMessage("\nExpecting that actual BasketBallPlayer is rookie but is not.");
+    }
+    
+    // return the current assertion for method chaining
+    return myself;
+  }
+
+  /**
+   * Verifies that the actual BasketBallPlayer is not rookie.
+   * @return this assertion object.
+   * @throws AssertionError - if the actual BasketBallPlayer is rookie.
+   */
+  public S isNotRookie() {
+    // check that actual BasketBallPlayer we want to make assertions on is not null.
+    isNotNull();
+
+    // check
+    if (actual.isRookie()) {
+      failWithMessage("\nExpecting that actual BasketBallPlayer is not rookie but is.");
+    }
+    
     // return the current assertion for method chaining
     return myself;
   }
@@ -296,7 +378,7 @@ public abstract class AbstractBasketBallPlayerAssert<S extends AbstractBasketBal
     double actualSize = actual.size;
     
     // overrides the default error message with a more explicit one
-    String assertjErrorMessage = String.format("\nExpected size:\n  <%s>\nto be close to:\n  <%s>\nby less than <%s> but difference was <%s>",
+    String assertjErrorMessage = String.format("\nExpecting size:\n  <%s>\nto be close to:\n  <%s>\nby less than <%s> but difference was <%s>",
                                                actualSize, size, offset, Math.abs(size - actualSize));
     
     // check

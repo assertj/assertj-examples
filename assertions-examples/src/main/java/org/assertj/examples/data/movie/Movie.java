@@ -20,7 +20,10 @@ public class Movie {
   private Date releaseDate;
   @SuppressWarnings("unused")
   private String duration;
-
+  public boolean xrated;
+  public boolean canBeCopied;
+  private boolean canBeGiven;
+  
   public Movie(String title, Date releaseDate, String duration) {
     super();
     this.title = title;
@@ -34,6 +37,10 @@ public class Movie {
   
   public Date getReleaseDate() {
     return releaseDate;
+  }
+
+  public boolean canBeGiven() {
+    return canBeGiven;
   }
 
   @Override

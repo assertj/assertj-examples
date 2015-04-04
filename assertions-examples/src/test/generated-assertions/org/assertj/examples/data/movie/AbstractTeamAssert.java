@@ -27,10 +27,51 @@ public abstract class AbstractTeamAssert<S extends AbstractTeamAssert<S, A>, A e
     isNotNull();
 
     // check that given String varargs is not null.
-    if (actors == null) throw new AssertionError("Expecting actors parameter not to be null.");
+    if (actors == null) failWithMessage("Expecting actors parameter not to be null.");
     
     // check with standard error message, to set another message call: info.overridingErrorMessage("my error message");
     Iterables.instance().assertContains(info, actual.getActors(), actors);
+
+    // return the current assertion for method chaining
+    return myself;
+  }
+
+  /**
+   * Verifies that the actual Team's actors contains <b>only<b> the given String elements and nothing else in whatever order.
+   * @param actors the given elements that should be contained in actual Team's actors.
+   * @return this assertion object.
+   * @throws AssertionError if the actual Team's actors does not contain all given String elements.
+   */
+  public S hasOnlyActors(String... actors) {
+    // check that actual Team we want to make assertions on is not null.
+    isNotNull();
+
+    // check that given String varargs is not null.
+    if (actors == null) failWithMessage("Expecting actors parameter not to be null.");
+    
+    // check with standard error message, to set another message call: info.overridingErrorMessage("my error message");
+    Iterables.instance().assertContainsOnly(info, actual.getActors(), actors);
+
+    // return the current assertion for method chaining
+    return myself;
+  }
+
+  /**
+   * Verifies that the actual Team's actors does not contain the given String elements.
+   *
+   * @param actors the given elements that should not be in actual Team's actors.
+   * @return this assertion object.
+   * @throws AssertionError if the actual Team's actors does not contain all given String elements.
+   */
+  public S doesNotHaveActors(String... actors) {
+    // check that actual Team we want to make assertions on is not null.
+    isNotNull();
+
+    // check that given String varargs is not null.
+    if (actors == null) failWithMessage("Expecting actors parameter not to be null.");
+    
+    // check with standard error message (use overridingErrorMessage before contains to set your own message).
+    Iterables.instance().assertDoesNotContain(info, actual.getActors(), actors);
 
     // return the current assertion for method chaining
     return myself;
@@ -46,7 +87,7 @@ public abstract class AbstractTeamAssert<S extends AbstractTeamAssert<S, A>, A e
     isNotNull();
 
     // we override the default error message with a more explicit one
-    String assertjErrorMessage = "\nExpected :\n  <%s>\nnot to have actors but had :\n  <%s>";
+    String assertjErrorMessage = "\nExpecting :\n  <%s>\nnot to have actors but had :\n  <%s>";
     
     // check
     if (actual.getActors().iterator().hasNext()) {

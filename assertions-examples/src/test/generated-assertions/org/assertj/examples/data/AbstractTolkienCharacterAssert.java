@@ -27,7 +27,7 @@ public abstract class AbstractTolkienCharacterAssert<S extends AbstractTolkienCh
     isNotNull();
 
     // overrides the default error message with a more explicit one
-    String assertjErrorMessage = "\nExpected name of:\n  <%s>\nto be:\n  <%s>\nbut was:\n  <%s>";
+    String assertjErrorMessage = "\nExpecting name of:\n  <%s>\nto be:\n  <%s>\nbut was:\n  <%s>";
     
     // null safe check
     String actualName = actual.getName();
@@ -50,7 +50,7 @@ public abstract class AbstractTolkienCharacterAssert<S extends AbstractTolkienCh
     isNotNull();
 
     // overrides the default error message with a more explicit one
-    String assertjErrorMessage = "\nExpected race of:\n  <%s>\nto be:\n  <%s>\nbut was:\n  <%s>";
+    String assertjErrorMessage = "\nExpecting race of:\n  <%s>\nto be:\n  <%s>\nbut was:\n  <%s>";
     
     // null safe check
     Race actualRace = actual.getRace();
@@ -73,7 +73,7 @@ public abstract class AbstractTolkienCharacterAssert<S extends AbstractTolkienCh
     isNotNull();
 
     // overrides the default error message with a more explicit one
-    String assertjErrorMessage = "\nExpected age of:\n  <%s>\nto be:\n  <%s>\nbut was:\n  <%s>";
+    String assertjErrorMessage = "\nExpecting age of:\n  <%s>\nto be:\n  <%s>\nbut was:\n  <%s>";
     
     // check
     int actualAge = actual.age;

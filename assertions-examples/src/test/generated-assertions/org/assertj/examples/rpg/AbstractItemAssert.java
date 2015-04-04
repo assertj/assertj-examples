@@ -26,7 +26,7 @@ public abstract class AbstractItemAssert<S extends AbstractItemAssert<S, A>, A e
 
     // check
     if (!actual.isMagic()) {
-      failWithMessage("\nExpected actual Item to be magic but was not.");
+      failWithMessage("\nExpecting that actual Item is magic but is not.");
     }
     
     // return the current assertion for method chaining
@@ -44,7 +44,7 @@ public abstract class AbstractItemAssert<S extends AbstractItemAssert<S, A>, A e
 
     // check
     if (actual.isMagic()) {
-      failWithMessage("\nExpected actual Item not to be magic but was.");
+      failWithMessage("\nExpecting that actual Item is not magic but is.");
     }
     
     // return the current assertion for method chaining

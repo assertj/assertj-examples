@@ -27,7 +27,7 @@ public abstract class AbstractHostAndPortAssert<S extends AbstractHostAndPortAss
     isNotNull();
 
     // overrides the default error message with a more explicit one
-    String assertjErrorMessage = "\nExpected hostText of:\n  <%s>\nto be:\n  <%s>\nbut was:\n  <%s>";
+    String assertjErrorMessage = "\nExpecting hostText of:\n  <%s>\nto be:\n  <%s>\nbut was:\n  <%s>";
     
     // null safe check
     String actualHostText = actual.getHostText();
@@ -50,7 +50,7 @@ public abstract class AbstractHostAndPortAssert<S extends AbstractHostAndPortAss
     isNotNull();
 
     // overrides the default error message with a more explicit one
-    String assertjErrorMessage = "\nExpected port of:\n  <%s>\nto be:\n  <%s>\nbut was:\n  <%s>";
+    String assertjErrorMessage = "\nExpecting port of:\n  <%s>\nto be:\n  <%s>\nbut was:\n  <%s>";
     
     // check
     int actualPort = actual.getPort();
@@ -58,6 +58,42 @@ public abstract class AbstractHostAndPortAssert<S extends AbstractHostAndPortAss
       failWithMessage(assertjErrorMessage, actual, port, actualPort);
     }
 
+    // return the current assertion for method chaining
+    return myself;
+  }
+
+  /**
+   * Verifies that the actual HostAndPort has port.
+   * @return this assertion object.
+   * @throws AssertionError - if the actual HostAndPort does not have port.
+   */
+  public S hasPort() {
+    // check that actual HostAndPort we want to make assertions on is not null.
+    isNotNull();
+
+    // check
+    if (!actual.hasPort()) {
+      failWithMessage("\nExpecting that actual HostAndPort has port but does not have.");
+    }
+    
+    // return the current assertion for method chaining
+    return myself;
+  }
+
+  /**
+   * Verifies that the actual HostAndPort does not have port.
+   * @return this assertion object.
+   * @throws AssertionError - if the actual HostAndPort has port.
+   */
+  public S doesNotHavePort() {
+    // check that actual HostAndPort we want to make assertions on is not null.
+    isNotNull();
+
+    // check
+    if (actual.hasPort()) {
+      failWithMessage("\nExpecting that actual HostAndPort does not have port but has.");
+    }
+    
     // return the current assertion for method chaining
     return myself;
   }
