@@ -13,9 +13,11 @@
 package org.assertj.examples;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
-import org.assertj.core.api.Assertions;
 import org.junit.Test;
+import org.assertj.core.api.Assertions;
+import org.assertj.core.api.ThrowableAssert.ThrowingCallable;
 
 /**
  * Exception assertions examples.
@@ -182,5 +184,17 @@ public class ExceptionAssertionsExamples extends AbstractAssertionsExamples {
 
     // hasRootCauseExactlyInstanceOf will match only exact same type
     assertThat(throwable_root).hasRootCauseExactlyInstanceOf(NullPointerException.class);
+  }
+  
+  @Test
+  public void thrown_exception_assertion_examples() throws Exception {
+    
+    assertThatThrownBy(new ThrowingCallable() {
+      @Override
+      public void call() {
+        throw new IllegalArgumentException("something was wrong");
+      }
+    }).isInstanceOf(IllegalArgumentException.class)
+      .hasMessage("something was wrong");
   }
 }
