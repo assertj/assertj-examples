@@ -13,12 +13,14 @@
 package org.assertj.examples;
 
 import static org.assertj.core.api.Assertions.fail;
+import static org.assertj.core.api.Assertions.tuple;
 
 import org.assertj.core.api.AutoCloseableBDDSoftAssertions;
 import org.assertj.core.api.AutoCloseableSoftAssertions;
 import org.assertj.core.api.BDDSoftAssertions;
 import org.assertj.core.api.SoftAssertionError;
 import org.assertj.core.api.SoftAssertions;
+import org.assertj.core.util.Arrays;
 import org.assertj.examples.data.Mansion;
 import org.junit.Test;
 
@@ -125,5 +127,30 @@ public class SoftAssertionsExamples extends AbstractAssertionsExamples {
 	}
 	fail("BDD SoftAssertionError expected.");
   }
+  
+  @Test
+  public void soft_assertions_combined_with_extracting_example() {
+    BDDSoftAssertions softly = new BDDSoftAssertions();
+    softly.then(fellowshipOfTheRing).extracting("name", "age").contains(tuple("Sauron", 1000));
+    softly.then(fellowshipOfTheRing).extracting("race.name").contains("Man", "Orc");
+    try {
+      softly.assertAll();
+    } catch (SoftAssertionError e) {
+      logAssertionErrorMessage("BDD SoftAssertion errors example", e);
+    }
+  }
+  
+  @Test
+  public void soft_assertions_example_with_arrays() {
+    String[] players = Arrays.array("Michael Jordan", "Tim Duncan");
+    BDDSoftAssertions softly = new BDDSoftAssertions();
+    softly.then(players).contains("Kobe Bryant").doesNotContain("Tim Duncan");
+    try {
+      softly.assertAll();
+    } catch (SoftAssertionError e) {
+      logAssertionErrorMessage("BDD SoftAssertion errors example", e);
+    }
+  }
+  
   
 }
