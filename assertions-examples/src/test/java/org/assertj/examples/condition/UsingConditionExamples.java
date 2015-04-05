@@ -59,6 +59,13 @@ public class UsingConditionExamples extends AbstractAssertionsExamples {
   }
 
   @Test
+  public void condition_built_with_predicate_example() {
+    Condition<String> fairyTale = new Condition<String>(s -> s.startsWith("Once upon a time"), "a %s tale", "fairy");
+    String littleRedCap = "Once upon a time there was a dear little girl ...";
+    assertThat(littleRedCap).is(fairyTale);
+  }
+
+  @Test
   public void condition_with_supertype_example() {
 	assertThat("string").is(new Condition<Object>() {
 

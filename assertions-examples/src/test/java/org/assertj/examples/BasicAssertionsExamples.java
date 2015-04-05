@@ -15,13 +15,13 @@ package org.assertj.examples;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.examples.data.Race.HOBBIT;
 
-import org.junit.Test;
 import org.assertj.core.api.Assertions;
 import org.assertj.core.util.introspection.IntrospectionError;
 import org.assertj.examples.data.Person;
 import org.assertj.examples.data.Ring;
 import org.assertj.examples.data.TolkienCharacter;
 import org.assertj.examples.data.movie.Movie;
+import org.junit.Test;
 
 /**
  * Assertions available for all objects.
@@ -57,7 +57,7 @@ public class BasicAssertionsExamples extends AbstractAssertionsExamples {
     final String frodon = "Frodon";
     try {
       assertThat(frodo.getName()).as("check Frodo's name")
-        .overridingErrorMessage("Hey my name is Frodo not %s", frodon).isEqualTo(frodon);
+                                 .overridingErrorMessage("Hey my name is Frodo not %s", frodon).isEqualTo(frodon);
     } catch (AssertionError e) {
       assertThat(e).hasMessage("[check Frodo's name] Hey my name is Frodo not Frodon");
     }
@@ -91,6 +91,12 @@ public class BasicAssertionsExamples extends AbstractAssertionsExamples {
     assertThat(nullObject).isNull();
     Object nonNullObject = new Object();
     assertThat(nonNullObject).isNotNull();
+  }
+
+  @Test
+  public void matches_assertions_examples() {
+    assertThat(frodo).matches(p -> p.age > 30 && p.getRace() == HOBBIT);
+    assertThat(frodo.age).matches(p -> p > 30);
   }
 
   @Test
@@ -222,5 +228,5 @@ public class BasicAssertionsExamples extends AbstractAssertionsExamples {
     }
     Assertions.setAllowComparingPrivateFields(true);
   }
-  
+
 }
