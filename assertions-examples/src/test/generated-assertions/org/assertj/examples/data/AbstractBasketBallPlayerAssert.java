@@ -110,7 +110,7 @@ public abstract class AbstractBasketBallPlayerAssert<S extends AbstractBasketBal
    *
    * @param points the given elements that should not be in actual BasketBallPlayer's points.
    * @return this assertion object.
-   * @throws AssertionError if the actual BasketBallPlayer's points does not contain all given int[] elements.
+   * @throws AssertionError if the actual BasketBallPlayer's points contains any given int[] elements.
    */
   public S doesNotHavePoints(int[]... points) {
     // check that actual BasketBallPlayer we want to make assertions on is not null.
@@ -262,7 +262,7 @@ public abstract class AbstractBasketBallPlayerAssert<S extends AbstractBasketBal
    *
    * @param teamMates the given elements that should not be in actual BasketBallPlayer's teamMates.
    * @return this assertion object.
-   * @throws AssertionError if the actual BasketBallPlayer's teamMates does not contain all given BasketBallPlayer elements.
+   * @throws AssertionError if the actual BasketBallPlayer's teamMates contains any given BasketBallPlayer elements.
    */
   public S doesNotHaveTeamMates(BasketBallPlayer... teamMates) {
     // check that actual BasketBallPlayer we want to make assertions on is not null.

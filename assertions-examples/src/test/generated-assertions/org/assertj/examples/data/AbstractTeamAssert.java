@@ -61,7 +61,7 @@ public abstract class AbstractTeamAssert<S extends AbstractTeamAssert<S, A>, A e
    *
    * @param players the given elements that should not be in actual Team's players.
    * @return this assertion object.
-   * @throws AssertionError if the actual Team's players does not contain all given BasketBallPlayer elements.
+   * @throws AssertionError if the actual Team's players contains any given BasketBallPlayer elements.
    */
   public S doesNotHavePlayers(BasketBallPlayer... players) {
     // check that actual Team we want to make assertions on is not null.
