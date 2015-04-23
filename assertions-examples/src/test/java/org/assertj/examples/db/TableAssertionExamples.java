@@ -12,16 +12,16 @@
  */
 package org.assertj.examples.db;
 
-import static org.assertj.db.api.Assertions.assertThat;
-
-import org.assertj.db.api.ValueType;
-import org.assertj.db.type.DateTimeValue;
-import org.assertj.db.type.DateValue;
-import org.assertj.db.type.Source;
-import org.assertj.db.type.Table;
-import org.assertj.db.type.TimeValue;
+import org.assertj.db.type.*;
 import org.junit.Test;
 
+import static org.assertj.db.api.Assertions.assertThat;
+
+/**
+ * {@link Table} assertions example.
+ * 
+ * @author Régis Pouiller
+ */
 public class TableAssertionExamples extends AbstractAssertionsExamples {
 
   /**
@@ -57,7 +57,7 @@ public class TableAssertionExamples extends AbstractAssertionsExamples {
     Table table = new Table(source, "members");
 
     assertThat(table).column("name")
-        .haveValuesEqualTo("Hewson", "Evans", "Clayton", "Mullen");
+        .hasValuesEqualTo("Hewson", "Evans", "Clayton", "Mullen");
   }
 
   /**
@@ -68,14 +68,14 @@ public class TableAssertionExamples extends AbstractAssertionsExamples {
     Table table = new Table(dataSource, "members");
 
     assertThat(table).row(1)
-        .haveValuesEqualTo(2, "Evans", "David Howell", "The Edge", DateValue.of(1961, 8, 8), 1.77)
-        .haveValuesEqualTo("2", "Evans", "David Howell", "The Edge", "1961-08-08", "1.77");
+        .hasValuesEqualTo(2, "Evans", "David Howell", "The Edge", DateValue.of(1961, 8, 8), 1.77)
+        .hasValuesEqualTo("2", "Evans", "David Howell", "The Edge", "1961-08-08", "1.77");
 
     Table table1 = new Table(dataSource, "albums");
 
     assertThat(table1).row()
-        .haveValuesEqualTo(1, DateValue.of(1980, 10, 20), "Boy", 12, TimeValue.of(0, 42, 17), null)
-        .haveValuesEqualTo("1", "1980-10-20", "Boy", "12", "00:42:17", null);
+        .hasValuesEqualTo(1, DateValue.of(1980, 10, 20), "Boy", 12, TimeValue.of(0, 42, 17), null)
+        .hasValuesEqualTo("1", "1980-10-20", "Boy", "12", "00:42:17", null);
   }
 
   /**
@@ -86,12 +86,12 @@ public class TableAssertionExamples extends AbstractAssertionsExamples {
     Table table = new Table(dataSource, "members");
 
     // There is assertion to test the column and row size.
-    assertThat(table).hasColumnsSize(6);
-    assertThat(table).hasRowsSize(4);
+    assertThat(table).hasNumberOfColumns(6);
+    assertThat(table).hasNumberOfRows(4);
 
     // There are equivalences of these size assertions on the column and on the row.
-    assertThat(table).column().hasSize(4);
-    assertThat(table).row().hasSize(6);
+    assertThat(table).column().hasNumberOfRows(4);
+    assertThat(table).row().hasNumberOfColumns(6);
   }
 
   /**
@@ -101,9 +101,9 @@ public class TableAssertionExamples extends AbstractAssertionsExamples {
   public void table_inclusion_examples() {
     Table table = new Table(dataSource, "members", new String[] {"id", "name", "firstname"}, null);
 
-    assertThat(table).hasColumnsSize(3);
-    assertThat(table).row().hasSize(3)
-        .haveValuesEqualTo(1, "Hewson", "Paul David");
+    assertThat(table).hasNumberOfColumns(3);
+    assertThat(table).row().hasNumberOfColumns(3)
+        .hasValuesEqualTo(1, "Hewson", "Paul David");
   }
 
   /**
@@ -113,9 +113,9 @@ public class TableAssertionExamples extends AbstractAssertionsExamples {
   public void table_exclusion_examples() {
     Table table = new Table(dataSource, "members", null, new String[] {"id", "name", "firstname"});
 
-    assertThat(table).hasColumnsSize(3)
-        .row().hasSize(3)
-            .haveValuesEqualTo("Bono", "1960-05-10", 1.75);
+    assertThat(table).hasNumberOfColumns(3)
+        .row().hasNumberOfColumns(3)
+            .hasValuesEqualTo("Bono", "1960-05-10", 1.75);
   }
 
   /**

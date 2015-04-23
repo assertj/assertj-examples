@@ -15,20 +15,18 @@ package org.assertj.examples.db;
 import java.sql.Connection;
 import java.sql.SQLException;
 
-import javax.sql.DataSource;
-
 import org.h2.jdbcx.JdbcConnectionPool;
-import org.junit.BeforeClass;
+import org.junit.Before;
 
 /**
  * 
  * Init data for assertions examples.
  * 
- * @author Régis Pouiller
+ * @author RÃ©gis Pouiller
  */
 public class AbstractAssertionsExamples {
 
-  protected static DataSource dataSource;
+  protected static JdbcConnectionPool dataSource;
 
   private static final String MEMBERS_CREATE_REQUEST = "create table members(id number primary key, name varchar not null, firstname varchar not null, surname varchar, birthdate date, size decimal);";
   private static final String[] MEMBERS_INSERT_REQUESTS = {
@@ -56,20 +54,33 @@ public class AbstractAssertionsExamples {
     "insert into albums values (15, PARSEDATETIME('09/09/2014', 'dd/MM/yyyy'), 'Songs of Innocence', 11, PARSEDATETIME('48:11', 'mm:ss'), null);",
   };
 
-  @BeforeClass
-  public static void setUpOnce() throws SQLException {
+  @Before
+  public void setUp() throws SQLException {
     if (dataSource == null) {
       dataSource = JdbcConnectionPool.create("jdbc:h2:mem:test;DB_CLOSE_DELAY=-1", "user", "password");
+    }
+    else {
       Connection conn = dataSource.getConnection();
-      conn.createStatement().executeUpdate(MEMBERS_CREATE_REQUEST);
-      for (String request : MEMBERS_INSERT_REQUESTS) {
-        conn.createStatement().executeUpdate(request);
-      }
-      conn.createStatement().executeUpdate(ALBUMS_CREATE_REQUEST);
-      for (String request : ALBUMS_INSERT_REQUESTS) {
-        conn.createStatement().executeUpdate(request);
-      }
+      conn.createStatement().executeUpdate("drop table albums;");
+      conn.createStatement().executeUpdate("drop table members;");
       conn.close();
     }
+    Connection conn = dataSource.getConnection();
+    conn.createStatement().executeUpdate(MEMBERS_CREATE_REQUEST);
+    for (String request : MEMBERS_INSERT_REQUESTS) {
+      conn.createStatement().executeUpdate(request);
+    }
+    conn.createStatement().executeUpdate(ALBUMS_CREATE_REQUEST);
+    for (String request : ALBUMS_INSERT_REQUESTS) {
+      conn.createStatement().executeUpdate(request);
+    }
+    conn.close();
+  }
+
+  protected void makeChangesInTheData() throws SQLException {
+    Connection conn = dataSource.getConnection();
+    conn.createStatement().executeUpdate("insert into members values (5, 'McGuiness', 'Paul', null, PARSEDATETIME('17/06/1951', 'dd/MM/yyyy'), null);");
+    conn.createStatement().executeUpdate("update members set surname = 'Bono Vox' where id = 1;");
+    conn.createStatement().executeUpdate("delete from albums where id = 15;");
   }
 }

@@ -1,15 +1,15 @@
 package org.assertj.examples.db;
 
-import static org.assertj.db.api.Assertions.assertThat;
-
-import org.assertj.db.api.ValueType;
-import org.assertj.db.type.DateTimeValue;
-import org.assertj.db.type.DateValue;
-import org.assertj.db.type.Request;
-import org.assertj.db.type.Source;
-import org.assertj.db.type.TimeValue;
+import org.assertj.db.type.*;
 import org.junit.Test;
 
+import static org.assertj.db.api.Assertions.assertThat;
+
+/**
+ * {@link Request} assertions example.
+ * 
+ * @author Régis Pouiller
+ */
 public class RequestAssertionExamples extends AbstractAssertionsExamples {
 
   /**
@@ -56,10 +56,10 @@ public class RequestAssertionExamples extends AbstractAssertionsExamples {
     Request request = new Request(source, "select * from albums");
 
     assertThat(request).column("title")
-        .haveValuesEqualTo("Boy", "October", "War", "Under a Blood Red Sky", 
-            "The Unforgettable Fire", "Wide Awake in America", "The Joshua Tree", 
-            "Rattle and Hum", "Achtung Baby", "Zooropa", "Pop", "All That You Can't Leave Behind",
-            "How to Dismantle an Atomic Bomb", "No Line on the Horizon", "Songs of Innocence");
+        .hasValuesEqualTo("Boy", "October", "War", "Under a Blood Red Sky",
+                "The Unforgettable Fire", "Wide Awake in America", "The Joshua Tree",
+                "Rattle and Hum", "Achtung Baby", "Zooropa", "Pop", "All That You Can't Leave Behind",
+                "How to Dismantle an Atomic Bomb", "No Line on the Horizon", "Songs of Innocence");
   }
 
   /**
@@ -70,8 +70,8 @@ public class RequestAssertionExamples extends AbstractAssertionsExamples {
     Request request = new Request(dataSource, "select * from albums");
 
     assertThat(request).row(1)
-        .haveValuesEqualTo(2, DateValue.of(1981, 10, 12), "October", 11, TimeValue.of(0, 41, 8), null)
-        .haveValuesEqualTo("2", "1981-10-12", "October", "11", "00:41:08", null);
+        .hasValuesEqualTo(2, DateValue.of(1981, 10, 12), "October", 11, TimeValue.of(0, 41, 8), null)
+        .hasValuesEqualTo("2", "1981-10-12", "October", "11", "00:41:08", null);
   }
 
   /**
@@ -82,12 +82,12 @@ public class RequestAssertionExamples extends AbstractAssertionsExamples {
     Request request = new Request(dataSource, "select * from albums");
 
     // There is assertion to test the column and row size.
-    assertThat(request).hasColumnsSize(6);
-    assertThat(request).hasRowsSize(15);
+    assertThat(request).hasNumberOfColumns(6);
+    assertThat(request).hasNumberOfRows(15);
 
     // There are equivalences of these size assertions on the column and on the row.
-    assertThat(request).column().hasSize(15);
-    assertThat(request).row().hasSize(6);
+    assertThat(request).column().hasNumberOfRows(15);
+    assertThat(request).row().hasNumberOfColumns(6);
   }
 
   /**
@@ -97,10 +97,10 @@ public class RequestAssertionExamples extends AbstractAssertionsExamples {
   public void request_parameters_examples() {
     Request request = new Request(dataSource, "select release, title from albums where title like ?", "A%");
 
-    assertThat(request).hasColumnsSize(2).hasRowsSize(2);
+    assertThat(request).hasNumberOfColumns(2).hasNumberOfRows(2);
     assertThat(request)
-        .row().hasSize(2).haveValuesEqualTo("1991-11-18", "Achtung Baby")
-        .row().haveValuesEqualTo("2000-10-30", "All That You Can't Leave Behind");
+        .row().hasNumberOfColumns(2).hasValuesEqualTo("1991-11-18", "Achtung Baby")
+        .row().hasValuesEqualTo("2000-10-30", "All That You Can't Leave Behind");
   }
 
   /**
