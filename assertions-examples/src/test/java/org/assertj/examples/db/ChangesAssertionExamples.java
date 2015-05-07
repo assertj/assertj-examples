@@ -16,6 +16,7 @@ import java.sql.SQLException;
 import java.text.ParseException;
 
 import org.assertj.db.type.Changes;
+import org.assertj.db.type.DataType;
 import org.assertj.db.type.DateValue;
 import org.assertj.db.type.Request;
 import org.assertj.db.type.Table;
@@ -217,5 +218,36 @@ public class ChangesAssertionExamples extends AbstractAssertionsExamples {
     assertThat(changes).hasNumberOfChanges(1)
         .change().isDeletion()
             .rowAtStartPoint().value().isEqualTo("Songs of Innocence");
+  }
+
+  /**
+   * This example shows a simple case of test on data type for change on a table.
+   */
+  @Test
+  public void datatype_isontable_assertion_examples() throws SQLException {
+    Changes changes = new Changes(dataSource);
+    changes.setStartPointNow();
+    makeChangesInTheData();
+    changes.setEndPointNow();
+
+    assertThat(changes)
+        .change().isOnDataType(DataType.TABLE).isOnTable().isOnTable("MEMBERS")
+        .change().isOnDataType(DataType.TABLE).isOnTable().isOnTable("MEMBERS")
+        .change().isOnDataType(DataType.TABLE).isOnTable().isOnTable("ALBUMS");
+  }
+
+  /**
+   * This example shows a simple case of test on data type for change on a request.
+   */
+  @Test
+  public void datatype_isonrequest_assertion_examples() throws SQLException {
+    Request request = new Request(dataSource, "select title from albums");
+    Changes changes = new Changes(request);
+    changes.setStartPointNow();
+    makeChangesInTheData();
+    changes.setEndPointNow();
+
+    assertThat(changes)
+        .change().isOnDataType(DataType.REQUEST).isOnRequest();
   }
 }
