@@ -227,4 +227,16 @@ public class RequestAssertionExamples extends AbstractAssertionsExamples {
             .isBeforeOrEqualTo("1961-08-08T00:00:00.000000000")
             .isBeforeOrEqualTo(DateTimeValue.of(DateValue.of(1961, 8, 9), TimeValue.of(0, 0, 1, 3)));
   }
+
+  /**
+   * This example shows a simple case of test on column nullity.
+   */
+  @Test
+  public void column_nullity_assertion_examples() {
+    Request request = new Request(dataSource, "select * from members where id >= 3");
+
+    assertThat(request)
+        .column("surname").hasOnlyNullValues()
+        .column().hasOnlyNotNullValues();
+  }
 }
