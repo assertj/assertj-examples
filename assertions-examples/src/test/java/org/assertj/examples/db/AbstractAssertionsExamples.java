@@ -82,5 +82,6 @@ public class AbstractAssertionsExamples {
     conn.createStatement().executeUpdate("insert into members values (5, 'McGuiness', 'Paul', null, PARSEDATETIME('17/06/1951', 'dd/MM/yyyy'), null);");
     conn.createStatement().executeUpdate("update members set surname = 'Bono Vox' where id = 1;");
     conn.createStatement().executeUpdate("delete from albums where id = 15;");
+    conn.close();
   }
 }
