@@ -32,6 +32,8 @@ public class ComparableAssertionsExamples extends AbstractAssertionsExamples {
     assertThat(goodRating).isGreaterThanOrEqualTo(badRating);
     assertThat(badRating).isLessThan(goodRating);
     assertThat(badRating).isLessThanOrEqualTo(goodRating);
+    assertThat(goodRating).isEqualByComparingTo(goodRating);
+    assertThat(goodRating).isNotEqualByComparingTo(badRating);
     try {
       assertThat(badRating).isGreaterThan(goodRating);
     } catch (AssertionError e) {
