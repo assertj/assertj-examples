@@ -239,4 +239,123 @@ public class RequestAssertionExamples extends AbstractAssertionsExamples {
         .column("surname").hasOnlyNullValues()
         .column().hasOnlyNotNullValues();
   }
+
+  /**
+   * This example shows the assertion on number of columns.
+   */
+  @Test
+  public void columns_number_assertion_examples() {
+    Request request = new Request(dataSource, "select * from albums");
+
+    assertThat(request).hasNumberOfColumns(6)
+        .row().hasNumberOfColumns(6);
+  }
+
+  /**
+   * This example shows the assertion on number of rows.
+   */
+  @Test
+  public void rows_number_assertion_examples() {
+    Request request = new Request(dataSource, "select * from albums");
+
+    assertThat(request).hasNumberOfRows(15)
+        .column().hasNumberOfRows(15);
+  }
+
+  /**
+   * This example shows the assertion on name of columns.
+   */
+  @Test
+  public void column_name_assertion_examples() {
+    Request request = new Request(dataSource, "select * from albums");
+
+    assertThat(request)
+        .column().hasColumnName("id")
+        .column().hasColumnName("reLease")
+        .column().hasColumnName("tiTle")
+        .column().hasColumnName("numberOfSongs")
+        .column().hasColumnName("DuraTion")
+        .column().hasColumnName("Live");
+  }
+
+  /**
+   * This example shows the assertion on type of columns.
+   */
+  @Test
+  public void column_type_assertion_examples() {
+    Request request = new Request(dataSource, "select * from albums");
+
+    assertThat(request)
+        .column().isNumber(false).isOfType(ValueType.NUMBER, false).isOfAnyOfTypes(ValueType.NUMBER)
+        .column().isDate(false).isOfType(ValueType.DATE, false).isOfAnyOfTypes(ValueType.DATE)
+        .column().isText(false).isOfType(ValueType.TEXT, false).isOfAnyOfTypes(ValueType.TEXT)
+        .column().isNumber(false).isOfType(ValueType.NUMBER, false).isOfAnyOfTypes(ValueType.NUMBER)
+        .column().isTime(false).isOfType(ValueType.TIME, false).isOfAnyOfTypes(ValueType.TIME)
+        .column().isBoolean(true).isOfType(ValueType.BOOLEAN, true).isOfAnyOfTypes(ValueType.BOOLEAN, ValueType.NOT_IDENTIFIED);
+  }
+
+  /**
+   * This example shows the assertion on equality on the values of columns.
+   */
+  @Test
+  public void column_equality_assertion_examples() {
+    Request request = new Request(dataSource, "select * from albums");
+
+    assertThat(request)
+        .column().hasValuesEqualTo(1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15)
+        .column().hasValuesEqualTo(DateValue.of(1980, 10, 20), DateValue.of(1981, 10, 12), 
+            DateValue.of(1983, 2, 28), DateValue.of(1983, 11, 7), 
+            DateValue.of(1984, 10, 1), DateValue.of(1985, 6, 10),
+            DateValue.of(1987, 3, 9), DateValue.of(1988, 10, 10),
+            DateValue.of(1991, 11, 18), DateValue.of(1993, 7, 6),
+            DateValue.of(1997, 3, 3), DateValue.of(2000, 10, 30),
+            DateValue.of(2004, 11, 22), DateValue.of(2009, 3, 2),
+            DateValue.of(2014, 9, 9))
+        .column().hasValuesEqualTo("Boy", "October", "War", "Under a Blood Red Sky", "The Unforgettable Fire", 
+            "Wide Awake in America", "The Joshua Tree", "Rattle and Hum", "Achtung Baby", "Zooropa", "Pop", 
+            "All That You Can't Leave Behind", "How to Dismantle an Atomic Bomb", "No Line on the Horizon", 
+            "Songs of Innocence")
+        .column().hasValuesEqualTo(12, 11, 10, 8, 10, 4, 11, 17, 12, 10, 12, 11, 11, 11, 11)
+        .column().hasValuesEqualTo(TimeValue.of(0, 42, 17),
+            TimeValue.of(0, 41, 8),
+            TimeValue.of(0, 42, 7),
+            TimeValue.of(0, 33, 25),
+            TimeValue.of(0, 42, 42),
+            TimeValue.of(0, 20, 30),
+            TimeValue.of(0, 50, 11),
+            TimeValue.of(1, 12, 27),
+            TimeValue.of(0, 55, 23),
+            TimeValue.of(0, 51, 15),
+            TimeValue.of(1, 0, 8),
+            TimeValue.of(0, 49, 23),
+            TimeValue.of(0, 49, 8),
+            TimeValue.of(0, 53, 44),
+            TimeValue.of(0, 48, 11))
+        .column().hasValuesEqualTo(null, null, null, true, null, true, null, null, null, null, null, null, null, null, null);
+  }
+
+  /**
+   * This example shows the assertion on equality on the values of columns.
+   */
+  @Test
+  public void row_equality_assertion_examples() {
+    Request request = new Request(dataSource, "select * from albums");
+
+    assertThat(request)
+        .row().hasValuesEqualTo(1, DateValue.of(1980, 10, 20), "Boy", 12, TimeValue.of(0, 42, 17), null)
+        .row().hasValuesEqualTo(2, DateValue.of(1981, 10, 12), "October", 11, TimeValue.of(0, 41, 8), null)
+        .row().hasValuesEqualTo(3, DateValue.of(1983, 2, 28), "War", 10, TimeValue.of(0, 42, 7), null)
+        .row().hasValuesEqualTo(4, DateValue.of(1983, 11, 7), "Under a Blood Red Sky", 8, TimeValue.of(0, 33, 25), true)
+        .row().hasValuesEqualTo(5, DateValue.of(1984, 10, 1),"The Unforgettable Fire", 10, TimeValue.of(0, 42, 42), null)
+        .row().hasValuesEqualTo(6, DateValue.of(1985, 6, 10),"Wide Awake in America", 4, TimeValue.of(0, 20, 30), true)
+        .row().hasValuesEqualTo(7, DateValue.of(1987, 3, 9), "The Joshua Tree", 11, TimeValue.of(0, 50, 11), null)
+        .row().hasValuesEqualTo(8, DateValue.of(1988, 10, 10),"Rattle and Hum", 17, TimeValue.of(1, 12, 27), null)
+        .row().hasValuesEqualTo(9, DateValue.of(1991, 11, 18), "Achtung Baby", 12, TimeValue.of(0, 55, 23), null)
+        .row().hasValuesEqualTo(10, DateValue.of(1993, 7, 6), "Zooropa", 10, TimeValue.of(0, 51, 15), null)
+        .row().hasValuesEqualTo(11, DateValue.of(1997, 3, 3), "Pop", 12, TimeValue.of(1, 0, 8), null)
+        .row().hasValuesEqualTo(12, DateValue.of(2000, 10, 30), "All That You Can't Leave Behind", 11, TimeValue.of(0, 49, 23), null)
+        .row().hasValuesEqualTo(13, DateValue.of(2004, 11, 22), "How to Dismantle an Atomic Bomb", 11, TimeValue.of(0, 49, 8), null)
+        .row().hasValuesEqualTo(14, DateValue.of(2009, 3, 2), "No Line on the Horizon", 11, TimeValue.of(0, 53, 44), null)
+        .row().hasValuesEqualTo(15, DateValue.of(2014, 9, 9), "Songs of Innocence", 11, TimeValue.of(0, 48, 11), null);
+  }
 }

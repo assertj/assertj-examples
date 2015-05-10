@@ -242,4 +242,89 @@ public class TableAssertionExamples extends AbstractAssertionsExamples {
             .isBeforeOrEqualTo("1961-08-08T00:00:00.000000000")
             .isBeforeOrEqualTo(DateTimeValue.of(DateValue.of(1961, 8, 9), TimeValue.of(0, 0, 1, 3)));
   }
+
+  /**
+   * This example shows the assertion on number of columns.
+   */
+  @Test
+  public void columns_number_assertion_examples() {
+    Table table = new Table(dataSource, "members");
+
+    assertThat(table).hasNumberOfColumns(6)
+        .row().hasNumberOfColumns(6);
+  }
+
+  /**
+   * This example shows the assertion on number of rows.
+   */
+  @Test
+  public void rows_number_assertion_examples() {
+    Table table = new Table(dataSource, "members");
+
+    assertThat(table).hasNumberOfRows(4)
+        .column().hasNumberOfRows(4);
+  }
+
+  /**
+   * This example shows the assertion on name of columns.
+   */
+  @Test
+  public void column_name_assertion_examples() {
+    Table table = new Table(dataSource, "members");
+
+    assertThat(table)
+        .column().hasColumnName("id")
+        .column().hasColumnName("Name")
+        .column().hasColumnName("firstName")
+        .column().hasColumnName("SURNAME")
+        .column().hasColumnName("BiRThDate")
+        .column().hasColumnName("size");
+  }
+
+  /**
+   * This example shows the assertion on type of columns.
+   */
+  @Test
+  public void column_type_assertion_examples() {
+    Table table = new Table(dataSource, "members");
+
+    assertThat(table)
+        .column().isNumber(false).isOfType(ValueType.NUMBER, false).isOfAnyOfTypes(ValueType.NUMBER)
+        .column().isText(false).isOfType(ValueType.TEXT, false).isOfAnyOfTypes(ValueType.TEXT)
+        .column().isText(false).isOfType(ValueType.TEXT, false).isOfAnyOfTypes(ValueType.TEXT)
+        .column().isText(true).isOfType(ValueType.TEXT, true).isOfAnyOfTypes(ValueType.TEXT, ValueType.NOT_IDENTIFIED)
+        .column().isDate(true).isOfType(ValueType.DATE, false).isOfAnyOfTypes(ValueType.DATE)
+        .column().isNumber(false).isOfType(ValueType.NUMBER, false).isOfAnyOfTypes(ValueType.NUMBER);
+  }
+
+  /**
+   * This example shows the assertion on equality on the values of columns.
+   */
+  @Test
+  public void column_equality_assertion_examples() {
+    Table table = new Table(dataSource, "members");
+
+    assertThat(table)
+        .column().hasValuesEqualTo(1, 2, 3, 4)
+        .column().hasValuesEqualTo("Hewson", "Evans", "Clayton", "Mullen")
+        .column().hasValuesEqualTo("Paul David", "David Howell", "Adam", "Larry")
+        .column().hasValuesEqualTo("Bono", "The Edge", null, null)
+        .column().hasValuesEqualTo(DateValue.of(1960, 5, 10), DateValue.of(1961, 8, 8), 
+            DateValue.of(1960, 3, 13), DateValue.of(1961, 10, 31))
+        .column().hasValuesEqualTo(1.75, 1.77, 1.78, 1.7);
+  }
+
+  /**
+   * This example shows the assertion on equality on the values of columns.
+   */
+  @Test
+  public void row_equality_assertion_examples() {
+    Table table = new Table(dataSource, "members");
+
+    assertThat(table)
+        .row().hasValuesEqualTo(1, "Hewson", "Paul David", "Bono", DateValue.of(1960, 5, 10), 1.75)
+        .row().hasValuesEqualTo(2, "Evans", "David Howell", "The Edge", DateValue.of(1961, 8, 8), 1.77)
+        .row().hasValuesEqualTo(3, "Clayton", "Adam", null, DateValue.of(1960, 3, 13), 1.78)
+        .row().hasValuesEqualTo(4, "Mullen", "Larry", null, DateValue.of(1961, 10, 31), 1.7);
+  }
 }
