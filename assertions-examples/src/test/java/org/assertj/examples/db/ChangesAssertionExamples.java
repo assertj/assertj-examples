@@ -104,21 +104,21 @@ public class ChangesAssertionExamples extends AbstractAssertionsExamples {
             .rowAtEndPoint()
                 .exists()
                 .hasNumberOfColumns(6)
-                .hasValuesEqualTo(5, "McGuiness", "Paul", null, "1951-06-17", null)
+                .hasValues(5, "McGuiness", "Paul", null, "1951-06-17", null)
         .change()
             .rowAtStartPoint()
                 .exists()
                 .hasNumberOfColumns(6)
-                .hasValuesEqualTo(1, "Hewson", "Paul David", "Bono", DateValue.of(1960, 5, 10), 1.75)
+                .hasValues(1, "Hewson", "Paul David", "Bono", DateValue.of(1960, 5, 10), 1.75)
             .rowAtEndPoint()
                 .exists()
                 .hasNumberOfColumns(6)
-                .hasValuesEqualTo(1, "Hewson", "Paul David", "Bono Vox", DateValue.parse("1960-05-10"), 1.75)
+                .hasValues(1, "Hewson", "Paul David", "Bono Vox", DateValue.parse("1960-05-10"), 1.75)
         .change()
             .rowAtStartPoint()
                 .exists()
                 .hasNumberOfColumns(6)
-                .hasValuesEqualTo(15, DateValue.of(2014, 9, 9), "Songs of Innocence", "11", TimeValue.of(0, 48, 11), null)
+                .hasValues(15, DateValue.of(2014, 9, 9), "Songs of Innocence", "11", TimeValue.of(0, 48, 11), null)
             .rowAtEndPoint()
                 .doesNotExist();
   }
@@ -138,26 +138,26 @@ public class ChangesAssertionExamples extends AbstractAssertionsExamples {
             .column()
                 .hasColumnName("id")
                 .isNumber(true)
-                .hasValuesEqualTo(null, 5)
+                .hasValues(null, 5)
             .column()
                 .hasColumnName("name")
                 .isText(true)
-                .hasValuesEqualTo(null, "McGuiness")
+                .hasValues(null, "McGuiness")
             .column(4)
                 .hasColumnName("birthdate")
                 .isDate(true)
-                .hasValuesEqualTo(null, "1951-06-17")
+                .hasValues(null, "1951-06-17")
         .change()
             .columnAmongTheModifiedOnes()
                 .hasColumnName("surname")
                 .isModified()
                 .isText(true)
-                .hasValuesEqualTo("Bono", "Bono Vox")
+                .hasValues("Bono", "Bono Vox")
             .column(1)
                 .hasColumnName("name")
                 .isNotModified()
                 .isText(false)
-                .hasValuesEqualTo("Hewson");
+                .hasValues("Hewson");
   }
 
   /**
@@ -281,22 +281,22 @@ public class ChangesAssertionExamples extends AbstractAssertionsExamples {
 
     assertThat(changes)
         .change()
-            .column().hasValuesEqualTo(null, 5)
-            .column().hasValuesEqualTo(null, "McGuiness")
-            .column().hasValuesEqualTo(null, "Paul")
+            .column().hasValues(null, 5)
+            .column().hasValues(null, "McGuiness")
+            .column().hasValues(null, "Paul")
         .change()
-            .column().hasValuesEqualTo(1)
-            .column().hasValuesEqualTo("Hewson") 
-            .column().hasValuesEqualTo("Paul David") 
-            .column().hasValuesEqualTo("Bono", "Bono Vox")
-            .column().hasValuesEqualTo(DateValue.of(1960, 5, 10))
-            .column().hasValuesEqualTo(1.75)
+            .column().hasValues(1)
+            .column().hasValues("Hewson") 
+            .column().hasValues("Paul David") 
+            .column().hasValues("Bono", "Bono Vox")
+            .column().hasValues(DateValue.of(1960, 5, 10))
+            .column().hasValues(1.75)
         .change()
-            .column().hasValuesEqualTo(15, null)
-            .column().hasValuesEqualTo(DateValue.of(2014, 9, 9), null)
-            .column().hasValuesEqualTo("Songs of Innocence", null)
-            .column().hasValuesEqualTo(11, null)
-            .column().hasValuesEqualTo(TimeValue.of(0, 48, 11), null);
+            .column().hasValues(15, null)
+            .column().hasValues(DateValue.of(2014, 9, 9), null)
+            .column().hasValues("Songs of Innocence", null)
+            .column().hasValues(11, null)
+            .column().hasValues(TimeValue.of(0, 48, 11), null);
   }
 
   /**
@@ -510,12 +510,12 @@ public class ChangesAssertionExamples extends AbstractAssertionsExamples {
 
     assertThat(changes)
         .change()
-            .rowAtEndPoint().hasValuesEqualTo(5, "McGuiness", "Paul", null, DateValue.of(1951, 6, 17), null)
+            .rowAtEndPoint().hasValues(5, "McGuiness", "Paul", null, DateValue.of(1951, 6, 17), null)
         .change()
-            .rowAtStartPoint().hasValuesEqualTo(1, "Hewson", "Paul David", "Bono", DateValue.of(1960, 5, 10), 1.75)
-            .rowAtEndPoint().hasValuesEqualTo(1, "Hewson", "Paul David", "Bono Vox", DateValue.of(1960, 5, 10), 1.75)
+            .rowAtStartPoint().hasValues(1, "Hewson", "Paul David", "Bono", DateValue.of(1960, 5, 10), 1.75)
+            .rowAtEndPoint().hasValues(1, "Hewson", "Paul David", "Bono Vox", DateValue.of(1960, 5, 10), 1.75)
         .change()
-            .rowAtStartPoint().hasValuesEqualTo(15, DateValue.of(2014, 9, 9), "Songs of Innocence", 11, TimeValue.of(0, 48, 11), null);
+            .rowAtStartPoint().hasValues(15, DateValue.of(2014, 9, 9), "Songs of Innocence", 11, TimeValue.of(0, 48, 11), null);
   }
 
   /**

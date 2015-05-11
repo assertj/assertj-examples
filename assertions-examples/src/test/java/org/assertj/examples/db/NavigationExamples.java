@@ -32,7 +32,7 @@ public class NavigationExamples extends AbstractAssertionsExamples {
           .isNotEqualTo(2)                      // Another assertion on this value
         .returnToRow()                          // Go back on the first row
         .hasNumberOfColumns(6)                  // Assertion on the row
-        .hasValuesEqualTo(1,
+        .hasValues(1,
                 "Hewson",
                 "Paul David",
                 "Bono",
@@ -49,7 +49,7 @@ public class NavigationExamples extends AbstractAssertionsExamples {
         .value()                                // The next value (note that returnToRow() is not mandatory)
           .isNull()                             // Assertion on this value
       .row()                                    // The next row (note that returnToTable() is not mandatory)
-        .hasValuesEqualTo(4,
+        .hasValues(4,
                           "Mullen", 
                           "Larry", 
                           null, 
@@ -84,7 +84,7 @@ public class NavigationExamples extends AbstractAssertionsExamples {
           .isNotEqualTo(2)                      // Another assertion on this value
         .returnToRow()                          // Go back on the first row
         .hasNumberOfColumns(6)                  // Assertion on the row
-        .hasValuesEqualTo(1,
+        .hasValues(1,
                 "Hewson",
                 "Paul David",
                 "Bono",
@@ -101,7 +101,7 @@ public class NavigationExamples extends AbstractAssertionsExamples {
         .value()                                // The next value (note that returnToRow() is not mandatory)
           .isNull()                             // Assertion on this value
       .row()                                    // The next row (note that returnToTable() is not mandatory)
-        .hasValuesEqualTo(4,
+        .hasValues(4,
                           "Mullen", 
                           "Larry", 
                           null, 
@@ -147,7 +147,7 @@ public class NavigationExamples extends AbstractAssertionsExamples {
             .returnToChange()                   // Go back to the change
         .change()                               // Next change
             .rowAtEndPoint()                    // Row at end point of this change
-                .hasValuesEqualTo(1, 
+                .hasValues(1, 
                                   "Hewson", 
                                   "Paul David", 
                                   "Bono Vox", 
@@ -155,7 +155,7 @@ public class NavigationExamples extends AbstractAssertionsExamples {
                                   1.75)
             .column("surname")                  // Column with name is "surname" of the second change (note that returnToChange() is not mandatory)
                 .isModified()                   // Assertion on column
-                .hasValuesEqualTo("Bono",
+                .hasValues("Bono",
                                   "Bono Vox")
             .column()                           // Next column
                 .isNotModified()                // Assertion on the column
@@ -169,7 +169,7 @@ public class NavigationExamples extends AbstractAssertionsExamples {
         .changeOnTableWithPks("members", 5)     // Change with primary key 5 on "members" table
             .isCreation()
                 .rowAtEndPoint()                // Row at end point of change with primary key 5 on "members" table 
-                    .hasValuesEqualTo(5, 
+                    .hasValues(5, 
                                       "McGuiness", 
                                       "Paul", 
                                       null,

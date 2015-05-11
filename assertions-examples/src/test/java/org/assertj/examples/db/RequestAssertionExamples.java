@@ -56,7 +56,7 @@ public class RequestAssertionExamples extends AbstractAssertionsExamples {
     Request request = new Request(source, "select * from albums");
 
     assertThat(request).column("title")
-        .hasValuesEqualTo("Boy", "October", "War", "Under a Blood Red Sky",
+        .hasValues("Boy", "October", "War", "Under a Blood Red Sky",
                 "The Unforgettable Fire", "Wide Awake in America", "The Joshua Tree",
                 "Rattle and Hum", "Achtung Baby", "Zooropa", "Pop", "All That You Can't Leave Behind",
                 "How to Dismantle an Atomic Bomb", "No Line on the Horizon", "Songs of Innocence");
@@ -70,8 +70,8 @@ public class RequestAssertionExamples extends AbstractAssertionsExamples {
     Request request = new Request(dataSource, "select * from albums");
 
     assertThat(request).row(1)
-        .hasValuesEqualTo(2, DateValue.of(1981, 10, 12), "October", 11, TimeValue.of(0, 41, 8), null)
-        .hasValuesEqualTo("2", "1981-10-12", "October", "11", "00:41:08", null);
+        .hasValues(2, DateValue.of(1981, 10, 12), "October", 11, TimeValue.of(0, 41, 8), null)
+        .hasValues("2", "1981-10-12", "October", "11", "00:41:08", null);
   }
 
   /**
@@ -99,8 +99,8 @@ public class RequestAssertionExamples extends AbstractAssertionsExamples {
 
     assertThat(request).hasNumberOfColumns(2).hasNumberOfRows(2);
     assertThat(request)
-        .row().hasNumberOfColumns(2).hasValuesEqualTo("1991-11-18", "Achtung Baby")
-        .row().hasValuesEqualTo("2000-10-30", "All That You Can't Leave Behind");
+        .row().hasNumberOfColumns(2).hasValues("1991-11-18", "Achtung Baby")
+        .row().hasValues("2000-10-30", "All That You Can't Leave Behind");
   }
 
   /**
@@ -290,8 +290,8 @@ public class RequestAssertionExamples extends AbstractAssertionsExamples {
     Request request = new Request(dataSource, "select * from albums");
 
     assertThat(request)
-        .column().hasValuesEqualTo(1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15)
-        .column().hasValuesEqualTo(DateValue.of(1980, 10, 20), DateValue.of(1981, 10, 12), 
+        .column().hasValues(1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15)
+        .column().hasValues(DateValue.of(1980, 10, 20), DateValue.of(1981, 10, 12), 
             DateValue.of(1983, 2, 28), DateValue.of(1983, 11, 7), 
             DateValue.of(1984, 10, 1), DateValue.of(1985, 6, 10),
             DateValue.of(1987, 3, 9), DateValue.of(1988, 10, 10),
@@ -299,12 +299,12 @@ public class RequestAssertionExamples extends AbstractAssertionsExamples {
             DateValue.of(1997, 3, 3), DateValue.of(2000, 10, 30),
             DateValue.of(2004, 11, 22), DateValue.of(2009, 3, 2),
             DateValue.of(2014, 9, 9))
-        .column().hasValuesEqualTo("Boy", "October", "War", "Under a Blood Red Sky", "The Unforgettable Fire", 
+        .column().hasValues("Boy", "October", "War", "Under a Blood Red Sky", "The Unforgettable Fire", 
             "Wide Awake in America", "The Joshua Tree", "Rattle and Hum", "Achtung Baby", "Zooropa", "Pop", 
             "All That You Can't Leave Behind", "How to Dismantle an Atomic Bomb", "No Line on the Horizon", 
             "Songs of Innocence")
-        .column().hasValuesEqualTo(12, 11, 10, 8, 10, 4, 11, 17, 12, 10, 12, 11, 11, 11, 11)
-        .column().hasValuesEqualTo(TimeValue.of(0, 42, 17),
+        .column().hasValues(12, 11, 10, 8, 10, 4, 11, 17, 12, 10, 12, 11, 11, 11, 11)
+        .column().hasValues(TimeValue.of(0, 42, 17),
             TimeValue.of(0, 41, 8),
             TimeValue.of(0, 42, 7),
             TimeValue.of(0, 33, 25),
@@ -319,7 +319,7 @@ public class RequestAssertionExamples extends AbstractAssertionsExamples {
             TimeValue.of(0, 49, 8),
             TimeValue.of(0, 53, 44),
             TimeValue.of(0, 48, 11))
-        .column().hasValuesEqualTo(null, null, null, true, null, true, null, null, null, null, null, null, null, null, null);
+        .column().hasValues(null, null, null, true, null, true, null, null, null, null, null, null, null, null, null);
   }
 
   /**
@@ -330,21 +330,21 @@ public class RequestAssertionExamples extends AbstractAssertionsExamples {
     Request request = new Request(dataSource, "select * from albums");
 
     assertThat(request)
-        .row().hasValuesEqualTo(1, DateValue.of(1980, 10, 20), "Boy", 12, TimeValue.of(0, 42, 17), null)
-        .row().hasValuesEqualTo(2, DateValue.of(1981, 10, 12), "October", 11, TimeValue.of(0, 41, 8), null)
-        .row().hasValuesEqualTo(3, DateValue.of(1983, 2, 28), "War", 10, TimeValue.of(0, 42, 7), null)
-        .row().hasValuesEqualTo(4, DateValue.of(1983, 11, 7), "Under a Blood Red Sky", 8, TimeValue.of(0, 33, 25), true)
-        .row().hasValuesEqualTo(5, DateValue.of(1984, 10, 1), "The Unforgettable Fire", 10, TimeValue.of(0, 42, 42), null)
-        .row().hasValuesEqualTo(6, DateValue.of(1985, 6, 10), "Wide Awake in America", 4, TimeValue.of(0, 20, 30), true)
-        .row().hasValuesEqualTo(7, DateValue.of(1987, 3, 9), "The Joshua Tree", 11, TimeValue.of(0, 50, 11), null)
-        .row().hasValuesEqualTo(8, DateValue.of(1988, 10, 10), "Rattle and Hum", 17, TimeValue.of(1, 12, 27), null)
-        .row().hasValuesEqualTo(9, DateValue.of(1991, 11, 18), "Achtung Baby", 12, TimeValue.of(0, 55, 23), null)
-        .row().hasValuesEqualTo(10, DateValue.of(1993, 7, 6), "Zooropa", 10, TimeValue.of(0, 51, 15), null)
-        .row().hasValuesEqualTo(11, DateValue.of(1997, 3, 3), "Pop", 12, TimeValue.of(1, 0, 8), null)
-        .row().hasValuesEqualTo(12, DateValue.of(2000, 10, 30), "All That You Can't Leave Behind", 11, TimeValue.of(0, 49, 23), null)
-        .row().hasValuesEqualTo(13, DateValue.of(2004, 11, 22), "How to Dismantle an Atomic Bomb", 11, TimeValue.of(0, 49, 8), null)
-        .row().hasValuesEqualTo(14, DateValue.of(2009, 3, 2), "No Line on the Horizon", 11, TimeValue.of(0, 53, 44), null)
-        .row().hasValuesEqualTo(15, DateValue.of(2014, 9, 9), "Songs of Innocence", 11, TimeValue.of(0, 48, 11), null);
+        .row().hasValues(1, DateValue.of(1980, 10, 20), "Boy", 12, TimeValue.of(0, 42, 17), null)
+        .row().hasValues(2, DateValue.of(1981, 10, 12), "October", 11, TimeValue.of(0, 41, 8), null)
+        .row().hasValues(3, DateValue.of(1983, 2, 28), "War", 10, TimeValue.of(0, 42, 7), null)
+        .row().hasValues(4, DateValue.of(1983, 11, 7), "Under a Blood Red Sky", 8, TimeValue.of(0, 33, 25), true)
+        .row().hasValues(5, DateValue.of(1984, 10, 1), "The Unforgettable Fire", 10, TimeValue.of(0, 42, 42), null)
+        .row().hasValues(6, DateValue.of(1985, 6, 10), "Wide Awake in America", 4, TimeValue.of(0, 20, 30), true)
+        .row().hasValues(7, DateValue.of(1987, 3, 9), "The Joshua Tree", 11, TimeValue.of(0, 50, 11), null)
+        .row().hasValues(8, DateValue.of(1988, 10, 10), "Rattle and Hum", 17, TimeValue.of(1, 12, 27), null)
+        .row().hasValues(9, DateValue.of(1991, 11, 18), "Achtung Baby", 12, TimeValue.of(0, 55, 23), null)
+        .row().hasValues(10, DateValue.of(1993, 7, 6), "Zooropa", 10, TimeValue.of(0, 51, 15), null)
+        .row().hasValues(11, DateValue.of(1997, 3, 3), "Pop", 12, TimeValue.of(1, 0, 8), null)
+        .row().hasValues(12, DateValue.of(2000, 10, 30), "All That You Can't Leave Behind", 11, TimeValue.of(0, 49, 23), null)
+        .row().hasValues(13, DateValue.of(2004, 11, 22), "How to Dismantle an Atomic Bomb", 11, TimeValue.of(0, 49, 8), null)
+        .row().hasValues(14, DateValue.of(2009, 3, 2), "No Line on the Horizon", 11, TimeValue.of(0, 53, 44), null)
+        .row().hasValues(15, DateValue.of(2014, 9, 9), "Songs of Innocence", 11, TimeValue.of(0, 48, 11), null);
   }
 
   /**

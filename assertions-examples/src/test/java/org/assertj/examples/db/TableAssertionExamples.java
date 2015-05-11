@@ -57,7 +57,7 @@ public class TableAssertionExamples extends AbstractAssertionsExamples {
     Table table = new Table(source, "members");
 
     assertThat(table).column("name")
-        .hasValuesEqualTo("Hewson", "Evans", "Clayton", "Mullen");
+        .hasValues("Hewson", "Evans", "Clayton", "Mullen");
   }
 
   /**
@@ -68,14 +68,14 @@ public class TableAssertionExamples extends AbstractAssertionsExamples {
     Table table = new Table(dataSource, "members");
 
     assertThat(table).row(1)
-        .hasValuesEqualTo(2, "Evans", "David Howell", "The Edge", DateValue.of(1961, 8, 8), 1.77)
-        .hasValuesEqualTo("2", "Evans", "David Howell", "The Edge", "1961-08-08", "1.77");
+        .hasValues(2, "Evans", "David Howell", "The Edge", DateValue.of(1961, 8, 8), 1.77)
+        .hasValues("2", "Evans", "David Howell", "The Edge", "1961-08-08", "1.77");
 
     Table table1 = new Table(dataSource, "albums");
 
     assertThat(table1).row()
-        .hasValuesEqualTo(1, DateValue.of(1980, 10, 20), "Boy", 12, TimeValue.of(0, 42, 17), null)
-        .hasValuesEqualTo("1", "1980-10-20", "Boy", "12", "00:42:17", null);
+        .hasValues(1, DateValue.of(1980, 10, 20), "Boy", 12, TimeValue.of(0, 42, 17), null)
+        .hasValues("1", "1980-10-20", "Boy", "12", "00:42:17", null);
   }
 
   /**
@@ -103,7 +103,7 @@ public class TableAssertionExamples extends AbstractAssertionsExamples {
 
     assertThat(table).hasNumberOfColumns(3);
     assertThat(table).row().hasNumberOfColumns(3)
-        .hasValuesEqualTo(1, "Hewson", "Paul David");
+        .hasValues(1, "Hewson", "Paul David");
   }
 
   /**
@@ -115,7 +115,7 @@ public class TableAssertionExamples extends AbstractAssertionsExamples {
 
     assertThat(table).hasNumberOfColumns(3)
         .row().hasNumberOfColumns(3)
-            .hasValuesEqualTo("Bono", "1960-05-10", 1.75);
+            .hasValues("Bono", "1960-05-10", 1.75);
   }
 
   /**
@@ -305,13 +305,13 @@ public class TableAssertionExamples extends AbstractAssertionsExamples {
     Table table = new Table(dataSource, "members");
 
     assertThat(table)
-        .column().hasValuesEqualTo(1, 2, 3, 4)
-        .column().hasValuesEqualTo("Hewson", "Evans", "Clayton", "Mullen")
-        .column().hasValuesEqualTo("Paul David", "David Howell", "Adam", "Larry")
-        .column().hasValuesEqualTo("Bono", "The Edge", null, null)
-        .column().hasValuesEqualTo(DateValue.of(1960, 5, 10), DateValue.of(1961, 8, 8), 
+        .column().hasValues(1, 2, 3, 4)
+        .column().hasValues("Hewson", "Evans", "Clayton", "Mullen")
+        .column().hasValues("Paul David", "David Howell", "Adam", "Larry")
+        .column().hasValues("Bono", "The Edge", null, null)
+        .column().hasValues(DateValue.of(1960, 5, 10), DateValue.of(1961, 8, 8), 
             DateValue.of(1960, 3, 13), DateValue.of(1961, 10, 31))
-        .column().hasValuesEqualTo(1.75, 1.77, 1.78, 1.7);
+        .column().hasValues(1.75, 1.77, 1.78, 1.7);
   }
 
   /**
@@ -322,10 +322,10 @@ public class TableAssertionExamples extends AbstractAssertionsExamples {
     Table table = new Table(dataSource, "members");
 
     assertThat(table)
-        .row().hasValuesEqualTo(1, "Hewson", "Paul David", "Bono", DateValue.of(1960, 5, 10), 1.75)
-        .row().hasValuesEqualTo(2, "Evans", "David Howell", "The Edge", DateValue.of(1961, 8, 8), 1.77)
-        .row().hasValuesEqualTo(3, "Clayton", "Adam", null, DateValue.of(1960, 3, 13), 1.78)
-        .row().hasValuesEqualTo(4, "Mullen", "Larry", null, DateValue.of(1961, 10, 31), 1.7);
+        .row().hasValues(1, "Hewson", "Paul David", "Bono", DateValue.of(1960, 5, 10), 1.75)
+        .row().hasValues(2, "Evans", "David Howell", "The Edge", DateValue.of(1961, 8, 8), 1.77)
+        .row().hasValues(3, "Clayton", "Adam", null, DateValue.of(1960, 3, 13), 1.78)
+        .row().hasValues(4, "Mullen", "Larry", null, DateValue.of(1961, 10, 31), 1.7);
   }
 
   /**
