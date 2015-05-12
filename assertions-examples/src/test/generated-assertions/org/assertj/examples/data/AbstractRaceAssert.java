@@ -40,6 +40,29 @@ public abstract class AbstractRaceAssert<S extends AbstractRaceAssert<S, A>, A e
   }
 
   /**
+   * Verifies that the actual Race's fullname is equal to the given one.
+   * @param fullname the given fullname to compare the actual Race's fullname to.
+   * @return this assertion object.
+   * @throws AssertionError - if the actual Race's fullname is not equal to the given one.
+   */
+  public S hasFullname(String fullname) {
+    // check that actual Race we want to make assertions on is not null.
+    isNotNull();
+
+    // overrides the default error message with a more explicit one
+    String assertjErrorMessage = "\nExpecting fullname of:\n  <%s>\nto be:\n  <%s>\nbut was:\n  <%s>";
+    
+    // null safe check
+    String actualFullname = actual.getFullname();
+    if (!Objects.areEqual(actualFullname, fullname)) {
+      failWithMessage(assertjErrorMessage, actual, fullname, actualFullname);
+    }
+
+    // return the current assertion for method chaining
+    return myself;
+  }
+
+  /**
    * Verifies that the actual Race's name is equal to the given one.
    * @param name the given name to compare the actual Race's name to.
    * @return this assertion object.

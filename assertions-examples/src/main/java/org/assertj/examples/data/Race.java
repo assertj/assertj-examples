@@ -44,6 +44,10 @@ public enum Race {
     return alignment;
   }
 
+  public String getFullname() {
+    return immortal ? "immortal " + name : name;
+  }
+
   @Override
   public String toString() {
     return "Race [name=" + name + ", immortal=" + immortal + "]";

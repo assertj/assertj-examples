@@ -64,6 +64,13 @@ public class StringAssertionsExamples extends AbstractAssertionsExamples {
     assertThat("").isEmpty();
     assertThat("").isNullOrEmpty();
     assertThat("not empty").isNotEmpty();
+
+    // check size.
+    assertThat("C-3PO").hasSameSizeAs("R2-D2").hasSize(5);
+
+    //
+    assertThat("Frodo").doesNotStartWith("fro")
+                       .doesNotEndWith("don");
   }
 
   @Test
@@ -101,6 +108,7 @@ public class StringAssertionsExamples extends AbstractAssertionsExamples {
     assertThat(stringBuilder).containsOnlyOnce("do");
 
     Comparator<CharSequence> caseInsensitiveComparator = new Comparator<CharSequence>() {
+      @Override
       public int compare(CharSequence s1, CharSequence s2) {
         return s1.toString().toLowerCase().compareTo(s2.toString().toLowerCase());
       }
@@ -119,14 +127,14 @@ public class StringAssertionsExamples extends AbstractAssertionsExamples {
   public void xml_assertions_examples() {
 
     String expectedXml = "<rings>\n" +
-                          "  <bearer>\n" +
-                          "    <name>Frodo</name>\n" +
-                          "    <ring>\n" +
-                          "      <name>one ring</name>\n" +
-                          "      <createdBy>Sauron</createdBy>\n" +
-                          "    </ring>\n" +
-                          "  </bearer>\n" +
-                          "</rings>";
+                         "  <bearer>\n" +
+                         "    <name>Frodo</name>\n" +
+                         "    <ring>\n" +
+                         "      <name>one ring</name>\n" +
+                         "      <createdBy>Sauron</createdBy>\n" +
+                         "    </ring>\n" +
+                         "  </bearer>\n" +
+                         "</rings>";
 
     // XML String don't need to be formatted, AssertJ will format both actual and expected string before comparison.
     // Whatever how formatted your xml string is, isXmlEqualTo assertion is able to compare it with another xml String.
@@ -148,7 +156,8 @@ public class StringAssertionsExamples extends AbstractAssertionsExamples {
     // You can easily compare your XML String to the content of an XML file.
     assertThat(oneLineXml).isXmlEqualToContentOf(new File("src/test/resources/formatted.xml"));
 
-    // Since both actual and expected xml string are formatted as XML document, it is easy to see what were the differences.
+    // Since both actual and expected xml string are formatted as XML document, it is easy to see what were the
+    // differences.
     // here : bearer is not Sauron but should Frodo !
     String unexpectedXml = "<rings>\n" +
                            "<bearer>   \n" +
@@ -191,6 +200,5 @@ public class StringAssertionsExamples extends AbstractAssertionsExamples {
     Object title = "Game of Thrones";
     assertThat(title).asString().endsWith("ones");
   }
-  
 
 }

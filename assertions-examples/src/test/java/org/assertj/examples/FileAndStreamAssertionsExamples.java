@@ -41,7 +41,7 @@ public class FileAndStreamAssertionsExamples extends AbstractAssertionsExamples 
 
     // compare content with another file
     File xFileClone = writeFile("xFileClone", "The Truth Is Out There");
-    assertThat(xFile).hasContentEqualTo(xFileClone);
+    assertThat(xFile).hasSameContentAs(xFileClone);
 
     // compare content with a string
     assertThat(xFile).hasContent("The Truth Is Out There");
