@@ -15,13 +15,16 @@ package org.assertj.examples;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.examples.data.Race.HOBBIT;
 
-import org.junit.Test;
+import java.util.ArrayList;
+import java.util.List;
+
 import org.assertj.core.api.Assertions;
 import org.assertj.core.util.introspection.IntrospectionError;
 import org.assertj.examples.data.Person;
 import org.assertj.examples.data.Ring;
 import org.assertj.examples.data.TolkienCharacter;
 import org.assertj.examples.data.movie.Movie;
+import org.junit.Test;
 
 /**
  * Assertions available for all objects.
@@ -223,4 +226,56 @@ public class BasicAssertionsExamples extends AbstractAssertionsExamples {
     Assertions.setAllowComparingPrivateFields(true);
   }
   
+  @Test
+  public void usingFieldByFieldElementComparatorTest() throws Exception {
+    List<Animal> animals = new ArrayList<>();
+    Bird bird = new Bird("White");
+    Snake snake = new Snake(15);
+    animals.add(bird);
+    animals.add(snake);
+
+    assertThat(animals).usingFieldByFieldElementComparator()
+                       .containsExactly(bird, snake);
+  }
+
+  private class Animal {
+    private final String name;
+
+    private Animal(String name) {
+      this.name = name;
+    }
+
+    @SuppressWarnings("unused")
+    public String getName() {
+      return name;
+    }
+  }
+
+  private class Bird extends Animal {
+    private final String color;
+
+    private Bird(String color) {
+      super("Bird");
+      this.color = color;
+    }
+
+    @SuppressWarnings("unused")
+    public String getColor() {
+      return color;
+    }
+  }
+
+  private class Snake extends Animal {
+    private final int length;
+
+    private Snake(int length) {
+      super("Snake");
+      this.length = length;
+    }
+
+    @SuppressWarnings("unused")
+    public int getLength() {
+      return length;
+    }
+  }
 }

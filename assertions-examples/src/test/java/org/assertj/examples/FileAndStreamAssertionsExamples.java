@@ -101,7 +101,7 @@ public class FileAndStreamAssertionsExamples extends AbstractAssertionsExamples 
 
   @Test
   public void stream_assertions_examples() throws Exception {
-    assertThat(streamFrom("string")).hasContentEqualTo(streamFrom("string"));
+    assertThat(streamFrom("string")).hasSameContentAs(streamFrom("string"));
   }
 
   // helper methods

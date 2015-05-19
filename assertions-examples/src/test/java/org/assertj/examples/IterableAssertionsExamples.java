@@ -15,11 +15,16 @@ package org.assertj.examples;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.extractProperty;
 import static org.assertj.core.api.Assertions.failBecauseExceptionWasNotThrown;
+import static org.assertj.core.api.Assertions.in;
+import static org.assertj.core.api.Assertions.not;
+import static org.assertj.core.api.Assertions.notIn;
 import static org.assertj.core.api.Assertions.setAllowExtractingPrivateFields;
 import static org.assertj.core.api.Assertions.tuple;
 import static org.assertj.core.util.Lists.newArrayList;
 import static org.assertj.examples.data.Race.ELF;
 import static org.assertj.examples.data.Race.HOBBIT;
+import static org.assertj.examples.data.Race.MAIA;
+import static org.assertj.examples.data.Race.MAN;
 import static org.assertj.examples.data.Race.ORC;
 import static org.assertj.examples.data.Ring.dwarfRing;
 import static org.assertj.examples.data.Ring.manRing;
@@ -39,7 +44,9 @@ import java.util.List;
 import java.util.SortedSet;
 import java.util.TreeSet;
 
+import org.assertj.core.api.Condition;
 import org.assertj.core.util.introspection.IntrospectionError;
+import org.assertj.examples.data.BasketBallPlayer;
 import org.assertj.examples.data.Employee;
 import org.assertj.examples.data.Ring;
 import org.assertj.examples.data.TolkienCharacter;
@@ -452,6 +459,40 @@ public class IterableAssertionsExamples extends AbstractAssertionsExamples {
 
     List<? extends Object> mixed = newArrayList("string", 1L);
     assertThat(mixed).hasAtLeastOneElementOfType(String.class);
+  }
+
+  @Test
+  public void iterable_fluent_filter_with_examples() {
+    assertThat(fellowshipOfTheRing).filteredOn("race", HOBBIT)
+                                   .containsOnly(sam, frodo, pippin, merry);
+
+    // nested property are supported
+    assertThat(fellowshipOfTheRing).filteredOn("race.name", "Man")
+                                   .containsOnly(aragorn, boromir);
+
+    // you can apply different comparison
+    assertThat(fellowshipOfTheRing).filteredOn("race", notIn(HOBBIT, MAN))
+                                   .containsOnly(gandalf, gimli, legolas);
+
+    assertThat(fellowshipOfTheRing).filteredOn("race", in(MAIA, MAN))
+                                   .containsOnly(gandalf, boromir, aragorn);
+
+    assertThat(fellowshipOfTheRing).filteredOn("race", not(HOBBIT))
+                                   .containsOnly(gandalf, boromir, aragorn, gimli, legolas);
+
+    // you can chain multiple filter criteria
+    assertThat(fellowshipOfTheRing).filteredOn("race", MAN)
+                                   .filteredOn("name", not("Boromir"))
+                                   .containsOnly(aragorn);
+
+    // having(condition) example
+    Condition<BasketBallPlayer> potentialMvp = new Condition<BasketBallPlayer>() {
+      @Override
+      public boolean matches(BasketBallPlayer player) {
+        return player.getPointsPerGame() > 20 && (player.getAssistsPerGame() >= 8 || player.getReboundsPerGame() >= 8);
+      }
+    };
+    assertThat(basketBallPlayers).filteredOn(potentialMvp).containsOnly(rose, james, dwayne);
   }
 
   @Test
