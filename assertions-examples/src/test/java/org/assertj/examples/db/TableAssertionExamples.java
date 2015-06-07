@@ -38,7 +38,7 @@ public class TableAssertionExamples extends AbstractAssertionsExamples {
         .value().isEqualTo("Clayton")
         .value().isEqualTo("Mullen");
 
-    // Check first row values
+    // Check row at index 1 (the second row) values
     assertThat(table).row(1)
         .value().isEqualTo(2)
         .value().isEqualTo("Evans")
