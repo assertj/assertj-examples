@@ -31,14 +31,14 @@ public class TableAssertionExamples extends AbstractAssertionsExamples {
   public void basic_table_assertion_examples() {
     Table table = new Table(dataSource, "members");
 
-    // On the values of a column by using the name of the column
+    // Check column "name" values
     assertThat(table).column("name")
         .value().isEqualTo("Hewson")
         .value().isEqualTo("Evans")
         .value().isEqualTo("Clayton")
         .value().isEqualTo("Mullen");
 
-    // On the values of a row by using the index of the row
+    // Check first row values
     assertThat(table).row(1)
         .value().isEqualTo(2)
         .value().isEqualTo("Evans")
