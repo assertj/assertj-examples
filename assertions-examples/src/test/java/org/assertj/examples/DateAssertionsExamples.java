@@ -13,12 +13,12 @@
 package org.assertj.examples;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.util.Dates.monthOf;
-import static org.assertj.core.util.Dates.parse;
-import static org.assertj.core.util.Dates.parseDatetime;
-import static org.assertj.core.util.Dates.parseDatetimeWithMs;
-import static org.assertj.core.util.Dates.tomorrow;
-import static org.assertj.core.util.Dates.yesterday;
+import static org.assertj.core.util.DateUtil.monthOf;
+import static org.assertj.core.util.DateUtil.parse;
+import static org.assertj.core.util.DateUtil.parseDatetime;
+import static org.assertj.core.util.DateUtil.parseDatetimeWithMs;
+import static org.assertj.core.util.DateUtil.tomorrow;
+import static org.assertj.core.util.DateUtil.yesterday;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -252,11 +252,7 @@ public class DateAssertionsExamples extends AbstractAssertionsExamples {
     try {
       assertThat(theReturnOfTheKing.getReleaseDate()).isEqualTo("17/12/2003");
     } catch (AssertionError e) {
-      assertThat(e).hasMessage("Failed to parse 17/12/2003 with any of these date formats: [" +
-                               "yyyy-MM-dd'T'HH:mm:ss.SSS, " +
-                               "yyyy-MM-dd HH:mm:ss.SSS, " +
-                               "yyyy-MM-dd'T'HH:mm:ss, " +
-                               "yyyy-MM-dd]");
+      logAssertionErrorMessage("date assertion parse error", e);
     }
 
     // another way of using custom date format:

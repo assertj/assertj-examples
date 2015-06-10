@@ -14,9 +14,9 @@ package org.assertj.examples;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.util.Arrays.array;
-import static org.assertj.core.util.Dates.monthOf;
-import static org.assertj.core.util.Dates.tomorrow;
-import static org.assertj.core.util.Dates.yesterday;
+import static org.assertj.core.util.DateUtil.monthOf;
+import static org.assertj.core.util.DateUtil.tomorrow;
+import static org.assertj.core.util.DateUtil.yesterday;
 import static org.assertj.core.util.Lists.newArrayList;
 
 import java.math.BigDecimal;

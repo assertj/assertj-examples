@@ -449,6 +449,7 @@ public class IterableAssertionsExamples extends AbstractAssertionsExamples {
   @Test
   public void iterable_assertions_on_flat_extracted_values_examples() throws Exception {
     assertThat(newArrayList(noah, james)).flatExtracting(teammates()).contains(dwayne, rose);
+    assertThat(newArrayList(noah, james)).flatExtracting("teamMates").contains(dwayne, rose);
   }
 
   @Test
@@ -523,6 +524,15 @@ public class IterableAssertionsExamples extends AbstractAssertionsExamples {
       assertThat(list1).usingFieldByFieldElementComparator().isEqualTo(list2);
     } catch (AssertionError e) {
       logAssertionErrorMessage("asBinary for byte list", e);
+    }
+  }
+
+  @Test
+  public void display_collection_with_one_element_per_line() throws Exception {
+    try {
+      assertThat(fellowshipOfTheRing).contains(sauron);
+    } catch (AssertionError e) {
+      logAssertionErrorMessage("display collection with one element per line", e);
     }
   }
 

@@ -31,6 +31,7 @@ public class UriAssertionsExamples extends AbstractAssertionsExamples {
                                                                   .hasFragment("print");
     assertThat(new URI("http://assertj.org")).hasNoFragment()
                                              .hasNoPort()
+                                             .hasPath("")
                                              .hasNoQuery()
                                              .hasNoUserInfo();
 

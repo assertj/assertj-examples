@@ -37,6 +37,7 @@ import java.util.Arrays;
 import java.util.Comparator;
 
 import org.assertj.core.util.introspection.IntrospectionError;
+import org.assertj.examples.data.Employee;
 import org.assertj.examples.data.Race;
 import org.assertj.examples.data.Ring;
 import org.assertj.examples.data.TolkienCharacter;
@@ -96,6 +97,16 @@ public class ArrayAssertionsExamples extends AbstractAssertionsExamples {
     assertThat(array).containsSequence("--option", "c=d");
     // containsSequence would fail but not containsSubsequence.
     assertThat(array).containsSubsequence("a=b", "c=d");
+  }
+
+  @Test
+  public void display_array_with_one_element_per_line() throws Exception {
+    TolkienCharacter[] fellowshipOfTheRingArray = fellowshipOfTheRing.toArray(new TolkienCharacter[0]);
+    try {
+      assertThat(fellowshipOfTheRingArray).contains(sauron);
+    } catch (AssertionError e) {
+      logAssertionErrorMessage("isSorted with custom element comparator", e);
+    }
   }
 
   @Test
@@ -180,6 +191,7 @@ public class ArrayAssertionsExamples extends AbstractAssertionsExamples {
 
     // ring comparison by increasing power
     Comparator<Ring> increasingPowerRingComparator = new Comparator<Ring>() {
+      @Override
       public int compare(Ring ring1, Ring ring2) {
         return -ring1.compareTo(ring2);
       }
@@ -386,5 +398,49 @@ public class ArrayAssertionsExamples extends AbstractAssertionsExamples {
 	}
   }
 
+  @Test
+  public void array_assertions_comparing_elements_field_by_field_example() {
+    // this is useful if elements don't have a good equals method implementation.
+    Employee bill = new Employee("Bill", 60, "Micro$oft");
+    final Employee[] micro$oftEmployees = array(bill);
+    Employee appleBill = new Employee("Bill", 60, "Apple");
+
+    // this assertion should fail as the company differs but it passes since Employee equals ignores company fields.
+    assertThat(micro$oftEmployees).contains(appleBill);
+
+    // let's make the assertion fails by comparing all Employee's fields instead of using equals.
+    try {
+      assertThat(micro$oftEmployees).usingFieldByFieldElementComparator().contains(appleBill);
+    } catch (AssertionError e) {
+      logAssertionErrorMessage("contains for Iterable using field by field element comparator", e);
+    }
+    // if we don't compare company, appleBill is equivalent to bill.
+    assertThat(micro$oftEmployees).usingElementComparatorIgnoringFields("company").contains(appleBill);
+
+    // if we compare only name and company, youngBill is equivalent to bill ...
+    Employee youngBill = new Employee("Bill", 25, "Micro$oft");
+    assertThat(micro$oftEmployees).usingElementComparatorOnFields("company").contains(youngBill);
+    // ... but not if we compare only age.
+    try {
+      assertThat(micro$oftEmployees).usingElementComparatorOnFields("age").contains(youngBill);
+    } catch (AssertionError e) {
+      logAssertionErrorMessage("contains for Iterable usingElementComparatorOnFields", e);
+    }
+
+    // another example with usingElementComparatorOnFields
+    TolkienCharacter frodo = new TolkienCharacter("Frodo", 33, HOBBIT);
+    TolkienCharacter sam = new TolkienCharacter("Sam", 38, HOBBIT);
+
+    // frodo and sam both are hobbits, so they are equals when comparing only race ...
+    TolkienCharacter[] array = array(frodo);
+    assertThat(array).usingElementComparatorOnFields("race").contains(sam);
+    assertThat(array).usingElementComparatorOnFields("race").isEqualTo(array(sam));
+    // ... but not when comparing both name and race
+    try {
+      assertThat(array).usingElementComparatorOnFields("name", "race").contains(sam);
+    } catch (AssertionError e) {
+      logAssertionErrorMessage("contains for Iterable usingElementComparatorOnFields", e);
+    }
+  }
   
 }

@@ -12,7 +12,7 @@
  */
 package org.assertj.examples;
 
-import static org.assertj.core.util.Dates.parse;
+import static org.assertj.core.util.DateUtil.parse;
 import static org.assertj.core.util.Lists.newArrayList;
 import static org.assertj.examples.data.Race.DWARF;
 import static org.assertj.examples.data.Race.ELF;
@@ -62,6 +62,7 @@ public abstract class AbstractAssertionsExamples {
 
   static final String ERROR_MESSAGE_EXAMPLE_FOR_ASSERTION = "{} assertion : {}\n";
   protected static final Logger logger = LoggerFactory.getLogger("[ERROR MESSAGE EXAMPLE]");
+  protected static final Logger log = LoggerFactory.getLogger("\n");
   /**
    * log error message if one wants to see it "live".
    */

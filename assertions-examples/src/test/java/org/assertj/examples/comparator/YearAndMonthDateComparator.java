@@ -12,14 +12,15 @@
  */
 package org.assertj.examples.comparator;
 
-import static org.assertj.core.util.Dates.monthOf;
-import static org.assertj.core.util.Dates.yearOf;
+import static org.assertj.core.util.DateUtil.monthOf;
+import static org.assertj.core.util.DateUtil.yearOf;
 
 import java.util.Comparator;
 import java.util.Date;
 
 public class YearAndMonthDateComparator implements Comparator<Date> {
 
+  @Override
   public int compare(Date d1, Date d2) {
     int yearDifference = yearOf(d1) - yearOf(d2);
     return yearDifference != 0 ? yearDifference : monthOf(d1) - monthOf(d2);

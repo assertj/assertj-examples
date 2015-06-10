@@ -15,6 +15,7 @@ package org.assertj.examples;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.offset;
 import static org.assertj.core.api.Assertions.within;
+import static org.assertj.core.api.Assertions.withinPercentage;
 
 import java.math.BigDecimal;
 
@@ -116,6 +117,10 @@ public class NumberAssertionsExamples extends AbstractAssertionsExamples {
 
     // same stuff using within instead of offset
     assertThat(8.1).isCloseTo(8.0, within(0.1));
+    assertThat(5.0).isCloseTo(6.0, withinPercentage(20.0));
+    assertThat(5.0).isCloseTo(6.0, withinPercentage(20));
+    assertThat(5).isCloseTo(6, withinPercentage(20));
+
     assertThat(8.2f).isCloseTo(8.0f, within(0.2f));
     assertThat(new BigDecimal("8.1")).isCloseTo(new BigDecimal("8.0"), within(new BigDecimal("0.1")));
     // just to see that the BigDecimal format does not have impact on the assertion

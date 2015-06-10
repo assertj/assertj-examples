@@ -13,10 +13,14 @@
 package org.assertj.examples;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.util.Arrays.array;
+import static org.assertj.core.util.IterableUtil.smartFormat;
+import static org.assertj.core.util.Lists.newArrayList;
 
 import java.io.File;
 import java.util.Comparator;
 
+import org.assertj.core.presentation.StandardRepresentation;
 import org.junit.Test;
 
 /**
@@ -67,6 +71,8 @@ public class StringAssertionsExamples extends AbstractAssertionsExamples {
 
     // check size.
     assertThat("C-3PO").hasSameSizeAs("R2-D2").hasSize(5);
+
+    assertThat("3210").containsOnlyDigits();
 
     //
     assertThat("Frodo").doesNotStartWith("fro")
@@ -199,6 +205,12 @@ public class StringAssertionsExamples extends AbstractAssertionsExamples {
   public void switch_to_String_assertion() {
     Object title = "Game of Thrones";
     assertThat(title).asString().endsWith("ones");
+  }
+
+  @Test
+  public void multine_collection_formatting() {
+    String[] greatBooks = array("A Game of Thrones", "The Lord of the Rings", "Assassin's Apprentice  ....");
+    String smartFormat = smartFormat(StandardRepresentation.STANDARD_REPRESENTATION, newArrayList(greatBooks));
   }
 
 }
