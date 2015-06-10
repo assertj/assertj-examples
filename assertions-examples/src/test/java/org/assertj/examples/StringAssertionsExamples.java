@@ -211,6 +211,7 @@ public class StringAssertionsExamples extends AbstractAssertionsExamples {
   public void multine_collection_formatting() {
     String[] greatBooks = array("A Game of Thrones", "The Lord of the Rings", "Assassin's Apprentice  ....");
     String smartFormat = smartFormat(StandardRepresentation.STANDARD_REPRESENTATION, newArrayList(greatBooks));
+    log.info(smartFormat);
   }
 
 }
