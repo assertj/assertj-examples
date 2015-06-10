@@ -184,7 +184,7 @@ public class StringAssertionsExamples extends AbstractAssertionsExamples {
   }
 
   @Test
-  public void use_hexadecimal_representation_in_error_messages() throws UnsupportedEncodingException {
+  public void use_hexadecimal_representation_in_error_messages() {
     try {
       assertThat("µµµ").inHexadecimal().contains("μμμ");
     } catch (AssertionError e) {
