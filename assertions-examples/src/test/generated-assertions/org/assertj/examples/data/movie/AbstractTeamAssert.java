@@ -61,7 +61,7 @@ public abstract class AbstractTeamAssert<S extends AbstractTeamAssert<S, A>, A e
    *
    * @param actors the given elements that should not be in actual Team's actors.
    * @return this assertion object.
-   * @throws AssertionError if the actual Team's actors does not contain all given String elements.
+   * @throws AssertionError if the actual Team's actors contains any given String elements.
    */
   public S doesNotHaveActors(String... actors) {
     // check that actual Team we want to make assertions on is not null.

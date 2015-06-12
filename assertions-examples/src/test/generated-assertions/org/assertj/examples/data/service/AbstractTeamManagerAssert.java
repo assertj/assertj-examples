@@ -61,7 +61,7 @@ public abstract class AbstractTeamManagerAssert<S extends AbstractTeamManagerAss
    *
    * @param players the given elements that should not be in actual TeamManager's players.
    * @return this assertion object.
-   * @throws AssertionError if the actual TeamManager's players does not contain all given org.assertj.examples.data.BasketBallPlayer elements.
+   * @throws AssertionError if the actual TeamManager's players contains any given org.assertj.examples.data.BasketBallPlayer elements.
    */
   public S doesNotHavePlayers(org.assertj.examples.data.BasketBallPlayer... players) {
     // check that actual TeamManager we want to make assertions on is not null.

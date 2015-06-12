@@ -27,8 +27,10 @@ import static org.assertj.examples.data.Ring.narya;
 import static org.assertj.examples.data.Ring.nenya;
 import static org.assertj.examples.data.Ring.oneRing;
 import static org.assertj.examples.data.Ring.vilya;
-import static org.assertj.examples.extractor.BasketballExtractors.*;
-import static org.assertj.examples.extractor.TolkienCharactersExtractors.*;
+import static org.assertj.examples.extractor.BasketballExtractors.teammates;
+import static org.assertj.examples.extractor.TolkienCharactersExtractors.age;
+import static org.assertj.examples.extractor.TolkienCharactersExtractors.ageAndRace;
+import static org.assertj.examples.extractor.TolkienCharactersExtractors.race;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -154,6 +156,7 @@ public class IterableAssertionsExamples extends AbstractAssertionsExamples {
 	assertThat(fellowshipOfTheRing).contains(gandalf).doesNotContain(sauron);
 	// ... but if we compare only race name Sauron is in fellowshipOfTheRing because he's a Maia like Gandalf.
 	assertThat(fellowshipOfTheRing).usingElementComparator(raceNameComparator).contains(sauron);
+    assertThat(fellowshipOfTheRing).usingElementComparator(raceNameComparator).containsOnly(sauron, gandalf);
 
 	// note that error message mentions the comparator used to better understand the failure
 	// the message indicates that Sauron were found because he is a Maia like Gandalf.

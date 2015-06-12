@@ -61,7 +61,7 @@ public abstract class AbstractWithGenericListTypeAssert<S extends AbstractWithGe
    *
    * @param movies the given elements that should not be in actual WithGenericListType's movies.
    * @return this assertion object.
-   * @throws AssertionError if the actual WithGenericListType's movies does not contain all given org.assertj.examples.data.movie.Movie elements.
+   * @throws AssertionError if the actual WithGenericListType's movies contains any given org.assertj.examples.data.movie.Movie elements.
    */
   public S doesNotHaveMovies(org.assertj.examples.data.movie.Movie... movies) {
     // check that actual WithGenericListType we want to make assertions on is not null.
