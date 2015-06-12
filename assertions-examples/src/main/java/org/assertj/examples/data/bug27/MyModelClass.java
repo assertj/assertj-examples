@@ -12,7 +12,6 @@
  */
 package org.assertj.examples.data.bug27;
 
-
 public class MyModelClass {
   @SuppressWarnings("unused")
   private MyIteratorWrapper iterator;

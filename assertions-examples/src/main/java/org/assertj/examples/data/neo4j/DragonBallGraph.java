@@ -12,10 +12,10 @@
  */
 package org.assertj.examples.data.neo4j;
 
-import com.google.common.io.CharStreams;
-import org.neo4j.cypher.javacompat.ExecutionEngine;
-import org.neo4j.cypher.javacompat.ExecutionResult;
-import org.neo4j.graphdb.*;
+import static com.google.common.base.Splitter.on;
+import static com.google.common.collect.FluentIterable.from;
+import static com.google.common.collect.Maps.newHashMap;
+import static java.lang.String.format;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -25,10 +25,16 @@ import java.util.LinkedHashSet;
 import java.util.LinkedList;
 import java.util.Map;
 
-import static com.google.common.base.Splitter.on;
-import static com.google.common.collect.FluentIterable.from;
-import static com.google.common.collect.Maps.newHashMap;
-import static java.lang.String.format;
+import org.neo4j.cypher.javacompat.ExecutionEngine;
+import org.neo4j.cypher.javacompat.ExecutionResult;
+import org.neo4j.graphdb.GraphDatabaseService;
+import org.neo4j.graphdb.Node;
+import org.neo4j.graphdb.Path;
+import org.neo4j.graphdb.Relationship;
+import org.neo4j.graphdb.ResourceIterator;
+import org.neo4j.graphdb.Transaction;
+
+import com.google.common.io.CharStreams;
 
 public class DragonBallGraph {
 

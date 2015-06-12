@@ -13,12 +13,12 @@
 package org.assertj.examples;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.util.Dates.monthOf;
-import static org.assertj.core.util.Dates.parse;
-import static org.assertj.core.util.Dates.parseDatetime;
-import static org.assertj.core.util.Dates.parseDatetimeWithMs;
-import static org.assertj.core.util.Dates.tomorrow;
-import static org.assertj.core.util.Dates.yesterday;
+import static org.assertj.core.util.DateUtil.monthOf;
+import static org.assertj.core.util.DateUtil.parse;
+import static org.assertj.core.util.DateUtil.parseDatetime;
+import static org.assertj.core.util.DateUtil.parseDatetimeWithMs;
+import static org.assertj.core.util.DateUtil.tomorrow;
+import static org.assertj.core.util.DateUtil.yesterday;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -95,9 +95,13 @@ public class DateAssertionsExamples extends AbstractAssertionsExamples {
     Date date5 = parseDatetimeWithMs("2003-01-01T05:55:55.555");
 
     assertThat(date1).isEqualToIgnoringMillis(date2);
+    assertThat(date1).isInSameSecondAs(date2);
     assertThat(date1).isEqualToIgnoringSeconds(date3);
+    assertThat(date1).isInSameMinuteAs(date3);
     assertThat(date1).isEqualToIgnoringMinutes(date4);
+    assertThat(date1).isInSameHourAs(date4);
     assertThat(date1).isEqualToIgnoringHours(date5);
+    assertThat(date1).isInSameDayAs(date5);
 
     try {
       assertThat(date1).isEqualToIgnoringMillis(date3);
@@ -244,25 +248,21 @@ public class DateAssertionsExamples extends AbstractAssertionsExamples {
     assertThat(theTwoTowers.getReleaseDate()).withDefaultDateFormatsOnly().isEqualTo("2002-12-18");
     // ... which is then used for all following assertions
     assertThat(theReturnOfTheKing.getReleaseDate()).isEqualTo("2003-12-17");
-    // but now the registered custom format are forgotten
-    try {
-      assertThat(theReturnOfTheKing.getReleaseDate()).isEqualTo("17/12/2003");
-    } catch (AssertionError e) {
-      assertThat(e).hasMessage("Failed to parse 17/12/2003 with any of these date formats: [" +
-                               "yyyy-MM-dd'T'HH:mm:ss.SSS, " +
-                               "yyyy-MM-dd HH:mm:ss.SSS, " +
-                               "yyyy-MM-dd'T'HH:mm:ss, " +
-                               "yyyy-MM-dd]");
-    }
 
-    // another way of using custom date format:
+    // another way of using custom date format by calling static method useDateFormat
     Assertions.registerCustomDateFormat("dd/MM/yyyy");
     assertThat(theTwoTowers.getReleaseDate()).isEqualTo("18/12/2002");
     assertThat(theReturnOfTheKing.getReleaseDate()).isEqualTo("17/12/2003");
 
-    // default date formats can still be used
-    assertThat(theTwoTowers.getReleaseDate()).isEqualTo("2002-12-18T00.00.00.000");
+    // switch back to default date formats
+    Assertions.useDefaultDateFormatsOnly();
+    assertThat(theTwoTowers.getReleaseDate()).isEqualTo("2002-12-18");
     assertThat(theReturnOfTheKing.getReleaseDate()).isEqualTo("2003-12-17");
+
+    // you can switch back to default easily with one of
+    Assertions.useDefaultDateFormatsOnly();
+    assertThat(theTwoTowers.getReleaseDate()).isEqualTo("2002-12-18T00.00.00.000");
+    // choose whatever approach suits you best !
   }
 
   @Test

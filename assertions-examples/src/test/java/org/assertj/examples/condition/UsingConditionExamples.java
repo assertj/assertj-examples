@@ -103,23 +103,23 @@ public class UsingConditionExamples extends AbstractAssertionsExamples {
     assertThat(newLinkedHashSet("Luke", "Yoda", "Leia")).haveAtLeast(2, jediPower);
     assertThat(newLinkedHashSet("Luke", "Yoda", "Obiwan")).haveAtLeast(2, jediPower);
 
-    // areAtMost & areNotAtMost
+    // areAtMost
     assertThat(newLinkedHashSet("Luke", "Yoda", "Leia")).areAtMost(2, jedi);
     assertThat(newLinkedHashSet("Luke", "Solo", "Leia")).areAtMost(2, jedi);
 
-    // haveAtMost & doNotHaveAtMost
+    // haveAtMost
     assertThat(newLinkedHashSet("Luke", "Yoda", "Leia")).haveAtMost(2, jediPower);
     assertThat(newLinkedHashSet("Luke", "Solo", "Leia")).haveAtMost(2, jediPower);
 
-    // areExactly & areNotExactly
+    // areExactly
     assertThat(newLinkedHashSet("Luke", "Yoda", "Leia")).areExactly(2, jedi);
 
-    // haveExactly & haveNotExactly
+    // haveExactly
     assertThat(newLinkedHashSet("Luke", "Yoda", "Leia")).haveExactly(2, jediPower);
   }
 
   @Test
-  public void has_not_condition_example() {
+  public void combined_condition_example() {
     assertThat("Yoda").has(jediPower);
     assertThat("Yoda").has(allOf(jediPower, not(sithPower)));
     assertThat("Solo").has(not(jediPower));
@@ -133,19 +133,12 @@ public class UsingConditionExamples extends AbstractAssertionsExamples {
     private final Set<String> jedis = newLinkedHashSet("Luke", "Yoda", "Obiwan");
 
     @Override
-    public boolean matches(String value) {
-      return jedis.contains(value);
-    };
+    public boolean matches(String actual) {
+      return jedis.contains(actual);
+    }
   };
 
-  private final Condition<String> jediPower = new Condition<String>("jedi power") {
-    private final Set<String> jedis = newLinkedHashSet("Luke", "Yoda", "Obiwan");
-
-    @Override
-    public boolean matches(String value) {
-      return jedis.contains(value);
-    };
-  };
+  private final Condition<String> jediPower = jedi;
 
   private final Condition<String> sith = new Condition<String>("sith") {
     private final Set<String> siths = newLinkedHashSet("Sidious", "Vader", "Plagueis");

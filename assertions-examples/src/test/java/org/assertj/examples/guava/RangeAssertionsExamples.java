@@ -27,7 +27,7 @@ import com.google.common.collect.Range;
 public class RangeAssertionsExamples extends AbstractAssertionsExamples {
 
   @Test
-  public void table_assertions_examples() {
+  public void range_assertions_examples() {
 
     Range<Integer> range = Range.closed(10, 12);
 

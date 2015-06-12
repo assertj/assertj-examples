@@ -12,13 +12,13 @@
  */
 package org.assertj.examples.neo4j;
 
+import java.io.IOException;
+
 import org.assertj.examples.data.neo4j.DragonBallGraph;
 import org.junit.AfterClass;
 import org.junit.BeforeClass;
 import org.neo4j.graphdb.GraphDatabaseService;
 import org.neo4j.test.TestGraphDatabaseFactory;
-
-import java.io.IOException;
 
 public class Neo4jAssertionExamples {
 

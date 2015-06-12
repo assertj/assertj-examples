@@ -12,7 +12,8 @@
  */
 package org.assertj.examples.comparator;
 
-import static org.assertj.core.util.Dates.*;
+import static org.assertj.core.util.DateUtil.monthOf;
+import static org.assertj.core.util.DateUtil.yearOf;
 
 import java.util.Comparator;
 import java.util.Date;

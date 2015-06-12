@@ -56,7 +56,7 @@ public class IterableAssertionsExamples extends AbstractAssertionsExamples {
   public void iterable_basic_assertions_examples() {
 
 	// would work the same way with Iterable<Ring>,
-	Iterable<? extends Ring> elvesRings = newArrayList(vilya, nenya, narya);
+    Iterable<Ring> elvesRings = newArrayList(vilya, nenya, narya);
 	assertThat(elvesRings).isNotEmpty().hasSize(3);
 	assertThat(elvesRings).hasSameSizeAs(trilogy);
 	assertThat(elvesRings).contains(nenya).doesNotContain(oneRing);
@@ -156,7 +156,6 @@ public class IterableAssertionsExamples extends AbstractAssertionsExamples {
 	assertThat(fellowshipOfTheRing).contains(gandalf).doesNotContain(sauron);
 	// ... but if we compare only race name Sauron is in fellowshipOfTheRing because he's a Maia like Gandalf.
 	assertThat(fellowshipOfTheRing).usingElementComparator(raceNameComparator).contains(sauron);
-    assertThat(fellowshipOfTheRing).usingElementComparator(raceNameComparator).containsOnly(sauron, gandalf);
 
 	// note that error message mentions the comparator used to better understand the failure
 	// the message indicates that Sauron were found because he is a Maia like Gandalf.
@@ -331,9 +330,7 @@ public class IterableAssertionsExamples extends AbstractAssertionsExamples {
   @Test
   public void containsSubSequence_assertion_examples() {
 	assertThat(newArrayList("Batman", "is", "weaker", "than", "Superman", "but", "he", "is", "less", "annoying"))
-	                                                                                                             .containsSubsequence("Superman",
-	                                                                                                                                  "is",
-	                                                                                                                                  "annoying");
+      .containsSubsequence("Superman", "is", "annoying");
 	assertThat(newArrayList("Breaking", "objects", "is", "pretty", "bad")).containsSubsequence("Breaking", "bad");
 	try {
 	  assertThat(newArrayList("A", "B", "C", "D")).containsSubsequence("B", "A", "C");

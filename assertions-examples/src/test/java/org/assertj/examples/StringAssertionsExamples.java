@@ -15,7 +15,6 @@ package org.assertj.examples;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import java.io.File;
-import java.io.UnsupportedEncodingException;
 import java.util.Comparator;
 
 import org.junit.Test;
@@ -65,9 +64,6 @@ public class StringAssertionsExamples extends AbstractAssertionsExamples {
     assertThat("").isEmpty();
     assertThat("").isNullOrEmpty();
     assertThat("not empty").isNotEmpty();
-
-    // check size.
-    assertThat("C-3PO").hasSameSizeAs("R2-D2").hasSize(5);
   }
 
   @Test
@@ -105,6 +101,7 @@ public class StringAssertionsExamples extends AbstractAssertionsExamples {
     assertThat(stringBuilder).containsOnlyOnce("do");
 
     Comparator<CharSequence> caseInsensitiveComparator = new Comparator<CharSequence>() {
+      @Override
       public int compare(CharSequence s1, CharSequence s2) {
         return s1.toString().toLowerCase().compareTo(s2.toString().toLowerCase());
       }
@@ -173,7 +170,7 @@ public class StringAssertionsExamples extends AbstractAssertionsExamples {
   }
 
   @Test
-  public void use_hexadecimal_representation_in_error_messages() throws UnsupportedEncodingException {
+  public void use_hexadecimal_representation_in_error_messages() {
     try {
       assertThat("µµµ").inHexadecimal().contains("μμμ");
     } catch (AssertionError e) {

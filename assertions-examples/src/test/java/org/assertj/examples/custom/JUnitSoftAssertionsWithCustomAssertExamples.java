@@ -12,11 +12,10 @@
  */
 package org.assertj.examples.custom;
 
+import org.assertj.examples.AbstractAssertionsExamples;
 import org.junit.Ignore;
 import org.junit.Rule;
 import org.junit.Test;
-
-import org.assertj.examples.AbstractAssertionsExamples;
 
 public class JUnitSoftAssertionsWithCustomAssertExamples extends AbstractAssertionsExamples {
 
@@ -39,7 +38,7 @@ public class JUnitSoftAssertionsWithCustomAssertExamples extends AbstractAsserti
     // basic object to test
     String name = "Michael Jordan - Bulls";
     // custom object to test
-    Employee kent = new Employee("Kent Beck");
+    Employee kent = new Employee("Kent Beck"); 
     kent.jobTitle = "TDD evangelist";
 
     // use our own soft assertions based on JUnit rule

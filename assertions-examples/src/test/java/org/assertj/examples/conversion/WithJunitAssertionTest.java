@@ -12,14 +12,20 @@
  */
 package org.assertj.examples.conversion;
 
+import static com.google.common.collect.Lists.newArrayList;
+import static org.junit.Assert.assertArrayEquals;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertNotSame;
+import static org.junit.Assert.assertNull;
+import static org.junit.Assert.assertSame;
+import static org.junit.Assert.assertTrue;
+
 import java.util.List;
 
-import static com.google.common.collect.Lists.newArrayList;
-import static org.junit.Assert.*;
-
-import org.junit.Test;
-
 import org.assertj.examples.data.Person;
+import org.junit.Test;
 
 /**
  * This class is just used to check the effect of the script that migrates JUnit assertions to AssertJ assertions.

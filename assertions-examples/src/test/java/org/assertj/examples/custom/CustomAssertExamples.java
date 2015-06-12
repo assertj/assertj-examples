@@ -79,7 +79,7 @@ public class CustomAssertExamples extends AbstractAssertionsExamples {
 	employee.jobTitle = "CEO";
 	employee.name = "John Smith";
 	assertThat(employee).hasJobTitle("CEO").hasName("John Smith").isEqualTo(employee);
-	// assertThat(employee).hasName("John Smith").hasJobTitle("CEO");
+	assertThat(employee).hasName("John Smith").hasJobTitle("CEO");
 
 	Human joe = new Human();
 	joe.name = "joe";

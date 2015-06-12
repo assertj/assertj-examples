@@ -1,6 +1,6 @@
 #!/bin/bash
 
-rsync -av ../../test/java/org/assertj/swing/junit/examples/ ../../../../assertj-swing-testng-examples/src/test/java/org/assertj/swing/testng/examples
+rsync -av --delete ../../test/java/org/assertj/swing/junit/examples/ ../../../../assertj-swing-testng-examples/src/test/java/org/assertj/swing/testng/examples
 
 for example in `find ../../../../assertj-swing-testng-examples/src/test/java/org/assertj/swing/testng/examples -type f -name *.java`
 do
@@ -20,4 +20,5 @@ do
   # the annotations
   perl -i -p -e 'undef $/; s/\@After([^C])/\@AfterMethod\1/g' "${example}"
   perl -i -p -e 'undef $/; s/\@Before([^C])/\@BeforeMethod\1/g' "${example}"
+  perl -i -p -e 'undef $/; s/\@Test\(expected/\@Test(expectedExceptions/g' "${example}"
 done

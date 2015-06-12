@@ -17,17 +17,17 @@ import java.util.Iterator;
 @SuppressWarnings("rawtypes")
 public class MyIteratorWrapper implements Iterator {
 
-    @Override
-    public boolean hasNext() {
-      return false;
-    }
-
-    @Override
-    public Object next() {
-      return null;
-    }
-
-    @Override
-    public void remove() {
-    }
+  @Override
+  public boolean hasNext() {
+	return false;
   }
+
+  @Override
+  public Object next() {
+	return null;
+  }
+
+  @Override
+  public void remove() {
+  }
+}
