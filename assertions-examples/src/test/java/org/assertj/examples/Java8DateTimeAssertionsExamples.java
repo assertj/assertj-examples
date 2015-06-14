@@ -17,6 +17,8 @@ import static org.assertj.core.api.Assertions.assertThat;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
+import java.time.OffsetDateTime;
+import java.time.OffsetTime;
 import java.time.ZoneId;
 import java.time.ZoneOffset;
 import java.time.ZonedDateTime;
@@ -164,4 +166,65 @@ public class Java8DateTimeAssertionsExamples extends AbstractAssertionsExamples 
                      .isBeforeOrEqualTo("02:00:00")
                      .isBeforeOrEqualTo("01:00:00");
   }
+
+  @Test
+  public void offsetTime_assertions_examples() {
+    OffsetTime oneAm = OffsetTime.parse("01:00:00+02:00");
+
+    assertThat(oneAm).isEqualTo("01:00:00+02:00");
+
+    assertThat(oneAm).isAfter("00:00:00+02:00")
+                     .isAfterOrEqualTo("00:00:00+02:00")
+                     .isAfterOrEqualTo("01:00:00+02:00");
+
+    assertThat(oneAm).isBefore("02:00:00+02:00")
+                     .isBeforeOrEqualTo("02:00:00+02:00")
+                     .isBeforeOrEqualTo("01:00:00+02:00");
+  }
+
+  @Test
+  public void offsetDateTime_assertions_examples() {
+
+    OffsetDateTime firstOfJanuary2000InUTC = OffsetDateTime.parse("2000-01-01T00:00:00Z");
+    assertThat(firstOfJanuary2000InUTC).isEqualTo(OffsetDateTime.parse("2000-01-01T00:00:00Z"));
+    // same assertion but AssertJ takes care of expected String to OffsetDateTime conversion
+    assertThat(firstOfJanuary2000InUTC).isEqualTo("2000-01-01T00:00:00Z");
+
+    try {
+      // 2000-01-01T00:00+01:00 = 1999-12-31T23:00:00Z !
+      assertThat(firstOfJanuary2000InUTC).isEqualTo("2000-01-01T00:00+01:00");
+    } catch (AssertionError e) {
+      logAssertionErrorMessage("isEqualTo with time zone change adjustment", e);
+    }
+
+    assertThat(firstOfJanuary2000InUTC).isAfter("1999-12-31T23:59:59Z");
+    // assertion succeeds as OffsetDateTime are compared in actual's time zone
+    // 2000-01-01T00:30:00+01:00 = 1999-12-31T23:30:00Z
+    assertThat(firstOfJanuary2000InUTC).isAfter("2000-01-01T00:30:00+01:00")
+                                       .isAfterOrEqualTo("1999-12-31T23:59:59Z")
+                                       .isAfterOrEqualTo("2000-01-01T00:00:00Z");
+
+    assertThat(firstOfJanuary2000InUTC).isBefore("2000-01-01T00:00:01Z")
+                                       .isBeforeOrEqualTo("2000-01-01T00:00:01Z")
+                                       .isBeforeOrEqualTo("2000-01-01T00:00:00Z");
+
+    OffsetDateTime offsetDateTime1 = OffsetDateTime.of(2000, 1, 1, 0, 0, 0, 0, ZoneOffset.UTC);
+    OffsetDateTime offsetDateTime2 = OffsetDateTime.of(2000, 1, 1, 23, 59, 59, 999, ZoneOffset.UTC);
+    OffsetDateTime offsetDateTime3 = OffsetDateTime.of(2000, 1, 1, 0, 59, 59, 999, ZoneOffset.UTC);
+    OffsetDateTime offsetDateTime4 = OffsetDateTime.of(2000, 1, 1, 0, 0, 59, 999, ZoneOffset.UTC);
+    OffsetDateTime offsetDateTime5 = OffsetDateTime.of(2000, 1, 1, 0, 0, 0, 999, ZoneOffset.UTC);
+    assertThat(offsetDateTime1).isEqualToIgnoringHours(offsetDateTime2);
+    assertThat(offsetDateTime1).isEqualToIgnoringMinutes(offsetDateTime3);
+    assertThat(offsetDateTime1).isEqualToIgnoringSeconds(offsetDateTime4);
+    assertThat(offsetDateTime1).isEqualToIgnoringNanos(offsetDateTime5);
+
+    // example showing that OffsetDateTime are compared in actual's time zone
+    OffsetDateTime offsetDateTimeNotInUTC = OffsetDateTime.of(2000, 1, 1, 0, 0, 0, 0, ZoneOffset.MAX);
+    try {
+      assertThat(firstOfJanuary2000InUTC).isEqualToIgnoringHours(offsetDateTimeNotInUTC);
+    } catch (AssertionError e) {
+      logAssertionErrorMessage("isEqualToIgnoringHours with time zone change adjustment", e);
+    }
+  }
+
 }

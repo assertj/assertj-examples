@@ -60,8 +60,7 @@ public class DateAssertionsExamples extends AbstractAssertionsExamples {
   public void is_between_date_assertions_examples() {
     // various usage of isBetween assertion, the Two Towers release date being 2002-12-18
     // Note that isBetween(2002-12-17, 2002-12-19) includes start date but end date :
-    assertThat(theTwoTowers.getReleaseDate())
-                                             .isBetween(theFellowshipOfTheRing.getReleaseDate(),
+    assertThat(theTwoTowers.getReleaseDate()).isBetween(theFellowshipOfTheRing.getReleaseDate(),
                                                         theReturnOfTheKing.getReleaseDate())
                                              .isBetween(parse("2002-12-17"), parse("2002-12-19")) // [2002-12-17,
                                                                                                   // 2002-12-19[
