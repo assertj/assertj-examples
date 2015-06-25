@@ -13,9 +13,9 @@
 package org.assertj.examples;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.in;
-import static org.assertj.core.api.Assertions.not;
-import static org.assertj.core.api.Assertions.notIn;
+import static org.assertj.core.api.StrictAssertions.in;
+import static org.assertj.core.api.StrictAssertions.not;
+import static org.assertj.core.api.StrictAssertions.notIn;
 import static org.assertj.core.api.filter.Filters.filter;
 import static org.assertj.core.util.Lists.newArrayList;
 import static org.assertj.examples.data.Race.HOBBIT;
@@ -113,6 +113,9 @@ public class FilterExamples extends AbstractAssertionsExamples {
     assertThat(fellowshipOfTheRing).filteredOn("race", MAN)
                                    .filteredOn("name", not("Boromir"))
                                    .containsOnly(aragorn);
+
+    assertThat(fellowshipOfTheRing).filteredOn(character -> character.getName().contains("o"))
+                                   .containsOnly(aragorn, frodo, legolas, boromir);
 
     // having(condition) example
     Condition<BasketBallPlayer> potentialMvp = new Condition<BasketBallPlayer>() {

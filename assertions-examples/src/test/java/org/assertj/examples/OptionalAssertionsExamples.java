@@ -12,9 +12,11 @@
  */
 package org.assertj.examples;
 
-import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.StrictAssertions.assertThat;
 
 import java.util.Optional;
+import java.util.OptionalDouble;
+import java.util.OptionalInt;
 
 import org.junit.Test;
 
@@ -28,11 +30,13 @@ public class OptionalAssertionsExamples extends AbstractAssertionsExamples {
   @Test
   public void optional_assertions_examples() {
     Optional<String> optional = Optional.of("Test");
-    assertThat(optional).isPresent().contains("Test");
+    assertThat(optional).isPresent()
+                        .containsInstanceOf(String.class)
+                        .contains("Test");
 
     Optional<Object> emptyOptional = Optional.empty();
     assertThat(emptyOptional).isEmpty();
-    
+
     // log some error messages to have a look at them
     try {
       assertThat(emptyOptional).isPresent();
@@ -55,5 +59,15 @@ public class OptionalAssertionsExamples extends AbstractAssertionsExamples {
       logAssertionErrorMessage("OptionalAssert.isEmpty", e);
     }
   }
-  
+
+  @Test
+  public void primitives_optional_assertions_examples() {
+    OptionalInt optional = OptionalInt.of(12);
+    assertThat(optional).isPresent()
+                        .hasValue(12);
+
+    OptionalDouble emptyOptional = OptionalDouble.empty();
+    assertThat(emptyOptional).isEmpty();
+  }
+
 }
