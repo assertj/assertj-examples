@@ -31,8 +31,8 @@ public class OptionalAssertionsExamples extends AbstractAssertionsExamples {
   public void optional_assertions_examples() {
     final Optional<String> optional = Optional.of("Test");
     assertThat(optional).isPresent().contains("Test");
-//    assertThat(Optional.of("Test")).extractingValue().isEqualTo("Test");
-//    assertThat(Optional.of("Test")).extractingString().startsWith("T");
+    assertThat(Optional.of("Test")).extractingValue().isEqualTo("Test");
+    assertThat(Optional.of("Test")).extractingCharSequence().startsWith("T");
 
     Optional<Object> absentOptional = Optional.fromNullable(null);
     assertThat(absentOptional).isAbsent();

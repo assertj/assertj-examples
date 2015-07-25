@@ -41,6 +41,8 @@ public class MultimapAssertionsExamples extends AbstractAssertionsExamples {
     assertThat(nbaTeams).containsKeys("Lakers", "Spurs");
     assertThat(nbaTeams).contains(entry("Lakers", "Kobe Bryant"), entry("Spurs", "Tim Duncan"));
     assertThat(nbaTeams).containsValues("Kareem Abdul Jabbar", "Tony Parker");
+    assertThat(nbaTeams).hasSameEntriesAs(nbaTeams);
+    assertThat(nbaTeams).containsAllEntriesOf(nbaTeams);
 
     Multimap<String, String> emptyMultimap = ArrayListMultimap.create();
     assertThat(emptyMultimap).isEmpty();
