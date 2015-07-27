@@ -210,22 +210,15 @@ public class DateAssertionsExamples extends AbstractAssertionsExamples {
   }
 
   @Test
-  public void is_within_date_assertions_examples() {
+  public void has_field_date_assertions_examples() {
     Date date1 = parseDatetimeWithMs("2003-04-26T13:20:35.017");
-    assertThat(date1).isWithinMillisecond(17);
-    assertThat(date1).isWithinSecond(35);
-    assertThat(date1).isWithinMinute(20);
-    assertThat(date1).isWithinHourOfDay(13);
-    assertThat(date1).isWithinDayOfWeek(Calendar.SATURDAY);
-    assertThat(date1).isWithinMonth(4);
-    assertThat(date1).isWithinYear(2003);
-    // assertThat(date1).hasMillisecond(17);
-    // assertThat(date1).hasSecond(35);
-    // assertThat(date1).hasMinute(20);
-    // assertThat(date1).hasHourOfDay(13);
-    // assertThat(date1).hasDayOfWeek(Calendar.SATURDAY);
-    // assertThat(date1).hasMonth(4);
-    // assertThat(date1).hasYear(2003);
+    assertThat(date1).hasMillisecond(17);
+    assertThat(date1).hasSecond(35);
+    assertThat(date1).hasMinute(20);    
+    assertThat(date1).hasHourOfDay(13);
+    assertThat(date1).hasDayOfWeek(Calendar.SATURDAY);
+    assertThat(date1).hasMonth(4);
+    assertThat(date1).hasYear(2003);
   }
 
   @Test
