@@ -26,11 +26,13 @@ public abstract class AbstractHostAndPortAssert<S extends AbstractHostAndPortAss
     // check that actual HostAndPort we want to make assertions on is not null.
     isNotNull();
 
+
     // overrides the default error message with a more explicit one
     String assertjErrorMessage = "\nExpecting hostText of:\n  <%s>\nto be:\n  <%s>\nbut was:\n  <%s>";
     
-    // null safe check
+    // check
     String actualHostText = actual.getHostText();
+    System.out.println("check HostText");
     if (!Objects.areEqual(actualHostText, hostText)) {
       failWithMessage(assertjErrorMessage, actual, hostText, actualHostText);
     }

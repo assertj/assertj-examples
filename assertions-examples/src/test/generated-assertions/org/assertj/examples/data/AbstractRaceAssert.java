@@ -26,11 +26,13 @@ public abstract class AbstractRaceAssert<S extends AbstractRaceAssert<S, A>, A e
     // check that actual Race we want to make assertions on is not null.
     isNotNull();
 
+
     // overrides the default error message with a more explicit one
     String assertjErrorMessage = "\nExpecting alignment of:\n  <%s>\nto be:\n  <%s>\nbut was:\n  <%s>";
     
-    // null safe check
+    // check
     Alignment actualAlignment = actual.getAlignment();
+    System.out.println("check Alignment");
     if (!Objects.areEqual(actualAlignment, alignment)) {
       failWithMessage(assertjErrorMessage, actual, alignment, actualAlignment);
     }
@@ -49,11 +51,13 @@ public abstract class AbstractRaceAssert<S extends AbstractRaceAssert<S, A>, A e
     // check that actual Race we want to make assertions on is not null.
     isNotNull();
 
+
     // overrides the default error message with a more explicit one
     String assertjErrorMessage = "\nExpecting fullname of:\n  <%s>\nto be:\n  <%s>\nbut was:\n  <%s>";
     
-    // null safe check
+    // check
     String actualFullname = actual.getFullname();
+    System.out.println("check Fullname");
     if (!Objects.areEqual(actualFullname, fullname)) {
       failWithMessage(assertjErrorMessage, actual, fullname, actualFullname);
     }
@@ -72,11 +76,13 @@ public abstract class AbstractRaceAssert<S extends AbstractRaceAssert<S, A>, A e
     // check that actual Race we want to make assertions on is not null.
     isNotNull();
 
+
     // overrides the default error message with a more explicit one
     String assertjErrorMessage = "\nExpecting name of:\n  <%s>\nto be:\n  <%s>\nbut was:\n  <%s>";
     
-    // null safe check
+    // check
     String actualName = actual.getName();
+    System.out.println("check Name");
     if (!Objects.areEqual(actualName, name)) {
       failWithMessage(assertjErrorMessage, actual, name, actualName);
     }

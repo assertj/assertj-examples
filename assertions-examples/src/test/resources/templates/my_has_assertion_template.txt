@@ -16,7 +16,7 @@
     // check
     ${propertyType} actual${Property} = actual.get${Property}();
     System.out.println("check ${Property}");
-    if (actual${Property} != ${property_safe}) {
+    if (!Objects.areEqual(actual${Property}, ${property_safe})) {
       failWithMessage(assertjErrorMessage, actual, ${property_safe}, actual${Property});
     }
 

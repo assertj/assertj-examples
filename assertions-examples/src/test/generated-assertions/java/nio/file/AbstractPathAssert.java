@@ -26,11 +26,13 @@ public abstract class AbstractPathAssert<S extends AbstractPathAssert<S, A>, A e
     // check that actual Path we want to make assertions on is not null.
     isNotNull();
 
+
     // overrides the default error message with a more explicit one
     String assertjErrorMessage = "\nExpecting fileName of:\n  <%s>\nto be:\n  <%s>\nbut was:\n  <%s>";
     
-    // null safe check
+    // check
     Path actualFileName = actual.getFileName();
+    System.out.println("check FileName");
     if (!Objects.areEqual(actualFileName, fileName)) {
       failWithMessage(assertjErrorMessage, actual, fileName, actualFileName);
     }
@@ -49,11 +51,13 @@ public abstract class AbstractPathAssert<S extends AbstractPathAssert<S, A>, A e
     // check that actual Path we want to make assertions on is not null.
     isNotNull();
 
+
     // overrides the default error message with a more explicit one
     String assertjErrorMessage = "\nExpecting fileSystem of:\n  <%s>\nto be:\n  <%s>\nbut was:\n  <%s>";
     
-    // null safe check
+    // check
     FileSystem actualFileSystem = actual.getFileSystem();
+    System.out.println("check FileSystem");
     if (!Objects.areEqual(actualFileSystem, fileSystem)) {
       failWithMessage(assertjErrorMessage, actual, fileSystem, actualFileSystem);
     }
@@ -95,11 +99,13 @@ public abstract class AbstractPathAssert<S extends AbstractPathAssert<S, A>, A e
     // check that actual Path we want to make assertions on is not null.
     isNotNull();
 
+
     // overrides the default error message with a more explicit one
     String assertjErrorMessage = "\nExpecting parent of:\n  <%s>\nto be:\n  <%s>\nbut was:\n  <%s>";
     
-    // null safe check
+    // check
     Path actualParent = actual.getParent();
+    System.out.println("check Parent");
     if (!Objects.areEqual(actualParent, parent)) {
       failWithMessage(assertjErrorMessage, actual, parent, actualParent);
     }
@@ -118,11 +124,13 @@ public abstract class AbstractPathAssert<S extends AbstractPathAssert<S, A>, A e
     // check that actual Path we want to make assertions on is not null.
     isNotNull();
 
+
     // overrides the default error message with a more explicit one
     String assertjErrorMessage = "\nExpecting root of:\n  <%s>\nto be:\n  <%s>\nbut was:\n  <%s>";
     
-    // null safe check
+    // check
     Path actualRoot = actual.getRoot();
+    System.out.println("check Root");
     if (!Objects.areEqual(actualRoot, root)) {
       failWithMessage(assertjErrorMessage, actual, root, actualRoot);
     }

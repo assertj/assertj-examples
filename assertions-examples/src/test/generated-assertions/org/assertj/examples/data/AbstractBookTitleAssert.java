@@ -26,11 +26,13 @@ public abstract class AbstractBookTitleAssert<S extends AbstractBookTitleAssert<
     // check that actual Book.Title we want to make assertions on is not null.
     isNotNull();
 
+
     // overrides the default error message with a more explicit one
     String assertjErrorMessage = "\nExpecting title of:\n  <%s>\nto be:\n  <%s>\nbut was:\n  <%s>";
     
-    // null safe check
+    // check
     String actualTitle = actual.getTitle();
+    System.out.println("check Title");
     if (!Objects.areEqual(actualTitle, title)) {
       failWithMessage(assertjErrorMessage, actual, title, actualTitle);
     }
