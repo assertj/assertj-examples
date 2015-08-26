@@ -47,6 +47,7 @@ public class PathAssertionsExamples extends AbstractAssertionsExamples {
   private Path xFileClone;
   private Path rwxFile;
 
+  @Override
   @Before
   public void setup() {
 	xFile = Paths.get("target/xfile.txt");
@@ -218,6 +219,9 @@ public class PathAssertionsExamples extends AbstractAssertionsExamples {
 		                               .endsWithRaw(Paths.get("lib"));
 	}
 
+	
+	assertThat(Paths.get("abc.txt")).isLessThan(Paths.get("xyz.txt"));
+	
 	// assertions error examples
 
 	try {
