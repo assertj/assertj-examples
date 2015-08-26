@@ -35,6 +35,7 @@ public class StringAssertionsExamples extends AbstractAssertionsExamples {
     assertThat("Frodo").startsWith("Fro").endsWith("do").hasSize(5);
     assertThat("Frodo").contains("rod").doesNotContain("fro");
     assertThat("Frodo").containsOnlyOnce("do");
+    assertThat("Frodo").isSubstringOf("Frodon");
     try {
       assertThat("Frodo").containsOnlyOnce("o");
     } catch (AssertionError e) {
