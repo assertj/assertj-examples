@@ -12,7 +12,7 @@
  */
 package org.assertj.examples;
 
-import static org.assertj.core.api.StrictAssertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThat;
 
 import java.util.Optional;
 import java.util.OptionalDouble;
