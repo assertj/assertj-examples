@@ -16,7 +16,6 @@ import org.assertj.examples.data.Name;
 
 @SuppressWarnings("serial")
 public class NameException extends Exception {
-  private static final long serialVersionUID = 1L;
 
   public NameException(Name name) {
     super("Invalid name " + name);
