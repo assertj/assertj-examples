@@ -13,11 +13,14 @@
 package org.assertj.examples;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatExceptionOfType;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
+import static org.assertj.core.api.Assertions.catchThrowable;
 
-import org.junit.Test;
+import java.io.IOException;
+
 import org.assertj.core.api.Assertions;
-import org.assertj.core.api.ThrowableAssert.ThrowingCallable;
+import org.junit.Test;
 
 /**
  * Exception assertions examples.
@@ -104,7 +107,7 @@ public class ExceptionAssertionsExamples extends AbstractAssertionsExamples {
 
     System.err.println("\n--------------- stack trace filtered -----------------");
     Assertions.setRemoveAssertJRelatedElementsFromStackTrace(true); // TODO
-                                                                             // setRemoveAssertJRelatedElementsFromStackTrace
+    // setRemoveAssertJRelatedElementsFromStackTrace
     try {
       assertThat("Messi").isEqualTo("Ronaldo");
     } catch (AssertionError e) {
@@ -163,7 +166,7 @@ public class ExceptionAssertionsExamples extends AbstractAssertionsExamples {
     Throwable throwable = new Throwable(new NullPointerException("boom"));
 
     assertThat(throwable).hasCause(new NullPointerException("boom"));
-    
+
     // hasCauseInstanceOf will match inheritance.
     assertThat(throwable).hasCauseInstanceOf(NullPointerException.class);
     assertThat(throwable).hasCauseInstanceOf(RuntimeException.class);
@@ -185,16 +188,34 @@ public class ExceptionAssertionsExamples extends AbstractAssertionsExamples {
     // hasRootCauseExactlyInstanceOf will match only exact same type
     assertThat(throwable_root).hasRootCauseExactlyInstanceOf(NullPointerException.class);
   }
-  
+
   @Test
-  public void thrown_exception_assertion_examples() throws Exception {
-    
-    assertThatThrownBy(new ThrowingCallable() {
-      @Override
-      public void call() {
-        throw new IllegalArgumentException("something was wrong");
-      }
-    }).isInstanceOf(IllegalArgumentException.class)
-      .hasMessage("something was wrong");
+  public void thrown_exception_assertion_examples() {
+    // @format:off
+    assertThatThrownBy(() -> { throw new IllegalArgumentException("boom!"); })
+                     .isInstanceOf(IllegalArgumentException.class)
+                     .hasMessageContaining("boom");
+    // @format:on
+  }
+
+  @Test
+  public void thrown_exception_assertion_alternative() {
+    // @format:off
+    assertThatExceptionOfType(IOException.class)
+                     .isThrownBy(() -> { throw new IOException("boom!"); })
+                     .withMessage("boom!")
+                     .withNoCause(); 
+    // @format:on
+  }
+
+  @Test
+  public void bdd_style_exception_testing() {
+    // @format:off
+    // when
+    Throwable thrown = catchThrowable(() -> { throw new Exception("boom!"); });
+
+    // then
+    assertThat(thrown).isInstanceOf(Exception.class);
+    // @format:on
   }
 }
