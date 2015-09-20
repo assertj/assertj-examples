@@ -37,6 +37,9 @@ public class OptionalAssertionsExamples extends AbstractAssertionsExamples {
     Optional<Object> emptyOptional = Optional.empty();
     assertThat(emptyOptional).isEmpty();
 
+    String someString = "something";
+    assertThat(Optional.of(someString)).containsSame(someString);
+
     // log some error messages to have a look at them
     try {
       assertThat(emptyOptional).isPresent();
@@ -68,6 +71,14 @@ public class OptionalAssertionsExamples extends AbstractAssertionsExamples {
 
     OptionalDouble emptyOptional = OptionalDouble.empty();
     assertThat(emptyOptional).isEmpty();
+  }
+
+  @Test
+  public void optional_comparator_assertions_examples() {
+    Optional<String> optional = Optional.of("YODA");
+    assertThat(optional).usingValueComparator(caseInsensitiveStringComparator)
+                        .hasValue("yoda")
+                        .contains("yoda");
   }
 
 }
