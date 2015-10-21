@@ -23,7 +23,7 @@ import org.junit.Test;
 
 /**
  * {@link Optional} assertions example.
- * 
+ *
  * @author Joel Costigliola
  */
 public class OptionalAssertionsExamples extends AbstractAssertionsExamples {
@@ -40,7 +40,7 @@ public class OptionalAssertionsExamples extends AbstractAssertionsExamples {
 
     String someString = "something";
     assertThat(Optional.of(someString)).containsSame(someString);
-    assertThat(Optional.of(someString)).containing(s -> {
+    assertThat(Optional.of(someString)).satisfies(s -> {
       assertThat(s).isEqualTo("something");
       assertThat(s).startsWith("some");
       assertThat(s).endsWith("thing");
@@ -68,14 +68,14 @@ public class OptionalAssertionsExamples extends AbstractAssertionsExamples {
       logAssertionErrorMessage("OptionalAssert.isEmpty", e);
     }
     try {
-      assertThat(optional).containing(s -> {
+      assertThat(optional).satisfies(s -> {
         assertThat(s).isEqualTo("Not Test");
       });
     } catch (AssertionError e) {
       logAssertionErrorMessage("OptionalAssert.containing", e);
     }
     try {
-      assertThat(emptyOptional).containing(o -> {});
+      assertThat(emptyOptional).satisfies(o -> {});
     } catch (AssertionError e) {
       logAssertionErrorMessage("OptionalAssert.containing", e);
     }
