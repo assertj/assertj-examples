@@ -18,6 +18,7 @@ import java.util.Optional;
 import java.util.OptionalDouble;
 import java.util.OptionalInt;
 
+import org.junit.Assert;
 import org.junit.Test;
 
 /**
@@ -39,6 +40,11 @@ public class OptionalAssertionsExamples extends AbstractAssertionsExamples {
 
     String someString = "something";
     assertThat(Optional.of(someString)).containsSame(someString);
+    assertThat(Optional.of(someString)).containing(s -> {
+      assertThat(s).isEqualTo("something");
+      assertThat(s).startsWith("some");
+      assertThat(s).endsWith("thing");
+    });
 
     // log some error messages to have a look at them
     try {
@@ -60,6 +66,18 @@ public class OptionalAssertionsExamples extends AbstractAssertionsExamples {
       assertThat(optional).isEmpty();
     } catch (AssertionError e) {
       logAssertionErrorMessage("OptionalAssert.isEmpty", e);
+    }
+    try {
+      assertThat(optional).containing(s -> {
+        assertThat(s).isEqualTo("Not Test");
+      });
+    } catch (AssertionError e) {
+      logAssertionErrorMessage("OptionalAssert.containing", e);
+    }
+    try {
+      assertThat(emptyOptional).containing(o -> {});
+    } catch (AssertionError e) {
+      logAssertionErrorMessage("OptionalAssert.containing", e);
     }
   }
 
