@@ -417,6 +417,10 @@ public class IterableAssertionsExamples extends AbstractAssertionsExamples {
 
 	// extracting works also with user's types (here Race)
 	assertThat(fellowshipOfTheRing).extracting(race()).contains(HOBBIT, ELF).doesNotContain(ORC);
+    assertThat(fellowshipOfTheRing).extracting(tc -> tc.getRace()).contains(HOBBIT, ELF).doesNotContain(ORC);
+    assertThat(fellowshipOfTheRing).extracting(tc -> tc.getRace().getName())
+                                   .contains("Hobbit", "Elf")
+                                   .doesNotContain("Orc");
 
 	// extract 'name' and 'age' values.
 	assertThat(fellowshipOfTheRing).extracting(ageAndRace()).contains(tuple(33, HOBBIT), tuple(38, HOBBIT),

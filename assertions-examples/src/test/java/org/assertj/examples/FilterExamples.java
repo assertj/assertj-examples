@@ -117,6 +117,11 @@ public class FilterExamples extends AbstractAssertionsExamples {
     assertThat(fellowshipOfTheRing).filteredOn(character -> character.getName().contains("o"))
                                    .containsOnly(aragorn, frodo, legolas, boromir);
 
+    assertThat(fellowshipOfTheRing).filteredOn(character -> character.getName().contains("o"))
+                                   .containsOnly(aragorn, frodo, legolas, boromir)
+                                   .extracting(character -> character.getRace().getName())
+                                   .contains("Hobbit", "Elf", "Man");
+
     // having(condition) example
     Condition<BasketBallPlayer> potentialMvp = new Condition<BasketBallPlayer>() {
       @Override

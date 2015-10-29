@@ -218,4 +218,14 @@ public class ExceptionAssertionsExamples extends AbstractAssertionsExamples {
     assertThat(thrown).isInstanceOf(Exception.class);
     // @format:on
   }
+
+  @Test
+  public void use_as_with_exception_testing() {
+    // @format:off
+    assertThat(catchThrowable(() -> { throw new Exception("boom!"); }))
+              .as("boom expected")
+              .isInstanceOf(Exception.class)
+              .hasMessageContaining("boom");
+    // @format:on
+  }
 }
