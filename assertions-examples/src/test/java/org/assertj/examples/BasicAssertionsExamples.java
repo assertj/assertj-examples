@@ -148,7 +148,7 @@ public class BasicAssertionsExamples extends AbstractAssertionsExamples {
   }
 
   @Test
-  public void basic_assertions_with_lenient_equals_examples() {
+  public void basic_assertions_with_field_by_field_comparison_examples() {
 
     TolkienCharacter mysteriousHobbit = new TolkienCharacter(null, 33, HOBBIT);
 
@@ -226,6 +226,18 @@ public class BasicAssertionsExamples extends AbstractAssertionsExamples {
     Assertions.setAllowComparingPrivateFields(true);
   }
   
+  
+  @Test
+  public void has_field_or_property_examples() {
+    assertThat(frodo).hasFieldOrProperty("age");
+    // private field are found unless Assertions.setAllowExtractingPrivateFields(false);
+    assertThat(frodo).hasFieldOrProperty("notAccessibleField");
+    assertThat(frodo).hasFieldOrPropertyWithValue("age", 33);
+    assertThat(frodo).hasFieldOrProperty("race.name");
+    assertThat(frodo).hasFieldOrPropertyWithValue("race.name", "Hobbit");
+  }
+
+
   @Test
   public void usingFieldByFieldElementComparatorTest() throws Exception {
     List<Animal> animals = new ArrayList<>();

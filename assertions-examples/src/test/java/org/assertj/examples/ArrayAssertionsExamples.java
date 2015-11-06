@@ -15,8 +15,8 @@ package org.assertj.examples;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.extractProperty;
 import static org.assertj.core.api.Assertions.failBecauseExceptionWasNotThrown;
-import static org.assertj.core.api.Assertions.setAllowExtractingPrivateFields;
 import static org.assertj.core.api.Assertions.filter;
+import static org.assertj.core.api.Assertions.setAllowExtractingPrivateFields;
 import static org.assertj.core.data.Index.atIndex;
 import static org.assertj.core.util.Arrays.array;
 import static org.assertj.core.util.Lists.newArrayList;
@@ -352,7 +352,7 @@ public class ArrayAssertionsExamples extends AbstractAssertionsExamples {
   }
 
   @Test
-  public void use_unicode_representation_in_error_messages() throws UnsupportedEncodingException {
+  public void use_unicode_representation_in_error_messages() {
     try {
       assertThat("a6c".toCharArray()).inUnicode().isEqualTo("abó".toCharArray());
     } catch (AssertionError e) {

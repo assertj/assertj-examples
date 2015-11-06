@@ -1,13 +1,10 @@
 /**
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with
  * the License. You may obtain a copy of the License at
- *
  * http://www.apache.org/licenses/LICENSE-2.0
- *
  * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on
  * an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the
  * specific language governing permissions and limitations under the License.
- *
  * Copyright 2012-2014 the original author or authors.
  */
 package org.assertj.examples;
@@ -18,6 +15,7 @@ import static org.assertj.core.api.Assertions.within;
 import static org.assertj.core.api.Assertions.withinPercentage;
 
 import java.math.BigDecimal;
+import java.util.Comparator;
 
 import org.assertj.examples.comparator.AbsValueComparator;
 import org.junit.Test;
@@ -61,7 +59,7 @@ public class NumberAssertionsExamples extends AbstractAssertionsExamples {
     assertThat(-8.0).usingComparator(new AbsValueComparator<Double>()).isEqualTo(8.0);
     assertThat((byte) -8).usingComparator(new AbsValueComparator<Byte>()).isEqualTo((byte) 8);
     assertThat(new BigDecimal("-8")).usingComparator(new AbsValueComparator<BigDecimal>())
-                                    .isEqualTo( new BigDecimal("8"));
+                                    .isEqualTo(new BigDecimal("8"));
 
     // works with arrays !
     assertThat(new int[] { -1, 2, 3 }).usingElementComparator(absValueComparator).contains(1, 2, -3);
@@ -99,6 +97,8 @@ public class NumberAssertionsExamples extends AbstractAssertionsExamples {
 
     // With BigDecimal, 8.0 is not equals to 8.00 but it is if you use compareTo()
     assertThat(new BigDecimal("8.0")).isEqualByComparingTo(new BigDecimal("8.00"));
+    assertThat(new BigDecimal("8.0")).isEqualByComparingTo("8.00");
+    assertThat(new BigDecimal("8.0")).isNotEqualByComparingTo("8.00");
 
     // isGreaterThanOrEqualTo uses compareTo semantics
     assertThat(new BigDecimal("8.0")).isGreaterThanOrEqualTo(new BigDecimal("8.00"));
@@ -136,11 +136,11 @@ public class NumberAssertionsExamples extends AbstractAssertionsExamples {
     } catch (AssertionError e) {
       logAssertionErrorMessage("BigDecimal isCloseTo within offset", e);
     }
-    
+
     assertThat(sam.age).isCloseTo(40, within(10));
     assertThat(10l).isCloseTo(8l, within(2l));
-    assertThat((short)5).isCloseTo((short)7, within((short)3));
-    assertThat((byte)5).isCloseTo((byte)7, within((byte)3));
+    assertThat((short) 5).isCloseTo((short) 7, within((short) 3));
+    assertThat((byte) 5).isCloseTo((byte) 7, within((byte) 3));
   }
 
   @Test
@@ -151,6 +151,18 @@ public class NumberAssertionsExamples extends AbstractAssertionsExamples {
     } catch (AssertionError e) {
       logAssertionErrorMessage("isEqualTo with binary representation_", e);
     }
+  }
+
+  @Test
+  public void comparing_array_of_real_numbers() {
+    Comparator<Double> closeToComparator = new Comparator<Double>() {
+      @Override
+      public int compare(Double o1, Double o2) {
+        return Math.abs(o1.doubleValue() - o2.doubleValue()) < 0.001 ? 0 : -1;
+      }
+    };
+    assertThat(new double[] { 7.2, 3.6, -12.0 }).usingElementComparator(closeToComparator)
+                                                .containsExactly(7.2000001, 3.5999999, -12.000001);
   }
 
 }

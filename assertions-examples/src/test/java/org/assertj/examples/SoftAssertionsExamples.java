@@ -141,6 +141,20 @@ public class SoftAssertionsExamples extends AbstractAssertionsExamples {
   }
   
   @Test
+  public void soft_assertions_combined_with_filtering_example() {
+    BDDSoftAssertions softly = new BDDSoftAssertions();
+    softly.then(fellowshipOfTheRing).filteredOn("name", "Frodo").containsOnly(frodo);
+    softly.then(fellowshipOfTheRing).filteredOn("name", "Frodo").isEmpty();
+    try {
+      softly.assertAll();
+    } catch (SoftAssertionError e) {
+      logAssertionErrorMessage("BDD SoftAssertion errors example", e);
+      return;
+    }
+    throw new AssertionError("should have caught soft assertion errors properly");
+  }
+  
+  @Test
   public void soft_assertions_example_with_arrays() {
     String[] players = Arrays.array("Michael Jordan", "Tim Duncan");
     BDDSoftAssertions softly = new BDDSoftAssertions();
