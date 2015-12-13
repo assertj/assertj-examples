@@ -12,7 +12,7 @@
  */
 package org.assertj.examples;
 
-import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.*;
 
 import java.util.Optional;
 import java.util.OptionalDouble;
@@ -39,7 +39,7 @@ public class OptionalAssertionsExamples extends AbstractAssertionsExamples {
 
     String someString = "something";
     assertThat(Optional.of(someString)).containsSame(someString);
-    assertThat(Optional.of(someString)).satisfies(s -> {
+    assertThat(Optional.of(someString)).hasValueSatisfying(s -> {
       assertThat(s).isEqualTo("something");
       assertThat(s).startsWith("some");
       assertThat(s).endsWith("thing");
@@ -67,14 +67,14 @@ public class OptionalAssertionsExamples extends AbstractAssertionsExamples {
       logAssertionErrorMessage("OptionalAssert.isEmpty", e);
     }
     try {
-      assertThat(optional).satisfies(s -> {
+      assertThat(optional).hasValueSatisfying(s -> {
         assertThat(s).isEqualTo("Not Test");
       });
     } catch (AssertionError e) {
       logAssertionErrorMessage("OptionalAssert.containing", e);
     }
     try {
-      assertThat(emptyOptional).satisfies(o -> {});
+      assertThat(emptyOptional).hasValueSatisfying(o -> {});
     } catch (AssertionError e) {
       logAssertionErrorMessage("OptionalAssert.containing", e);
     }

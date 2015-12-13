@@ -150,6 +150,8 @@ public class Java8DateTimeAssertionsExamples extends AbstractAssertionsExamples 
     assertThat(firstOfJanuary2000).isBefore("2000-01-02")
                                   .isBeforeOrEqualTo("2000-01-02")
                                   .isBeforeOrEqualTo("2000-01-01");
+    
+    assertThat(LocalDate.now()).isToday();
   }
 
   @Test

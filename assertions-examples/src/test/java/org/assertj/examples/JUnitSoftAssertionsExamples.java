@@ -12,12 +12,11 @@
  */
 package org.assertj.examples;
 
+import org.assertj.core.api.JUnitSoftAssertions;
+import org.assertj.examples.data.Mansion;
 import org.junit.Ignore;
 import org.junit.Rule;
 import org.junit.Test;
-
-import org.assertj.core.api.JUnitSoftAssertions;
-import org.assertj.examples.data.Mansion;
 
 public class JUnitSoftAssertionsExamples extends AbstractAssertionsExamples {
 
@@ -58,6 +57,11 @@ public class JUnitSoftAssertionsExamples extends AbstractAssertionsExamples {
     softly.assertThat(mansion.colonel()).as("Colonel").isEqualTo("well kempt");
     softly.assertThat(mansion.professor()).as("Professor").isEqualTo("well kempt");
     // no need to call softly.assertAll(); (as with SoftAssertions) error gathering is handled by the JUnit rule
+  }
+
+  @Test
+  public void filteredOn_with_junit_soft_assertions_example() {
+    softly.assertThat(fellowshipOfTheRing).filteredOn("name", "Frodo").isNotEmpty();
   }
 
 }
