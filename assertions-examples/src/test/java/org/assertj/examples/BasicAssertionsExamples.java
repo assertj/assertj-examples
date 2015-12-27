@@ -60,7 +60,7 @@ public class BasicAssertionsExamples extends AbstractAssertionsExamples {
     final String frodon = "Frodon";
     try {
       assertThat(frodo.getName()).as("check Frodo's name")
-        .overridingErrorMessage("Hey my name is Frodo not %s", frodon).isEqualTo(frodon);
+                                 .overridingErrorMessage("Hey my name is Frodo not %s", frodon).isEqualTo(frodon);
     } catch (AssertionError e) {
       assertThat(e).hasMessage("[check Frodo's name] Hey my name is Frodo not Frodon");
     }
@@ -85,7 +85,9 @@ public class BasicAssertionsExamples extends AbstractAssertionsExamples {
   public void isIn_isNotIn_assertions_examples() {
     assertThat(frodo).isIn(fellowshipOfTheRing);
     assertThat(frodo).isIn(sam, frodo, pippin);
+    assertThat((TolkienCharacter) null).isIn(sam, frodo, pippin, null);
     assertThat(sauron).isNotIn(fellowshipOfTheRing);
+    assertThat((TolkienCharacter) null).isNotIn(fellowshipOfTheRing);
   }
 
   @Test
@@ -225,8 +227,7 @@ public class BasicAssertionsExamples extends AbstractAssertionsExamples {
     }
     Assertions.setAllowComparingPrivateFields(true);
   }
-  
-  
+
   @Test
   public void has_field_or_property_examples() {
     assertThat(frodo).hasFieldOrProperty("age");
@@ -237,6 +238,11 @@ public class BasicAssertionsExamples extends AbstractAssertionsExamples {
     assertThat(frodo).hasFieldOrPropertyWithValue("race.name", "Hobbit");
   }
 
+  @Test
+  public void extracting_field_or_property_examples() {
+    assertThat(frodo).extracting("name", "age", "race.name")
+                     .containsExactly("Frodo", 33, "Hobbit");
+  }
 
   @Test
   public void usingFieldByFieldElementComparatorTest() throws Exception {

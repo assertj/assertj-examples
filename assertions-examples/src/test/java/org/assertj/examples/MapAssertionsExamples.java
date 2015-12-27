@@ -51,7 +51,7 @@ public class MapAssertionsExamples extends AbstractAssertionsExamples {
     assertThat(ringBearers).containsEntry(oneRing, frodo).containsEntry(nenya, galadriel);
     // opposite of contains/containsEntry
     assertThat(ringBearers).doesNotContain(entry(oneRing, sauron), entry(nenya, aragorn));
-    assertThat(ringBearers).doesNotContainEntry(oneRing, aragorn); 
+    assertThat(ringBearers).doesNotContainEntry(oneRing, aragorn);
 
     // Assertion on key
     assertThat(ringBearers).containsKey(nenya);
@@ -85,30 +85,26 @@ public class MapAssertionsExamples extends AbstractAssertionsExamples {
     characters.put(gandalf.getName(), gandalf);
     characters.put(sam.getName(), sam);
 
-    assertThat(characters).containsOnly(
-                                        entry(sam.getName(), sam),
+    assertThat(characters).containsOnly(entry(sam.getName(), sam),
                                         entry(frodo.getName(), frodo),
                                         entry(gandalf.getName(), gandalf),
                                         entry(galadriel.getName(), galadriel));
 
     try {
-      assertThat(characters).containsOnly(
-                                          entry(sam.getName(), sam),
+      assertThat(characters).containsOnly(entry(sam.getName(), sam),
                                           entry(frodo.getName(), frodo),
                                           entry(aragorn.getName(), aragorn));
     } catch (AssertionError e) {
       logAssertionErrorMessage("containsOnly with not found and not expected elements.", e);
     }
 
-    assertThat(characters).containsExactly(
-                                           entry(frodo.getName(), frodo),
+    assertThat(characters).containsExactly(entry(frodo.getName(), frodo),
                                            entry(galadriel.getName(), galadriel),
                                            entry(gandalf.getName(), gandalf),
                                            entry(sam.getName(), sam));
 
     try {
-      assertThat(characters).containsExactly(
-                                             entry(frodo.getName(), frodo),
+      assertThat(characters).containsExactly(entry(frodo.getName(), frodo),
                                              entry(sam.getName(), sam),
                                              entry(gandalf.getName(), gandalf),
                                              entry(galadriel.getName(), galadriel));

@@ -60,15 +60,15 @@ public class UsingConditionExamples extends AbstractAssertionsExamples {
 
   @Test
   public void condition_with_supertype_example() {
-	assertThat("string").is(new Condition<Object>() {
+    assertThat("string").is(new Condition<Object>() {
 
-	  @Override
+      @Override
       public boolean matches(Object value) {
-	    return value instanceof String;
+        return value instanceof String;
       }
-	});
+    });
   }
-  
+
   @Test
   public void condition_example_on_multiple_elements() {
     // are & areNot
