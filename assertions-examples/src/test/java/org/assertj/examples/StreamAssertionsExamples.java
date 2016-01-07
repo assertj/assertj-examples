@@ -12,6 +12,7 @@
  */
 package org.assertj.examples;
 
+import static java.util.Collections.singleton;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.extractProperty;
 import static org.assertj.core.api.Assertions.failBecauseExceptionWasNotThrown;
@@ -32,12 +33,11 @@ import static org.assertj.examples.extractor.TolkienCharactersExtractors.age;
 import static org.assertj.examples.extractor.TolkienCharactersExtractors.ageAndRace;
 import static org.assertj.examples.extractor.TolkienCharactersExtractors.race;
 
-import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Iterator;
 import java.util.List;
 import java.util.SortedSet;
 import java.util.TreeSet;
+import java.util.stream.Stream;
 
 import org.assertj.core.util.introspection.IntrospectionError;
 import org.assertj.examples.data.Employee;
@@ -45,75 +45,69 @@ import org.assertj.examples.data.Ring;
 import org.assertj.examples.data.TolkienCharacter;
 import org.junit.Test;
 
-/**
- * Iterable (including Collection) assertions examples.<br>
- *
- * @author Joel Costigliola
- */
-public class IterableAssertionsExamples extends AbstractAssertionsExamples {
+public class StreamAssertionsExamples extends AbstractAssertionsExamples {
 
   @Test
-  public void iterable_basic_assertions_examples() {
+  public void stream_basic_assertions_examples() {
 
-    // would work the same way with Iterable<Ring>,
-    Iterable<Ring> elvesRings = newArrayList(vilya, nenya, narya);
-    assertThat(elvesRings).isNotEmpty().hasSize(3);
-    assertThat(elvesRings).hasSameSizeAs(trilogy);
-    assertThat(elvesRings).contains(nenya).doesNotContain(oneRing);
+    // would work the same way with Stream<Ring>,
+    assertThat(Stream.of(vilya, nenya, narya)).isNotEmpty().hasSize(3);
+    assertThat(Stream.of(vilya, nenya, narya)).hasSameSizeAs(trilogy);
+    assertThat(Stream.of(vilya, nenya, narya)).contains(nenya).doesNotContain(oneRing);
 
     // with containsOnly, all the elements must be present (but the order is not important)
-    assertThat(elvesRings).containsOnly(nenya, vilya, narya)
-                          .containsOnly(vilya, nenya, narya)
-                          .containsOnlyElementsOf(newArrayList(nenya, narya, vilya, nenya))
-                          .hasSameElementsAs(newArrayList(nenya, narya, vilya, nenya));
-    assertThat(elvesRings).doesNotContainNull().doesNotHaveDuplicates();
+    assertThat(Stream.of(vilya, nenya, narya)).containsOnly(nenya, vilya, narya)
+                                              .containsOnly(vilya, nenya, narya)
+                                              .containsOnlyElementsOf(newArrayList(nenya, narya, vilya, nenya))
+                                              .hasSameElementsAs(newArrayList(nenya, narya, vilya, nenya));
+    assertThat(Stream.of(vilya, nenya, narya)).doesNotContainNull().doesNotHaveDuplicates();
 
-    Iterable<Ring> duplicatedElvesRings = newArrayList(vilya, nenya, narya, vilya, nenya, narya);
-    assertThat(elvesRings).hasSameElementsAs(duplicatedElvesRings)
-                          .containsOnlyElementsOf(duplicatedElvesRings);
+    List<Ring> duplicatedElvesRings = newArrayList(vilya, nenya, narya, vilya, nenya, narya);
+    assertThat(Stream.of(vilya, nenya, narya)).hasSameElementsAs(duplicatedElvesRings)
+                                              .containsOnlyElementsOf(duplicatedElvesRings);
 
     try {
-      assertThat(elvesRings).containsOnlyElementsOf(newArrayList(vilya, nenya, vilya, oneRing));
-      assertThat(elvesRings).containsOnly(nenya, vilya, oneRing);
+      assertThat(Stream.of(vilya, nenya, narya)).containsOnlyElementsOf(newArrayList(vilya, nenya, vilya, oneRing));
+      assertThat(Stream.of(vilya, nenya, narya)).containsOnly(nenya, vilya, oneRing);
     } catch (AssertionError e) {
       logAssertionErrorMessage("containsOnly", e);
     }
 
     // special check for null, empty collection or both
-    assertThat(newArrayList(frodo, null, sam)).containsNull();
-    List<Object> newArrayList = newArrayList();
-    assertThat(newArrayList).isEmpty();
-    assertThat(newArrayList).contains();
-    assertThat(newArrayList).isNullOrEmpty();
-    newArrayList = null;
-    assertThat(newArrayList).isNullOrEmpty();
+    assertThat(Stream.of(frodo, null, sam)).containsNull();
+    assertThat(Stream.empty()).isEmpty();
+    assertThat(Stream.empty()).contains();
+    assertThat(Stream.empty()).isNullOrEmpty();
+    Stream<?> nullStream = null;
+    assertThat(nullStream).isNullOrEmpty();
 
     // you can also check the start or end of your collection/iterable
-    Iterable<Ring> allRings = newArrayList(oneRing, vilya, nenya, narya, dwarfRing, manRing);
-    assertThat(allRings).startsWith(oneRing, vilya).endsWith(dwarfRing, manRing);
-    assertThat(allRings).containsSequence(nenya, narya, dwarfRing);
-    assertThat(allRings).containsAll(elvesRings);
+    assertThat(Stream.of(oneRing, vilya, nenya, narya, dwarfRing, manRing)).startsWith(oneRing, vilya)
+                                                                           .endsWith(dwarfRing, manRing)
+                                                                           .containsSequence(nenya, narya, dwarfRing)
+                                                                           .containsAll(newArrayList(vilya, nenya,
+                                                                                                     narya));
 
     // to show an error message
     try {
-      assertThat(elvesRings).containsAll(allRings);
+      assertThat(Stream.of(vilya, nenya, narya)).containsAll(newArrayList(oneRing, vilya, nenya, narya, dwarfRing,
+                                                                          manRing));
     } catch (AssertionError e) {
       logAssertionErrorMessage("containsAll", e);
     }
 
-    List<Integer> testedList = newArrayList(1);
-    List<Integer> referenceList = newArrayList(1, 2, 3);
-    assertThat(referenceList).containsSequence(testedList.toArray(new Integer[testedList.size()]));
+    Stream<Integer> testedList = Stream.of(1);
+    Stream<Integer> referenceList = Stream.of(1, 2, 3);
+    assertThat(referenceList).containsSequence(testedList.toArray(Integer[]::new));
 
-    List<String> list = newArrayList("--option", "a=b", "--option", "c=d");
-    assertThat(list).containsSequence("--option", "c=d");
+    Stream<String> stream = Stream.of("--option", "a=b", "--option", "c=d");
+    assertThat(stream).containsSequence("--option", "c=d");
 
   }
 
   @Test
-  public void iterable_basic_contains_exactly_assertions_examples() {
-    Iterable<Ring> elvesRings = newArrayList(vilya, nenya, narya);
-    assertThat(elvesRings).containsExactly(vilya, nenya, narya);
+  public void stream_basic_contains_exactly_assertions_examples() {
+    assertThat(Stream.of(vilya, nenya, narya)).containsExactly(vilya, nenya, narya);
 
     // It works with collections that have a consistent iteration order
     SortedSet<Ring> elvesRingsSet = new TreeSet<Ring>();
@@ -122,19 +116,19 @@ public class IterableAssertionsExamples extends AbstractAssertionsExamples {
     elvesRingsSet.add(narya);
     assertThat(elvesRingsSet).containsExactly(vilya, nenya, narya);
 
-    // Expected values can be given by another Iterable.
-    assertThat(elvesRings).containsExactlyElementsOf(elvesRingsSet);
+    // Expected values can be given by another Stream.
+    assertThat(Stream.of(vilya, nenya, narya)).containsExactlyElementsOf(elvesRingsSet);
 
     try {
       // putting a different order would make the assertion fail :
-      assertThat(elvesRings).containsExactly(nenya, vilya, narya);
+      assertThat(Stream.of(vilya, nenya, narya)).containsExactly(nenya, vilya, narya);
     } catch (AssertionError e) {
       logger.info(e.getMessage());
       logAssertionErrorMessage("containsExactly", e);
     }
 
     try {
-      List<String> z = newArrayList("a", "a", "a");
+      Stream<String> z = Stream.of("a", "a", "a");
       assertThat(z).containsExactly("a", "a");
     } catch (AssertionError e) {
       logAssertionErrorMessage("containsExactly with same elements appearing several time", e);
@@ -142,7 +136,7 @@ public class IterableAssertionsExamples extends AbstractAssertionsExamples {
 
     try {
       // putting a different order would make the assertion fail :
-      assertThat(newArrayList(narya, vilya, nenya)).containsExactlyElementsOf(elvesRingsSet);
+      assertThat(Stream.of(narya, vilya, nenya)).containsExactlyElementsOf(elvesRingsSet);
     } catch (AssertionError e) {
       logger.info(e.getMessage());
       logAssertionErrorMessage("containsExactlyElementsOf with elements in different order", e);
@@ -150,7 +144,7 @@ public class IterableAssertionsExamples extends AbstractAssertionsExamples {
   }
 
   @Test
-  public void iterable_assertions_with_custom_comparator_examples() {
+  public void stream_assertions_with_custom_comparator_examples() {
 
     // standard comparison : the fellowshipOfTheRing includes Gandalf but not Sauron ...
     assertThat(fellowshipOfTheRing).contains(gandalf).doesNotContain(sauron);
@@ -160,25 +154,25 @@ public class IterableAssertionsExamples extends AbstractAssertionsExamples {
     // note that error message mentions the comparator used to better understand the failure
     // the message indicates that Sauron were found because he is a Maia like Gandalf.
     try {
-      assertThat(newArrayList(gandalf, sam)).usingElementComparator(raceNameComparator).doesNotContain(sauron);
+      assertThat(Stream.of(gandalf, sam)).usingElementComparator(raceNameComparator).doesNotContain(sauron);
     } catch (AssertionError e) {
       logAssertionErrorMessage("doesNotContain with custom element comparator", e);
     }
 
     // duplicates assertion honors custom comparator
     assertThat(fellowshipOfTheRing).doesNotHaveDuplicates();
-    assertThat(newArrayList(sam, gandalf)).usingElementComparator(raceNameComparator)
-                                          .doesNotHaveDuplicates()
-                                          .isEqualTo(newArrayList(frodo, gandalf));
+    assertThat(Stream.of(sam, gandalf)).usingElementComparator(raceNameComparator)
+                                       .doesNotHaveDuplicates()
+                                       .isEqualTo(newArrayList(frodo, gandalf));
     try {
-      assertThat(newArrayList(sam, gandalf, frodo)).usingElementComparator(raceNameComparator).doesNotHaveDuplicates();
+      assertThat(Stream.of(sam, gandalf, frodo)).usingElementComparator(raceNameComparator).doesNotHaveDuplicates();
     } catch (AssertionError e) {
       logAssertionErrorMessage("doesNotHaveDuplicates with custom element comparator", e);
     }
   }
 
   @Test
-  public void iterable_assertions_on_extracted_values_example() {
+  public void stream_assertions_on_extracted_values_example() {
 
     // extract 'name' property values
     assertThat(fellowshipOfTheRing).extracting("name").contains("Boromir", "Gandalf", "Frodo", "Legolas")
@@ -214,7 +208,7 @@ public class IterableAssertionsExamples extends AbstractAssertionsExamples {
   }
 
   @Test
-  public void iterable_assertions_on_extracted_private_fields_values_example() {
+  public void stream_assertions_on_extracted_private_fields_values_example() {
 
     // extract private fields
     assertThat(trilogy).extracting("duration").containsExactly("178 min", "179 min", "201 min");
@@ -232,7 +226,7 @@ public class IterableAssertionsExamples extends AbstractAssertionsExamples {
   }
 
   @Test
-  public void iterable_assertions_on_several_extracted_values() {
+  public void stream_assertions_on_several_extracted_values() {
 
     // extract 'name' and 'age' values.
     assertThat(fellowshipOfTheRing).extracting("name", "age").contains(tuple("Boromir", 37), tuple("Sam", 38),
@@ -244,37 +238,32 @@ public class IterableAssertionsExamples extends AbstractAssertionsExamples {
                                                                                     tuple("Legolas", 1000, "Elf"));
     // extract 'name', 'age' and Race name values.
     TolkienCharacter unknown = new TolkienCharacter("unknown", 100, null);
-    assertThat(newArrayList(sam, unknown)).extracting("name", "age", "race.name").contains(tuple("Sam", 38, "Hobbit"),
-                                                                                           tuple("unknown", 100, null));
+    assertThat(Stream.of(sam, unknown)).extracting("name", "age", "race.name").contains(tuple("Sam", 38, "Hobbit"),
+                                                                                        tuple("unknown", 100, null));
   }
 
   @Test
-  public void iterable_is_subset_of_assertion_example() {
-    List<Ring> elvesRings = newArrayList(vilya, nenya, narya);
-    assertThat(elvesRings).isSubsetOf(ringsOfPower);
+  public void stream_is_subset_of_assertion_example() {
+    assertThat(Stream.of(vilya, nenya, narya)).isSubsetOf(ringsOfPower);
     try {
-      assertThat(elvesRings).isSubsetOf(newArrayList(nenya, narya));
+      assertThat(Stream.of(vilya, nenya, narya)).isSubsetOf(newArrayList(nenya, narya));
     } catch (AssertionError e) {
       logAssertionErrorMessage("isSubsetOf", e);
     }
   }
 
   @Test
-  public void iterable_type_safe_assertion_example() {
+  public void stream_type_safe_assertion_example() {
     // just to show that containsAll can accept subtype of is not bounded to Object only
-    Collection<Ring> elvesRings = newArrayList(vilya, nenya, narya);
-    Collection<Object> powerfulRings = new ArrayList<Object>();
-    powerfulRings.add(oneRing);
-    powerfulRings.add(vilya);
-    powerfulRings.add(nenya);
-    powerfulRings.add(narya);
+    List<Ring> elvesRings = newArrayList(vilya, nenya, narya);
+    Stream<Object> powerfulRings = Stream.of(oneRing, vilya, nenya, narya);
     assertThat(powerfulRings).containsAll(elvesRings);
   }
 
   @Test
   public void iterator_assertion_example() {
-    // Iterable assertions also works if you give an Iterator as input.
-    Iterator<Ring> elvesRingsIterator = newArrayList(vilya, nenya, narya).iterator();
+    // Stream assertions also works if you give an Iterator as input.
+    Iterator<Ring> elvesRingsIterator = Stream.of(vilya, nenya, narya).iterator();
     // elvesRingsIterator is only consumed when needed which is not the case with null/notNull assertion
     assertThat(elvesRingsIterator).isNotNull();
     assertThat(elvesRingsIterator.hasNext()).as("iterator is not consumed").isTrue();
@@ -287,12 +276,12 @@ public class IterableAssertionsExamples extends AbstractAssertionsExamples {
   @Test
   public void doesNotContainAnyElementsOf_assertion_example() {
     // this assertion succeed :
-    List<String> actual = newArrayList("GIT", "CVS", "SOURCESAFE");
+    Stream<String> actual = Stream.of("GIT", "CVS", "SOURCESAFE");
     List<String> values = newArrayList("git", "cvs", "subversion");
     assertThat(actual).doesNotContainAnyElementsOf(values);
 
     // This one failed :
-    actual = newArrayList("GIT", "cvs", "SOURCESAFE");
+    actual = Stream.of("GIT", "cvs", "SOURCESAFE");
     values = newArrayList("git", "cvs", "subversion");
     try {
       assertThat(actual).doesNotContainAnyElementsOf(values);
@@ -304,76 +293,74 @@ public class IterableAssertionsExamples extends AbstractAssertionsExamples {
   @Test
   public void containsOnlyOnce_assertion_examples() {
     // int
-    assertThat(newArrayList("Winter", "is", "coming")).containsOnlyOnce("Winter");
-    assertThat(newArrayList("Winter", "is", "coming")).containsOnlyOnce("coming", "Winter");
+    assertThat(Stream.of("Winter", "is", "coming")).containsOnlyOnce("Winter");
+    assertThat(Stream.of("Winter", "is", "coming")).containsOnlyOnce("coming", "Winter");
     try {
-      assertThat(newArrayList("Aria", "Stark", "daughter", "of", "Ned", "Stark")).containsOnlyOnce("Stark");
+      assertThat(Stream.of("Aria", "Stark", "daughter", "of", "Ned", "Stark")).containsOnlyOnce("Stark");
     } catch (AssertionError e) {
-      logAssertionErrorMessage("containsOnlyOnce for Iterable", e);
+      logAssertionErrorMessage("containsOnlyOnce for Stream", e);
     }
 
     try {
-      assertThat(newArrayList("winter", "is", "coming")).containsOnlyOnce("Lannister");
+      assertThat(Stream.of("winter", "is", "coming")).containsOnlyOnce("Lannister");
     } catch (AssertionError e) {
-      logAssertionErrorMessage("containsOnlyOnce for Iterable", e);
+      logAssertionErrorMessage("containsOnlyOnce for Stream", e);
     }
 
     try {
-      assertThat(newArrayList("Aria", "Stark", "daughter", "of", "Ned", "Stark")).containsOnlyOnce("Stark",
-                                                                                                   "Lannister", "Aria");
+      assertThat(Stream.of("Aria", "Stark", "daughter", "of", "Ned", "Stark")).containsOnlyOnce("Stark",
+                                                                                                "Lannister",
+                                                                                                "Aria");
     } catch (AssertionError e) {
-      logAssertionErrorMessage("containsOnlyOnce for Iterable", e);
+      logAssertionErrorMessage("containsOnlyOnce for Stream", e);
     }
   }
 
   @Test
   public void containsSubSequence_assertion_examples() {
-    assertThat(newArrayList("Batman", "is", "weaker", "than", "Superman", "but", "he", "is", "less", "annoying"))
-                                                                                                                 .containsSubsequence("Superman",
-                                                                                                                                      "is",
-                                                                                                                                      "annoying");
-    assertThat(newArrayList("Breaking", "objects", "is", "pretty", "bad")).containsSubsequence("Breaking", "bad");
+    assertThat(Stream.of("Batman", "is", "weaker", "than", "Superman", "but", "he", "is", "less",
+                         "annoying")).containsSubsequence("Superman", "is", "annoying");
+    assertThat(Stream.of("Breaking", "objects", "is", "pretty", "bad")).containsSubsequence("Breaking", "bad");
     try {
-      assertThat(newArrayList("A", "B", "C", "D")).containsSubsequence("B", "A", "C");
+      assertThat(Stream.of("A", "B", "C", "D")).containsSubsequence("B", "A", "C");
     } catch (AssertionError e) {
-      logAssertionErrorMessage("containsSubsequence for Iterable", e);
+      logAssertionErrorMessage("containsSubsequence for Stream", e);
     }
   }
 
   @Test
-  public void iterable_assertions_on_extracted_method_result_example() {
+  public void stream_assertions_on_extracted_method_result_example() {
     // extract results of calls to 'toString' method
     assertThat(fellowshipOfTheRing).extractingResultOf("toString").contains("Frodo 33 years old Hobbit",
                                                                             "Aragorn 87 years old Man");
   }
 
   @Test
-  public void iterable_assertions_comparing_elements_field_by_field_example() {
+  public void stream_assertions_comparing_elements_field_by_field_example() {
     // this is useful if elements don't have a good equals method implementation.
     Employee bill = new Employee("Bill", 60, "Micro$oft");
-    final List<Employee> micro$oftEmployees = newArrayList(bill);
     Employee appleBill = new Employee("Bill", 60, "Apple");
 
     // this assertion should fail as the company differs but it passes since Employee equals ignores company fields.
-    assertThat(micro$oftEmployees).contains(appleBill);
+    assertThat(Stream.of(bill)).contains(appleBill);
 
     // let's make the assertion fails by comparing all Employee's fields instead of using equals.
     try {
-      assertThat(micro$oftEmployees).usingFieldByFieldElementComparator().contains(appleBill);
+      assertThat(Stream.of(bill)).usingFieldByFieldElementComparator().contains(appleBill);
     } catch (AssertionError e) {
-      logAssertionErrorMessage("contains for Iterable using field by field element comparator", e);
+      logAssertionErrorMessage("contains for Stream using field by field element comparator", e);
     }
     // if we don't compare company, appleBill is equivalent to bill.
-    assertThat(micro$oftEmployees).usingElementComparatorIgnoringFields("company").contains(appleBill);
+    assertThat(Stream.of(bill)).usingElementComparatorIgnoringFields("company").contains(appleBill);
 
     // if we compare only name and company, youngBill is equivalent to bill ...
     Employee youngBill = new Employee("Bill", 25, "Micro$oft");
-    assertThat(micro$oftEmployees).usingElementComparatorOnFields("company").contains(youngBill);
+    assertThat(Stream.of(bill)).usingElementComparatorOnFields("company").contains(youngBill);
     // ... but not if we compare only age.
     try {
-      assertThat(micro$oftEmployees).usingElementComparatorOnFields("age").contains(youngBill);
+      assertThat(Stream.of(bill)).usingElementComparatorOnFields("age").contains(youngBill);
     } catch (AssertionError e) {
-      logAssertionErrorMessage("contains for Iterable usingElementComparatorOnFields", e);
+      logAssertionErrorMessage("contains for Stream usingElementComparatorOnFields", e);
     }
 
     // another example with usingElementComparatorOnFields
@@ -381,38 +368,38 @@ public class IterableAssertionsExamples extends AbstractAssertionsExamples {
     TolkienCharacter sam = new TolkienCharacter("Sam", 38, HOBBIT);
 
     // frodo and sam both are hobbits, so they are equals when comparing only race ...
-    assertThat(newArrayList(frodo)).usingElementComparatorOnFields("race").contains(sam);
-    assertThat(newArrayList(frodo)).usingElementComparatorOnFields("race").isEqualTo(newArrayList(sam));
+    assertThat(Stream.of(frodo)).usingElementComparatorOnFields("race").contains(sam);
+    assertThat(Stream.of(frodo)).usingElementComparatorOnFields("race").isEqualTo(singleton(sam));
     // ... but not when comparing both name and race
     try {
-      assertThat(newArrayList(frodo)).usingElementComparatorOnFields("name", "race").contains(sam);
+      assertThat(Stream.of(frodo)).usingElementComparatorOnFields("name", "race").contains(sam);
     } catch (AssertionError e) {
-      logAssertionErrorMessage("contains for Iterable usingElementComparatorOnFields", e);
+      logAssertionErrorMessage("contains for Stream usingElementComparatorOnFields", e);
     }
   }
 
   @Test
   public void use_hexadecimal_representation_in_error_messages() {
-    final List<Byte> bytes = newArrayList((byte) 0x10, (byte) 0x20);
+    final Stream<Byte> bytes = Stream.of((byte) 0x10, (byte) 0x20);
     try {
       assertThat(bytes).inHexadecimal().contains((byte) 0x30);
     } catch (AssertionError e) {
-      logAssertionErrorMessage("asHexadecimal for byte list", e);
+      logAssertionErrorMessage("asHexadecimal for byte stream", e);
     }
   }
 
   @Test
   public void use_binary_representation_in_error_messages() {
-    final List<Byte> bytes = newArrayList((byte) 0x10, (byte) 0x20);
+    final Stream<Byte> bytes = Stream.of((byte) 0x10, (byte) 0x20);
     try {
       assertThat(bytes).inBinary().contains((byte) 0x30);
     } catch (AssertionError e) {
-      logAssertionErrorMessage("asBinary for byte list", e);
+      logAssertionErrorMessage("asBinary for byte stream", e);
     }
   }
 
   @Test
-  public void iterable_assertions_on_extracted_value_examples() throws Exception {
+  public void stream_assertions_on_extracted_value_examples() throws Exception {
     // extract 'age' field values
     assertThat(fellowshipOfTheRing).extracting(age()).contains(33, 38, 36);
 
@@ -431,17 +418,16 @@ public class IterableAssertionsExamples extends AbstractAssertionsExamples {
   }
 
   @Test
-  public void iterable_assertions_on_flat_extracted_values_examples() throws Exception {
-    assertThat(newArrayList(noah, james)).flatExtracting(teammates()).contains(dwayne, rose);
+  public void stream_assertions_on_flat_extracted_values_examples() throws Exception {
+    assertThat(Stream.of(noah, james)).flatExtracting(teammates()).contains(dwayne, rose);
   }
 
   @Test
-  public void iterable_assertions_testing_elements_type() throws Exception {
-    List<Long> numbers = newArrayList(1L, 2L);
-    assertThat(numbers).hasOnlyElementsOfType(Number.class);
-    assertThat(numbers).hasOnlyElementsOfType(Long.class);
+  public void stream_assertions_testing_elements_type() throws Exception {
+    assertThat(Stream.of(1L, 2L)).hasOnlyElementsOfType(Number.class);
+    assertThat(Stream.of(1L, 2L)).hasOnlyElementsOfType(Long.class);
 
-    List<? extends Object> mixed = newArrayList("string", 1L);
+    Stream<? extends Object> mixed = Stream.of("string", 1L);
     assertThat(mixed).hasAtLeastOneElementOfType(String.class);
   }
 
@@ -451,28 +437,26 @@ public class IterableAssertionsExamples extends AbstractAssertionsExamples {
     foo1._f2 = "foo1";
     Foo foo2 = new Foo("id", 2);
     foo2._f2 = "foo1";
-    List<Foo> list1 = newArrayList(foo1);
-    List<Foo> list2 = newArrayList(foo2);
-    assertThat(list1).usingElementComparatorOnFields("_f2").isEqualTo(list2);
-    assertThat(list1).usingElementComparatorOnFields("id").isEqualTo(list2);
-    assertThat(list1).usingElementComparatorIgnoringFields("bar").isEqualTo(list2);
+    List<Foo> stream2 = newArrayList(foo2);
+    assertThat(Stream.of(foo1)).usingElementComparatorOnFields("_f2").isEqualTo(stream2);
+    assertThat(Stream.of(foo1)).usingElementComparatorOnFields("id").isEqualTo(stream2);
+    assertThat(Stream.of(foo1)).usingElementComparatorIgnoringFields("bar").isEqualTo(stream2);
     try {
-      assertThat(list1).usingFieldByFieldElementComparator().isEqualTo(list2);
+      assertThat(Stream.of(foo1)).usingFieldByFieldElementComparator().isEqualTo(stream2);
     } catch (AssertionError e) {
-      logAssertionErrorMessage("asBinary for byte list", e);
+      logAssertionErrorMessage("asBinary for byte stream", e);
     }
   }
 
   @Test
   public void test_issue_236() throws Exception {
-    List<Foo> list1 = newArrayList(new Foo("id", 1));
-    List<Foo> list2 = newArrayList(new Foo("id", 2));
-    assertThat(list1).usingElementComparatorOnFields("id").isEqualTo(list2);
-    assertThat(list1).usingElementComparatorIgnoringFields("bar").isEqualTo(list2);
+    List<Foo> stream2 = newArrayList(new Foo("id", 2));
+    assertThat(Stream.of(new Foo("id", 1))).usingElementComparatorOnFields("id").isEqualTo(stream2);
+    assertThat(Stream.of(new Foo("id", 1))).usingElementComparatorIgnoringFields("bar").isEqualTo(stream2);
     try {
-      assertThat(list1).usingFieldByFieldElementComparator().isEqualTo(list2);
+      assertThat(Stream.of(new Foo("id", 1))).usingFieldByFieldElementComparator().isEqualTo(stream2);
     } catch (AssertionError e) {
-      logAssertionErrorMessage("asBinary for byte list", e);
+      logAssertionErrorMessage("asBinary for byte stream", e);
     }
   }
 

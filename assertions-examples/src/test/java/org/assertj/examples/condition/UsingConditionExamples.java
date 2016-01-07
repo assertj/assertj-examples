@@ -19,6 +19,7 @@ import static org.assertj.core.condition.Not.not;
 import static org.assertj.core.util.Lists.newArrayList;
 import static org.assertj.core.util.Sets.newLinkedHashSet;
 
+import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Set;
 
@@ -28,6 +29,8 @@ import org.assertj.examples.data.BasketBallPlayer;
 import org.junit.Test;
 
 public class UsingConditionExamples extends AbstractAssertionsExamples {
+
+  private static final LinkedHashSet<String> JEDIS = newLinkedHashSet("Luke", "Yoda", "Obiwan");
 
   @Test
   public void is_condition_example() {
@@ -67,15 +70,15 @@ public class UsingConditionExamples extends AbstractAssertionsExamples {
 
   @Test
   public void condition_with_supertype_example() {
-	assertThat("string").is(new Condition<Object>() {
+    assertThat("string").is(new Condition<Object>() {
 
-	  @Override
+      @Override
       public boolean matches(Object value) {
-	    return value instanceof String;
+        return value instanceof String;
       }
-	});
+    });
   }
-  
+
   @Test
   public void condition_example_on_multiple_elements() {
     // are & areNot
@@ -129,14 +132,7 @@ public class UsingConditionExamples extends AbstractAssertionsExamples {
     assertThat("Solo").doesNotHave(anyOf(jediPower, sithPower));
   }
 
-  private final Condition<String> jedi = new Condition<String>("jedi") {
-    private final Set<String> jedis = newLinkedHashSet("Luke", "Yoda", "Obiwan");
-
-    @Override
-    public boolean matches(String actual) {
-      return jedis.contains(actual);
-    }
-  };
+  private final Condition<String> jedi = new Condition<>(JEDIS::contains, "jedi");
 
   private final Condition<String> jediPower = jedi;
 

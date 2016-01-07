@@ -229,4 +229,12 @@ public class BasicAssertionsExamples extends AbstractAssertionsExamples {
     Assertions.setAllowComparingPrivateFields(true);
   }
 
+  @Test
+  public void extracting_object_values() {
+    assertThat(frodo).extracting(TolkienCharacter::getName,
+                                 character -> character.age,
+                                 character -> character.getRace().getName())
+                     .containsExactly("Frodo", 33, "Hobbit");
+  }
+
 }
