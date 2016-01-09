@@ -17,6 +17,7 @@ import static org.assertj.core.api.Assertions.extractProperty;
 import static org.assertj.core.api.Assertions.failBecauseExceptionWasNotThrown;
 import static org.assertj.core.api.Assertions.filter;
 import static org.assertj.core.api.Assertions.setAllowExtractingPrivateFields;
+import static org.assertj.core.api.Assertions.tuple;
 import static org.assertj.core.data.Index.atIndex;
 import static org.assertj.core.util.Arrays.array;
 import static org.assertj.core.util.Lists.newArrayList;
@@ -277,7 +278,9 @@ public class ArrayAssertionsExamples extends AbstractAssertionsExamples {
   @Test
   public void containsSubSequence_assertion_examples() {
     assertThat(new String[] { "Batman", "is", "weaker", "than", "Superman", "but", "he", "is", "less", "annoying" })
-                                                                                                                    .containsSubsequence("Superman", "is", "annoying");
+                                                                                                                    .containsSubsequence("Superman",
+                                                                                                                                         "is",
+                                                                                                                                         "annoying");
     assertThat(new String[] { "Breaking", "objects", "is", "pretty", "bad" }).containsSubsequence("Breaking", "bad");
     try {
       assertThat(new String[] { "A", "B", "C", "D" }).containsSubsequence("B", "A", "C");
@@ -329,7 +332,7 @@ public class ArrayAssertionsExamples extends AbstractAssertionsExamples {
   @Test
   public void use_hexadecimal_representation_in_error_messages() throws UnsupportedEncodingException {
     try {
-      assertThat(new Byte[]{0x10,0x20}).inHexadecimal().contains(new Byte[]{0x30});
+      assertThat(new Byte[] { 0x10, 0x20 }).inHexadecimal().contains(new Byte[] { 0x30 });
     } catch (AssertionError e) {
       logAssertionErrorMessage("asHexadecimal for byte array", e);
     }
@@ -362,30 +365,44 @@ public class ArrayAssertionsExamples extends AbstractAssertionsExamples {
     try {
       assertThat(trilogyArray).extracting("duration");
       failBecauseExceptionWasNotThrown(IntrospectionError.class);
-    } catch (Exception ignore) {
-    } finally {
+    } catch (Exception ignore) {} finally {
       // back to default value
       setAllowExtractingPrivateFields(true);
     }
   }
-  
+
   @Test
   public void array_assertions_testing_elements_type() throws Exception {
-	  Number[] numbers = { 2, 6L, 8.0 };
-	  assertThat(numbers).hasAtLeastOneElementOfType(Long.class);
-	  assertThat(numbers).hasOnlyElementsOfType(Number.class);
+    Number[] numbers = { 2, 6L, 8.0 };
+    assertThat(numbers).hasAtLeastOneElementOfType(Long.class);
+    assertThat(numbers).hasOnlyElementsOfType(Number.class);
   }
- 
+
   @Test
   public void iterable_is_subset_of_assertion_example() {
     Ring[] elvesRings = array(vilya, nenya, narya);
-	assertThat(elvesRings).isSubsetOf(ringsOfPower);
-	try {
-	  assertThat(elvesRings).isSubsetOf(newArrayList(nenya, narya));
-	} catch (AssertionError e) {
-	  logAssertionErrorMessage("isSubsetOf", e);
-	}
+    assertThat(elvesRings).isSubsetOf(ringsOfPower);
+    try {
+      assertThat(elvesRings).isSubsetOf(newArrayList(nenya, narya));
+    } catch (AssertionError e) {
+      logAssertionErrorMessage("isSubsetOf", e);
+    }
   }
 
-  
+  @Test
+  public void allMatch_iterable_assertion_example() {
+    TolkienCharacter[] hobbits = { frodo, sam, pippin };
+    assertThat(hobbits).allMatch(character -> character.getRace() == HOBBIT);
+  }
+
+  @Test
+  public void extracting_with_lambdas_example() {
+    TolkienCharacter[] fellowshipOfTheRingArray = fellowshipOfTheRing.toArray(new TolkienCharacter[0]);
+
+    assertThat(fellowshipOfTheRingArray).extracting(TolkienCharacter::getName, tc -> tc.age)
+                                        .contains(tuple("Boromir", 37),
+                                                  tuple("Sam", 38),
+                                                  tuple("Legolas", 1000));
+  }
+
 }

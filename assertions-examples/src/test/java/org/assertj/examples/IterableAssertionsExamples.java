@@ -235,7 +235,8 @@ public class IterableAssertionsExamples extends AbstractAssertionsExamples {
   public void iterable_assertions_on_several_extracted_values() {
 
     // extract 'name' and 'age' values.
-    assertThat(fellowshipOfTheRing).extracting("name", "age").contains(tuple("Boromir", 37), tuple("Sam", 38),
+    assertThat(fellowshipOfTheRing).extracting("name", "age").contains(tuple("Boromir", 37), 
+                                                                       tuple("Sam", 38),
                                                                        tuple("Legolas", 1000));
 
     // extract 'name', 'age' and Race name values.
@@ -345,6 +346,12 @@ public class IterableAssertionsExamples extends AbstractAssertionsExamples {
     // extract results of calls to 'toString' method
     assertThat(fellowshipOfTheRing).extractingResultOf("toString").contains("Frodo 33 years old Hobbit",
                                                                             "Aragorn 87 years old Man");
+  }
+
+  @Test
+  public void allMatch_iterable_assertion_example() {
+    List<TolkienCharacter> hobbits = newArrayList(frodo, sam, pippin);
+    assertThat(hobbits).allMatch(character -> character.getRace() == HOBBIT);
   }
 
   @Test

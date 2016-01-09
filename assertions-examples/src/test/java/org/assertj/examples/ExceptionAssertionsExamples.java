@@ -204,6 +204,7 @@ public class ExceptionAssertionsExamples extends AbstractAssertionsExamples {
     assertThatExceptionOfType(IOException.class)
                      .isThrownBy(() -> { throw new IOException("boom!"); })
                      .withMessage("boom!")
+                     .withMessage("%s!", "boom")
                      .withNoCause(); 
     // @format:on
   }

@@ -401,16 +401,17 @@ public class StreamAssertionsExamples extends AbstractAssertionsExamples {
   @Test
   public void stream_assertions_on_extracted_value_examples() throws Exception {
     // extract 'age' field values
-    assertThat(fellowshipOfTheRing).extracting(age()).contains(33, 38, 36);
+    assertThat(fellowshipOfTheRing.stream()).contains(frodo)
+                                            .doesNotContain(sauron);
 
     // extracting works also with user's types (here Race)
-    assertThat(fellowshipOfTheRing).extracting(race())
-                                   .contains(HOBBIT, ELF).doesNotContain(ORC);
-    assertThat(fellowshipOfTheRing).extracting(TolkienCharacter::getRace)
-                                   .contains(HOBBIT, ELF).doesNotContain(ORC);
-    assertThat(fellowshipOfTheRing).extracting(tc -> tc.getRace().getName())
-                                   .contains("Hobbit", "Elf")
-                                   .doesNotContain("Orc");
+    assertThat(fellowshipOfTheRing.stream()).extracting(race())
+                                            .contains(HOBBIT, ELF).doesNotContain(ORC);
+    assertThat(fellowshipOfTheRing.stream()).extracting(TolkienCharacter::getRace)
+                                            .contains(HOBBIT, ELF).doesNotContain(ORC);
+    assertThat(fellowshipOfTheRing.stream()).extracting(tc -> tc.getRace().getName())
+                                            .contains("Hobbit", "Elf")
+                                            .doesNotContain("Orc");
 
     // extract 'name' and 'age' values.
     assertThat(fellowshipOfTheRing).extracting(ageAndRace()).contains(tuple(33, HOBBIT), tuple(38, HOBBIT),
