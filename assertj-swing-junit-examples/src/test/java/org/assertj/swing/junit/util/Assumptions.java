@@ -3,7 +3,7 @@ package org.assertj.swing.junit.util;
 import static java.lang.String.format;
 import static java.lang.String.valueOf;
 
-import org.junit.AssumptionViolatedException;
+import org.junit.internal.AssumptionViolatedException;
 
 public class Assumptions {
 
