@@ -15,6 +15,7 @@ public class SimpleFrame_JButtonMatcher_Test extends SwingTestNGExamples {
   @Override
   protected void onSetUp() {
     frame = GuiActionRunner.execute(new GuiQuery<SimpleFrame>() {
+      @Override
       protected SimpleFrame executeInEDT() {
         return new SimpleFrame();
       }

@@ -21,6 +21,7 @@ public class SimpleCopyApplicationTest {
   @BeforeMethod
   public void setUp() {
     SimpleCopyApplication frame = GuiActionRunner.execute(new GuiQuery<SimpleCopyApplication>() {
+      @Override
       protected SimpleCopyApplication executeInEDT() {
         return new SimpleCopyApplication();
       }

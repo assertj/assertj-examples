@@ -18,6 +18,7 @@ public class LoginFrame_ComponentLookup_Test extends SwingTestNGExamples {
   @Override
   protected void onSetUp() {
     SampleFrame frame = GuiActionRunner.execute(new GuiQuery<SampleFrame>() {
+      @Override
       protected SampleFrame executeInEDT() {
         return new LoginFrame();
       }
