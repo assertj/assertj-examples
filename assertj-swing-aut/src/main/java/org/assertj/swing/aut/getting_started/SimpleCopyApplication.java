@@ -45,7 +45,7 @@ public class SimpleCopyApplication extends SampleFrame {
 
   public static void main(String[] args) throws InvocationTargetException, InterruptedException {
     invokeAndWait(new Runnable() {
-
+      @Override
       public void run() {
         JFrame frame = new SimpleCopyApplication();
         frame.setVisible(true);

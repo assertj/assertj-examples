@@ -21,6 +21,7 @@ public class LoginFrame_LongDurationTask_Test extends SwingJUnitExamples {
   @Override
   protected void onSetUp() {
     SampleFrame frame = GuiActionRunner.execute(new GuiQuery<SampleFrame>() {
+      @Override
       protected SampleFrame executeInEDT() {
         return new LoginFrame();
       }
@@ -61,6 +62,7 @@ public class LoginFrame_LongDurationTask_Test extends SwingJUnitExamples {
   @Test
   public void shouldLookupWithDefaultTimeoutByGenericTypeMatcher() {
     GenericTypeMatcher<JFrame> matcher = new GenericTypeMatcher<JFrame>(JFrame.class) {
+      @Override
       protected boolean isMatching(JFrame frame) {
         return frame.getTitle() != null && frame.getTitle().startsWith("News") && frame.isShowing();
       }
