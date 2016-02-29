@@ -22,7 +22,7 @@
     <dependency>
       <groupId>org.assertj</groupId>
       <artifactId>assertj-swing-testng</artifactId>
-      <version>3.1.1</version>
+      <version>3.2.0</version>
       <scope>test</scope>
     </dependency>
     <dependency>
