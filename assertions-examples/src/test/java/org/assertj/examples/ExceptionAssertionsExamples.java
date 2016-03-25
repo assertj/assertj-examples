@@ -62,6 +62,7 @@ public class ExceptionAssertionsExamples extends AbstractAssertionsExamples {
     try {
       assertThat("Messi").isEqualTo("Ronaldo");
     } catch (AssertionError e) {
+      assertThat(e).hasStackTraceContaining("newAssertionError");
       e.printStackTrace();
     }
 
@@ -204,7 +205,9 @@ public class ExceptionAssertionsExamples extends AbstractAssertionsExamples {
     assertThatExceptionOfType(IOException.class)
                      .isThrownBy(() -> { throw new IOException("boom!"); })
                      .withMessage("boom!")
+                     .withMessageContaining("oom")
                      .withMessage("%s!", "boom")
+                     .withStackTraceContaining("IOException")
                      .withNoCause(); 
     // @format:on
   }

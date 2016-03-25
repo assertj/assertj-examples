@@ -29,7 +29,6 @@ import static org.assertj.examples.data.Ring.nenya;
 import static org.assertj.examples.data.Ring.oneRing;
 import static org.assertj.examples.data.Ring.vilya;
 import static org.assertj.examples.extractor.BasketballExtractors.teammates;
-import static org.assertj.examples.extractor.TolkienCharactersExtractors.age;
 import static org.assertj.examples.extractor.TolkienCharactersExtractors.ageAndRace;
 import static org.assertj.examples.extractor.TolkienCharactersExtractors.race;
 

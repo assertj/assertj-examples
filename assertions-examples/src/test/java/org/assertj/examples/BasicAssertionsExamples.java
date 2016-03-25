@@ -13,15 +13,27 @@
 package org.assertj.examples;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.atIndex;
+import static org.assertj.core.util.Lists.newArrayList;
 import static org.assertj.examples.data.Race.HOBBIT;
+import static org.assertj.examples.data.Ring.narya;
+import static org.assertj.examples.data.Ring.nenya;
+import static org.assertj.examples.data.Ring.oneRing;
+import static org.assertj.examples.data.Ring.vilya;
+
+import java.util.List;
+import java.util.Map;
 
 import org.assertj.core.api.Assertions;
+import org.assertj.core.api.AssertionsForInterfaceTypes;
 import org.assertj.core.util.introspection.IntrospectionError;
 import org.assertj.examples.data.Person;
 import org.assertj.examples.data.Ring;
 import org.assertj.examples.data.TolkienCharacter;
 import org.assertj.examples.data.movie.Movie;
 import org.junit.Test;
+
+import com.google.common.collect.ImmutableMap;
 
 /**
  * Assertions available for all objects.
@@ -231,10 +243,31 @@ public class BasicAssertionsExamples extends AbstractAssertionsExamples {
 
   @Test
   public void extracting_object_values() {
-assertThat(frodo).extracting(TolkienCharacter::getName,
-                             character -> character.age,
-                             character -> character.getRace().getName())
-                 .containsExactly("Frodo", 33, "Hobbit");
+    assertThat(frodo).extracting(TolkienCharacter::getName,
+                                 character -> character.age,
+                                 character -> character.getRace().getName())
+                     .containsExactly("Frodo", 33, "Hobbit");
+  }
+
+  @Test
+  public void as_and_list_or_map() {
+    List<Ring> elvesRings = newArrayList(vilya, nenya, narya);
+    assertThat(elvesRings).as("abc").isNotEmpty();
+    assertThat(elvesRings).as("abc").contains(vilya, atIndex(0));
+    assertThat(elvesRings).as("abc %d %d", 1, 2).isNotEmpty();
+
+    assertThat(ringBearers).as("map").hasSize(4);
+    assertThat(ringBearers).as("map %s", "size").hasSize(4);
+    assertThat(ringBearers).as("map %s", "keys").containsOnlyKeys(vilya, nenya, narya, oneRing);
+    assertThat(ringBearers).as("map").containsOnlyKeys(vilya, nenya, narya, oneRing);
+
+    Map<String, String> map = ImmutableMap.of("Key1", "Value1", "Key2", "Value2");
+    assertThat(map).as("").containsOnlyKeys("Key1", "Key2");
+    
+    Map map1 = new java.util.HashMap<>();
+    map1.put("Key1","Value1");
+    map1.put("Key2","Value2");
+    Assertions.assertThat(map1).containsOnlyKeys("Key1","Key2");
   }
 
 }
