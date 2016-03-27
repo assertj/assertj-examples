@@ -22,9 +22,11 @@ import static org.assertj.examples.data.Ring.oneRing;
 import static org.assertj.examples.data.Ring.vilya;
 
 import java.util.AbstractMap.SimpleImmutableEntry;
+import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
+import org.assertj.examples.data.Ring;
 import org.assertj.examples.data.TolkienCharacter;
 import org.junit.Test;
 
@@ -74,10 +76,23 @@ public class MapAssertionsExamples extends AbstractAssertionsExamples {
     assertThat(ringBearers).hasSameSizeAs(ringBearers);
     ringBearers.clear();
     assertThat(ringBearers).contains();
+    assertThat(ringBearers).containsAllEntriesOf(ringBearers);
+  }
+  
+  
+  @Test
+  public void containsAllEntriesOf_example() {
+    Map<Ring, TolkienCharacter> elvesRingBearer = new HashMap<>();
+    elvesRingBearer.put(nenya, galadriel);
+    elvesRingBearer.put(narya, gandalf);
+    elvesRingBearer.put(vilya, elrond);
+    
+    assertThat(ringBearers).containsAllEntriesOf(elvesRingBearer);
   }
 
+
   @Test
-  public void map_contains_examples() throws Exception {
+  public void map_contains_entries_examples() throws Exception {
 
     Map<String, TolkienCharacter> characters = new LinkedHashMap<>();
     characters.put(frodo.getName(), frodo);
@@ -122,6 +137,17 @@ public class MapAssertionsExamples extends AbstractAssertionsExamples {
     } catch (AssertionError e) {
       logAssertionErrorMessage("display sorted maps in error message", e);
     }
+  }
+
+  @SuppressWarnings({ "unchecked", "rawtypes" })
+  @Test
+  public void test_bug_485() {
+    // https://github.com/joel-costigliola/assertj-core/issues/485
+    Map map1 = new java.util.HashMap<>();
+    map1.put("Key1","Value1");
+    map1.put("Key2","Value2");
+    
+    assertThat(map1).as("").containsOnlyKeys("Key1","Key2");
   }
 
   @Test

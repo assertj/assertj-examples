@@ -168,4 +168,10 @@ public class NumberAssertionsExamples extends AbstractAssertionsExamples {
                                                 .containsExactly(7.2000001, 3.5999999, -12.000001);
   }
 
+  @Test
+  public void subsequence_of_real_numbers() {
+    assertThat(new double[] { 1.0, 2.0, 3.0 }).containsSubsequence(1.0, 3.0);
+    assertThat(new float[] { 1.0f, 2.0f, 3.0f }).containsSubsequence(1.0f, 3.0f);
+  }
+  
 }

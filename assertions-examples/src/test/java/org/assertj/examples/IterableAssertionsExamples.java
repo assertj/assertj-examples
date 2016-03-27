@@ -120,7 +120,9 @@ public class IterableAssertionsExamples extends AbstractAssertionsExamples {
   @Test
   public void iterable_basic_contains_exactly_assertions_examples() {
     Iterable<Ring> elvesRings = newArrayList(vilya, nenya, narya);
-    assertThat(elvesRings).containsExactly(vilya, nenya, narya);
+    assertThat(elvesRings).containsExactly(vilya, nenya, narya)
+                          .containsExactlyInAnyOrder(vilya, nenya, narya)
+                          .containsExactlyInAnyOrder(nenya, vilya, narya);
 
     // It works with collections that have a consistent iteration order
     SortedSet<Ring> elvesRingsSet = new TreeSet<Ring>();
@@ -262,6 +264,7 @@ public class IterableAssertionsExamples extends AbstractAssertionsExamples {
   public void iterable_is_subset_of_assertion_example() {
     Collection<Ring> elvesRings = newArrayList(vilya, nenya, narya);
     assertThat(elvesRings).isSubsetOf(ringsOfPower);
+    assertThat(elvesRings).isSubsetOf(vilya, nenya, narya);
     try {
       assertThat(elvesRings).isSubsetOf(newArrayList(nenya, narya));
     } catch (AssertionError e) {
@@ -338,14 +341,16 @@ public class IterableAssertionsExamples extends AbstractAssertionsExamples {
 
   @Test
   public void containsSubSequence_assertion_examples() {
-	assertThat(newArrayList("Batman", "is", "weaker", "than", "Superman", "but", "he", "is", "less", "annoying"))
-      .containsSubsequence("Superman", "is", "annoying");
-	assertThat(newArrayList("Breaking", "objects", "is", "pretty", "bad")).containsSubsequence("Breaking", "bad");
-	try {
-	  assertThat(newArrayList("A", "B", "C", "D")).containsSubsequence("B", "A", "C");
-	} catch (AssertionError e) {
-	  logAssertionErrorMessage("containsSubsequence for Iterable", e);
-	}
+    assertThat(newArrayList("Batman", "is", "weaker", "than", "Superman", "but", "he", "is", "less", "annoying"))
+                                                                                                                 .containsSubsequence("Superman",
+                                                                                                                                      "is",
+                                                                                                                                      "annoying");
+    assertThat(newArrayList("Breaking", "objects", "is", "pretty", "bad")).containsSubsequence("Breaking", "bad");
+    try {
+      assertThat(newArrayList("A", "B", "C", "D")).containsSubsequence("B", "A", "C");
+    } catch (AssertionError e) {
+      logAssertionErrorMessage("containsSubsequence for Iterable", e);
+    }
   }
 
   @Test

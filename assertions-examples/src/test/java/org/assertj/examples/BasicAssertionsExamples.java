@@ -13,13 +13,16 @@
 package org.assertj.examples;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.examples.data.Race.ELF;
 import static org.assertj.examples.data.Race.HOBBIT;
 
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 
 import org.assertj.core.api.Assertions;
 import org.assertj.core.util.introspection.IntrospectionError;
+import org.assertj.examples.comparator.AtPrecisionComparator;
 import org.assertj.examples.data.Person;
 import org.assertj.examples.data.Ring;
 import org.assertj.examples.data.TolkienCharacter;
@@ -242,6 +245,40 @@ public class BasicAssertionsExamples extends AbstractAssertionsExamples {
   public void extracting_field_or_property_examples() {
     assertThat(frodo).extracting("name", "age", "race.name")
                      .containsExactly("Frodo", 33, "Hobbit");
+  }
+
+  @Test
+  public void field_by_field_comparison_with_specific_comparator_by_type_or_field_examples() {
+
+    TolkienCharacter olderFrodo = new TolkienCharacter("Frodo", 35, HOBBIT);
+
+    Assertions.setAllowComparingPrivateFields(false); // ignore notAccessibleField in comparison
+
+    // specify a comparator for a single field : age
+    assertThat(frodo).usingComparatorForFields(new AtPrecisionComparator<Integer>(2), "age")
+                     .isEqualToComparingFieldByField(olderFrodo)
+                     .isEqualToComparingOnlyGivenFields(olderFrodo, "age");
+
+    // specify a comparator for a field type : Integer
+    assertThat(frodo).usingComparatorForType(new AtPrecisionComparator<Integer>(2), Integer.class)
+                     .isEqualToComparingFieldByField(olderFrodo)
+                     .isEqualToComparingOnlyGivenFields(olderFrodo, "age");
+
+    // field comparators take precendence over field type comparators
+    assertThat(frodo).usingComparatorForFields(new AtPrecisionComparator<Integer>(2), "age")
+                     .usingComparatorForType(new AtPrecisionComparator<Integer>(1), Integer.class)
+                     .isEqualToComparingFieldByField(olderFrodo);
+
+    TolkienCharacter elfFrodo = new TolkienCharacter("Frodo", 33, ELF);
+    assertThat(frodo).usingComparatorForFields(new Comparator<String>() {
+
+      @Override
+      public int compare(String o1, String o2) {
+        return 0;
+      }
+    }, "race.name").isEqualToComparingOnlyGivenFields(elfFrodo);
+
+    Assertions.setAllowComparingPrivateFields(true);
   }
 
   @Test
