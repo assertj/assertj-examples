@@ -19,6 +19,7 @@ import static java.nio.file.Files.deleteIfExists;
 import static java.nio.file.Files.write;
 import static java.util.Collections.singleton;
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.Assume.assumeTrue;
 
 import java.nio.charset.Charset;
 import java.nio.file.FileSystems;
@@ -31,7 +32,6 @@ import java.util.Set;
 
 import org.apache.commons.lang3.SystemUtils;
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Test;
 
 /**
@@ -115,9 +115,9 @@ public class PathAssertionsExamples extends AbstractAssertionsExamples {
   }
 
   @Test
-  @Ignore
-  // ignore for windows system
   public void path_rwx_assertion() throws Exception {
+	assumeTrue(SystemUtils.IS_OS_UNIX);
+
 	// Create a file and set permissions to be readable by all.
 	write(rwxFile, "rwx file".getBytes());
 
@@ -155,6 +155,8 @@ public class PathAssertionsExamples extends AbstractAssertionsExamples {
 
   @Test
   public void path_assertions() throws Exception {
+	assumeTrue(SystemUtils.IS_OS_UNIX);
+
 	// Create a regular file, and a symbolic link pointing to it
 	final Path existingFile = Paths.get("somefile.txt");
 	write(existingFile, "foo".getBytes());
@@ -203,21 +205,19 @@ public class PathAssertionsExamples extends AbstractAssertionsExamples {
 	assertThat(existingFile).hasFileName("somefile.txt");
 	assertThat(symlinkToExistingFile).hasFileName("symlink-to-somefile.txt");
 
-	if (SystemUtils.IS_OS_UNIX) {
-	  assertThat(Paths.get("/foo/bar")).isAbsolute();
-	  assertThat(Paths.get("foo/bar")).isRelative();
-	  assertThat(Paths.get("/usr/lib")).isNormalized();
-	  assertThat(Paths.get("a/b/c")).isNormalized();
-	  assertThat(Paths.get("../d")).isNormalized();
-	  assertThat(Paths.get("/")).hasNoParent();
-	  assertThat(Paths.get("foo")).hasNoParentRaw();
-	  assertThat(Paths.get("/usr/lib")).startsWith(Paths.get("/usr"))
-		                               .startsWith(Paths.get("/usr/lib/..")) // would fail with startsWithRaw
-		                               .startsWithRaw(Paths.get("/usr"));
-	  assertThat(Paths.get("/usr/lib")).endsWith(Paths.get("lib"))
-		                               .endsWith(Paths.get("lib/../lib")) // would fail with endsWithRaw
-		                               .endsWithRaw(Paths.get("lib"));
-	}
+	assertThat(Paths.get("/foo/bar")).isAbsolute();
+	assertThat(Paths.get("foo/bar")).isRelative();
+	assertThat(Paths.get("/usr/lib")).isNormalized();
+	assertThat(Paths.get("a/b/c")).isNormalized();
+	assertThat(Paths.get("../d")).isNormalized();
+	assertThat(Paths.get("/")).hasNoParent();
+	assertThat(Paths.get("foo")).hasNoParentRaw();
+	assertThat(Paths.get("/usr/lib")).startsWith(Paths.get("/usr"))
+	                                 .startsWith(Paths.get("/usr/lib/..")) // would fail with startsWithRaw
+	                                 .startsWithRaw(Paths.get("/usr"));
+	assertThat(Paths.get("/usr/lib")).endsWith(Paths.get("lib"))
+	                                 .endsWith(Paths.get("lib/../lib")) // would fail with endsWithRaw
+	                                 .endsWithRaw(Paths.get("lib"));
 
 	
 	assertThat(Paths.get("abc.txt")).isLessThan(Paths.get("xyz.txt"));
