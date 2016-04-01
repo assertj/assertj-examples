@@ -19,6 +19,7 @@ import static org.assertj.core.util.Lists.newArrayList;
 
 import java.io.File;
 import java.util.Comparator;
+import java.util.regex.Pattern;
 
 import org.assertj.core.presentation.StandardRepresentation;
 import org.junit.Test;
@@ -35,6 +36,7 @@ public class StringAssertionsExamples extends AbstractAssertionsExamples {
     assertThat("Frodo").startsWith("Fro").endsWith("do").hasSize(5);
     assertThat("Frodo").contains("rod").doesNotContain("fro");
     assertThat("Frodo").containsOnlyOnce("do");
+    assertThat("Frodo").isSubstringOf("Frodon");
     try {
       assertThat("Frodo").containsOnlyOnce("o");
     } catch (AssertionError e) {
@@ -207,6 +209,12 @@ public class StringAssertionsExamples extends AbstractAssertionsExamples {
     assertThat(title).asString().endsWith("ones");
   }
 
+  @Test
+  public void containsPattern_assertion_example() {
+    assertThat("Frodo").containsPattern("Fr.d");
+    assertThat("Frodo").containsPattern(Pattern.compile("Fr.d"));
+  }
+  
   @Test
   public void multine_collection_formatting() {
     String[] greatBooks = array("A Game of Thrones", "The Lord of the Rings", "Assassin's Apprentice  ....");

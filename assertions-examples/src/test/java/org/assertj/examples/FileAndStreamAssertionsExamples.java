@@ -50,22 +50,22 @@ public class FileAndStreamAssertionsExamples extends AbstractAssertionsExamples 
     Charset turkishCharset = Charset.forName("windows-1254");
     File xFileWithTurkishCharset = writeFile("xFileWithTurkishCharset", "La Vérité Est Ailleurs", turkishCharset);
     assertThat(xFileWithTurkishCharset).usingCharset(turkishCharset).hasContent("La Vérité Est Ailleurs");
-    
+
     // compare content with a binary array
     byte[] binaryContent = "The Truth Is Out There".getBytes();
     assertThat(xFile).hasBinaryContent(binaryContent);
-    
+
     // compare content with a binary array
     binaryContent = "La Vérité Est Ailleurs".getBytes(turkishCharset.name());
     assertThat(xFileWithTurkishCharset).hasBinaryContent(binaryContent);
 
     File xFileWithExtension = writeFile("xFile.secret", "The Truth Is Out There");
     assertThat(xFileWithExtension)
-            .hasParent("target")
-            .hasParent(new File("target"))
-            .hasExtension("secret")
-            .hasName("xFile.secret");
-            
+                                  .hasParent("target")
+                                  .hasParent(new File("target"))
+                                  .hasExtension("secret")
+                                  .hasName("xFile.secret");
+
     assertThat(new File("/")).hasNoParent();
   }
 
@@ -102,6 +102,25 @@ public class FileAndStreamAssertionsExamples extends AbstractAssertionsExamples 
   @Test
   public void stream_assertions_examples() throws Exception {
     assertThat(streamFrom("string")).hasSameContentAs(streamFrom("string"));
+  }
+
+  @Test
+  public void improved_diff_assertions_examples() throws Exception {
+    File actual = writeFile("actual", "aaaaaa\n" +
+                                      "bbbbbb\n" +
+                                      "cccccc\n" +
+                                      "dddddd\n");
+    File expected = writeFile("expected", "------\n" +
+                                          "aaaaaa\n" +
+                                          "bbbbbb\n" +
+                                          "CCCCCC\n" +
+                                          "dddddd\n" +
+                                          "eeeeee\n");
+    try {
+      assertThat(actual).hasSameContentAs(expected);
+    } catch (AssertionError e) {
+      logAssertionErrorMessage("file diff", e);
+    }
   }
 
   // helper methods

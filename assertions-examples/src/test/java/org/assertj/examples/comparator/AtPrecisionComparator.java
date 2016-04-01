@@ -10,41 +10,24 @@
  *
  * Copyright 2012-2014 the original author or authors.
  */
-package org.assertj.examples.data;
+package org.assertj.examples.comparator;
 
-public class Book {
+import static java.lang.Math.abs;
 
-  private Title title;
-  private int numberOfPages;
-  private double pryce;
+import java.util.Comparator;
 
-  public Book(String title) {
-    this.title = new Title(title);
-  }
+public class AtPrecisionComparator<NUMBER extends Number> implements Comparator<NUMBER> {
   
-  public int getNumberOfPages() {
-    return numberOfPages;
-  }
-  
-  public double getPryce() {
-    return pryce;
-  }
-  
-  public Title getTitle() {
-    return title;
+  private NUMBER precision;
+
+  public AtPrecisionComparator(NUMBER precision) {
+    this.precision = precision;
   }
 
-  public static class Title {
-    private String title;
-
-    public Title(String title) {
-      super();
-      this.title = title;
-    }
-
-    public String getTitle() {
-      return title;
-    }
+  @Override
+  public int compare(NUMBER i1, NUMBER i2) {
+    double diff = abs(i1.doubleValue() - i2.doubleValue());
+    if (diff <= precision.doubleValue()) return 0;
+    return diff < 0.0 ? -1 : 1;
   }
-
 }

@@ -26,11 +26,13 @@ public abstract class AbstractClassUsingDifferentClassesWithSameNameAssert<S ext
     // check that actual ClassUsingDifferentClassesWithSameName we want to make assertions on is not null.
     isNotNull();
 
+
     // overrides the default error message with a more explicit one
     String assertjErrorMessage = "\nExpecting movieTeam of:\n  <%s>\nto be:\n  <%s>\nbut was:\n  <%s>";
     
-    // null safe check
+    // check
     org.assertj.examples.data.movie.Team actualMovieTeam = actual.getMovieTeam();
+    System.out.println("check MovieTeam");
     if (!Objects.areEqual(actualMovieTeam, movieTeam)) {
       failWithMessage(assertjErrorMessage, actual, movieTeam, actualMovieTeam);
     }
@@ -49,11 +51,13 @@ public abstract class AbstractClassUsingDifferentClassesWithSameNameAssert<S ext
     // check that actual ClassUsingDifferentClassesWithSameName we want to make assertions on is not null.
     isNotNull();
 
+
     // overrides the default error message with a more explicit one
     String assertjErrorMessage = "\nExpecting team of:\n  <%s>\nto be:\n  <%s>\nbut was:\n  <%s>";
     
-    // null safe check
+    // check
     Team actualTeam = actual.getTeam();
+    System.out.println("check Team");
     if (!Objects.areEqual(actualTeam, team)) {
       failWithMessage(assertjErrorMessage, actual, team, actualTeam);
     }

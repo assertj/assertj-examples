@@ -15,8 +15,8 @@ package org.assertj.examples;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.extractProperty;
 import static org.assertj.core.api.Assertions.failBecauseExceptionWasNotThrown;
-import static org.assertj.core.api.Assertions.setAllowExtractingPrivateFields;
 import static org.assertj.core.api.Assertions.filter;
+import static org.assertj.core.api.Assertions.setAllowExtractingPrivateFields;
 import static org.assertj.core.data.Index.atIndex;
 import static org.assertj.core.util.Arrays.array;
 import static org.assertj.core.util.Lists.newArrayList;
@@ -55,6 +55,11 @@ public class ArrayAssertionsExamples extends AbstractAssertionsExamples {
   public void array_assertions_examples() {
     // array assertion are very similar to newArrayList assertions
     Ring[] elvesRings = array(vilya, nenya, narya);
+    Ring[] elvesRings2 = array(nenya, vilya, narya);
+    assertThat(elvesRings).containsOnly(elvesRings2);
+    
+    assertThat(array(vilya, nenya, narya)).containsOnly(array(nenya, vilya, narya));
+    
     Movie[] trilogy = array(theFellowshipOfTheRing, theTwoTowers, theReturnOfTheKing);
     assertThat(elvesRings).isNotEmpty().hasSize(3);
     assertThat(elvesRings).hasSameSizeAs(trilogy);
@@ -352,7 +357,7 @@ public class ArrayAssertionsExamples extends AbstractAssertionsExamples {
   }
 
   @Test
-  public void use_unicode_representation_in_error_messages() throws UnsupportedEncodingException {
+  public void use_unicode_representation_in_error_messages() {
     try {
       assertThat("a6c".toCharArray()).inUnicode().isEqualTo("abó".toCharArray());
     } catch (AssertionError e) {

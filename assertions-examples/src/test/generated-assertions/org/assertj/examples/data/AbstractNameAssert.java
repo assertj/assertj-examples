@@ -26,11 +26,13 @@ public abstract class AbstractNameAssert<S extends AbstractNameAssert<S, A>, A e
     // check that actual Name we want to make assertions on is not null.
     isNotNull();
 
+
     // overrides the default error message with a more explicit one
     String assertjErrorMessage = "\nExpecting first of:\n  <%s>\nto be:\n  <%s>\nbut was:\n  <%s>";
     
-    // null safe check
+    // check
     String actualFirst = actual.getFirst();
+    System.out.println("check First");
     if (!Objects.areEqual(actualFirst, first)) {
       failWithMessage(assertjErrorMessage, actual, first, actualFirst);
     }
@@ -49,11 +51,13 @@ public abstract class AbstractNameAssert<S extends AbstractNameAssert<S, A>, A e
     // check that actual Name we want to make assertions on is not null.
     isNotNull();
 
+
     // overrides the default error message with a more explicit one
     String assertjErrorMessage = "\nExpecting last of:\n  <%s>\nto be:\n  <%s>\nbut was:\n  <%s>";
     
-    // null safe check
+    // check
     String actualLast = actual.getLast();
+    System.out.println("check Last");
     if (!Objects.areEqual(actualLast, last)) {
       failWithMessage(assertjErrorMessage, actual, last, actualLast);
     }
