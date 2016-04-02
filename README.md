@@ -2,6 +2,8 @@
 
 AssertJ examples is divided in two : assertions-examples (core, guava and joda assertions) and AssertJ swing modules.
 
+The **master** branch contains examples with the latest released version of AssertJ modules (for Java 8).
+
 There are several branches that contain examples for the ongoing development versions of AssertJ modules. That means you have to build the according AssertJ modules by your own before new features compile. The following table contains these special branches that are merged into the master each time the module is released.
 
 | Branch                        | Modules                                    |
@@ -15,8 +17,7 @@ There are several branches that contain examples for the ongoing development ver
 **assertj-examples/assertions-examples** contains executable AssertJ assertions examples that you can run as JUnit tests.
 Please have a look at **[assertions examples sources](assertions-examples/src/test/java/org/assertj/examples)**.
 
-The **master** branch contains examples with the latest released version of AssertJ modules for Java 8.
-The **java-7** branch contains examples with the latest released version of AssertJ modules for Java 7.
+The **master** branch contains examples with the latest released version of AssertJ modules for Java 8, similarly the **java-7** branch contains examples of AssertJ modules for Java 7.
 You should be able to build those two branches with `mvn clean install` command.
 
 In your IDE, add `src/test/generated-assertions` to the project java sources if you IDE shows errors/missing classes.
