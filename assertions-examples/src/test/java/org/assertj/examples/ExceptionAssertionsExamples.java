@@ -213,6 +213,18 @@ public class ExceptionAssertionsExamples extends AbstractAssertionsExamples {
   }
 
   @Test
+  public void thrown_exception_assertion_alternative_withStackTraceContaining() {
+    // @format:off
+    Throwable runtime = new RuntimeException("no way", new Exception("you shall not pass"));
+    
+    // assertion will pass
+    assertThatExceptionOfType(RuntimeException.class)
+               .isThrownBy(() -> {throw runtime;})
+               .withStackTraceContaining("you shall not pass");
+    // @format:on
+  }
+  
+  @Test
   public void bdd_style_exception_testing() {
     // @format:off
     // when
