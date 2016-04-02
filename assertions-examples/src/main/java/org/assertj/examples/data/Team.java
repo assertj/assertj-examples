@@ -27,4 +27,6 @@ public class Team {
     return players;
   }
 
+  public boolean isPlayoffTeam = true;
+
 }

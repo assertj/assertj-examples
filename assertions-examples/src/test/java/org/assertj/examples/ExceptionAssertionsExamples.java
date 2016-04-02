@@ -20,6 +20,7 @@ import static org.assertj.core.api.Assertions.catchThrowable;
 import java.io.IOException;
 
 import org.assertj.core.api.Assertions;
+import org.assertj.core.api.ThrowableAssert.ThrowingCallable;
 import org.junit.Test;
 
 /**
@@ -48,6 +49,10 @@ public class ExceptionAssertionsExamples extends AbstractAssertionsExamples {
       assertThat(e).hasMessageStartingWith("Index: 9").hasMessageContaining("9").hasMessageEndingWith("Size: 9");
       // this equivalent to (unless for error message which is more explicit in assertThat(e).hasMessageXXX)
       assertThat(e.getMessage()).startsWith("Index: 9").contains("9").endsWith("Size: 9");
+      
+      // String#format syntax support
+      assertThat(e).hasMessage("Index: %s, Size: %s", 9, 9);
+      
     }
   }
 
@@ -107,8 +112,7 @@ public class ExceptionAssertionsExamples extends AbstractAssertionsExamples {
     // at org.eclipse.jdt.internal.junit.runner.RemoteTestRunner.main(RemoteTestRunner.java:197)
 
     System.err.println("\n--------------- stack trace filtered -----------------");
-    Assertions.setRemoveAssertJRelatedElementsFromStackTrace(true); // TODO
-    // setRemoveAssertJRelatedElementsFromStackTrace
+    Assertions.setRemoveAssertJRelatedElementsFromStackTrace(true); 
     try {
       assertThat("Messi").isEqualTo("Ronaldo");
     } catch (AssertionError e) {

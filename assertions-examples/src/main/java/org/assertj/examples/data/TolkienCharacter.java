@@ -42,6 +42,10 @@ public class TolkienCharacter {
     return name;
   }
 
+  public String getSurname() {
+    return name + " the " + race.getName();
+  }
+
   public void setName(String name) {
     this.name = name;
   }

@@ -25,11 +25,13 @@ public abstract class AbstractEmployeeAssert<S extends AbstractEmployeeAssert<S,
     // check that actual Employee we want to make assertions on is not null.
     isNotNull();
 
+
     // overrides the default error message with a more explicit one
     String assertjErrorMessage = "\nExpecting company of:\n  <%s>\nto be:\n  <%s>\nbut was:\n  <%s>";
     
-    // null safe check
+    // check
     String actualCompany = actual.getCompany();
+    System.out.println("check Company");
     if (!Objects.areEqual(actualCompany, company)) {
       failWithMessage(assertjErrorMessage, actual, company, actualCompany);
     }

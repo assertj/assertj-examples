@@ -40,6 +40,6 @@ public class BasketBallAssertExamples extends AbstractAssertionsExamples {
   public void basketBallPlayer_real_number_assertion() {
     rose.size = 6.3;
     rose.setWeight(189.5f);
-    BasketBallPlayerAssert.assertThat(rose).hasSize(6.2, 0.1).hasWeight(189, 0.51f);
+    BasketBallPlayerAssert.assertThat(rose).hasSizeCloseTo(6.2, 0.1).hasWeightCloseTo(189, 0.51f);
   }
 }

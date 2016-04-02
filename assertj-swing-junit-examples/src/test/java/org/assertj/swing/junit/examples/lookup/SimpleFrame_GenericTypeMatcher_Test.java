@@ -16,6 +16,7 @@ public class SimpleFrame_GenericTypeMatcher_Test extends SwingJUnitExamples {
   @Override
   protected void onSetUp() {
     SimpleFrame frame = GuiActionRunner.execute(new GuiQuery<SimpleFrame>() {
+      @Override
       protected SimpleFrame executeInEDT() {
         return new SimpleFrame();
       }

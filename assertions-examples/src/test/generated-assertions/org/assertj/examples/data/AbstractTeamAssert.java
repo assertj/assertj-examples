@@ -99,4 +99,40 @@ public abstract class AbstractTeamAssert<S extends AbstractTeamAssert<S, A>, A e
   }
   
 
+  /**
+   * Verifies that the actual Team is playoff team.
+   * @return this assertion object.
+   * @throws AssertionError - if the actual Team is not playoff team.
+   */
+  public S isPlayoffTeam() {
+    // check that actual Team we want to make assertions on is not null.
+    isNotNull();
+
+    // check
+    if (!actual.isPlayoffTeam) {
+      failWithMessage("\nExpecting that actual Team is playoff team but is not.");
+    }
+    
+    // return the current assertion for method chaining
+    return myself;
+  }
+
+  /**
+   * Verifies that the actual Team is not playoff team.
+   * @return this assertion object.
+   * @throws AssertionError - if the actual Team is playoff team.
+   */
+  public S isNotPlayoffTeam() {
+    // check that actual Team we want to make assertions on is not null.
+    isNotNull();
+
+    // check
+    if (actual.isPlayoffTeam) {
+      failWithMessage("\nExpecting that actual Team is not playoff team but is.");
+    }
+    
+    // return the current assertion for method chaining
+    return myself;
+  }
+
 }

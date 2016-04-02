@@ -15,8 +15,10 @@ package org.assertj.examples;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.offset;
 import static org.assertj.core.api.Assertions.within;
+import static org.assertj.core.api.Assertions.withinPercentage;
 
 import java.math.BigDecimal;
+import java.util.Comparator;
 
 import org.assertj.examples.comparator.AbsValueComparator;
 import org.junit.Test;
@@ -60,7 +62,7 @@ public class NumberAssertionsExamples extends AbstractAssertionsExamples {
     assertThat(-8.0).usingComparator(new AbsValueComparator<Double>()).isEqualTo(8.0);
     assertThat((byte) -8).usingComparator(new AbsValueComparator<Byte>()).isEqualTo((byte) 8);
     assertThat(new BigDecimal("-8")).usingComparator(new AbsValueComparator<BigDecimal>())
-                                    .isEqualTo( new BigDecimal("8"));
+                                    .isEqualTo(new BigDecimal("8"));
 
     // works with arrays !
     assertThat(new int[] { -1, 2, 3 }).usingElementComparator(absValueComparator).contains(1, 2, -3);
@@ -98,6 +100,8 @@ public class NumberAssertionsExamples extends AbstractAssertionsExamples {
 
     // With BigDecimal, 8.0 is not equals to 8.00 but it is if you use compareTo()
     assertThat(new BigDecimal("8.0")).isEqualByComparingTo(new BigDecimal("8.00"));
+    assertThat(new BigDecimal("8.0")).isEqualByComparingTo("8.00");
+    assertThat(new BigDecimal("8.0")).isNotEqualByComparingTo("8.01");
 
     // isGreaterThanOrEqualTo uses compareTo semantics
     assertThat(new BigDecimal("8.0")).isGreaterThanOrEqualTo(new BigDecimal("8.00"));
@@ -116,6 +120,10 @@ public class NumberAssertionsExamples extends AbstractAssertionsExamples {
 
     // same stuff using within instead of offset
     assertThat(8.1).isCloseTo(8.0, within(0.1));
+    assertThat(5.0).isCloseTo(6.0, withinPercentage(20.0));
+    assertThat(5.0).isCloseTo(6.0, withinPercentage(20));
+    assertThat(5).isCloseTo(6, withinPercentage(20));
+
     assertThat(8.2f).isCloseTo(8.0f, within(0.2f));
     assertThat(new BigDecimal("8.1")).isCloseTo(new BigDecimal("8.0"), within(new BigDecimal("0.1")));
     // just to see that the BigDecimal format does not have impact on the assertion
@@ -131,11 +139,11 @@ public class NumberAssertionsExamples extends AbstractAssertionsExamples {
     } catch (AssertionError e) {
       logAssertionErrorMessage("BigDecimal isCloseTo within offset", e);
     }
-    
+
     assertThat(sam.age).isCloseTo(40, within(10));
     assertThat(10l).isCloseTo(8l, within(2l));
-    assertThat((short)5).isCloseTo((short)7, within((short)3));
-    assertThat((byte)5).isCloseTo((byte)7, within((byte)3));
+    assertThat((short) 5).isCloseTo((short) 7, within((short) 3));
+    assertThat((byte) 5).isCloseTo((byte) 7, within((byte) 3));
   }
 
   @Test
@@ -148,4 +156,22 @@ public class NumberAssertionsExamples extends AbstractAssertionsExamples {
     }
   }
 
+  @Test
+  public void comparing_array_of_real_numbers() {
+    Comparator<Double> closeToComparator = new Comparator<Double>() {
+      @Override
+      public int compare(Double o1, Double o2) {
+        return Math.abs(o1.doubleValue() - o2.doubleValue()) < 0.001 ? 0 : -1;
+      }
+    };
+    assertThat(new double[] { 7.2, 3.6, -12.0 }).usingElementComparator(closeToComparator)
+                                                .containsExactly(7.2000001, 3.5999999, -12.000001);
+  }
+
+  @Test
+  public void subsequence_of_real_numbers() {
+    assertThat(new double[] { 1.0, 2.0, 3.0 }).containsSubsequence(1.0, 3.0);
+    assertThat(new float[] { 1.0f, 2.0f, 3.0f }).containsSubsequence(1.0f, 3.0f);
+  }
+  
 }

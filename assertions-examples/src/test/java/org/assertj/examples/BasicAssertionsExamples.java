@@ -15,6 +15,7 @@ package org.assertj.examples;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.atIndex;
 import static org.assertj.core.util.Lists.newArrayList;
+import static org.assertj.examples.data.Race.ELF;
 import static org.assertj.examples.data.Race.HOBBIT;
 import static org.assertj.examples.data.Ring.narya;
 import static org.assertj.examples.data.Ring.nenya;
@@ -22,11 +23,15 @@ import static org.assertj.examples.data.Ring.oneRing;
 import static org.assertj.examples.data.Ring.vilya;
 
 import java.util.List;
+import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.Map;
 
 import org.assertj.core.api.Assertions;
 import org.assertj.core.api.AssertionsForInterfaceTypes;
+import org.assertj.core.util.Lists;
 import org.assertj.core.util.introspection.IntrospectionError;
+import org.assertj.examples.comparator.AtPrecisionComparator;
 import org.assertj.examples.data.Person;
 import org.assertj.examples.data.Ring;
 import org.assertj.examples.data.TolkienCharacter;
@@ -94,7 +99,9 @@ public class BasicAssertionsExamples extends AbstractAssertionsExamples {
   public void isIn_isNotIn_assertions_examples() {
     assertThat(frodo).isIn(fellowshipOfTheRing);
     assertThat(frodo).isIn(sam, frodo, pippin);
+    assertThat((TolkienCharacter) null).isIn(sam, frodo, pippin, null);
     assertThat(sauron).isNotIn(fellowshipOfTheRing);
+    assertThat((TolkienCharacter) null).isNotIn(fellowshipOfTheRing);
   }
 
   @Test
@@ -163,7 +170,7 @@ public class BasicAssertionsExamples extends AbstractAssertionsExamples {
   }
 
   @Test
-  public void basic_assertions_with_lenient_equals_examples() {
+  public void basic_assertions_with_field_by_field_comparison_examples() {
 
     TolkienCharacter mysteriousHobbit = new TolkienCharacter(null, 33, HOBBIT);
 
@@ -250,6 +257,23 @@ public class BasicAssertionsExamples extends AbstractAssertionsExamples {
   }
 
   @Test
+  public void has_field_or_property_examples() {
+    assertThat(frodo).hasFieldOrProperty("age");
+    // private field are found unless Assertions.setAllowExtractingPrivateFields(false);
+    assertThat(frodo).hasFieldOrProperty("notAccessibleField");
+    assertThat(frodo).hasFieldOrPropertyWithValue("age", 33);
+    assertThat(frodo).hasFieldOrProperty("race.name");
+    assertThat(frodo).hasFieldOrPropertyWithValue("race.name", "Hobbit");
+  }
+
+  @Test
+  public void extracting_field_or_property_examples() {
+    assertThat(frodo).extracting("name", "age", "race.name")
+                     .containsExactly("Frodo", 33, "Hobbit");
+  }
+
+  @SuppressWarnings("unchecked")
+  @Test
   public void as_and_list_or_map() {
     List<Ring> elvesRings = newArrayList(vilya, nenya, narya);
     assertThat(elvesRings).as("abc").isNotEmpty();
@@ -264,10 +288,97 @@ public class BasicAssertionsExamples extends AbstractAssertionsExamples {
     Map<String, String> map = ImmutableMap.of("Key1", "Value1", "Key2", "Value2");
     assertThat(map).as("").containsOnlyKeys("Key1", "Key2");
     
+    @SuppressWarnings("rawtypes")
     Map map1 = new java.util.HashMap<>();
     map1.put("Key1","Value1");
     map1.put("Key2","Value2");
     Assertions.assertThat(map1).containsOnlyKeys("Key1","Key2");
   }
 
+  @Test
+  public void field_by_field_comparison_with_specific_comparator_by_type_or_field_examples() {
+
+    TolkienCharacter olderFrodo = new TolkienCharacter("Frodo", 35, HOBBIT);
+
+    Assertions.setAllowComparingPrivateFields(false); // ignore notAccessibleField in comparison
+
+    // specify a comparator for a single field : age
+    assertThat(frodo).usingComparatorForFields(new AtPrecisionComparator<Integer>(2), "age")
+                     .isEqualToComparingFieldByField(olderFrodo)
+                     .isEqualToComparingOnlyGivenFields(olderFrodo, "age");
+
+    // specify a comparator for a field type : Integer
+    assertThat(frodo).usingComparatorForType(new AtPrecisionComparator<Integer>(2), Integer.class)
+                     .isEqualToComparingFieldByField(olderFrodo)
+                     .isEqualToComparingOnlyGivenFields(olderFrodo, "age");
+
+    // field comparators take precendence over field type comparators
+    assertThat(frodo).usingComparatorForFields(new AtPrecisionComparator<Integer>(2), "age")
+                     .usingComparatorForType(new AtPrecisionComparator<Integer>(1), Integer.class)
+                     .isEqualToComparingFieldByField(olderFrodo);
+
+    TolkienCharacter elfFrodo = new TolkienCharacter("Frodo", 33, ELF);
+    assertThat(frodo).usingComparatorForFields(new Comparator<String>() {
+
+      @Override
+      public int compare(String o1, String o2) {
+        return 0;
+      }
+    }, "race.name").isEqualToComparingOnlyGivenFields(elfFrodo);
+
+    Assertions.setAllowComparingPrivateFields(true);
+  }
+
+  @Test
+  public void usingFieldByFieldElementComparatorTest() throws Exception {
+    List<Animal> animals = new ArrayList<>();
+    Bird bird = new Bird("White");
+    Snake snake = new Snake(15);
+    animals.add(bird);
+    animals.add(snake);
+
+    assertThat(animals).usingFieldByFieldElementComparator()
+                       .containsExactly(bird, snake);
+  }
+
+  private class Animal {
+    private final String name;
+
+    private Animal(String name) {
+      this.name = name;
+    }
+
+    @SuppressWarnings("unused")
+    public String getName() {
+      return name;
+    }
+  }
+
+  private class Bird extends Animal {
+    private final String color;
+
+    private Bird(String color) {
+      super("Bird");
+      this.color = color;
+    }
+
+    @SuppressWarnings("unused")
+    public String getColor() {
+      return color;
+    }
+  }
+
+  private class Snake extends Animal {
+    private final int length;
+
+    private Snake(int length) {
+      super("Snake");
+      this.length = length;
+    }
+
+    @SuppressWarnings("unused")
+    public int getLength() {
+      return length;
+    }
+  }
 }

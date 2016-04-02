@@ -49,11 +49,13 @@ public abstract class AbstractPersonAssert<S extends AbstractPersonAssert<S, A>,
     // check that actual Person we want to make assertions on is not null.
     isNotNull();
 
+
     // overrides the default error message with a more explicit one
     String assertjErrorMessage = "\nExpecting name of:\n  <%s>\nto be:\n  <%s>\nbut was:\n  <%s>";
     
-    // null safe check
+    // check
     String actualName = actual.getName();
+    System.out.println("check Name");
     if (!Objects.areEqual(actualName, name)) {
       failWithMessage(assertjErrorMessage, actual, name, actualName);
     }

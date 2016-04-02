@@ -13,6 +13,7 @@ public class SimpleCopyApplication_UseBaseTest extends AssertJSwingJUnitTestCase
   @Override
   protected void onSetUp() {
     SimpleCopyApplication frame = GuiActionRunner.execute(new GuiQuery<SimpleCopyApplication>() {
+      @Override
       protected SimpleCopyApplication executeInEDT() {
         return new SimpleCopyApplication();
       }

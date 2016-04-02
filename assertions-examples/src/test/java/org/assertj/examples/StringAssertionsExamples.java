@@ -13,10 +13,15 @@
 package org.assertj.examples;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.util.Arrays.array;
+import static org.assertj.core.util.IterableUtil.smartFormat;
+import static org.assertj.core.util.Lists.newArrayList;
 
 import java.io.File;
 import java.util.Comparator;
+import java.util.regex.Pattern;
 
+import org.assertj.core.presentation.StandardRepresentation;
 import org.junit.Test;
 
 /**
@@ -31,6 +36,7 @@ public class StringAssertionsExamples extends AbstractAssertionsExamples {
     assertThat("Frodo").startsWith("Fro").endsWith("do").hasSize(5);
     assertThat("Frodo").contains("rod").doesNotContain("fro");
     assertThat("Frodo").containsOnlyOnce("do");
+    assertThat("Frodo").isSubstringOf("Frodon");
     try {
       assertThat("Frodo").containsOnlyOnce("o");
     } catch (AssertionError e) {
@@ -64,6 +70,15 @@ public class StringAssertionsExamples extends AbstractAssertionsExamples {
     assertThat("").isEmpty();
     assertThat("").isNullOrEmpty();
     assertThat("not empty").isNotEmpty();
+
+    // check size.
+    assertThat("C-3PO").hasSameSizeAs("R2-D2").hasSize(5);
+
+    assertThat("3210").containsOnlyDigits();
+
+    //
+    assertThat("Frodo").doesNotStartWith("fro")
+                       .doesNotEndWith("don");
   }
 
   @Test
@@ -120,14 +135,14 @@ public class StringAssertionsExamples extends AbstractAssertionsExamples {
   public void xml_assertions_examples() {
 
     String expectedXml = "<rings>\n" +
-                          "  <bearer>\n" +
-                          "    <name>Frodo</name>\n" +
-                          "    <ring>\n" +
-                          "      <name>one ring</name>\n" +
-                          "      <createdBy>Sauron</createdBy>\n" +
-                          "    </ring>\n" +
-                          "  </bearer>\n" +
-                          "</rings>";
+                         "  <bearer>\n" +
+                         "    <name>Frodo</name>\n" +
+                         "    <ring>\n" +
+                         "      <name>one ring</name>\n" +
+                         "      <createdBy>Sauron</createdBy>\n" +
+                         "    </ring>\n" +
+                         "  </bearer>\n" +
+                         "</rings>";
 
     // XML String don't need to be formatted, AssertJ will format both actual and expected string before comparison.
     // Whatever how formatted your xml string is, isXmlEqualTo assertion is able to compare it with another xml String.
@@ -149,7 +164,8 @@ public class StringAssertionsExamples extends AbstractAssertionsExamples {
     // You can easily compare your XML String to the content of an XML file.
     assertThat(oneLineXml).isXmlEqualToContentOf(new File("src/test/resources/formatted.xml"));
 
-    // Since both actual and expected xml string are formatted as XML document, it is easy to see what were the differences.
+    // Since both actual and expected xml string are formatted as XML document, it is easy to see what were the
+    // differences.
     // here : bearer is not Sauron but should Frodo !
     String unexpectedXml = "<rings>\n" +
                            "<bearer>   \n" +
@@ -192,6 +208,18 @@ public class StringAssertionsExamples extends AbstractAssertionsExamples {
     Object title = "Game of Thrones";
     assertThat(title).asString().endsWith("ones");
   }
+
+  @Test
+  public void containsPattern_assertion_example() {
+    assertThat("Frodo").containsPattern("Fr.d");
+    assertThat("Frodo").containsPattern(Pattern.compile("Fr.d"));
+  }
   
+  @Test
+  public void multine_collection_formatting() {
+    String[] greatBooks = array("A Game of Thrones", "The Lord of the Rings", "Assassin's Apprentice  ....");
+    String smartFormat = smartFormat(StandardRepresentation.STANDARD_REPRESENTATION, newArrayList(greatBooks));
+    log.info(smartFormat);
+  }
 
 }

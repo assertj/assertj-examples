@@ -209,11 +209,11 @@ public class DateAssertionsExamples extends AbstractAssertionsExamples {
   }
 
   @Test
-  public void is_within_date_assertions_examples() {
+  public void has_field_date_assertions_examples() {
     Date date1 = parseDatetimeWithMs("2003-04-26T13:20:35.017");
     assertThat(date1).hasMillisecond(17);
     assertThat(date1).hasSecond(35);
-    assertThat(date1).hasMinute(20);
+    assertThat(date1).hasMinute(20);    
     assertThat(date1).hasHourOfDay(13);
     assertThat(date1).hasDayOfWeek(Calendar.SATURDAY);
     assertThat(date1).hasMonth(4);
@@ -240,8 +240,14 @@ public class DateAssertionsExamples extends AbstractAssertionsExamples {
     assertThat(theTwoTowers.getReleaseDate()).withDefaultDateFormatsOnly().isEqualTo("2002-12-18");
     // ... which is then used for all following assertions
     assertThat(theReturnOfTheKing.getReleaseDate()).isEqualTo("2003-12-17");
+    // but now the registered custom format are forgotten
+    try {
+      assertThat(theReturnOfTheKing.getReleaseDate()).isEqualTo("17/12/2003");
+    } catch (AssertionError e) {
+      logAssertionErrorMessage("date assertion parse error", e);
+    }
 
-    // another way of using custom date format by calling static method useDateFormat
+    // another way of using custom date format:
     Assertions.registerCustomDateFormat("dd/MM/yyyy");
     assertThat(theTwoTowers.getReleaseDate()).isEqualTo("18/12/2002");
     assertThat(theReturnOfTheKing.getReleaseDate()).isEqualTo("17/12/2003");
@@ -270,6 +276,29 @@ public class DateAssertionsExamples extends AbstractAssertionsExamples {
     // build date away from today by one day (subtract one day if we are at the end of the month, otherwise we add one)
     Date oneDayFromTodayInSameMonth = monthOf(tomorrow()) == monthOf(new Date()) ? tomorrow() : yesterday();
     assertThat(oneDayFromTodayInSameMonth).usingComparator(yearAndMonthComparator).isToday();
+  }
+
+  @Test
+  public void lenient_date_parsing() {
+    final Date date = parse("2001-02-03");
+    final Date dateTime = parseDatetime("2001-02-03T04:05:06");
+    final Date dateTimeWithMs = parseDatetimeWithMs("2001-02-03T04:05:06.700");
+
+    Assertions.setLenientDateParsing(true);
+
+    // assertions will pass
+    assertThat(date).isEqualTo("2001-01-34");
+    assertThat(date).isEqualTo("2001-02-02T24:00:00");
+    assertThat(date).isEqualTo("2001-02-04T-24:00:00.000");
+    assertThat(dateTime).isEqualTo("2001-02-03T04:05:05.1000");
+    assertThat(dateTime).isEqualTo("2001-02-03T04:04:66");
+    assertThat(dateTimeWithMs).isEqualTo("2001-02-03T04:05:07.-300");
+
+    // assertions will fail
+    // assertThat(date).hasSameTimeAs("2001-02-04"); // different date
+    // assertThat(dateTime).hasSameTimeAs("2001-02-03 04:05:06"); // leniency does not help here
+
+    Assertions.setLenientDateParsing(false);
   }
 
 }

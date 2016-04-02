@@ -26,13 +26,40 @@ public abstract class AbstractRaceAssert<S extends AbstractRaceAssert<S, A>, A e
     // check that actual Race we want to make assertions on is not null.
     isNotNull();
 
+
     // overrides the default error message with a more explicit one
     String assertjErrorMessage = "\nExpecting alignment of:\n  <%s>\nto be:\n  <%s>\nbut was:\n  <%s>";
     
-    // null safe check
+    // check
     Alignment actualAlignment = actual.getAlignment();
+    System.out.println("check Alignment");
     if (!Objects.areEqual(actualAlignment, alignment)) {
       failWithMessage(assertjErrorMessage, actual, alignment, actualAlignment);
+    }
+
+    // return the current assertion for method chaining
+    return myself;
+  }
+
+  /**
+   * Verifies that the actual Race's fullname is equal to the given one.
+   * @param fullname the given fullname to compare the actual Race's fullname to.
+   * @return this assertion object.
+   * @throws AssertionError - if the actual Race's fullname is not equal to the given one.
+   */
+  public S hasFullname(String fullname) {
+    // check that actual Race we want to make assertions on is not null.
+    isNotNull();
+
+
+    // overrides the default error message with a more explicit one
+    String assertjErrorMessage = "\nExpecting fullname of:\n  <%s>\nto be:\n  <%s>\nbut was:\n  <%s>";
+    
+    // check
+    String actualFullname = actual.getFullname();
+    System.out.println("check Fullname");
+    if (!Objects.areEqual(actualFullname, fullname)) {
+      failWithMessage(assertjErrorMessage, actual, fullname, actualFullname);
     }
 
     // return the current assertion for method chaining
@@ -49,11 +76,13 @@ public abstract class AbstractRaceAssert<S extends AbstractRaceAssert<S, A>, A e
     // check that actual Race we want to make assertions on is not null.
     isNotNull();
 
+
     // overrides the default error message with a more explicit one
     String assertjErrorMessage = "\nExpecting name of:\n  <%s>\nto be:\n  <%s>\nbut was:\n  <%s>";
     
-    // null safe check
+    // check
     String actualName = actual.getName();
+    System.out.println("check Name");
     if (!Objects.areEqual(actualName, name)) {
       failWithMessage(assertjErrorMessage, actual, name, actualName);
     }

@@ -15,11 +15,16 @@ package org.assertj.examples;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.extractProperty;
 import static org.assertj.core.api.Assertions.failBecauseExceptionWasNotThrown;
+import static org.assertj.core.api.Assertions.in;
+import static org.assertj.core.api.Assertions.not;
+import static org.assertj.core.api.Assertions.notIn;
 import static org.assertj.core.api.Assertions.setAllowExtractingPrivateFields;
 import static org.assertj.core.api.Assertions.tuple;
 import static org.assertj.core.util.Lists.newArrayList;
 import static org.assertj.examples.data.Race.ELF;
 import static org.assertj.examples.data.Race.HOBBIT;
+import static org.assertj.examples.data.Race.MAIA;
+import static org.assertj.examples.data.Race.MAN;
 import static org.assertj.examples.data.Race.ORC;
 import static org.assertj.examples.data.Ring.dwarfRing;
 import static org.assertj.examples.data.Ring.manRing;
@@ -39,7 +44,9 @@ import java.util.List;
 import java.util.SortedSet;
 import java.util.TreeSet;
 
+import org.assertj.core.api.Condition;
 import org.assertj.core.util.introspection.IntrospectionError;
+import org.assertj.examples.data.BasketBallPlayer;
 import org.assertj.examples.data.Employee;
 import org.assertj.examples.data.Ring;
 import org.assertj.examples.data.TolkienCharacter;
@@ -113,7 +120,9 @@ public class IterableAssertionsExamples extends AbstractAssertionsExamples {
   @Test
   public void iterable_basic_contains_exactly_assertions_examples() {
     Iterable<Ring> elvesRings = newArrayList(vilya, nenya, narya);
-    assertThat(elvesRings).containsExactly(vilya, nenya, narya);
+    assertThat(elvesRings).containsExactly(vilya, nenya, narya)
+                          .containsExactlyInAnyOrder(vilya, nenya, narya)
+                          .containsExactlyInAnyOrder(nenya, vilya, narya);
 
     // It works with collections that have a consistent iteration order
     SortedSet<Ring> elvesRingsSet = new TreeSet<Ring>();
@@ -184,6 +193,9 @@ public class IterableAssertionsExamples extends AbstractAssertionsExamples {
     assertThat(fellowshipOfTheRing).extracting("name").contains("Boromir", "Gandalf", "Frodo", "Legolas")
                                    .doesNotContain("Sauron", "Elrond");
 
+    // extract 'surname' property values not backed by a field
+    assertThat(fellowshipOfTheRing).extracting("surname").contains("Sam the Hobbit");
+
     // extract 'age' field values
     assertThat(fellowshipOfTheRing).extracting("age").contains(33, 38, 36);
 
@@ -251,8 +263,9 @@ public class IterableAssertionsExamples extends AbstractAssertionsExamples {
 
   @Test
   public void iterable_is_subset_of_assertion_example() {
-    List<Ring> elvesRings = newArrayList(vilya, nenya, narya);
+    Collection<Ring> elvesRings = newArrayList(vilya, nenya, narya);
     assertThat(elvesRings).isSubsetOf(ringsOfPower);
+    assertThat(elvesRings).isSubsetOf(vilya, nenya, narya);
     try {
       assertThat(elvesRings).isSubsetOf(newArrayList(nenya, narya));
     } catch (AssertionError e) {
@@ -438,8 +451,23 @@ public class IterableAssertionsExamples extends AbstractAssertionsExamples {
   }
 
   @Test
+  public void iterable_assertions_on_extracted_nested_values_combining_field_and_property() throws Exception {
+    // extract 'age' field values
+    assertThat(fellowshipOfTheRing).extracting("race.name", "race.immortal")
+                                   .contains(tuple("Hobbit", false),
+                                             tuple("Maia", true),
+                                             tuple("Man", false));
+    assertThat(fellowshipOfTheRing).extracting("race.fullname", "race.immortal")
+                                   .contains(tuple("Hobbit", false),
+                                             tuple("immortal Maia", true),
+                                             tuple("Man", false));
+
+  }
+
+  @Test
   public void iterable_assertions_on_flat_extracted_values_examples() throws Exception {
     assertThat(newArrayList(noah, james)).flatExtracting(teammates()).contains(dwayne, rose);
+    assertThat(newArrayList(noah, james)).flatExtracting("teamMates").contains(dwayne, rose);
   }
 
   @Test
@@ -450,6 +478,40 @@ public class IterableAssertionsExamples extends AbstractAssertionsExamples {
 
     List<? extends Object> mixed = newArrayList("string", 1L);
     assertThat(mixed).hasAtLeastOneElementOfType(String.class);
+  }
+
+  @Test
+  public void iterable_fluent_filter_with_examples() {
+    assertThat(fellowshipOfTheRing).filteredOn("race", HOBBIT)
+                                   .containsOnly(sam, frodo, pippin, merry);
+
+    // nested property are supported
+    assertThat(fellowshipOfTheRing).filteredOn("race.name", "Man")
+                                   .containsOnly(aragorn, boromir);
+
+    // you can apply different comparison
+    assertThat(fellowshipOfTheRing).filteredOn("race", notIn(HOBBIT, MAN))
+                                   .containsOnly(gandalf, gimli, legolas);
+
+    assertThat(fellowshipOfTheRing).filteredOn("race", in(MAIA, MAN))
+                                   .containsOnly(gandalf, boromir, aragorn);
+
+    assertThat(fellowshipOfTheRing).filteredOn("race", not(HOBBIT))
+                                   .containsOnly(gandalf, boromir, aragorn, gimli, legolas);
+
+    // you can chain multiple filter criteria
+    assertThat(fellowshipOfTheRing).filteredOn("race", MAN)
+                                   .filteredOn("name", not("Boromir"))
+                                   .containsOnly(aragorn);
+
+    // having(condition) example
+    Condition<BasketBallPlayer> potentialMvp = new Condition<BasketBallPlayer>() {
+      @Override
+      public boolean matches(BasketBallPlayer player) {
+        return player.getPointsPerGame() > 20 && (player.getAssistsPerGame() >= 8 || player.getReboundsPerGame() >= 8);
+      }
+    };
+    assertThat(basketBallPlayers).filteredOn(potentialMvp).containsOnly(rose, james, dwayne);
   }
 
   @Test
@@ -480,6 +542,15 @@ public class IterableAssertionsExamples extends AbstractAssertionsExamples {
       assertThat(list1).usingFieldByFieldElementComparator().isEqualTo(list2);
     } catch (AssertionError e) {
       logAssertionErrorMessage("asBinary for byte list", e);
+    }
+  }
+
+  @Test
+  public void display_collection_with_one_element_per_line() throws Exception {
+    try {
+      assertThat(fellowshipOfTheRing).contains(sauron);
+    } catch (AssertionError e) {
+      logAssertionErrorMessage("display collection with one element per line", e);
     }
   }
 

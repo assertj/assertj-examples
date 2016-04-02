@@ -15,10 +15,19 @@ package org.assertj.examples.data;
 public class Book {
 
   private Title title;
+  private int numberOfPages;
+  private double pryce;
 
   public Book(String title) {
-
     this.title = new Title(title);
+  }
+  
+  public int getNumberOfPages() {
+    return numberOfPages;
+  }
+  
+  public double getPryce() {
+    return pryce;
   }
   
   public Title getTitle() {

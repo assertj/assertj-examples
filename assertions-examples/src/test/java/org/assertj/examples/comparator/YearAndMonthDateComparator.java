@@ -20,6 +20,7 @@ import java.util.Date;
 
 public class YearAndMonthDateComparator implements Comparator<Date> {
 
+  @Override
   public int compare(Date d1, Date d2) {
     int yearDifference = yearOf(d1) - yearOf(d2);
     return yearDifference != 0 ? yearDifference : monthOf(d1) - monthOf(d2);

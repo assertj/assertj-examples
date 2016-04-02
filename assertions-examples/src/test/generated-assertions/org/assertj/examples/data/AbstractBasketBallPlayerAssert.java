@@ -52,11 +52,13 @@ public abstract class AbstractBasketBallPlayerAssert<S extends AbstractBasketBal
     // check that actual BasketBallPlayer we want to make assertions on is not null.
     isNotNull();
 
+
     // overrides the default error message with a more explicit one
     String assertjErrorMessage = "\nExpecting name of:\n  <%s>\nto be:\n  <%s>\nbut was:\n  <%s>";
     
-    // null safe check
+    // check
     Name actualName = actual.getName();
+    System.out.println("check Name");
     if (!Objects.areEqual(actualName, name)) {
       failWithMessage(assertjErrorMessage, actual, name, actualName);
     }
@@ -204,11 +206,13 @@ public abstract class AbstractBasketBallPlayerAssert<S extends AbstractBasketBal
     // check that actual BasketBallPlayer we want to make assertions on is not null.
     isNotNull();
 
+
     // overrides the default error message with a more explicit one
     String assertjErrorMessage = "\nExpecting team of:\n  <%s>\nto be:\n  <%s>\nbut was:\n  <%s>";
     
-    // null safe check
+    // check
     String actualTeam = actual.getTeam();
+    System.out.println("check Team");
     if (!Objects.areEqual(actualTeam, team)) {
       failWithMessage(assertjErrorMessage, actual, team, actualTeam);
     }
@@ -301,6 +305,29 @@ public abstract class AbstractBasketBallPlayerAssert<S extends AbstractBasketBal
   
 
   /**
+   * Verifies that the actual BasketBallPlayer's weight is equal to the given one.
+   * @param weight the given weight to compare the actual BasketBallPlayer's weight to.
+   * @return this assertion object.
+   * @throws AssertionError - if the actual BasketBallPlayer's weight is not equal to the given one.
+   */
+  public S hasWeight(float weight) {
+    // check that actual BasketBallPlayer we want to make assertions on is not null.
+    isNotNull();
+
+    // overrides the default error message with a more explicit one
+    String assertjErrorMessage = "\nExpecting weight of:\n  <%s>\nto be:\n  <%s>\nbut was:\n  <%s>";
+
+    // check
+    float actualWeight = actual.getWeight();
+    if (actualWeight != weight) {
+      failWithMessage(assertjErrorMessage, actual, weight, actualWeight);
+    }
+
+    // return the current assertion for method chaining
+    return myself;
+  }
+
+  /**
    * Verifies that the actual BasketBallPlayer's weight is close to the given value by less than the given offset.
    * <p>
    * If difference is equal to the offset value, assertion is considered successful.
@@ -309,7 +336,7 @@ public abstract class AbstractBasketBallPlayerAssert<S extends AbstractBasketBal
    * @return this assertion object.
    * @throws AssertionError - if the actual BasketBallPlayer's weight is not close enough to the given value.
    */
-  public S hasWeight(float weight, float offset) {
+  public S hasWeightCloseTo(float weight, float offset) {
     // check that actual BasketBallPlayer we want to make assertions on is not null.
     isNotNull();
 
@@ -363,6 +390,29 @@ public abstract class AbstractBasketBallPlayerAssert<S extends AbstractBasketBal
   }
 
   /**
+   * Verifies that the actual BasketBallPlayer's size is equal to the given one.
+   * @param size the given size to compare the actual BasketBallPlayer's size to.
+   * @return this assertion object.
+   * @throws AssertionError - if the actual BasketBallPlayer's size is not equal to the given one.
+   */
+  public S hasSize(double size) {
+    // check that actual BasketBallPlayer we want to make assertions on is not null.
+    isNotNull();
+
+    // overrides the default error message with a more explicit one
+    String assertjErrorMessage = "\nExpecting size of:\n  <%s>\nto be:\n  <%s>\nbut was:\n  <%s>";
+
+    // check
+    double actualSize = actual.size;
+    if (actualSize != size) {
+      failWithMessage(assertjErrorMessage, actual, size, actualSize);
+    }
+
+    // return the current assertion for method chaining
+    return myself;
+  }
+
+  /**
    * Verifies that the actual BasketBallPlayer's size is close to the given value by less than the given offset.
    * <p>
    * If difference is equal to the offset value, assertion is considered successful.
@@ -371,7 +421,7 @@ public abstract class AbstractBasketBallPlayerAssert<S extends AbstractBasketBal
    * @return this assertion object.
    * @throws AssertionError - if the actual BasketBallPlayer's size is not close enough to the given value.
    */
-  public S hasSize(double size, double offset) {
+  public S hasSizeCloseTo(double size, double offset) {
     // check that actual BasketBallPlayer we want to make assertions on is not null.
     isNotNull();
 
