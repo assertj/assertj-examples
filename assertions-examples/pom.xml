@@ -21,7 +21,7 @@
   <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <neo4j.version>2.0.0</neo4j.version>
-    <assertj-core.version>3.4.0</assertj-core.version>
+    <assertj-core.version>3.4.1</assertj-core.version>
   </properties>
 
   <dependencies>
@@ -40,7 +40,7 @@
     <dependency>
       <groupId>org.assertj</groupId>
       <artifactId>assertj-joda-time</artifactId>
-      <version>1.1.0</version>
+      <version>2.0.0-SNAPSHOT</version>
       <scope>test</scope>
     </dependency>
     <dependency>
@@ -205,6 +205,12 @@
           <generateBddAssertions>true</generateBddAssertions>
           <generateSoftAssertions>true</generateSoftAssertions>
           <generateJUnitSoftAssertions>true</generateJUnitSoftAssertions>
+          <!-- 
+          <templates>
+            <templatesDirectory>src/test/resources/templates/</templatesDirectory>
+            <assertionsEntryPointClass>my_Assertions_class_template.txt</assertionsEntryPointClass>
+          </templates>
+           -->
         </configuration>
         <dependencies>
           <dependency>
