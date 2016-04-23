@@ -166,5 +166,28 @@ public class SoftAssertionsExamples extends AbstractAssertionsExamples {
     }
   }
   
+  @Test
+  public void should_work_with_comparable() throws Exception {
+
+    SoftAssertions softly = new SoftAssertions();
+    Example example = new Example(0);
+    softly.assertThat((Object)example).isEqualTo(example);
+    softly.assertAll();
+  }
+
+  class Example implements Comparable<Example> {
+
+    int id;
+
+    Example(int id) {
+      this.id = id;
+    }
+
+    @Override
+    public int compareTo(Example that) {
+      return this.id - that.id;
+    }
+  }
+
   
 }
