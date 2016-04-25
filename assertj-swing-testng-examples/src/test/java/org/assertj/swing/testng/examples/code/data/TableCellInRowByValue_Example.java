@@ -6,7 +6,6 @@ import javax.swing.JFrame;
 
 import org.assertj.swing.aut.code.data.TableFrame;
 import org.assertj.swing.edt.GuiActionRunner;
-import org.assertj.swing.edt.GuiQuery;
 import org.assertj.swing.fixture.FrameFixture;
 import org.assertj.swing.fixture.JTableCellFixture;
 import org.assertj.swing.testng.SwingTestNGExamples;
@@ -18,12 +17,7 @@ public class TableCellInRowByValue_Example extends SwingTestNGExamples {
 
   @Override
   protected void onSetUp() {
-    JFrame frame = GuiActionRunner.execute(new GuiQuery<JFrame>() {
-      @Override
-      protected JFrame executeInEDT() {
-        return new TableFrame();
-      }
-    });
+    JFrame frame = GuiActionRunner.execute(() -> new TableFrame());
     window = new FrameFixture(robot(), frame);
     window.show();
   }

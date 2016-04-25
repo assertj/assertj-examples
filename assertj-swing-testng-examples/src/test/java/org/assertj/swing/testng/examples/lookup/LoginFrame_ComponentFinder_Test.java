@@ -7,7 +7,6 @@ import org.assertj.swing.aut.lookup.LoginFrame;
 import org.assertj.swing.core.BasicComponentFinder;
 import org.assertj.swing.core.ComponentFinder;
 import org.assertj.swing.edt.GuiActionRunner;
-import org.assertj.swing.edt.GuiQuery;
 import org.assertj.swing.exception.ComponentLookupException;
 import org.assertj.swing.fixture.FrameFixture;
 import org.assertj.swing.fixture.JButtonFixture;
@@ -19,12 +18,7 @@ public class LoginFrame_ComponentFinder_Test extends SwingTestNGExamples {
 
   @Override
   protected void onSetUp() {
-    SampleFrame frame = GuiActionRunner.execute(new GuiQuery<SampleFrame>() {
-      @Override
-      protected SampleFrame executeInEDT() {
-        return new LoginFrame();
-      }
-    });
+    SampleFrame frame = GuiActionRunner.execute(() -> new LoginFrame());
     window = new FrameFixture(robot(), frame);
     window.show();
   }

@@ -6,7 +6,6 @@ import org.assertj.swing.aut.components.SampleFrame;
 import org.assertj.swing.aut.lookup.LoginFrame;
 import org.assertj.swing.core.GenericTypeMatcher;
 import org.assertj.swing.edt.GuiActionRunner;
-import org.assertj.swing.edt.GuiQuery;
 import org.assertj.swing.fixture.FrameFixture;
 import org.assertj.swing.fixture.JButtonFixture;
 import org.assertj.swing.junit.SwingJUnitExamples;
@@ -17,12 +16,7 @@ public class LoginFrame_ComponentLookup_Test extends SwingJUnitExamples {
 
   @Override
   protected void onSetUp() {
-    SampleFrame frame = GuiActionRunner.execute(new GuiQuery<SampleFrame>() {
-      @Override
-      protected SampleFrame executeInEDT() {
-        return new LoginFrame();
-      }
-    });
+    SampleFrame frame = GuiActionRunner.execute(() -> new LoginFrame());
     window = new FrameFixture(robot(), frame);
     window.show();
   }

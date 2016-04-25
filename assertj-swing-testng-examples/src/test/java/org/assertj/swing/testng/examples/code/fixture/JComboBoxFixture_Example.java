@@ -7,7 +7,6 @@ import javax.swing.SwingUtilities;
 
 import org.assertj.swing.aut.code.fixture.ComboboxFrame;
 import org.assertj.swing.edt.GuiActionRunner;
-import org.assertj.swing.edt.GuiQuery;
 import org.assertj.swing.fixture.FrameFixture;
 import org.assertj.swing.fixture.JComboBoxFixture;
 import org.assertj.swing.testng.SwingTestNGExamples;
@@ -19,12 +18,7 @@ public class JComboBoxFixture_Example extends SwingTestNGExamples {
 
   @Override
   protected void onSetUp() {
-    JFrame frame = GuiActionRunner.execute(new GuiQuery<JFrame>() {
-      @Override
-      protected JFrame executeInEDT() {
-        return new ComboboxFrame();
-      }
-    });
+    JFrame frame = GuiActionRunner.execute(() -> new ComboboxFrame());
     window = new FrameFixture(robot(), frame);
     window.show();
     comboBox = window.comboBox();
