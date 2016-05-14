@@ -540,6 +540,13 @@ public class IterableAssertionsExamples extends AbstractAssertionsExamples {
       logAssertionErrorMessage("display collection with one element per line", e);
     }
   }
+  
+  @Test
+  public void test_issue_656() {
+      Iterator<String> iterator = new ArrayList<String>().iterator();
+      assertThat(iterator).isSameAs(iterator);
+  }
+
 
   public static class Foo {
     private String id;
