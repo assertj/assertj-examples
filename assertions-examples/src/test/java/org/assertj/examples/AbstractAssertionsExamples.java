@@ -53,9 +53,9 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * 
+ *
  * Init data for assertions examples.
- * 
+ *
  * @author Joel Costigliola
  */
 public abstract class AbstractAssertionsExamples {
@@ -63,6 +63,7 @@ public abstract class AbstractAssertionsExamples {
   static final String ERROR_MESSAGE_EXAMPLE_FOR_ASSERTION = "{} assertion : {}\n";
   protected static final Logger logger = LoggerFactory.getLogger("[ERROR MESSAGE EXAMPLE]");
   protected static final Logger log = LoggerFactory.getLogger("\n");
+
   /**
    * log error message if one wants to see it "live".
    */
@@ -92,7 +93,8 @@ public abstract class AbstractAssertionsExamples {
   protected final Map<Ring, TolkienCharacter> ringBearers = new HashMap<>();
 
   // Lord of the Rings movies
-  protected final Movie theFellowshipOfTheRing = new Movie("the fellowship of the Ring", parse("2001-12-19"), "178 min");
+  protected final Movie theFellowshipOfTheRing = new Movie("the fellowship of the Ring", parse("2001-12-19"),
+                                                           "178 min");
   protected final Movie theTwoTowers = new Movie("the two Towers", parse("2002-12-18"), "179 min");
   protected final Movie theReturnOfTheKing = new Movie("the Return of the King", parse("2003-12-17"), "201 min");
   protected final Movie theSilmarillion = new Movie("the Silmarillion", parse("2030-01-01"), "unknown");
@@ -142,13 +144,13 @@ public abstract class AbstractAssertionsExamples {
     noah.setAssistsPerGame(4);
     noah.setPointsPerGame(10);
     noah.setReboundsPerGame(11);
-    
+
     noah.getTeamMates().add(rose);
     rose.getTeamMates().add(noah);
-    
+
     dwayne.getTeamMates().add(james);
     james.getTeamMates().add(dwayne);
-    
+
     basketBallPlayers = newArrayList(rose, james, dwayne, durant, noah);
     potentialMvp = new PotentialMvpCondition();
     doubleDoubleStats = new Condition<BasketBallPlayer>("double double stats") {

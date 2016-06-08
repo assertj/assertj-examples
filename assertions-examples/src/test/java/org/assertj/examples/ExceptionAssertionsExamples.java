@@ -20,12 +20,11 @@ import static org.assertj.core.api.Assertions.catchThrowable;
 import java.io.IOException;
 
 import org.assertj.core.api.Assertions;
-import org.assertj.core.api.ThrowableAssert.ThrowingCallable;
 import org.junit.Test;
 
 /**
  * Exception assertions examples.
- * 
+ *
  * @author Joel Costigliola
  */
 public class ExceptionAssertionsExamples extends AbstractAssertionsExamples {
@@ -49,10 +48,10 @@ public class ExceptionAssertionsExamples extends AbstractAssertionsExamples {
       assertThat(e).hasMessageStartingWith("Index: 9").hasMessageContaining("9").hasMessageEndingWith("Size: 9");
       // this equivalent to (unless for error message which is more explicit in assertThat(e).hasMessageXXX)
       assertThat(e.getMessage()).startsWith("Index: 9").contains("9").endsWith("Size: 9");
-      
+
       // String#format syntax support
       assertThat(e).hasMessage("Index: %s, Size: %s", 9, 9);
-      
+
     }
   }
 
@@ -112,7 +111,7 @@ public class ExceptionAssertionsExamples extends AbstractAssertionsExamples {
     // at org.eclipse.jdt.internal.junit.runner.RemoteTestRunner.main(RemoteTestRunner.java:197)
 
     System.err.println("\n--------------- stack trace filtered -----------------");
-    Assertions.setRemoveAssertJRelatedElementsFromStackTrace(true); 
+    Assertions.setRemoveAssertJRelatedElementsFromStackTrace(true);
     try {
       assertThat("Messi").isEqualTo("Ronaldo");
     } catch (AssertionError e) {
@@ -212,7 +211,7 @@ public class ExceptionAssertionsExamples extends AbstractAssertionsExamples {
                      .withMessageContaining("oom")
                      .withMessage("%s!", "boom")
                      .withStackTraceContaining("IOException")
-                     .withNoCause(); 
+                     .withNoCause();
     // @format:on
   }
 
@@ -220,14 +219,14 @@ public class ExceptionAssertionsExamples extends AbstractAssertionsExamples {
   public void thrown_exception_assertion_alternative_withStackTraceContaining() {
     // @format:off
     Throwable runtime = new RuntimeException("no way", new Exception("you shall not pass"));
-    
+
     // assertion will pass
     assertThatExceptionOfType(RuntimeException.class)
                .isThrownBy(() -> {throw runtime;})
                .withStackTraceContaining("you shall not pass");
     // @format:on
   }
-  
+
   @Test
   public void bdd_style_exception_testing() {
     // @format:off
