@@ -162,7 +162,7 @@ public class ExceptionAssertionsExamples extends AbstractAssertionsExamples {
   // at org.eclipse.jdt.internal.junit.runner.RemoteTestRunner.main(RemoteTestRunner.java:197)
 
   @Test
-  public void exception_cause_assertion_examples() throws Exception {
+  public void exception_cause_assertion_examples() {
 
     Throwable throwable = new Throwable(new NullPointerException("boom"));
 
@@ -191,7 +191,7 @@ public class ExceptionAssertionsExamples extends AbstractAssertionsExamples {
   }
   
   @Test
-  public void thrown_exception_assertion_examples() throws Exception {
+  public void thrown_exception_assertion_examples() {
     
     assertThatThrownBy(new ThrowingCallable() {
       @Override
@@ -199,6 +199,7 @@ public class ExceptionAssertionsExamples extends AbstractAssertionsExamples {
         throw new IllegalArgumentException("something was wrong");
       }
     }).isInstanceOf(IllegalArgumentException.class)
-      .hasMessage("something was wrong");
+      .hasMessage("something was wrong")
+      .hasFieldOrProperty("message");
   }
 }

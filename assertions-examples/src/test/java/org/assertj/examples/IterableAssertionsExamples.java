@@ -45,6 +45,7 @@ import java.util.SortedSet;
 import java.util.TreeSet;
 
 import org.assertj.core.api.Condition;
+import org.assertj.core.api.StringAssert;
 import org.assertj.core.util.introspection.IntrospectionError;
 import org.assertj.examples.data.BasketBallPlayer;
 import org.assertj.examples.data.Employee;
@@ -540,13 +541,37 @@ public class IterableAssertionsExamples extends AbstractAssertionsExamples {
       logAssertionErrorMessage("display collection with one element per line", e);
     }
   }
-  
+
   @Test
   public void test_issue_656() {
-      Iterator<String> iterator = new ArrayList<String>().iterator();
-      assertThat(iterator).isSameAs(iterator);
+    Iterator<String> iterator = new ArrayList<String>().iterator();
+    assertThat(iterator).isSameAs(iterator);
   }
 
+  @Test
+  public void test_navigation_with_iterable() {
+    Iterable<TolkienCharacter> hobbits = newArrayList(frodo, sam, pippin);
+    assertThat(hobbits).first().isEqualTo(frodo);
+    assertThat(hobbits).element(1).isEqualTo(sam);
+    assertThat(hobbits).last().isEqualTo(pippin);
+
+    Iterable<String> hobbitsName = newArrayList("frodo", "sam", "pippin");
+
+    // assertion succeeds
+    assertThat(hobbitsName, StringAssert.class).first()
+                                               .startsWith("fro")
+                                               .endsWith("do");
+    assertThat(hobbitsName, StringAssert.class).element(1).contains("a");
+    assertThat(hobbitsName, StringAssert.class).last().endsWith("in");
+  }
+
+  @Test
+  public void test_navigation_with_list() {
+    List<TolkienCharacter> hobbits = newArrayList(frodo, sam, pippin);
+    assertThat(hobbits).first().isEqualTo(frodo);
+    assertThat(hobbits).element(1).isEqualTo(sam);
+    assertThat(hobbits).last().isEqualTo(pippin);
+  }
 
   public static class Foo {
     private String id;
