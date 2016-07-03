@@ -125,7 +125,7 @@ public class IterableAssertionsExamples extends AbstractAssertionsExamples {
                           .containsExactlyInAnyOrder(nenya, vilya, narya);
 
     // It works with collections that have a consistent iteration order
-    SortedSet<Ring> elvesRingsSet = new TreeSet<Ring>();
+    SortedSet<Ring> elvesRingsSet = new TreeSet<>();
     elvesRingsSet.add(vilya);
     elvesRingsSet.add(nenya);
     elvesRingsSet.add(narya);
@@ -223,13 +223,21 @@ public class IterableAssertionsExamples extends AbstractAssertionsExamples {
                                                                        tuple("Legolas", 1000));
 
     // extract 'name', 'age' and Race name values.
-    assertThat(fellowshipOfTheRing).extracting("name", "age", "race.name").contains(tuple("Boromir", 37, "Man"),
-                                                                                    tuple("Sam", 38, "Hobbit"),
-                                                                                    tuple("Legolas", 1000, "Elf"));
+    assertThat(fellowshipOfTheRing).extracting("name", "age", "race.name")
+                                   .contains(tuple("Boromir", 37, "Man"),
+                                             tuple("Sam", 38, "Hobbit"),
+                                             tuple("Legolas", 1000, "Elf"));
+    // same thing but flatten the extraction
+    assertThat(fellowshipOfTheRing).flatExtracting("name", "age", "race.name")
+                                   .contains("Boromir", 37, "Man",
+                                             "Sam", 38, "Hobbit",
+                                             "Legolas", 1000, "Elf");
+
     // extract 'name', 'age' and Race name values.
     TolkienCharacter unknown = new TolkienCharacter("unknown", 100, null);
     assertThat(newArrayList(sam, unknown)).extracting("name", "age", "race.name").contains(tuple("Sam", 38, "Hobbit"),
                                                                                            tuple("unknown", 100, null));
+
   }
 
   @Test
@@ -248,7 +256,7 @@ public class IterableAssertionsExamples extends AbstractAssertionsExamples {
   public void iterable_type_safe_assertion_example() {
     // just to show that containsAll can accept subtype of is not bounded to Object only
     Collection<Ring> elvesRings = newArrayList(vilya, nenya, narya);
-    Collection<Object> powerfulRings = new ArrayList<Object>();
+    Collection<Object> powerfulRings = new ArrayList<>();
     powerfulRings.add(oneRing);
     powerfulRings.add(vilya);
     powerfulRings.add(nenya);
@@ -498,6 +506,19 @@ public class IterableAssertionsExamples extends AbstractAssertionsExamples {
     assertThat(hobbits).first().isEqualTo(frodo);
     assertThat(hobbits).element(1).isEqualTo(sam);
     assertThat(hobbits).last().isEqualTo(pippin);
+  }
+
+  @Test
+  public void test_navigable_size_assertions() {
+    Iterable<Ring> elvesRings = newArrayList(vilya, nenya, narya);
+
+    // assertion will pass:
+    assertThat(elvesRings).size()
+                          .isGreaterThan(1)
+                          .isLessThanOrEqualTo(3)
+                          .returnToIterable()
+                          .contains(narya)
+                          .doesNotContain(oneRing);
   }
 
   public static class Foo {
