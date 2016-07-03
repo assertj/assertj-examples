@@ -12,7 +12,6 @@
  */
 package org.assertj.examples;
 
-import static java.util.Collections.singleton;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.extractProperty;
 import static org.assertj.core.api.Assertions.failBecauseExceptionWasNotThrown;
@@ -368,7 +367,6 @@ public class StreamAssertionsExamples extends AbstractAssertionsExamples {
 
     // frodo and sam both are hobbits, so they are equals when comparing only race ...
     assertThat(Stream.of(frodo)).usingElementComparatorOnFields("race").contains(sam);
-    assertThat(Stream.of(frodo)).usingElementComparatorOnFields("race").isEqualTo(singleton(sam));
     // ... but not when comparing both name and race
     try {
       assertThat(Stream.of(frodo)).usingElementComparatorOnFields("name", "race").contains(sam);
