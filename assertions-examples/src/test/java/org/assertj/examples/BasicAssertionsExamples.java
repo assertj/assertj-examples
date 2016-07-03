@@ -287,7 +287,7 @@ public class BasicAssertionsExamples extends AbstractAssertionsExamples {
 
     Map<String, String> map = ImmutableMap.of("Key1", "Value1", "Key2", "Value2");
     assertThat(map).as("").containsOnlyKeys("Key1", "Key2");
-    
+
     @SuppressWarnings("rawtypes")
     Map map1 = new java.util.HashMap<>();
     map1.put("Key1","Value1");
@@ -327,6 +327,14 @@ public class BasicAssertionsExamples extends AbstractAssertionsExamples {
     }, "race.name").isEqualToComparingOnlyGivenFields(elfFrodo);
 
     Assertions.setAllowComparingPrivateFields(true);
+  }
+
+  @Test
+  public void satisfies_examples() {
+    assertThat(fellowshipOfTheRing.get(0)).satisfies(character -> {
+      assertThat(character.getRace()).isEqualTo(HOBBIT);
+      assertThat(character.age).isLessThan(200);
+    });
   }
 
   @Test
