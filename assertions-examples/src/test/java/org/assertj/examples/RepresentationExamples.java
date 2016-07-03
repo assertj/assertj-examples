@@ -22,15 +22,17 @@ import org.junit.Test;
 
 public class RepresentationExamples extends AbstractAssertionsExamples {
 
+  private static final CustomRepresentation CUSTOM_REPRESENTATION = new CustomRepresentation();
+
   @After
   public void afterTest() {
     Assertions.useDefaultRepresentation();
   }
-  
+
   @Test
   public void should_use_given_representation_in_assertion_error_messages() {
-    
-    Assertions.useRepresentation(new CustomRepresentation());
+
+    Assertions.useRepresentation(CUSTOM_REPRESENTATION);
     Example example = new Example();
     // this assertion fails with error : "expected:<[null]> but was:<[Example]>"
     try {
@@ -38,7 +40,7 @@ public class RepresentationExamples extends AbstractAssertionsExamples {
     } catch (AssertionError e1) {
       assertThat(e1).hasMessageContaining("EXAMPLE");
     }
-    
+
     try {
       assertThat("foo").startsWith("bar");
     } catch (AssertionError e) {
@@ -52,8 +54,13 @@ public class RepresentationExamples extends AbstractAssertionsExamples {
                       .hasMessageContaining("\"bar\"");
       }
     }
+    try {
+      assertThat("foo").withRepresentation(CUSTOM_REPRESENTATION).startsWith("bar");
+    } catch (AssertionError e) {
+      logAssertionErrorMessage("withRepresentation changing the way String are displayed", e);
+    }
   }
-  
+
   @Test
   public void should_use_registered_formatter_for_type_for_any_representations() {
     // GIVEN
@@ -66,24 +73,25 @@ public class RepresentationExamples extends AbstractAssertionsExamples {
     Assertions.useDefaultRepresentation();
     assertThat(STANDARD_REPRESENTATION.toStringOf(string)).isEqualTo("\"foo\"");
   }
-  
-  private class Example {}
 
-  private class CustomRepresentation extends StandardRepresentation {
-  
-    // override needed to hook specific formatting  
+  private class Example {
+  }
+
+  private static class CustomRepresentation extends StandardRepresentation {
+
+    // override needed to hook specific formatting
     @Override
     public String toStringOf(Object o) {
       if (o instanceof Example) return "EXAMPLE";
-      // fallback to default formatting.  
+      // fallback to default formatting.
       return super.toStringOf(o);
     }
-    
-    // change String representation  
+
+    // change String representation
     @Override
     protected String toStringOf(String s) {
       return "$" + s + "$";
     }
   }
-  
+
 }
