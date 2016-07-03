@@ -21,7 +21,7 @@
   <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <neo4j.version>2.0.0</neo4j.version>
-    <assertj-core.version>2.4.1</assertj-core.version>
+    <assertj-core.version>2.5.0</assertj-core.version>
   </properties>
 
   <dependencies>
@@ -297,6 +297,19 @@
                     <versionRange>[1.8,)</versionRange>
                     <goals>
                       <goal>add-source</goal>
+                    </goals>
+                  </pluginExecutionFilter>
+                  <action>
+                    <ignore></ignore>
+                  </action>
+                </pluginExecution>
+                <pluginExecution>
+                  <pluginExecutionFilter>
+                    <groupId>org.assertj</groupId>
+                    <artifactId>assertj-assertions-generator-maven-plugin</artifactId>
+                    <versionRange>[2.0.0,)</versionRange>
+                    <goals>
+                      <goal>generate-assertions</goal>
                     </goals>
                   </pluginExecutionFilter>
                   <action>

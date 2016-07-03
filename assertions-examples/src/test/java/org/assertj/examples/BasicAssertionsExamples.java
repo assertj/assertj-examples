@@ -242,6 +242,13 @@ public class BasicAssertionsExamples extends AbstractAssertionsExamples {
   }
 
   @Test
+  public void hasNoNullFieldsOrProperties_examples() {
+    assertThat(frodo).hasNoNullFieldsOrProperties();
+    TolkienCharacter sam = new TolkienCharacter(null, 38, HOBBIT);
+    assertThat(sam).hasNoNullFieldsOrPropertiesExcept("name");
+  }
+  
+  @Test
   public void extracting_field_or_property_examples() {
     assertThat(frodo).extracting("name", "age", "race.name")
                      .containsExactly("Frodo", 33, "Hobbit");
@@ -255,18 +262,18 @@ public class BasicAssertionsExamples extends AbstractAssertionsExamples {
     Assertions.setAllowComparingPrivateFields(false); // ignore notAccessibleField in comparison
 
     // specify a comparator for a single field : age
-    assertThat(frodo).usingComparatorForFields(new AtPrecisionComparator<Integer>(2), "age")
+    assertThat(frodo).usingComparatorForFields(new AtPrecisionComparator<>(2), "age")
                      .isEqualToComparingFieldByField(olderFrodo)
                      .isEqualToComparingOnlyGivenFields(olderFrodo, "age");
 
     // specify a comparator for a field type : Integer
-    assertThat(frodo).usingComparatorForType(new AtPrecisionComparator<Integer>(2), Integer.class)
+    assertThat(frodo).usingComparatorForType(new AtPrecisionComparator<>(2), Integer.class)
                      .isEqualToComparingFieldByField(olderFrodo)
                      .isEqualToComparingOnlyGivenFields(olderFrodo, "age");
 
     // field comparators take precendence over field type comparators
-    assertThat(frodo).usingComparatorForFields(new AtPrecisionComparator<Integer>(2), "age")
-                     .usingComparatorForType(new AtPrecisionComparator<Integer>(1), Integer.class)
+    assertThat(frodo).usingComparatorForFields(new AtPrecisionComparator<>(2), "age")
+                     .usingComparatorForType(new AtPrecisionComparator<>(1), Integer.class)
                      .isEqualToComparingFieldByField(olderFrodo);
 
     TolkienCharacter elfFrodo = new TolkienCharacter("Frodo", 33, ELF);

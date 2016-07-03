@@ -45,9 +45,9 @@ import java.util.SortedSet;
 import java.util.TreeSet;
 
 import org.assertj.core.api.Condition;
+import org.assertj.core.api.StringAssert;
 import org.assertj.core.util.introspection.IntrospectionError;
 import org.assertj.examples.data.BasketBallPlayer;
-import org.assertj.examples.data.Employee;
 import org.assertj.examples.data.Ring;
 import org.assertj.examples.data.TolkienCharacter;
 import org.junit.Test;
@@ -125,7 +125,7 @@ public class IterableAssertionsExamples extends AbstractAssertionsExamples {
                           .containsExactlyInAnyOrder(nenya, vilya, narya);
 
     // It works with collections that have a consistent iteration order
-    SortedSet<Ring> elvesRingsSet = new TreeSet<Ring>();
+    SortedSet<Ring> elvesRingsSet = new TreeSet<>();
     elvesRingsSet.add(vilya);
     elvesRingsSet.add(nenya);
     elvesRingsSet.add(narya);
@@ -155,34 +155,6 @@ public class IterableAssertionsExamples extends AbstractAssertionsExamples {
     } catch (AssertionError e) {
       logger.info(e.getMessage());
       logAssertionErrorMessage("containsExactlyElementsOf with elements in different order", e);
-    }
-  }
-
-  @Test
-  public void iterable_assertions_with_custom_comparator_examples() {
-
-    // standard comparison : the fellowshipOfTheRing includes Gandalf but not Sauron ...
-    assertThat(fellowshipOfTheRing).contains(gandalf).doesNotContain(sauron);
-    // ... but if we compare only race name Sauron is in fellowshipOfTheRing because he's a Maia like Gandalf.
-    assertThat(fellowshipOfTheRing).usingElementComparator(raceNameComparator).contains(sauron);
-
-    // note that error message mentions the comparator used to better understand the failure
-    // the message indicates that Sauron were found because he is a Maia like Gandalf.
-    try {
-      assertThat(newArrayList(gandalf, sam)).usingElementComparator(raceNameComparator).doesNotContain(sauron);
-    } catch (AssertionError e) {
-      logAssertionErrorMessage("doesNotContain with custom element comparator", e);
-    }
-
-    // duplicates assertion honors custom comparator
-    assertThat(fellowshipOfTheRing).doesNotHaveDuplicates();
-    assertThat(newArrayList(sam, gandalf)).usingElementComparator(raceNameComparator)
-                                          .doesNotHaveDuplicates()
-                                          .isEqualTo(newArrayList(frodo, gandalf));
-    try {
-      assertThat(newArrayList(sam, gandalf, frodo)).usingElementComparator(raceNameComparator).doesNotHaveDuplicates();
-    } catch (AssertionError e) {
-      logAssertionErrorMessage("doesNotHaveDuplicates with custom element comparator", e);
     }
   }
 
@@ -251,13 +223,21 @@ public class IterableAssertionsExamples extends AbstractAssertionsExamples {
                                                                        tuple("Legolas", 1000));
 
     // extract 'name', 'age' and Race name values.
-    assertThat(fellowshipOfTheRing).extracting("name", "age", "race.name").contains(tuple("Boromir", 37, "Man"),
-                                                                                    tuple("Sam", 38, "Hobbit"),
-                                                                                    tuple("Legolas", 1000, "Elf"));
+    assertThat(fellowshipOfTheRing).extracting("name", "age", "race.name")
+                                   .contains(tuple("Boromir", 37, "Man"),
+                                             tuple("Sam", 38, "Hobbit"),
+                                             tuple("Legolas", 1000, "Elf"));
+    // same thing but flatten the extraction
+    assertThat(fellowshipOfTheRing).flatExtracting("name", "age", "race.name")
+                                   .contains("Boromir", 37, "Man",
+                                             "Sam", 38, "Hobbit",
+                                             "Legolas", 1000, "Elf");
+
     // extract 'name', 'age' and Race name values.
     TolkienCharacter unknown = new TolkienCharacter("unknown", 100, null);
     assertThat(newArrayList(sam, unknown)).extracting("name", "age", "race.name").contains(tuple("Sam", 38, "Hobbit"),
                                                                                            tuple("unknown", 100, null));
+
   }
 
   @Test
@@ -276,7 +256,7 @@ public class IterableAssertionsExamples extends AbstractAssertionsExamples {
   public void iterable_type_safe_assertion_example() {
     // just to show that containsAll can accept subtype of is not bounded to Object only
     Collection<Ring> elvesRings = newArrayList(vilya, nenya, narya);
-    Collection<Object> powerfulRings = new ArrayList<Object>();
+    Collection<Object> powerfulRings = new ArrayList<>();
     powerfulRings.add(oneRing);
     powerfulRings.add(vilya);
     powerfulRings.add(nenya);
@@ -358,50 +338,6 @@ public class IterableAssertionsExamples extends AbstractAssertionsExamples {
     // extract results of calls to 'toString' method
     assertThat(fellowshipOfTheRing).extractingResultOf("toString").contains("Frodo 33 years old Hobbit",
                                                                             "Aragorn 87 years old Man");
-  }
-
-  @Test
-  public void iterable_assertions_comparing_elements_field_by_field_example() {
-    // this is useful if elements don't have a good equals method implementation.
-    Employee bill = new Employee("Bill", 60, "Micro$oft");
-    final List<Employee> micro$oftEmployees = newArrayList(bill);
-    Employee appleBill = new Employee("Bill", 60, "Apple");
-
-    // this assertion should fail as the company differs but it passes since Employee equals ignores company fields.
-    assertThat(micro$oftEmployees).contains(appleBill);
-
-    // let's make the assertion fails by comparing all Employee's fields instead of using equals.
-    try {
-      assertThat(micro$oftEmployees).usingFieldByFieldElementComparator().contains(appleBill);
-    } catch (AssertionError e) {
-      logAssertionErrorMessage("contains for Iterable using field by field element comparator", e);
-    }
-    // if we don't compare company, appleBill is equivalent to bill.
-    assertThat(micro$oftEmployees).usingElementComparatorIgnoringFields("company").contains(appleBill);
-
-    // if we compare only name and company, youngBill is equivalent to bill ...
-    Employee youngBill = new Employee("Bill", 25, "Micro$oft");
-    assertThat(micro$oftEmployees).usingElementComparatorOnFields("company").contains(youngBill);
-    // ... but not if we compare only age.
-    try {
-      assertThat(micro$oftEmployees).usingElementComparatorOnFields("age").contains(youngBill);
-    } catch (AssertionError e) {
-      logAssertionErrorMessage("contains for Iterable usingElementComparatorOnFields", e);
-    }
-
-    // another example with usingElementComparatorOnFields
-    TolkienCharacter frodo = new TolkienCharacter("Frodo", 33, HOBBIT);
-    TolkienCharacter sam = new TolkienCharacter("Sam", 38, HOBBIT);
-
-    // frodo and sam both are hobbits, so they are equals when comparing only race ...
-    assertThat(newArrayList(frodo)).usingElementComparatorOnFields("race").contains(sam);
-    assertThat(newArrayList(frodo)).usingElementComparatorOnFields("race").isEqualTo(newArrayList(sam));
-    // ... but not when comparing both name and race
-    try {
-      assertThat(newArrayList(frodo)).usingElementComparatorOnFields("name", "race").contains(sam);
-    } catch (AssertionError e) {
-      logAssertionErrorMessage("contains for Iterable usingElementComparatorOnFields", e);
-    }
   }
 
   @Test
@@ -539,6 +475,50 @@ public class IterableAssertionsExamples extends AbstractAssertionsExamples {
     } catch (AssertionError e) {
       logAssertionErrorMessage("display collection with one element per line", e);
     }
+  }
+
+  @Test
+  public void test_issue_656() {
+    Iterator<String> iterator = new ArrayList<String>().iterator();
+    assertThat(iterator).isSameAs(iterator);
+  }
+
+  @Test
+  public void test_navigation_with_iterable() {
+    Iterable<TolkienCharacter> hobbits = newArrayList(frodo, sam, pippin);
+    assertThat(hobbits).first().isEqualTo(frodo);
+    assertThat(hobbits).element(1).isEqualTo(sam);
+    assertThat(hobbits).last().isEqualTo(pippin);
+
+    Iterable<String> hobbitsName = newArrayList("frodo", "sam", "pippin");
+
+    // assertion succeeds
+    assertThat(hobbitsName, StringAssert.class).first()
+                                               .startsWith("fro")
+                                               .endsWith("do");
+    assertThat(hobbitsName, StringAssert.class).element(1).contains("a");
+    assertThat(hobbitsName, StringAssert.class).last().endsWith("in");
+  }
+
+  @Test
+  public void test_navigation_with_list() {
+    List<TolkienCharacter> hobbits = newArrayList(frodo, sam, pippin);
+    assertThat(hobbits).first().isEqualTo(frodo);
+    assertThat(hobbits).element(1).isEqualTo(sam);
+    assertThat(hobbits).last().isEqualTo(pippin);
+  }
+
+  @Test
+  public void test_navigable_size_assertions() {
+    Iterable<Ring> elvesRings = newArrayList(vilya, nenya, narya);
+
+    // assertion will pass:
+    assertThat(elvesRings).size()
+                          .isGreaterThan(1)
+                          .isLessThanOrEqualTo(3)
+                          .returnToIterable()
+                          .contains(narya)
+                          .doesNotContain(oneRing);
   }
 
   public static class Foo {

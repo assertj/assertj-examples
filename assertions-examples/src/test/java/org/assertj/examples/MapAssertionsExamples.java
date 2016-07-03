@@ -78,18 +78,16 @@ public class MapAssertionsExamples extends AbstractAssertionsExamples {
     assertThat(ringBearers).contains();
     assertThat(ringBearers).containsAllEntriesOf(ringBearers);
   }
-  
-  
+
   @Test
   public void containsAllEntriesOf_example() {
     Map<Ring, TolkienCharacter> elvesRingBearer = new HashMap<>();
     elvesRingBearer.put(nenya, galadriel);
     elvesRingBearer.put(narya, gandalf);
     elvesRingBearer.put(vilya, elrond);
-    
+
     assertThat(ringBearers).containsAllEntriesOf(elvesRingBearer);
   }
-
 
   @Test
   public void map_contains_entries_examples() throws Exception {
@@ -144,21 +142,29 @@ public class MapAssertionsExamples extends AbstractAssertionsExamples {
   public void test_bug_485() {
     // https://github.com/joel-costigliola/assertj-core/issues/485
     Map map1 = new java.util.HashMap<>();
-    map1.put("Key1","Value1");
-    map1.put("Key2","Value2");
-    
-    assertThat(map1).as("").containsOnlyKeys("Key1","Key2");
+    map1.put("Key1", "Value1");
+    map1.put("Key2", "Value2");
+
+    assertThat(map1).as("").containsOnlyKeys("Key1", "Key2");
   }
 
+  // @SuppressWarnings("unchecked")
   @Test
-  public void testName() throws Exception {
-    // Map<Object, ?> data = new JSONObject(ringBearers);
-    // assertThat(new JSONObject(ringBearers)).as("").containsKey(nenya);
-    // Object o = nenya;
-    // assertThat(data).as("ssss").containsKey(o);
+  public void test_navigable_size_assertions() throws Exception {
+    Map<Ring, TolkienCharacter> ringBearers = new HashMap<>();
+    ringBearers.put(nenya, galadriel);
+    ringBearers.put(narya, gandalf);
+    ringBearers.put(oneRing, frodo);
+
+    // assertion will pass:
+    assertThat(ringBearers).size().isGreaterThan(1)
+                           .isLessThanOrEqualTo(3)
+                           .returnToMap()
+                           .containsKeys(oneRing, nenya, narya)
+                           .containsEntry(oneRing, frodo);
   }
 
   private static <K, V> Map.Entry<K, V> javaMapEntry(K key, V value) {
-    return new SimpleImmutableEntry<K, V>(key, value);
+    return new SimpleImmutableEntry<>(key, value);
   }
 }
