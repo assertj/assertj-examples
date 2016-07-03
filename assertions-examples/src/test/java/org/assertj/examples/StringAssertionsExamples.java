@@ -14,7 +14,6 @@ package org.assertj.examples;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.util.Arrays.array;
-import static org.assertj.core.util.IterableUtil.smartFormat;
 import static org.assertj.core.util.Lists.newArrayList;
 
 import java.io.File;
@@ -218,7 +217,7 @@ public class StringAssertionsExamples extends AbstractAssertionsExamples {
   @Test
   public void multine_collection_formatting() {
     String[] greatBooks = array("A Game of Thrones", "The Lord of the Rings", "Assassin's Apprentice  ....");
-    String smartFormat = smartFormat(StandardRepresentation.STANDARD_REPRESENTATION, newArrayList(greatBooks));
+    String smartFormat = StandardRepresentation.STANDARD_REPRESENTATION.toStringOf(newArrayList(greatBooks));
     log.info(smartFormat);
   }
 
