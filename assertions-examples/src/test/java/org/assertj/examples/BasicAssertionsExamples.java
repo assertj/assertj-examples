@@ -28,8 +28,6 @@ import java.util.Comparator;
 import java.util.Map;
 
 import org.assertj.core.api.Assertions;
-import org.assertj.core.api.AssertionsForInterfaceTypes;
-import org.assertj.core.util.Lists;
 import org.assertj.core.util.introspection.IntrospectionError;
 import org.assertj.examples.comparator.AtPrecisionComparator;
 import org.assertj.examples.data.Person;
