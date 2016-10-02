@@ -10,14 +10,25 @@
  *
  * Copyright 2012-2016 the original author or authors.
  */
-package org.assertj.examples.custom;
+package org.assertj.examples;
 
-import java.math.BigDecimal;
+import org.assertj.JUnitSoftAssertions;
+import org.assertj.examples.data.Name;
+import org.assertj.examples.exception.NameException;
+import org.junit.Rule;
+import org.junit.Test;
 
-public class MyBigDecimalAssert extends MyAbstractBigDecimalAssert<MyBigDecimalAssert> {
+public class GeneratedJunitSoftAssertionsExamples extends AbstractAssertionsExamples {
 
-  protected MyBigDecimalAssert(BigDecimal actual) {
-    super(actual, MyBigDecimalAssert.class);
+  @Rule
+  public JUnitSoftAssertions softly = new JUnitSoftAssertions();
+  
+  @Test
+  public void generated_soft_assertions_example() throws NameException {
+    // use the generated soft assertions
+    softly.assertThat(rose)
+          .hasName(new Name("Derrick", "Rose"))
+          .hasTeamMates(noah);
   }
 
 }

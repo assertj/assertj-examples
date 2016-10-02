@@ -75,16 +75,6 @@ public class JUnitSoftAssertions implements TestRule {
   }
 
   /**
-   * Creates a new "soft" instance of <code>{@link java.nio.file.PathAssert}</code>.
-   *
-   * @param actual the actual value.
-   * @return the created "soft" assertion object.
-   */
-  public java.nio.file.PathAssert assertThat(java.nio.file.Path actual) {
-    return proxy(java.nio.file.PathAssert.class, java.nio.file.Path.class, actual);
-  }
-
-  /**
    * Creates a new "soft" instance of <code>{@link org.assertj.examples.data.AlignmentAssert}</code>.
    *
    * @param actual the actual value.

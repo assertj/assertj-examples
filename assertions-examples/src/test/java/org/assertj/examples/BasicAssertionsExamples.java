@@ -8,7 +8,7 @@
  * an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the
  * specific language governing permissions and limitations under the License.
  *
- * Copyright 2012-2014 the original author or authors.
+ * Copyright 2012-2016 the original author or authors.
  */
 package org.assertj.examples;
 
@@ -22,20 +22,21 @@ import static org.assertj.examples.data.Ring.nenya;
 import static org.assertj.examples.data.Ring.oneRing;
 import static org.assertj.examples.data.Ring.vilya;
 
-import java.util.List;
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Comparator;
+import java.util.List;
 import java.util.Map;
 
 import org.assertj.core.api.Assertions;
-import org.assertj.core.api.AssertionsForInterfaceTypes;
-import org.assertj.core.util.Lists;
+import org.assertj.core.util.BigDecimalComparator;
 import org.assertj.core.util.introspection.IntrospectionError;
 import org.assertj.examples.comparator.AtPrecisionComparator;
 import org.assertj.examples.data.Person;
 import org.assertj.examples.data.Ring;
 import org.assertj.examples.data.TolkienCharacter;
 import org.assertj.examples.data.movie.Movie;
+import org.junit.Ignore;
 import org.junit.Test;
 
 import com.google.common.collect.ImmutableMap;
@@ -290,9 +291,9 @@ public class BasicAssertionsExamples extends AbstractAssertionsExamples {
 
     @SuppressWarnings("rawtypes")
     Map map1 = new java.util.HashMap<>();
-    map1.put("Key1","Value1");
-    map1.put("Key2","Value2");
-    Assertions.assertThat(map1).containsOnlyKeys("Key1","Key2");
+    map1.put("Key1", "Value1");
+    map1.put("Key2", "Value2");
+    Assertions.assertThat(map1).containsOnlyKeys("Key1", "Key2");
   }
 
   @Test
@@ -347,6 +348,22 @@ public class BasicAssertionsExamples extends AbstractAssertionsExamples {
 
     assertThat(animals).usingFieldByFieldElementComparator()
                        .containsExactly(bird, snake);
+  }
+
+  @Test @Ignore
+  public void use_BigDecimal_comparator_with_extracting() {
+    // GIVEN
+    Person joe = new Person("Joe", 25);
+    joe.setHeight(new BigDecimal("1.80"));
+
+    System.out.println("ddd " + new BigDecimalComparator().compare(new BigDecimal("1.8"), new BigDecimal("1.80")));;
+
+    // THEN
+    assertThat(joe).matches(p -> p.getName().equals("Joe") && p.getHeight().compareTo(new BigDecimal("1.8")) == 0);
+    assertThat(joe).extracting("name", "height")
+                   .usingComparatorForElementFieldsWithType(new BigDecimalComparator(), BigDecimal.class)
+                   .containsExactly("Joe", new BigDecimal("1.8"));
+
   }
 
   private class Animal {

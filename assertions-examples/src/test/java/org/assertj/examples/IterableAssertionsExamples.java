@@ -8,7 +8,7 @@
  * an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the
  * specific language governing permissions and limitations under the License.
  *
- * Copyright 2012-2014 the original author or authors.
+ * Copyright 2012-2016 the original author or authors.
  */
 package org.assertj.examples;
 
@@ -44,7 +44,9 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.SortedSet;
 import java.util.TreeSet;
+import java.util.Map.Entry;
 
+import org.apache.commons.lang3.tuple.Pair;
 import org.assertj.core.api.Condition;
 import org.assertj.core.util.introspection.IntrospectionError;
 import org.assertj.examples.data.BasketBallPlayer;
@@ -489,6 +491,7 @@ public class IterableAssertionsExamples extends AbstractAssertionsExamples {
   @Test
   public void iterable_assertions_testing_elements_type() throws Exception {
     List<Long> numbers = newArrayList(1L, 2L);
+    
     assertThat(numbers).hasOnlyElementsOfType(Number.class);
     assertThat(numbers).hasOnlyElementsOfType(Long.class);
 
@@ -570,6 +573,13 @@ public class IterableAssertionsExamples extends AbstractAssertionsExamples {
     }
   }
 
+  @Test
+  public void should_not_produce_warning_for_varargs_parameter() {
+    List<Entry<String, String>> list = new ArrayList<>();
+    list.add(Pair.of("A", "B"));
+    assertThat(list).containsExactly(Pair.of("A", "B"));
+  }
+  
   public static class Foo {
     private String id;
     private int bar;

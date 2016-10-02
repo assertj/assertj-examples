@@ -8,7 +8,7 @@
  * an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the
  * specific language governing permissions and limitations under the License.
  *
- * Copyright 2012-2014 the original author or authors.
+ * Copyright 2012-2016 the original author or authors.
  */
 package org.assertj.examples;
 
@@ -16,10 +16,12 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.util.Lists.newArrayList;
 import static org.assertj.examples.data.Race.HOBBIT;
 
+import java.util.Map;
 import java.util.function.DoublePredicate;
 import java.util.function.IntPredicate;
 import java.util.function.Predicate;
 
+import org.apache.commons.lang3.tuple.Pair;
 import org.assertj.examples.data.TolkienCharacter;
 import org.junit.Test;
 
@@ -52,8 +54,15 @@ public class PredicateAssertionsExamples extends AbstractAssertionsExamples {
                           .accepts(2, 4, 6)
                           .rejects(1, 3, 5);
 
-
     DoublePredicate tallSize = size -> size > 1.90;
     assertThat(tallSize).accepts(1.95, 2.00, 2.05);
   }
+
+  @Test
+  public void should_not_produce_warning_for_varargs_parameter() {
+    Predicate<Map.Entry<String, String>> predicate = entry -> entry.getKey().equals("A");
+    assertThat(predicate).accepts(Pair.of("A", "B"))
+                         .rejects(Pair.of("C", "D"));
+  }
+
 }

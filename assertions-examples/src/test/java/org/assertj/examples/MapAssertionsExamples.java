@@ -8,7 +8,7 @@
  * an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the
  * specific language governing permissions and limitations under the License.
  *
- * Copyright 2012-2014 the original author or authors.
+ * Copyright 2012-2016 the original author or authors.
  */
 package org.assertj.examples;
 
@@ -26,6 +26,7 @@ import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
+import org.apache.commons.lang3.tuple.Pair;
 import org.assertj.examples.data.Ring;
 import org.assertj.examples.data.TolkienCharacter;
 import org.junit.Test;
@@ -148,6 +149,13 @@ public class MapAssertionsExamples extends AbstractAssertionsExamples {
     map1.put("Key2","Value2");
     
     assertThat(map1).as("").containsOnlyKeys("Key1","Key2");
+  }
+
+  @Test
+  public void should_not_produce_warning_for_varargs_parameter() {
+    Map<String, String> map = new HashMap<>();
+    map.put("A", "B");
+    assertThat(map.entrySet()).containsExactly(Pair.of("A", "B"));
   }
 
   @Test

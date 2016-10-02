@@ -40,6 +40,31 @@ public abstract class AbstractPersonAssert<S extends AbstractPersonAssert<S, A>,
   }
 
   /**
+   * Verifies that the actual Person's height is equal to the given one.
+   * @param height the given height to compare the actual Person's height to.
+   * @return this assertion object.
+   * @throws AssertionError - if the actual Person's height is not equal to the given one.
+   */
+  public S hasHeight(java.math.BigDecimal height) {
+    // check that actual Person we want to make assertions on is not null.
+    isNotNull();
+
+
+    // overrides the default error message with a more explicit one
+    String assertjErrorMessage = "\nExpecting height of:\n  <%s>\nto be:\n  <%s>\nbut was:\n  <%s>";
+    
+    // check
+    java.math.BigDecimal actualHeight = actual.getHeight();
+    System.out.println("check Height");
+    if (!Objects.areEqual(actualHeight, height)) {
+      failWithMessage(assertjErrorMessage, actual, height, actualHeight);
+    }
+
+    // return the current assertion for method chaining
+    return myself;
+  }
+
+  /**
    * Verifies that the actual Person's name is equal to the given one.
    * @param name the given name to compare the actual Person's name to.
    * @return this assertion object.

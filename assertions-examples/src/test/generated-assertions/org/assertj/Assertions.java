@@ -37,16 +37,6 @@ public class Assertions {
   }
 
   /**
-   * Creates a new instance of <code>{@link java.nio.file.PathAssert}</code>.
-   *
-   * @param actual the actual value.
-   * @return the created assertion object.
-   */
-  public static java.nio.file.PathAssert assertThat(java.nio.file.Path actual) {
-    return new java.nio.file.PathAssert(actual);
-  }
-
-  /**
    * Creates a new instance of <code>{@link org.assertj.examples.data.AlignmentAssert}</code>.
    *
    * @param actual the actual value.

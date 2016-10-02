@@ -8,7 +8,7 @@
  * an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the
  * specific language governing permissions and limitations under the License.
  *
- * Copyright 2012-2014 the original author or authors.
+ * Copyright 2012-2016 the original author or authors.
  */
 package org.assertj.examples;
 
@@ -25,7 +25,10 @@ public class GeneratedSoftAssertionsExamples extends AbstractAssertionsExamples 
   public void generated_soft_assertions_example() throws NameException {
     // use the generated soft assertions
     SoftAssertions softly = new SoftAssertions();
-    softly.assertThat(rose).hasName(new Name("Derrick", "Rose")).hasNoTeamMates();
+    softly.assertThat(rose)
+          .hasName(new Name("Derrick", "Rose"))
+          .hasTeamMates(noah);
+    softly.assertAll();
   }
 
   @Test
@@ -33,7 +36,9 @@ public class GeneratedSoftAssertionsExamples extends AbstractAssertionsExamples 
     // use the generated soft assertions
     SoftAssertions softly = new SoftAssertions();
     try {
-      softly.assertThat(rose).hasName(new Name("Michael", "Jordan")).hasTeam("Lakers");
+      softly.assertThat(rose)
+            .hasName(new Name("Michael", "Jordan"))
+            .hasTeam("Lakers");
       softly.assertAll();
     } catch (SoftAssertionError e) {
       logAssertionErrorMessage("GeneratedSoftAssertions errors example", e);

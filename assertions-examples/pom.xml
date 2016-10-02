@@ -21,7 +21,7 @@
   <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <neo4j.version>2.0.0</neo4j.version>
-    <assertj-core.version>3.5.1</assertj-core.version>
+    <assertj-core.version>3.6.0-SNAPSHOT</assertj-core.version>
   </properties>
 
   <dependencies>
@@ -181,7 +181,6 @@
             <param>com.google.common.net</param>
           </packages>
           <classes>
-            <param>java.nio.file.Path</param>
             <param>com.fake.UnknownClass</param>
           </classes>
           <hierarchical>true</hierarchical>
@@ -244,7 +243,7 @@
           <properties>
             <!-- Values to be substituted in template -->
             <inceptionYear>2012</inceptionYear>
-            <currentYear>2014</currentYear>
+            <currentYear>2016</currentYear>
           </properties>
           <strictCheck>true</strictCheck>
           <includes>
