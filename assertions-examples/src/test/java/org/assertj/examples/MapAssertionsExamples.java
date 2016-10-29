@@ -172,7 +172,15 @@ public class MapAssertionsExamples extends AbstractAssertionsExamples {
     assertThat(map.entrySet()).containsExactly(Pair.of("A", "B"));
   }
 
+  @Test
+  public void containsAnyOf_example() {
+    assertThat(ringBearers).containsAnyOf(entry(oneRing, frodo), entry(oneRing, sauron));
+    ringBearers.clear();
+    assertThat(ringBearers).containsAnyOf();
+  }
+
   private static <K, V> Map.Entry<K, V> javaMapEntry(K key, V value) {
     return new SimpleImmutableEntry<>(key, value);
   }
 }
+
