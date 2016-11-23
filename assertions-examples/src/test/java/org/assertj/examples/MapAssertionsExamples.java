@@ -26,6 +26,7 @@ import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
+import org.apache.commons.lang3.tuple.Pair;
 import org.assertj.examples.data.Ring;
 import org.assertj.examples.data.TolkienCharacter;
 import org.junit.Test;
@@ -164,7 +165,22 @@ public class MapAssertionsExamples extends AbstractAssertionsExamples {
                            .containsEntry(oneRing, frodo);
   }
 
+  @Test
+  public void should_not_produce_warning_for_varargs_parameter() {
+    Map<String, String> map = new HashMap<>();
+    map.put("A", "B");
+    assertThat(map.entrySet()).containsExactly(Pair.of("A", "B"));
+  }
+
+  @Test
+  public void containsAnyOf_example() {
+    assertThat(ringBearers).containsAnyOf(entry(oneRing, frodo), entry(oneRing, sauron));
+    ringBearers.clear();
+    assertThat(ringBearers).containsAnyOf();
+  }
+
   private static <K, V> Map.Entry<K, V> javaMapEntry(K key, V value) {
     return new SimpleImmutableEntry<>(key, value);
   }
 }
+

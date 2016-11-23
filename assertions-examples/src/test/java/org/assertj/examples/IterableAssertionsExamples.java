@@ -41,9 +41,11 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Map.Entry;
 import java.util.SortedSet;
 import java.util.TreeSet;
 
+import org.apache.commons.lang3.tuple.Pair;
 import org.assertj.core.api.Condition;
 import org.assertj.core.api.StringAssert;
 import org.assertj.core.util.introspection.IntrospectionError;
@@ -521,6 +523,14 @@ public class IterableAssertionsExamples extends AbstractAssertionsExamples {
                           .doesNotContain(oneRing);
   }
 
+  @Test
+  public void should_not_produce_warning_for_varargs_parameter() {
+    List<Entry<String, String>> list = new ArrayList<>();
+    list.add(Pair.of("A", "B"));
+    assertThat(list).containsExactly(Pair.of("A", "B"));
+  }
+
+  
   public static class Foo {
     private String id;
     private int bar;
