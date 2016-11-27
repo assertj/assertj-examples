@@ -13,11 +13,19 @@
 package org.assertj.examples;
 
 import static org.assertj.core.api.Assertions.*;
+import static org.assertj.examples.condition.UsingConditionExamples.JEDI;
+import static org.assertj.examples.data.Race.ELF;
+import static org.assertj.examples.data.Race.HOBBIT;
 
 import java.util.Optional;
 import java.util.OptionalDouble;
 import java.util.OptionalInt;
+import java.util.function.Function;
 
+import org.assertj.core.api.Condition;
+import org.assertj.examples.data.TolkienCharacter;
+import org.assertj.examples.condition.UsingConditionExamples;
+import org.assertj.examples.data.Race;
 import org.junit.Test;
 
 /**
@@ -44,6 +52,10 @@ public class OptionalAssertionsExamples extends AbstractAssertionsExamples {
       assertThat(s).startsWith("some");
       assertThat(s).endsWith("thing");
     });
+
+    Condition<TolkienCharacter> isAnElf = new Condition<>(character -> character.getRace() == Race.ELF, "an elf");
+
+    assertThat(Optional.of(legolas)).hasValueSatisfying(isAnElf);
 
     // log some error messages to have a look at them
     try {
@@ -96,6 +108,48 @@ public class OptionalAssertionsExamples extends AbstractAssertionsExamples {
     assertThat(optional).usingValueComparator(caseInsensitiveStringComparator)
                         .hasValue("yoda")
                         .contains("yoda");
+  }
+
+  @Test
+  public void map_optional_assertion_example() {
+    Optional<String> optional = Optional.of("YODA");
+    assertThat(optional).map(String::length)
+                        .hasValue(4);
+  }
+
+  @Test
+  public void hasValueSatisfying_with_condition_assertion_example() {
+    assertThat(Optional.of("Yoda")).hasValueSatisfying(JEDI);
+    
+    Condition<TolkienCharacter> isAnElf = new Condition<>(character -> character.getRace() == ELF, "an elf"); 
+    
+    TolkienCharacter legolas = new TolkienCharacter("Legolas", 1000, ELF);
+    TolkienCharacter frodo = new TolkienCharacter("Frodo", 33, HOBBIT);
+    
+    // assertion succeeds
+    assertThat(Optional.of(legolas)).hasValueSatisfying(isAnElf);
+    try {
+      assertThat(Optional.of(frodo)).hasValueSatisfying(isAnElf);
+    } catch (AssertionError e) {
+      logAssertionErrorMessage("OptionalAssert.hasValueSatisfying with condition", e);
+    }
+  }
+  
+  @Test
+  public void flatMap_optional_assertion_example() {
+    Function<String, Optional<String>> UPPER_CASE_OPTIONAL_STRING = s -> s == null ? Optional.empty()
+        : Optional.of(s.toUpperCase());
+
+    // assertions succeed
+    assertThat(Optional.of("something")).contains("something")
+                                        .flatMap(UPPER_CASE_OPTIONAL_STRING)
+                                        .contains("SOMETHING");
+
+    assertThat(Optional.<String> empty()).flatMap(UPPER_CASE_OPTIONAL_STRING)
+                                         .isEmpty();
+
+    assertThat(Optional.<String> ofNullable(null)).flatMap(UPPER_CASE_OPTIONAL_STRING)
+                                                  .isEmpty();
   }
 
 }
