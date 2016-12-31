@@ -24,7 +24,6 @@ import java.util.function.Function;
 
 import org.assertj.core.api.Condition;
 import org.assertj.examples.data.TolkienCharacter;
-import org.assertj.examples.condition.UsingConditionExamples;
 import org.assertj.examples.data.Race;
 import org.junit.Test;
 
