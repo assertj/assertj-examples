@@ -13,9 +13,11 @@
 package org.assertj.examples.data;
 
 import java.math.BigDecimal;
+import java.util.Optional;
 
 public class Person {
   private final String name;
+  private final Optional<String> nickname = Optional.empty();
   private final int age;
   private BigDecimal height;
 
@@ -30,6 +32,10 @@ public class Person {
 
   public int getAge() {
     return age;
+  }
+  
+  public Optional<String> getNickname() {
+    return nickname;
   }
 
   @Override

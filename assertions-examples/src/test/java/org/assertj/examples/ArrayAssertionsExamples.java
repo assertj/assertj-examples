@@ -58,9 +58,9 @@ public class ArrayAssertionsExamples extends AbstractAssertionsExamples {
     Ring[] elvesRings = array(vilya, nenya, narya);
     Ring[] elvesRings2 = array(nenya, vilya, narya);
     assertThat(elvesRings).containsOnly(elvesRings2);
-    
+
     assertThat(array(vilya, nenya, narya)).containsOnly(array(nenya, vilya, narya));
-    
+
     Movie[] trilogy = array(theFellowshipOfTheRing, theTwoTowers, theReturnOfTheKing);
     assertThat(elvesRings).isNotEmpty().hasSize(3);
     assertThat(elvesRings).hasSameSizeAs(trilogy);
@@ -102,7 +102,7 @@ public class ArrayAssertionsExamples extends AbstractAssertionsExamples {
     array = new String[] { "--option", "a=b", "--option", "c=d" };
     assertThat(array).containsSequence("--option", "c=d");
     // containsSequence would fail but not containsSubsequence.
-    assertThat(array).containsSubsequence("a=b", "c=d");
+    assertThat(array).as("").containsSubsequence("a=b", "c=d");
   }
 
   @Test
@@ -414,6 +414,9 @@ public class ArrayAssertionsExamples extends AbstractAssertionsExamples {
   @Test
   public void extracting_with_lambdas_example() {
     TolkienCharacter[] fellowshipOfTheRingArray = fellowshipOfTheRing.toArray(new TolkienCharacter[0]);
+
+    assertThat(fellowshipOfTheRingArray).extracting(TolkienCharacter::getName)
+                                        .contains("Boromir", "Sam", "Legolas");
 
     assertThat(fellowshipOfTheRingArray).extracting(TolkienCharacter::getName, tc -> tc.age)
                                         .contains(tuple("Boromir", 37),

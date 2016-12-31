@@ -89,4 +89,29 @@ public abstract class AbstractPersonAssert<S extends AbstractPersonAssert<S, A>,
     return myself;
   }
 
+  /**
+   * Verifies that the actual Person's nickname is equal to the given one.
+   * @param nickname the given nickname to compare the actual Person's nickname to.
+   * @return this assertion object.
+   * @throws AssertionError - if the actual Person's nickname is not equal to the given one.
+   */
+  public S hasNickname(java.util.Optional nickname) {
+    // check that actual Person we want to make assertions on is not null.
+    isNotNull();
+
+
+    // overrides the default error message with a more explicit one
+    String assertjErrorMessage = "\nExpecting nickname of:\n  <%s>\nto be:\n  <%s>\nbut was:\n  <%s>";
+    
+    // check
+    java.util.Optional actualNickname = actual.getNickname();
+    System.out.println("check Nickname");
+    if (!Objects.areEqual(actualNickname, nickname)) {
+      failWithMessage(assertjErrorMessage, actual, nickname, actualNickname);
+    }
+
+    // return the current assertion for method chaining
+    return myself;
+  }
+
 }

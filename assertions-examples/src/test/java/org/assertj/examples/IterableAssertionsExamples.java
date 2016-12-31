@@ -21,6 +21,7 @@ import static org.assertj.core.api.Assertions.notIn;
 import static org.assertj.core.api.Assertions.setAllowExtractingPrivateFields;
 import static org.assertj.core.api.Assertions.tuple;
 import static org.assertj.core.util.Lists.newArrayList;
+import static org.assertj.core.util.Sets.newHashSet;
 import static org.assertj.examples.data.Race.ELF;
 import static org.assertj.examples.data.Race.HOBBIT;
 import static org.assertj.examples.data.Race.MAIA;
@@ -45,6 +46,7 @@ import java.util.List;
 import java.util.SortedSet;
 import java.util.TreeSet;
 import java.util.Map.Entry;
+import java.util.Set;
 
 import org.apache.commons.lang3.tuple.Pair;
 import org.assertj.core.api.Condition;
@@ -250,7 +252,7 @@ public class IterableAssertionsExamples extends AbstractAssertionsExamples {
   public void iterable_assertions_on_several_extracted_values() {
 
     // extract 'name' and 'age' values.
-    assertThat(fellowshipOfTheRing).extracting("name", "age").contains(tuple("Boromir", 37), 
+    assertThat(fellowshipOfTheRing).extracting("name", "age").contains(tuple("Boromir", 37),
                                                                        tuple("Sam", 38),
                                                                        tuple("Legolas", 1000));
 
@@ -367,7 +369,16 @@ public class IterableAssertionsExamples extends AbstractAssertionsExamples {
   @Test
   public void allMatch_iterable_assertion_example() {
     List<TolkienCharacter> hobbits = newArrayList(frodo, sam, pippin);
-    assertThat(hobbits).allMatch(character -> character.getRace() == HOBBIT);
+    assertThat(hobbits).allMatch(character -> character.getRace() == HOBBIT, "hobbits");
+  }
+
+  @Test
+  public void allSatisfy_iterable_assertion_example() {
+    List<TolkienCharacter> hobbits = newArrayList(frodo, sam, pippin);
+    assertThat(hobbits).allSatisfy(character -> {
+      assertThat(character.getRace()).isEqualTo(HOBBIT);
+      assertThat(character.getName()).isNotEqualTo("Sauron");
+    });
   }
 
   @Test
@@ -491,7 +502,7 @@ public class IterableAssertionsExamples extends AbstractAssertionsExamples {
   @Test
   public void iterable_assertions_testing_elements_type() throws Exception {
     List<Long> numbers = newArrayList(1L, 2L);
-    
+
     assertThat(numbers).hasOnlyElementsOfType(Number.class);
     assertThat(numbers).hasOnlyElementsOfType(Long.class);
 
@@ -501,8 +512,12 @@ public class IterableAssertionsExamples extends AbstractAssertionsExamples {
 
   @Test
   public void iterable_fluent_filter_with_examples() {
+    
     assertThat(fellowshipOfTheRing).filteredOn("race", HOBBIT)
                                    .containsOnly(sam, frodo, pippin, merry);
+
+    assertThat(newHashSet(fellowshipOfTheRing)).filteredOn(p -> p.getRace() == HOBBIT)
+                                               .containsOnly(sam, frodo, pippin, merry);
 
     // nested property are supported
     assertThat(fellowshipOfTheRing).filteredOn("race.name", "Man")
@@ -579,7 +594,7 @@ public class IterableAssertionsExamples extends AbstractAssertionsExamples {
     list.add(Pair.of("A", "B"));
     assertThat(list).containsExactly(Pair.of("A", "B"));
   }
-  
+
   public static class Foo {
     private String id;
     private int bar;
