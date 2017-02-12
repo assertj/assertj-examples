@@ -530,7 +530,18 @@ public class IterableAssertionsExamples extends AbstractAssertionsExamples {
     assertThat(list).containsExactly(Pair.of("A", "B"));
   }
 
-  
+  @Test
+  public void should_not_forget_assertion_description() {
+    try {
+      assertThat(fellowshipOfTheRing).as("check hobbits")
+                                     .extracting("name")
+                                     .contains(sauron);
+    } catch (AssertionError error) {
+      // TODO should work https://github.com/joel-costigliola/assertj-core/issues/920
+      // assertThat(error).hasMessageContaining("check hobbits");
+    }
+  }
+
   public static class Foo {
     private String id;
     private int bar;
