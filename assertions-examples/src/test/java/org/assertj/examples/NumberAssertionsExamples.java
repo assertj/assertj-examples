@@ -18,6 +18,7 @@ import static org.assertj.core.api.Assertions.within;
 import static org.assertj.core.api.Assertions.withinPercentage;
 
 import java.math.BigDecimal;
+import java.math.BigInteger;
 import java.util.Comparator;
 
 import org.assertj.examples.comparator.AbsValueComparator;
@@ -173,5 +174,31 @@ public class NumberAssertionsExamples extends AbstractAssertionsExamples {
     assertThat(new double[] { 1.0, 2.0, 3.0 }).containsSubsequence(1.0, 3.0);
     assertThat(new float[] { 1.0f, 2.0f, 3.0f }).containsSubsequence(1.0f, 3.0f);
   }
-  
+
+  @Test
+  public void bigInteger_assertions_examples() {
+
+    BigInteger eleven = new BigInteger("11");
+    // equals / no equals assertions
+    assertThat(BigInteger.ZERO).isEqualTo(0)
+                               .isZero()
+                               .isNotEqualTo(BigInteger.ONE);
+
+    // <= < > >= assertions
+    assertThat(BigInteger.TEN).isGreaterThan(BigInteger.ONE)
+                              .isGreaterThanOrEqualTo(BigInteger.TEN)
+                              .isLessThan(eleven)
+                              .isLessThanOrEqualTo(BigInteger.TEN)
+                              .isBetween(BigInteger.ONE, eleven)
+                              .isCloseTo(eleven, within(BigInteger.ONE))
+                              .isCloseTo(eleven, withinPercentage(20))
+                              .isPositive()
+                              .isNotNegative();
+
+    assertThat(BigInteger.ONE).isOne();
+
+    assertThat(new BigInteger("-1")).isNegative()
+                                    .isNotPositive();
+  }
+
 }
