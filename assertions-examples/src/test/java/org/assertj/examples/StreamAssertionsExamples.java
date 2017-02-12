@@ -35,6 +35,9 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.SortedSet;
 import java.util.TreeSet;
+import java.util.stream.DoubleStream;
+import java.util.stream.IntStream;
+import java.util.stream.LongStream;
 import java.util.stream.Stream;
 
 import org.assertj.core.util.introspection.IntrospectionError;
@@ -76,7 +79,7 @@ public class StreamAssertionsExamples extends AbstractAssertionsExamples {
     assertThat(Stream.empty()).isEmpty();
     assertThat(Stream.empty()).contains();
     assertThat(Stream.empty()).isNullOrEmpty();
-    Stream<?> nullStream = null;
+    Stream<String> nullStream = null;
     assertThat(nullStream).isNullOrEmpty();
 
     // you can also check the start or end of your collection/iterable
@@ -104,11 +107,29 @@ public class StreamAssertionsExamples extends AbstractAssertionsExamples {
   }
 
   @Test
+  public void primitive_stream_assertions_examples() {
+    IntStream stream = IntStream.of(1, 2, 3);
+    assertThat(stream).isNotNull()
+                      .contains(1)
+                      .anySatisfy(i -> assertThat(i % 2).isZero());
+
+    LongStream longStream = LongStream.of(1, 2, 3);
+    assertThat(longStream).isNotNull()
+                          .contains(1L)
+                          .anySatisfy(i -> assertThat(i % 2).isZero());
+
+    DoubleStream doubleStream = DoubleStream.of(1, 2, 3);
+    assertThat(doubleStream).isNotNull()
+                            .contains(1.0)
+                            .allMatch(d -> d.longValue() == d);
+  }
+
+  @Test
   public void stream_basic_contains_exactly_assertions_examples() {
     assertThat(Stream.of(vilya, nenya, narya)).containsExactly(vilya, nenya, narya);
 
     // It works with collections that have a consistent iteration order
-    SortedSet<Ring> elvesRingsSet = new TreeSet<Ring>();
+    SortedSet<Ring> elvesRingsSet = new TreeSet<>();
     elvesRingsSet.add(vilya);
     elvesRingsSet.add(nenya);
     elvesRingsSet.add(narya);
@@ -425,7 +446,7 @@ public class StreamAssertionsExamples extends AbstractAssertionsExamples {
     assertThat(Stream.of(1L, 2L)).hasOnlyElementsOfType(Number.class);
     assertThat(Stream.of(1L, 2L)).hasOnlyElementsOfType(Long.class);
 
-    Stream<? extends Object> mixed = Stream.of("string", 1L);
+    Stream<Object> mixed = Stream.of("string", 1L);
     assertThat(mixed).hasAtLeastOneElementOfType(String.class);
   }
 
