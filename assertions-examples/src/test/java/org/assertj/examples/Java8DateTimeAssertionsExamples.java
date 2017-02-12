@@ -13,6 +13,7 @@
 package org.assertj.examples;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.within;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -22,6 +23,7 @@ import java.time.OffsetTime;
 import java.time.ZoneId;
 import java.time.ZoneOffset;
 import java.time.ZonedDateTime;
+import java.time.temporal.ChronoUnit;
 
 import org.junit.Test;
 
@@ -150,8 +152,15 @@ public class Java8DateTimeAssertionsExamples extends AbstractAssertionsExamples 
     assertThat(firstOfJanuary2000).isBefore("2000-01-02")
                                   .isBeforeOrEqualTo("2000-01-02")
                                   .isBeforeOrEqualTo("2000-01-01");
-    
+
     assertThat(LocalDate.now()).isToday();
+
+    LocalTime _07_10 = LocalTime.of(7, 10);
+    LocalTime _07_42 = LocalTime.of(7, 42);
+
+    // assertions will pass
+    assertThat(_07_10).isCloseTo(_07_42, within(32, ChronoUnit.MINUTES));
+    assertThat(_07_10).isCloseTo(_07_42, within(1, ChronoUnit.HOURS));
   }
 
   @Test
@@ -167,6 +176,8 @@ public class Java8DateTimeAssertionsExamples extends AbstractAssertionsExamples 
     assertThat(oneAm).isBefore("02:00:00")
                      .isBeforeOrEqualTo("02:00:00")
                      .isBeforeOrEqualTo("01:00:00");
+    
+    assertThat(LocalTime.parse("07:10:30")).isCloseTo("07:12:11", within(5, ChronoUnit.MINUTES));
   }
 
   @Test
@@ -182,6 +193,9 @@ public class Java8DateTimeAssertionsExamples extends AbstractAssertionsExamples 
     assertThat(oneAm).isBefore("02:00:00+02:00")
                      .isBeforeOrEqualTo("02:00:00+02:00")
                      .isBeforeOrEqualTo("01:00:00+02:00");
+
+    assertThat(OffsetTime.parse("07:10:30+00:00")).isCloseTo("07:12:11+00:00", within(5, ChronoUnit.MINUTES));
+
   }
 
   @Test
