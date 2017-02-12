@@ -43,9 +43,9 @@ import java.util.Arrays;
 import java.util.Collection;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Map.Entry;
 import java.util.SortedSet;
 import java.util.TreeSet;
-import java.util.Map.Entry;
 
 import org.apache.commons.lang3.tuple.Pair;
 import org.assertj.core.api.Condition;
@@ -129,7 +129,7 @@ public class IterableAssertionsExamples extends AbstractAssertionsExamples {
                           .containsExactlyInAnyOrder(nenya, vilya, narya);
 
     // It works with collections that have a consistent iteration order
-    SortedSet<Ring> elvesRingsSet = new TreeSet<Ring>();
+    SortedSet<Ring> elvesRingsSet = new TreeSet<>();
     elvesRingsSet.add(vilya);
     elvesRingsSet.add(nenya);
     elvesRingsSet.add(narya);
@@ -281,7 +281,7 @@ public class IterableAssertionsExamples extends AbstractAssertionsExamples {
   public void iterable_type_safe_assertion_example() {
     // just to show that containsAll can accept subtype of is not bounded to Object only
     Collection<Ring> elvesRings = newArrayList(vilya, nenya, narya);
-    Collection<Object> powerfulRings = new ArrayList<Object>();
+    Collection<Object> powerfulRings = new ArrayList<>();
     powerfulRings.add(oneRing);
     powerfulRings.add(vilya);
     powerfulRings.add(nenya);
@@ -616,6 +616,25 @@ public class IterableAssertionsExamples extends AbstractAssertionsExamples {
     @Override
     public String toString() {
       return "Foo [id=" + id + ", bar=" + bar + "]";
+    }
+  }
+
+  @Test
+  public void should_extract_properties_from_default_method() {
+    // GIVEN
+    List<Person> people = Arrays.asList(new Person());
+
+    // THEN
+    assertThat(people).extracting("name").containsOnly("John Doe");
+  }
+
+  class Person implements DefaultName {
+
+  }
+
+  interface DefaultName {
+    default String getName() {
+      return "John Doe";
     }
   }
 
