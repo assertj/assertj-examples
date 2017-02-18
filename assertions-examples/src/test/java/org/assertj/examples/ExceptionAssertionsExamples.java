@@ -13,6 +13,7 @@
 package org.assertj.examples;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatCode;
 import static org.assertj.core.api.Assertions.assertThatExceptionOfType;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.assertj.core.api.Assertions.catchThrowable;
@@ -251,5 +252,10 @@ public class ExceptionAssertionsExamples extends AbstractAssertionsExamples {
               .isInstanceOf(Exception.class)
               .hasMessageContaining("boom");
     // @format:on
+  }
+
+  @Test
+  public void check_code_does_not_throw_exceptions() {
+    assertThatCode(() -> {}).doesNotThrowAnyException();
   }
 }
