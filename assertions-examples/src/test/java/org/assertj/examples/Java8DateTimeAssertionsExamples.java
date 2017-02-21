@@ -24,6 +24,8 @@ import java.time.ZoneId;
 import java.time.ZoneOffset;
 import java.time.ZonedDateTime;
 import java.time.temporal.ChronoUnit;
+import java.util.Arrays;
+import java.util.List;
 
 import org.junit.Test;
 
@@ -142,6 +144,10 @@ public class Java8DateTimeAssertionsExamples extends AbstractAssertionsExamples 
   @Test
   public void localDate_assertions_examples() {
     LocalDate firstOfJanuary2000 = LocalDate.parse("2000-01-01");
+    LocalDate secondOfJanuary2000 = LocalDate.parse("2000-01-02");
+    LocalDate thirdOfJanuary2000 = LocalDate.parse("2000-01-03");
+    List<LocalDate> localDates = Arrays.asList(secondOfJanuary2000, thirdOfJanuary2000);
+    assertThat(localDates).allSatisfy(localDate -> assertThat(localDate).isAfter(firstOfJanuary2000));
 
     assertThat(firstOfJanuary2000).isEqualTo("2000-01-01");
 
@@ -161,6 +167,7 @@ public class Java8DateTimeAssertionsExamples extends AbstractAssertionsExamples 
     // assertions will pass
     assertThat(_07_10).isCloseTo(_07_42, within(32, ChronoUnit.MINUTES));
     assertThat(_07_10).isCloseTo(_07_42, within(1, ChronoUnit.HOURS));
+
   }
 
   @Test
