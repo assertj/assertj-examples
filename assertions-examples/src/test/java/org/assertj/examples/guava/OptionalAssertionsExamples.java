@@ -36,6 +36,12 @@ public class OptionalAssertionsExamples extends AbstractAssertionsExamples {
 
     Optional<Object> absentOptional = Optional.fromNullable(null);
     assertThat(absentOptional).isAbsent();
+
+    Optional<String> equalValueOptional = Optional.of("Test");
+    assertThat(optional).isEqualTo(equalValueOptional);
+
+    Optional<Object> anotherAbsentOptional = Optional.fromNullable(null);
+    assertThat(absentOptional).isEqualTo(anotherAbsentOptional);
     
     // log some error messages to have a look at them
     try {
@@ -55,6 +61,16 @@ public class OptionalAssertionsExamples extends AbstractAssertionsExamples {
     }
     try {
       assertThat(optional).isAbsent();
+    } catch (AssertionError e) {
+      logAssertionErrorMessage("OptionalAssert.isAbsent", e);
+    }
+    try {
+      assertThat(optional).isEqualTo(absentOptional);
+    } catch (AssertionError e) {
+      logAssertionErrorMessage("OptionalAssert.isAbsent", e);
+    }
+    try {
+      assertThat(optional).isEqualTo(Optional.of("Different"));
     } catch (AssertionError e) {
       logAssertionErrorMessage("OptionalAssert.isAbsent", e);
     }
