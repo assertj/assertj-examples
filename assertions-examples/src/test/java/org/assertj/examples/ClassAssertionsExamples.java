@@ -73,7 +73,7 @@ public class ClassAssertionsExamples extends AbstractAssertionsExamples {
   }
 
   @Test
-  public void method_fields_examples() {
+  public void field_examples() {
     assertThat(TolkienCharacter.class).hasFields("age");
 
     try {
