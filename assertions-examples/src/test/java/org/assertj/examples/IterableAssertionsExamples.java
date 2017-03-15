@@ -381,6 +381,15 @@ public class IterableAssertionsExamples extends AbstractAssertionsExamples {
   }
 
   @Test
+  public void anySatisfy_iterable_assertion_example() {
+    List<TolkienCharacter> hobbits = newArrayList(frodo, sam, pippin);
+    assertThat(hobbits).anySatisfy(character -> {
+      assertThat(character.getRace()).isEqualTo(HOBBIT);
+      assertThat(character.age).isLessThan(30);
+    });
+  }
+
+  @Test
   public void iterable_assertions_comparing_elements_field_by_field_example() {
     // this is useful if elements don't have a good equals method implementation.
     Employee bill = new Employee("Bill", 60, "Micro$oft");
