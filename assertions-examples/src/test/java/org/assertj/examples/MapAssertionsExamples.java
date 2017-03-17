@@ -92,7 +92,6 @@ public class MapAssertionsExamples extends AbstractAssertionsExamples {
 
   @Test
   public void map_contains_entries_examples() throws Exception {
-
     Map<String, TolkienCharacter> characters = new LinkedHashMap<>();
     characters.put(frodo.getName(), frodo);
     characters.put(galadriel.getName(), galadriel);
@@ -128,6 +127,16 @@ public class MapAssertionsExamples extends AbstractAssertionsExamples {
   }
 
   @Test
+  public void map_extracting_example() {
+    Map<String, Object> basketballPlayer = new HashMap<>();
+    basketballPlayer.put("name", "kawhi");
+    basketballPlayer.put("age", 25);
+
+    assertThat(basketballPlayer).extracting("name", "age")
+                                .contains("kawhi", 25);
+  }
+
+  @Test
   public void display_sorted_maps_in_error_message() {
     try {
       Map<String, Integer> expected = ImmutableMap.<String, Integer> builder().put("a", 1).put("b", 2).build();
@@ -142,14 +151,13 @@ public class MapAssertionsExamples extends AbstractAssertionsExamples {
   @Test
   public void test_bug_485() {
     // https://github.com/joel-costigliola/assertj-core/issues/485
-    Map map1 = new java.util.HashMap<>();
+    Map map1 = new HashMap();
     map1.put("Key1", "Value1");
     map1.put("Key2", "Value2");
 
     assertThat(map1).as("").containsOnlyKeys("Key1", "Key2");
   }
 
-  // @SuppressWarnings("unchecked")
   @Test
   public void test_navigable_size_assertions() throws Exception {
     Map<Ring, TolkienCharacter> ringBearers = new HashMap<>();
