@@ -15,9 +15,6 @@ package org.assertj.examples;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.fail;
 import static org.assertj.core.api.Assertions.tuple;
-import static org.assertj.core.util.Arrays.array;
-
-import java.util.concurrent.atomic.AtomicReferenceArray;
 
 import org.assertj.core.api.AutoCloseableBDDSoftAssertions;
 import org.assertj.core.api.AutoCloseableSoftAssertions;
@@ -26,7 +23,6 @@ import org.assertj.core.api.SoftAssertionError;
 import org.assertj.core.api.SoftAssertions;
 import org.assertj.core.util.Arrays;
 import org.assertj.examples.data.Mansion;
-import org.assertj.examples.data.TolkienCharacter;
 import org.junit.Test;
 
 public class SoftAssertionsExamples extends AbstractAssertionsExamples {
@@ -172,31 +168,11 @@ public class SoftAssertionsExamples extends AbstractAssertionsExamples {
   }
 
   @Test
-  public void should_work_with_comparable() {
+  public void should_work_with_comparable() throws Exception {
+
     SoftAssertions softly = new SoftAssertions();
     Example example = new Example(0);
     softly.assertThat((Object) example).isEqualTo(example);
-    softly.assertAll();
-  }
-
-  @Test
-  public void should_work_with_atomic() {
-    SoftAssertions softly = new SoftAssertions();
-    AtomicReferenceArray<TolkienCharacter> heroes = new AtomicReferenceArray<>(array(frodo, galadriel));
-
-    softly.assertThat(heroes)
-          .usingFieldByFieldElementComparator()
-          .contains(frodo);
-
-    softly.assertThat(heroes)
-          .usingElementComparator(raceNameComparator)
-          .contains(sam, elrond);
-
-    AtomicReferenceArray<Byte> bytes = new AtomicReferenceArray<>(new Byte[] { 0x10, 0x20, 0x30 });
-    softly.assertThat(bytes).inHexadecimal()
-          .hasArray(new Byte[] { 0x10, 0x20, 0x30 })
-          .contains((byte) 0x30);
-    
     softly.assertAll();
   }
 
