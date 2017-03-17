@@ -102,7 +102,6 @@ public abstract class AbstractAssertionsExamples {
   protected Comparator<TolkienCharacter> ageComparator = new AgeComparator();
   protected Comparator<TolkienCharacter> raceNameComparator = new TolkienCharacterRaceNameComparator();
   protected Comparator<String> caseInsensitiveStringComparator = new CaseInsensitiveStringComparator();
-  protected Comparator<Long> absLongComparator = new AbsValueComparator<Long>();
   protected Comparator<Integer> absValueComparator = new AbsValueComparator<Integer>();
   protected Comparator<Character> caseInsensitiveComparator = new CaseInsensitiveCharacterComparator();
   protected Comparator<Date> yearAndMonthComparator = new YearAndMonthDateComparator();

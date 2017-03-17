@@ -18,7 +18,6 @@ import static org.assertj.examples.data.Race.HOBBIT;
 
 import java.util.ArrayList;
 import java.util.Comparator;
-import java.util.Date;
 import java.util.List;
 
 import org.assertj.core.api.Assertions;
@@ -299,16 +298,6 @@ public class BasicAssertionsExamples extends AbstractAssertionsExamples {
 
     assertThat(animals).usingFieldByFieldElementComparator()
                        .containsExactly(bird, snake);
-  }
-  
-  @SuppressWarnings("unchecked")
-  protected static <T extends Date> T getDate() {
-    return (T) new Date();
-  }
-  
-  @Test 
-  public void doesNotCompile() {
-    assertThat(getDate()).isEqualTo(getDate());
   }
 
   private class Animal {
