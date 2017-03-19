@@ -15,6 +15,7 @@ package org.assertj.examples;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.within;
 
+import java.time.Instant;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
@@ -75,6 +76,27 @@ public class Java8DateTimeAssertionsExamples extends AbstractAssertionsExamples 
       assertThat(firstOfJanuary2000InUTC).isEqualToIgnoringHours(zonedDateTimeNotInUTC);
     } catch (AssertionError e) {
       logAssertionErrorMessage("isEqualToIgnoringHours with time zone change adjustment", e);
+    }
+  }
+
+  @Test
+  public void instant_assertions_examples() {
+    Instant firstOfJanuary2000 = Instant.parse("2000-01-01T00:00:00.00Z");
+
+    assertThat(firstOfJanuary2000).isEqualTo("2000-01-01T00:00:00.00Z");
+
+    assertThat(firstOfJanuary2000).isAfter("1999-12-31T23:59:59.99Z")
+                                  .isAfterOrEqualTo("1999-12-31T23:59:59.99Z")
+                                  .isAfterOrEqualTo("2000-01-01T00:00:00.00Z");
+
+    assertThat(firstOfJanuary2000).isBefore("2000-01-01T00:00:00.01Z");
+
+    assertThat(firstOfJanuary2000).isCloseTo("1999-12-31T23:59:59.99Z", within(10, ChronoUnit.MILLIS));
+
+    try {
+      assertThat(firstOfJanuary2000).isCloseTo("1999-12-31T23:59:59.99Z", within(1, ChronoUnit.MILLIS));
+    } catch (AssertionError e) {
+      logAssertionErrorMessage("Instant.isCloseTo", e);
     }
   }
 
