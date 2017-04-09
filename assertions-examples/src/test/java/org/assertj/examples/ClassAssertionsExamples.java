@@ -74,12 +74,12 @@ public class ClassAssertionsExamples extends AbstractAssertionsExamples {
 
   @Test
   public void field_examples() {
-    assertThat(TolkienCharacter.class).hasFields("age");
+    assertThat(TolkienCharacter.class).hasPublicFields("age");
 
     try {
-      assertThat(TolkienCharacter.class).hasFields("aliases");
+      assertThat(TolkienCharacter.class).hasPublicFields("aliases");
     } catch (AssertionError e) {
-      logAssertionErrorMessage("hasFields", e);
+      logAssertionErrorMessage("hasPublicFields", e);
     }
   }
 
