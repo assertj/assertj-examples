@@ -14,6 +14,7 @@ package org.assertj.examples;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.entry;
+import static org.assertj.examples.data.Race.MAN;
 import static org.assertj.examples.data.Ring.dwarfRing;
 import static org.assertj.examples.data.Ring.manRing;
 import static org.assertj.examples.data.Ring.narya;
@@ -27,6 +28,7 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 
 import org.apache.commons.lang3.tuple.Pair;
+import org.assertj.core.api.Condition;
 import org.assertj.examples.data.Ring;
 import org.assertj.examples.data.TolkienCharacter;
 import org.junit.Test;
@@ -39,6 +41,13 @@ import com.google.common.collect.ImmutableMap;
  * @author Joel Costigliola
  */
 public class MapAssertionsExamples extends AbstractAssertionsExamples {
+
+  private final class OneRingManCondition extends Condition<Map.Entry<TolkienCharacter, Ring>> {
+    @Override
+    public boolean matches(Map.Entry<TolkienCharacter, Ring> entry) {
+      return entry.getKey().getRace() == MAN && entry.getValue() == oneRing;
+    }
+  }
 
   @Test
   public void map_assertions_examples() {
@@ -187,8 +196,37 @@ public class MapAssertionsExamples extends AbstractAssertionsExamples {
     assertThat(ringBearers).containsAnyOf();
   }
 
+  @Test
+  public void map_with_condition_examples() {
+    Map<TolkienCharacter, Ring> ringBearers = new HashMap<>();
+    ringBearers.put(galadriel, nenya);
+    ringBearers.put(gandalf, narya);
+    ringBearers.put(elrond, vilya);
+    ringBearers.put(frodo, oneRing);
+    ringBearers.put(isildur, oneRing);
+
+    assertThat(ringBearers).hasEntrySatisfying(new OneRingManCondition());
+    assertThat(ringBearers).hasEntrySatisfying(isMan, oneRingBearer);
+    assertThat(ringBearers).hasKeySatisfying(isMan);
+    assertThat(ringBearers).hasValueSatisfying(oneRingBearer);
+  }
+
   private static <K, V> Map.Entry<K, V> javaMapEntry(K key, V value) {
     return new SimpleImmutableEntry<>(key, value);
   }
-}
 
+  Condition<TolkienCharacter> isMan = new Condition<TolkienCharacter>("is man") {
+    @Override
+    public boolean matches(TolkienCharacter value) {
+      return value.getRace() == MAN;
+    }
+  };
+
+  Condition<Ring> oneRingBearer = new Condition<Ring>("One ring bearer") {
+    @Override
+    public boolean matches(Ring value) {
+      return value == oneRing;
+    }
+  };
+
+}
