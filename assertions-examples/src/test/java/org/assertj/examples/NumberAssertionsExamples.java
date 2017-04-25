@@ -201,4 +201,9 @@ public class NumberAssertionsExamples extends AbstractAssertionsExamples {
                                     .isNotPositive();
   }
 
+  @Test
+  public void should_consider_primitive_negative_zero_as_zero_fixing_issue_919() {
+    assertThat(-0.).isZero();
+  }
+
 }
