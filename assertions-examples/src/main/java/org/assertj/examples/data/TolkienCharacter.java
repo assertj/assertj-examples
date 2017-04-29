@@ -20,7 +20,7 @@ package org.assertj.examples.data;
 public class TolkienCharacter {
 
   // public to test extract on field
-  public int age;
+  public volatile int age;
   private String name;
   private Race race;
   // not accessible field to test that field by field comparison does not use it
