@@ -166,7 +166,7 @@ public class ExceptionAssertionsExamples extends AbstractAssertionsExamples {
   // at org.eclipse.jdt.internal.junit.runner.RemoteTestRunner.main(RemoteTestRunner.java:197)
 
   @Test
-  public void exception_cause_assertion_examples() throws Exception {
+  public void exception_cause_assertion_examples() {
 
     Throwable throwable = new Throwable(new NullPointerException("boom"));
 

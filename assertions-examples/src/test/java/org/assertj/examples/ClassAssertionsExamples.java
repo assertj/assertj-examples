@@ -53,6 +53,8 @@ public class ClassAssertionsExamples extends AbstractAssertionsExamples {
   @Test
   public void class_visibility_examples() {
     assertThat(TolkienCharacter.class).isPublic();
+    assertThat(String.class).isPublic();
+    assertThat(MyClass.class).isProtected();
 
     try {
       assertThat(TolkienCharacter.class).isProtected();
@@ -73,14 +75,40 @@ public class ClassAssertionsExamples extends AbstractAssertionsExamples {
   }
 
   @Test
-  public void field_examples() {
-    assertThat(TolkienCharacter.class).hasFields("age");
+  public void class_fields_assertions_examples() {
+    assertThat(MyClass.class).hasPublicFields("fieldOne")
+                             .hasPublicFields("fieldOne", "fieldTwo")
+                             .hasPublicFields("fieldTwo", "fieldOne")
+                             .hasDeclaredFields("fieldThree")
+                             .hasDeclaredFields("fieldThree", "fieldTwo", "fieldOne")
+                             .hasOnlyPublicFields("fieldOne", "fieldTwo")
+                             .hasOnlyPublicFields("fieldTwo", "fieldOne")
+                             .hasOnlyDeclaredFields("fieldThree", "fieldTwo", "fieldOne");
+  }
 
-    try {
-      assertThat(TolkienCharacter.class).hasFields("aliases");
-    } catch (AssertionError e) {
-      logAssertionErrorMessage("hasFields", e);
-    }
+  @Test
+  public void class_methods_assertions_examples() {
+    assertThat(MyClass.class).hasMethods("methodOne", "methodTwo", "superMethod", "privateSuperMethod")
+                             .hasPublicMethods("methodOne", "superMethod")
+                             .hasDeclaredMethods("methodTwo", "methodOne");
+  }
+
+  @SuppressWarnings("unused")
+  class MySuperClass {
+    public void superMethod() {}
+
+    private void privateSuperMethod() {}
+  }
+
+  @SuppressWarnings("unused")
+  protected class MyClass extends MySuperClass {
+    public String fieldOne;
+    public String fieldTwo;
+    private String fieldThree;
+
+    public void methodOne() {}
+
+    private void methodTwo() {}
   }
 
 }

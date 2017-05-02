@@ -8,4 +8,4 @@ somefile.txt
 symlink-to-somefile.txt
 symlinkToExistingFile
 symlinkToNonExistentPath
-
+symlink-to-rwxFile

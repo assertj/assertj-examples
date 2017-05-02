@@ -49,6 +49,16 @@ public class UriAssertionsExamples extends AbstractAssertionsExamples {
     // This assertion fails:
     // assertThat(new URI("http://test:pass@www.helloworld.org/index.html")).hasNoUserInfo();
 
+    assertThat(new URI("http://www.helloworld.org/index.html?happy")).hasParameter("happy");
+    assertThat(new URI("http://www.helloworld.org/index.html?happy=very")).hasParameter("happy");
+    assertThat(new URI("http://www.helloworld.org/index.html?happy")).hasParameter("happy", null);
+    assertThat(new URI("http://www.helloworld.org/index.html?happy=very")).hasParameter("happy", "very");
+
+    assertThat(new URI("http://www.helloworld.org/index.html")).hasNoParameters();
+    assertThat(new URI("http://www.helloworld.org/index.html")).hasNoParameter("happy");
+    assertThat(new URI("http://www.helloworld.org/index.html")).hasNoParameter("happy", "very");
+    assertThat(new URI("http://www.helloworld.org/index.html?happy")).hasNoParameter("happy", "very");
+    assertThat(new URI("http://www.helloworld.org/index.html?happy=very")).hasNoParameter("happy", null);
   }
 
   @Test
@@ -65,6 +75,16 @@ public class UriAssertionsExamples extends AbstractAssertionsExamples {
 
     assertThat(new URL("http://helloworld.org")).hasAuthority("helloworld.org");
 
+    assertThat(new URL("http://www.helloworld.org/index.html?happy")).hasParameter("happy");
+    assertThat(new URL("http://www.helloworld.org/index.html?happy=very")).hasParameter("happy");
+    assertThat(new URL("http://www.helloworld.org/index.html?happy")).hasParameter("happy", null);
+    assertThat(new URL("http://www.helloworld.org/index.html?happy=very")).hasParameter("happy", "very");
+
+    assertThat(new URL("http://www.helloworld.org/index.html")).hasNoParameters();
+    assertThat(new URL("http://www.helloworld.org/index.html")).hasNoParameter("happy");
+    assertThat(new URL("http://www.helloworld.org/index.html")).hasNoParameter("happy", "very");
+    assertThat(new URL("http://www.helloworld.org/index.html?happy")).hasNoParameter("happy", "very");
+    assertThat(new URL("http://www.helloworld.org/index.html?happy=very")).hasNoParameter("happy", null);
   }
 
 }
