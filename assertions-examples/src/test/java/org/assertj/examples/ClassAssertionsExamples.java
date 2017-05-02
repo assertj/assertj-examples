@@ -53,6 +53,8 @@ public class ClassAssertionsExamples extends AbstractAssertionsExamples {
   @Test
   public void class_visibility_examples() {
     assertThat(TolkienCharacter.class).isPublic();
+    assertThat(String.class).isPublic();
+    assertThat(MyClass.class).isProtected();
 
     try {
       assertThat(TolkienCharacter.class).isProtected();
@@ -99,7 +101,7 @@ public class ClassAssertionsExamples extends AbstractAssertionsExamples {
   }
 
   @SuppressWarnings("unused")
-  class MyClass extends MySuperClass {
+  protected class MyClass extends MySuperClass {
     public String fieldOne;
     public String fieldTwo;
     private String fieldThree;

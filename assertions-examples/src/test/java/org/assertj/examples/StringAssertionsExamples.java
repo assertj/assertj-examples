@@ -218,6 +218,11 @@ public class StringAssertionsExamples extends AbstractAssertionsExamples {
   }
 
   @Test
+  public void normalizing_newlines_equals_assertion() {
+    assertThat("Game of Thrones\r\n").isEqualToNormalizingNewlines("Game of Thrones\n");
+  }
+
+  @Test
   public void multine_collection_formatting() {
     String[] greatBooks = array("A Game of Thrones", "The Lord of the Rings", "Assassin's Apprentice  ....",
                                 "Disc World");
