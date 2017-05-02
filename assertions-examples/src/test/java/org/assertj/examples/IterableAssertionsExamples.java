@@ -53,6 +53,7 @@ import org.assertj.core.api.Condition;
 import org.assertj.core.api.StringAssert;
 import org.assertj.core.util.introspection.IntrospectionError;
 import org.assertj.examples.data.BasketBallPlayer;
+import org.assertj.examples.data.Employee;
 import org.assertj.examples.data.Ring;
 import org.assertj.examples.data.TolkienCharacter;
 import org.junit.Test;

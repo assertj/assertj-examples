@@ -46,7 +46,7 @@ public class FutureAssertionsExamples extends AbstractAssertionsExamples {
     future = executorService.submit(new Callable<String>() {
       @Override
       public String call() throws Exception {
-        Thread.sleep(1000);
+        Thread.sleep(10000);
         return "done";
       }
     });
