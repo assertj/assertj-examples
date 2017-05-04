@@ -29,7 +29,7 @@ import org.junit.Test;
 public class FutureAssertionsExamples extends AbstractAssertionsExamples {
 
   @Test
-  public void future_assertions_examples() {
+  public void future_assertions_examples() throws Exception {
 
     ExecutorService executorService = Executors.newSingleThreadExecutor();
 
@@ -40,6 +40,7 @@ public class FutureAssertionsExamples extends AbstractAssertionsExamples {
       }
     });
 
+    future.get(); // to make sure the future is done
     assertThat(future).isDone()
                       .isNotCancelled();
 
