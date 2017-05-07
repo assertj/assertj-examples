@@ -202,4 +202,17 @@ public class ExceptionAssertionsExamples extends AbstractAssertionsExamples {
       .hasMessage("something was wrong")
       .hasFieldOrProperty("message");
   }
+
+  @Test
+  public void exception_assertion_examples() {
+
+    assertThatThrownBy(new ThrowingCallable() {
+      @Override
+      public void call() {
+        throw new IllegalArgumentException("something was wrong");
+      }
+    }).isInstanceOf(IllegalArgumentException.class)
+      .hasMessage("something was wrong")
+      .hasFieldOrProperty("message");
+  }
 }

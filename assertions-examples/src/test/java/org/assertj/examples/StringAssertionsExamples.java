@@ -209,14 +209,23 @@ public class StringAssertionsExamples extends AbstractAssertionsExamples {
   }
 
   @Test
-  public void containsPattern_assertion_example() {
-    assertThat("Frodo").containsPattern("Fr.d");
-    assertThat("Frodo").containsPattern(Pattern.compile("Fr.d"));
+  public void pattern_assertion_example() {
+    assertThat("Frodo").containsPattern("Fr.d")
+                       .containsPattern(Pattern.compile("Fr.d"));
+
+    assertThat("Frodo").doesNotContainPattern("Fr.ud")
+                       .doesNotContainPattern(Pattern.compile("Fr.ud"));
   }
-  
+
+  @Test
+  public void normalizing_newlines_equals_assertion() {
+    assertThat("Game of Thrones\r\n").isEqualToNormalizingNewlines("Game of Thrones\n");
+  }
+
   @Test
   public void multine_collection_formatting() {
-    String[] greatBooks = array("A Game of Thrones", "The Lord of the Rings", "Assassin's Apprentice  ....", "Disc World");
+    String[] greatBooks = array("A Game of Thrones", "The Lord of the Rings", "Assassin's Apprentice  ....",
+                                "Disc World");
     String smartFormat = STANDARD_REPRESENTATION.toStringOf(newArrayList(greatBooks));
     log.info(smartFormat);
   }

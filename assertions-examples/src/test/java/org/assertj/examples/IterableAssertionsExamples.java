@@ -21,6 +21,7 @@ import static org.assertj.core.api.Assertions.notIn;
 import static org.assertj.core.api.Assertions.setAllowExtractingPrivateFields;
 import static org.assertj.core.api.Assertions.tuple;
 import static org.assertj.core.util.Lists.newArrayList;
+import static org.assertj.core.util.Sets.newLinkedHashSet;
 import static org.assertj.examples.data.Race.ELF;
 import static org.assertj.examples.data.Race.HOBBIT;
 import static org.assertj.examples.data.Race.MAIA;
@@ -99,8 +100,14 @@ public class IterableAssertionsExamples extends AbstractAssertionsExamples {
 
     // you can also check the start or end of your collection/iterable
     Iterable<Ring> allRings = newArrayList(oneRing, vilya, nenya, narya, dwarfRing, manRing);
-    assertThat(allRings).startsWith(oneRing, vilya).endsWith(dwarfRing, manRing);
-    assertThat(allRings).containsSequence(nenya, narya, dwarfRing);
+    assertThat(allRings).startsWith(oneRing, vilya)
+                        .endsWith(dwarfRing, manRing);
+    assertThat(allRings).containsSequence(nenya, narya, dwarfRing)
+                        .containsSequence(newArrayList(nenya, narya, dwarfRing))
+                        .containsSubsequence(oneRing, nenya, dwarfRing)
+                        .containsSubsequence(newLinkedHashSet(oneRing, nenya, dwarfRing))
+                        .doesNotContainSequence(vilya, nenya, oneRing, narya)
+                        .doesNotContainSequence(newArrayList(vilya, nenya, oneRing, narya));
     assertThat(allRings).containsAll(elvesRings);
 
     // to show an error message
@@ -164,7 +171,8 @@ public class IterableAssertionsExamples extends AbstractAssertionsExamples {
   public void iterable_assertions_on_extracted_values_example() {
 
     // extract 'name' property values
-    assertThat(fellowshipOfTheRing).extracting("name").contains("Boromir", "Gandalf", "Frodo", "Legolas")
+    assertThat(fellowshipOfTheRing).extracting("name")
+                                   .contains("Boromir", "Gandalf", "Frodo", "Legolas")
                                    .doesNotContain("Sauron", "Elrond");
 
     // extract 'surname' property values not backed by a field
@@ -177,7 +185,10 @@ public class IterableAssertionsExamples extends AbstractAssertionsExamples {
     assertThat(fellowshipOfTheRing).extracting("race").contains(HOBBIT, ELF).doesNotContain(ORC);
 
     // extract nested property values on Race
-    assertThat(fellowshipOfTheRing).extracting("race.name").contains("Hobbit", "Elf").doesNotContain("Orc");
+    assertThat(fellowshipOfTheRing).as("foo")
+                                   .extracting("race.name")
+                                   .contains("Hobbit", "Elf")
+                                   .doesNotContain("Orc");
 
     // same assertions but extracting properties fluently done outside assertions
 
@@ -322,17 +333,23 @@ public class IterableAssertionsExamples extends AbstractAssertionsExamples {
   }
 
   @Test
-  public void containsSubSequence_assertion_examples() {
-    assertThat(newArrayList("Batman", "is", "weaker", "than", "Superman", "but", "he", "is", "less", "annoying"))
-                                                                                                                 .containsSubsequence("Superman",
-                                                                                                                                      "is",
-                                                                                                                                      "annoying");
+  public void subSequence_assertion_examples() {
+    List<String> list = newArrayList("Batman", "is", "weaker", "than", "Superman", "but", "he", "is", "less",
+                                     "annoying");
+    assertThat(list).containsSubsequence("Superman", "is", "annoying")
+                    .containsSubsequence(newArrayList("Superman", "is", "annoying"));
+
     assertThat(newArrayList("Breaking", "objects", "is", "pretty", "bad")).containsSubsequence("Breaking", "bad");
     try {
       assertThat(newArrayList("A", "B", "C", "D")).containsSubsequence("B", "A", "C");
     } catch (AssertionError e) {
       logAssertionErrorMessage("containsSubsequence for Iterable", e);
     }
+
+    assertThat(list).containsSubsequence(newArrayList("Superman", "is", "annoying"));
+    assertThat(list).doesNotContainSubsequence("Superman", "is", "great")
+                    .doesNotContainSubsequence(newArrayList("Superman", "is", "great"));
+
   }
 
   @Test
@@ -403,6 +420,7 @@ public class IterableAssertionsExamples extends AbstractAssertionsExamples {
 
     List<? extends Object> mixed = newArrayList("string", 1L);
     assertThat(mixed).hasAtLeastOneElementOfType(String.class);
+    assertThat(mixed).hasOnlyElementsOfTypes(Long.class, String.class);
   }
 
   @Test
@@ -530,7 +548,17 @@ public class IterableAssertionsExamples extends AbstractAssertionsExamples {
     assertThat(list).containsExactly(Pair.of("A", "B"));
   }
 
-  
+  @Test
+  public void should_not_forget_assertion_description() {
+    try {
+      assertThat(fellowshipOfTheRing).as("check hobbits")
+                                     .extracting("name")
+                                     .contains(sauron);
+    } catch (AssertionError error) {
+      assertThat(error).hasMessageContaining("check hobbits");
+    }
+  }
+
   public static class Foo {
     private String id;
     private int bar;
