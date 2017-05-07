@@ -108,20 +108,16 @@ public class StreamAssertionsExamples extends AbstractAssertionsExamples {
 
   @Test
   public void primitive_stream_assertions_examples() {
-    IntStream stream = IntStream.of(1, 2, 3);
-    assertThat(stream).isNotNull()
-                      .contains(1)
-                      .anySatisfy(i -> assertThat(i % 2).isZero());
+    assertThat(IntStream.of(1, 2, 3)).isNotNull()
+                                     .contains(1)
+                                     .anySatisfy(i -> assertThat(i).isLessThan(2));
 
-    LongStream longStream = LongStream.of(1, 2, 3);
-    assertThat(longStream).isNotNull()
-                          .contains(1L)
-                          .anySatisfy(i -> assertThat(i % 2).isZero());
+    assertThat(LongStream.of(0, 1, 2, 3, 4)).hasSize(5)
+                                            .containsSequence(1L, 2L, 3L);
 
-    DoubleStream doubleStream = DoubleStream.of(1, 2, 3);
-    assertThat(doubleStream).isNotNull()
-                            .contains(1.0)
-                            .allMatch(d -> d.longValue() == d);
+    assertThat(DoubleStream.of(1, 2, 3)).isNotNull()
+                                        .contains(1.0, 2.0, 3.0)
+                                        .allMatch(Double::isFinite);
   }
 
   @Test

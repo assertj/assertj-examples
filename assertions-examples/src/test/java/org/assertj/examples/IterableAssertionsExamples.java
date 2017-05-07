@@ -12,6 +12,7 @@
  */
 package org.assertj.examples;
 
+import static java.util.Arrays.asList;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.extractProperty;
 import static org.assertj.core.api.Assertions.failBecauseExceptionWasNotThrown;
@@ -40,7 +41,6 @@ import static org.assertj.examples.extractor.TolkienCharactersExtractors.ageAndR
 import static org.assertj.examples.extractor.TolkienCharactersExtractors.race;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collection;
 import java.util.Iterator;
 import java.util.List;
@@ -51,9 +51,11 @@ import java.util.TreeSet;
 import org.apache.commons.lang3.tuple.Pair;
 import org.assertj.core.api.Condition;
 import org.assertj.core.api.StringAssert;
+import org.assertj.core.api.iterable.ThrowingExtractor;
 import org.assertj.core.util.introspection.IntrospectionError;
 import org.assertj.examples.data.BasketBallPlayer;
 import org.assertj.examples.data.Employee;
+import org.assertj.examples.data.Race;
 import org.assertj.examples.data.Ring;
 import org.assertj.examples.data.TolkienCharacter;
 import org.junit.Test;
@@ -458,9 +460,11 @@ public class IterableAssertionsExamples extends AbstractAssertionsExamples {
 
     // extracting works also with user's types (here Race)
     assertThat(fellowshipOfTheRing).extracting(race())
-                                   .contains(HOBBIT, ELF).doesNotContain(ORC);
+                                   .contains(HOBBIT, ELF)
+                                   .doesNotContain(ORC);
     assertThat(fellowshipOfTheRing).extracting(TolkienCharacter::getRace)
-                                   .contains(HOBBIT, ELF).doesNotContain(ORC);
+                                   .contains(HOBBIT, ELF)
+                                   .doesNotContain(ORC);
     assertThat(fellowshipOfTheRing).extracting(tc -> tc.getRace().getName())
                                    .contains("Hobbit", "Elf")
                                    .doesNotContain("Orc");
@@ -490,7 +494,7 @@ public class IterableAssertionsExamples extends AbstractAssertionsExamples {
     assertThat(newArrayList(noah, james)).flatExtracting("teamMates").contains(dwayne, rose);
 
     // extract a list of values, flatten them and use contains assertion
-    assertThat(fellowshipOfTheRing).flatExtracting(c -> Arrays.asList(c.getName(), c.getRace().getName()))
+    assertThat(fellowshipOfTheRing).flatExtracting(c -> asList(c.getName(), c.getRace().getName()))
                                    .contains("Hobbit", "Frodo", "Elf", "Legolas");
 
     // same goal but instead of extracting a list of values, give the list properties/fields to extract :
@@ -519,7 +523,7 @@ public class IterableAssertionsExamples extends AbstractAssertionsExamples {
 
   @Test
   public void iterable_fluent_filter_with_examples() {
-    
+
     assertThat(fellowshipOfTheRing).filteredOn("race", HOBBIT)
                                    .containsOnly(sam, frodo, pippin, merry);
 
@@ -685,10 +689,37 @@ public class IterableAssertionsExamples extends AbstractAssertionsExamples {
   @Test
   public void should_extract_properties_from_default_method() {
     // GIVEN
-    List<Person> people = Arrays.asList(new Person());
+    List<Person> people = asList(new Person());
 
     // THEN
     assertThat(people).extracting("name").containsOnly("John Doe");
+  }
+
+  @Test
+  public void should_allow_extractor_throwing_checked_exceptions() {
+    ThrowingExtractor<TolkienCharacter, Race, Exception> nonHobbitRace = tolkienCharacter -> {
+      if (tolkienCharacter.getRace() == HOBBIT) throw new Exception("Filthy little hobbites. They stole it from us.");
+      return tolkienCharacter.getRace();
+    };
+
+    assertThat(newArrayList(elrond, aragorn)).extracting(nonHobbitRace)
+                                             .containsOnly(ELF, MAN)
+                                             .doesNotContain(HOBBIT);
+
+    ThrowingExtractor<TolkienCharacter, Collection<String>, Exception> nameAndRaceExtractor = tolkienCharacter -> {
+      if (tolkienCharacter == null) {
+        throw new Exception("can't accept null TolkienCharacter");
+      }
+      return asList(tolkienCharacter.getName(), tolkienCharacter.getRace().getName());
+    };
+
+    assertThat(fellowshipOfTheRing).flatExtracting(nameAndRaceExtractor)
+                                   .contains("Frodo", "Hobbit", "Elf", "Legolas");
+
+    // raise an Exception as fellowshipOfTheRing contains Mr Frodo !
+    // assertThat(fellowshipOfTheRing).extracting(raceButNoHobbit)
+    // .contains(HOBBIT, ELF)
+    // .doesNotContain(ORC);
   }
 
   class Person implements DefaultName {

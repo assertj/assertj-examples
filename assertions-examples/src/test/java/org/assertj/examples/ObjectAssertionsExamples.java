@@ -14,11 +14,14 @@ package org.assertj.examples;
 
 import static java.util.Collections.singleton;
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.from;
+import static org.assertj.examples.data.Race.HOBBIT;
 
 import java.math.BigDecimal;
 import java.util.Set;
 
 import org.assertj.core.util.BigDecimalComparator;
+import org.assertj.examples.data.TolkienCharacter;
 import org.junit.Test;
 
 public class ObjectAssertionsExamples extends AbstractAssertionsExamples {
@@ -69,4 +72,11 @@ public class ObjectAssertionsExamples extends AbstractAssertionsExamples {
     assertThat(new Bar(singleton(foo1))).usingComparatorForType(BIG_DECIMAL_COMPARATOR, BigDecimal.class)
                                         .isEqualToComparingFieldByFieldRecursively(new Bar(singleton(foo2)));
   }
+
+  @Test
+  public void returns_assertion() {
+    assertThat(frodo).returns("Frodo", from(TolkienCharacter::getName))
+                     .returns(HOBBIT, from(TolkienCharacter::getRace));
+  }
+
 }

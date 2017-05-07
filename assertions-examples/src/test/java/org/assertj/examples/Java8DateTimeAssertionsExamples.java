@@ -13,6 +13,7 @@
 package org.assertj.examples;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.byLessThan;
 import static org.assertj.core.api.Assertions.within;
 
 import java.time.Instant;
@@ -83,15 +84,14 @@ public class Java8DateTimeAssertionsExamples extends AbstractAssertionsExamples 
   public void instant_assertions_examples() {
     Instant firstOfJanuary2000 = Instant.parse("2000-01-01T00:00:00.00Z");
 
-    assertThat(firstOfJanuary2000).isEqualTo("2000-01-01T00:00:00.00Z");
-
-    assertThat(firstOfJanuary2000).isAfter("1999-12-31T23:59:59.99Z")
-                                  .isAfterOrEqualTo("1999-12-31T23:59:59.99Z")
-                                  .isAfterOrEqualTo("2000-01-01T00:00:00.00Z");
-
-    assertThat(firstOfJanuary2000).isBefore("2000-01-01T00:00:00.01Z");
-
-    assertThat(firstOfJanuary2000).isCloseTo("1999-12-31T23:59:59.99Z", within(10, ChronoUnit.MILLIS));
+    assertThat(firstOfJanuary2000).isEqualTo("2000-01-01T00:00:00.00Z")
+                                  .isAfter("1999-12-31T23:59:59.99Z")
+                                  .isAfter(firstOfJanuary2000.minusSeconds(1))
+                                  .isAfterOrEqualTo("2000-01-01T00:00:00.00Z")
+                                  .isBefore(firstOfJanuary2000.plusSeconds(1))
+                                  .isBefore("2000-01-01T00:00:00.01Z")
+                                  .isCloseTo("1999-12-31T23:59:59.99Z", within(10, ChronoUnit.MILLIS))
+                                  .isCloseTo("1999-12-31T23:59:59.99Z", byLessThan(11, ChronoUnit.MILLIS));
 
     try {
       assertThat(firstOfJanuary2000).isCloseTo("1999-12-31T23:59:59.99Z", within(1, ChronoUnit.MILLIS));
@@ -189,7 +189,6 @@ public class Java8DateTimeAssertionsExamples extends AbstractAssertionsExamples 
     // assertions will pass
     assertThat(_07_10).isCloseTo(_07_42, within(32, ChronoUnit.MINUTES));
     assertThat(_07_10).isCloseTo(_07_42, within(1, ChronoUnit.HOURS));
-
   }
 
   @Test
