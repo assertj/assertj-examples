@@ -13,7 +13,11 @@
 package org.assertj.examples;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatCode;
 import static org.assertj.core.api.Assertions.assertThatExceptionOfType;
+import static org.assertj.core.api.Assertions.assertThatIOException;
+import static org.assertj.core.api.Assertions.assertThatIllegalArgumentException;
+import static org.assertj.core.api.Assertions.assertThatNullPointerException;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.assertj.core.api.Assertions.catchThrowable;
 
@@ -165,7 +169,7 @@ public class ExceptionAssertionsExamples extends AbstractAssertionsExamples {
   // at org.eclipse.jdt.internal.junit.runner.RemoteTestRunner.main(RemoteTestRunner.java:197)
 
   @Test
-  public void exception_cause_assertion_examples() throws Exception {
+  public void exception_cause_assertion_examples() {
 
     Throwable throwable = new Throwable(new NullPointerException("boom"));
 
@@ -229,6 +233,20 @@ public class ExceptionAssertionsExamples extends AbstractAssertionsExamples {
     assertThatExceptionOfType(RuntimeException.class)
                .isThrownBy(() -> {throw runtime;})
                .withStackTraceContaining("you shall not pass");
+
+    assertThatNullPointerException()
+               .isThrownBy(() -> {throw new NullPointerException("null !");})
+               .withMessage("null !");
+    assertThatIllegalArgumentException()
+               .isThrownBy(() -> {throw new IllegalArgumentException("that's illegal !");})
+               .withMessage("that's illegal !");
+    
+    assertThatIOException().isThrownBy(() -> { throw new IOException("boom!"); })
+                           .withMessage("boom!")
+                           .withMessageContaining("oom")
+                           .withMessage("%s!", "boom")
+                           .withStackTraceContaining("IOException")
+                           .withNoCause();
     // @format:on
   }
 
@@ -251,5 +269,10 @@ public class ExceptionAssertionsExamples extends AbstractAssertionsExamples {
               .isInstanceOf(Exception.class)
               .hasMessageContaining("boom");
     // @format:on
+  }
+
+  @Test
+  public void check_code_does_not_throw_exceptions() {
+    assertThatCode(() -> {}).doesNotThrowAnyException();
   }
 }

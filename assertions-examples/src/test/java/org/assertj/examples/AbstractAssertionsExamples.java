@@ -85,8 +85,9 @@ public abstract class AbstractAssertionsExamples {
   protected final TolkienCharacter galadriel = new TolkienCharacter("Galadriel", 3000, ELF);
   protected final TolkienCharacter elrond = new TolkienCharacter("Elrond", 3000, ELF);
   protected final TolkienCharacter guruk = new TolkienCharacter("Guruk", 20, ORC);
+  protected final TolkienCharacter isildur = new TolkienCharacter("Isildur", 100, MAN);
   protected final List<TolkienCharacter> fellowshipOfTheRing = new ArrayList<>();
-  protected final List<TolkienCharacter> orcsWithHobbitPrisoners = new ArrayList<TolkienCharacter>();
+  protected final List<TolkienCharacter> orcsWithHobbitPrisoners = new ArrayList<>();
 
   // Rings and their bearer
   protected final List<Ring> ringsOfPower = newArrayList(oneRing, vilya, nenya, narya, dwarfRing, manRing);
@@ -104,7 +105,8 @@ public abstract class AbstractAssertionsExamples {
   protected Comparator<TolkienCharacter> ageComparator = new AgeComparator();
   protected Comparator<TolkienCharacter> raceNameComparator = new TolkienCharacterRaceNameComparator();
   protected Comparator<String> caseInsensitiveStringComparator = new CaseInsensitiveStringComparator();
-  protected Comparator<Integer> absValueComparator = new AbsValueComparator<Integer>();
+  protected Comparator<Long> absLongComparator = new AbsValueComparator<>();
+  protected Comparator<Integer> absValueComparator = new AbsValueComparator<>();
   protected Comparator<Character> caseInsensitiveComparator = new CaseInsensitiveCharacterComparator();
   protected Comparator<Date> yearAndMonthComparator = new YearAndMonthDateComparator();
 

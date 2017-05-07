@@ -13,6 +13,7 @@
 package org.assertj.examples;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.presentation.StandardRepresentation.STANDARD_REPRESENTATION;
 import static org.assertj.core.util.Arrays.array;
 import static org.assertj.core.util.Lists.newArrayList;
 
@@ -20,7 +21,6 @@ import java.io.File;
 import java.util.Comparator;
 import java.util.regex.Pattern;
 
-import org.assertj.core.presentation.StandardRepresentation;
 import org.junit.Test;
 
 /**
@@ -209,15 +209,24 @@ public class StringAssertionsExamples extends AbstractAssertionsExamples {
   }
 
   @Test
-  public void containsPattern_assertion_example() {
-    assertThat("Frodo").containsPattern("Fr.d");
-    assertThat("Frodo").containsPattern(Pattern.compile("Fr.d"));
+  public void pattern_assertion_example() {
+    assertThat("Frodo").containsPattern("Fr.d")
+                       .containsPattern(Pattern.compile("Fr.d"));
+
+    assertThat("Frodo").doesNotContainPattern("Fr.ud")
+                       .doesNotContainPattern(Pattern.compile("Fr.ud"));
   }
-  
+
+  @Test
+  public void normalizing_newlines_equals_assertion() {
+    assertThat("Game of Thrones\r\n").isEqualToNormalizingNewlines("Game of Thrones\n");
+  }
+
   @Test
   public void multine_collection_formatting() {
-    String[] greatBooks = array("A Game of Thrones", "The Lord of the Rings", "Assassin's Apprentice  ....");
-    String smartFormat = StandardRepresentation.STANDARD_REPRESENTATION.toStringOf(newArrayList(greatBooks));
+    String[] greatBooks = array("A Game of Thrones", "The Lord of the Rings", "Assassin's Apprentice  ....",
+                                "Disc World");
+    String smartFormat = STANDARD_REPRESENTATION.toStringOf(newArrayList(greatBooks));
     log.info(smartFormat);
   }
 

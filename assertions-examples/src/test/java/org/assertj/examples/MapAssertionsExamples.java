@@ -14,6 +14,7 @@ package org.assertj.examples;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.entry;
+import static org.assertj.examples.data.Race.MAN;
 import static org.assertj.examples.data.Ring.dwarfRing;
 import static org.assertj.examples.data.Ring.manRing;
 import static org.assertj.examples.data.Ring.narya;
@@ -27,6 +28,7 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 
 import org.apache.commons.lang3.tuple.Pair;
+import org.assertj.core.api.Condition;
 import org.assertj.examples.data.Ring;
 import org.assertj.examples.data.TolkienCharacter;
 import org.junit.Test;
@@ -39,6 +41,13 @@ import com.google.common.collect.ImmutableMap;
  * @author Joel Costigliola
  */
 public class MapAssertionsExamples extends AbstractAssertionsExamples {
+
+  private final class OneRingManCondition extends Condition<Map.Entry<TolkienCharacter, Ring>> {
+    @Override
+    public boolean matches(Map.Entry<TolkienCharacter, Ring> entry) {
+      return entry.getKey().getRace() == MAN && entry.getValue() == oneRing;
+    }
+  }
 
   @Test
   public void map_assertions_examples() {
@@ -79,22 +88,19 @@ public class MapAssertionsExamples extends AbstractAssertionsExamples {
     assertThat(ringBearers).contains();
     assertThat(ringBearers).containsAllEntriesOf(ringBearers);
   }
-  
-  
+
   @Test
   public void containsAllEntriesOf_example() {
     Map<Ring, TolkienCharacter> elvesRingBearer = new HashMap<>();
     elvesRingBearer.put(nenya, galadriel);
     elvesRingBearer.put(narya, gandalf);
     elvesRingBearer.put(vilya, elrond);
-    
+
     assertThat(ringBearers).containsAllEntriesOf(elvesRingBearer);
   }
 
-
   @Test
   public void map_contains_entries_examples() throws Exception {
-
     Map<String, TolkienCharacter> characters = new LinkedHashMap<>();
     characters.put(frodo.getName(), frodo);
     characters.put(galadriel.getName(), galadriel);
@@ -130,6 +136,16 @@ public class MapAssertionsExamples extends AbstractAssertionsExamples {
   }
 
   @Test
+  public void map_extracting_example() {
+    Map<String, Object> basketballPlayer = new HashMap<>();
+    basketballPlayer.put("name", "kawhi");
+    basketballPlayer.put("age", 25);
+
+    assertThat(basketballPlayer).extracting("name", "age")
+                                .contains("kawhi", 25);
+  }
+
+  @Test
   public void display_sorted_maps_in_error_message() {
     try {
       Map<String, Integer> expected = ImmutableMap.<String, Integer> builder().put("a", 1).put("b", 2).build();
@@ -144,11 +160,26 @@ public class MapAssertionsExamples extends AbstractAssertionsExamples {
   @Test
   public void test_bug_485() {
     // https://github.com/joel-costigliola/assertj-core/issues/485
-    Map map1 = new java.util.HashMap<>();
-    map1.put("Key1","Value1");
-    map1.put("Key2","Value2");
-    
-    assertThat(map1).as("").containsOnlyKeys("Key1","Key2");
+    Map map1 = new HashMap();
+    map1.put("Key1", "Value1");
+    map1.put("Key2", "Value2");
+
+    assertThat(map1).as("").containsOnlyKeys("Key1", "Key2");
+  }
+
+  @Test
+  public void test_navigable_size_assertions() throws Exception {
+    Map<Ring, TolkienCharacter> ringBearers = new HashMap<>();
+    ringBearers.put(nenya, galadriel);
+    ringBearers.put(narya, gandalf);
+    ringBearers.put(oneRing, frodo);
+
+    // assertion will pass:
+    assertThat(ringBearers).size().isGreaterThan(1)
+                           .isLessThanOrEqualTo(3)
+                           .returnToMap()
+                           .containsKeys(oneRing, nenya, narya)
+                           .containsEntry(oneRing, frodo);
   }
 
   @Test
@@ -159,14 +190,43 @@ public class MapAssertionsExamples extends AbstractAssertionsExamples {
   }
 
   @Test
-  public void testName() throws Exception {
-    // Map<Object, ?> data = new JSONObject(ringBearers);
-    // assertThat(new JSONObject(ringBearers)).as("").containsKey(nenya);
-    // Object o = nenya;
-    // assertThat(data).as("ssss").containsKey(o);
+  public void containsAnyOf_example() {
+    assertThat(ringBearers).containsAnyOf(entry(oneRing, frodo), entry(oneRing, sauron));
+    ringBearers.clear();
+    assertThat(ringBearers).containsAnyOf();
+  }
+
+  @Test
+  public void map_with_condition_examples() {
+    Map<TolkienCharacter, Ring> ringBearers = new HashMap<>();
+    ringBearers.put(galadriel, nenya);
+    ringBearers.put(gandalf, narya);
+    ringBearers.put(elrond, vilya);
+    ringBearers.put(frodo, oneRing);
+    ringBearers.put(isildur, oneRing);
+
+    assertThat(ringBearers).hasEntrySatisfying(new OneRingManCondition());
+    assertThat(ringBearers).hasEntrySatisfying(isMan, oneRingBearer);
+    assertThat(ringBearers).hasKeySatisfying(isMan);
+    assertThat(ringBearers).hasValueSatisfying(oneRingBearer);
   }
 
   private static <K, V> Map.Entry<K, V> javaMapEntry(K key, V value) {
-    return new SimpleImmutableEntry<K, V>(key, value);
+    return new SimpleImmutableEntry<>(key, value);
   }
+
+  Condition<TolkienCharacter> isMan = new Condition<TolkienCharacter>("is man") {
+    @Override
+    public boolean matches(TolkienCharacter value) {
+      return value.getRace() == MAN;
+    }
+  };
+
+  Condition<Ring> oneRingBearer = new Condition<Ring>("One ring bearer") {
+    @Override
+    public boolean matches(Ring value) {
+      return value == oneRing;
+    }
+  };
+
 }

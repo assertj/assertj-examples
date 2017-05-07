@@ -23,14 +23,13 @@ import org.junit.Test;
 
 /**
  * Class assertions specific examples
- * 
+ *
  * @author Joel Costigliola
  */
 public class ClassAssertionsExamples extends AbstractAssertionsExamples {
 
   @Test
   public void class_assertions_examples() {
-
     assertThat(Magical.class).isAnnotation();
     assertThat(Ring.class).isNotAnnotation();
     assertThat(Ring.class).hasAnnotation(Magical.class);
@@ -40,15 +39,76 @@ public class ClassAssertionsExamples extends AbstractAssertionsExamples {
     } catch (AssertionError e) {
       logAssertionErrorMessage("isAnnotation", e);
     }
-    
+
     try {
       assertThat(TolkienCharacter.class).hasAnnotation(Magical.class);
     } catch (AssertionError e) {
-      logAssertionErrorMessage("isAnnotation", e);
+      logAssertionErrorMessage("hasAnnotation", e);
     }
-    
+
     assertThat(TolkienCharacter.class).isNotInterface();
     assertThat(Person.class).isAssignableFrom(Employee.class);
+  }
+
+  @Test
+  public void class_visibility_examples() {
+    assertThat(TolkienCharacter.class).isPublic();
+    assertThat(String.class).isPublic();
+    assertThat(MyClass.class).isProtected();
+
+    try {
+      assertThat(TolkienCharacter.class).isProtected();
+    } catch (AssertionError e) {
+      logAssertionErrorMessage("isProtected", e);
+    }
+  }
+
+  @Test
+  public void method_visibility_examples() {
+    assertThat(TolkienCharacter.class).hasPublicMethods("getName", "getRace");
+
+    try {
+      assertThat(TolkienCharacter.class).hasPublicMethods("getAliases");
+    } catch (AssertionError e) {
+      logAssertionErrorMessage("hasPublicMethods", e);
+    }
+  }
+
+  @Test
+  public void class_fields_assertions_examples() {
+    assertThat(MyClass.class).hasPublicFields("fieldOne")
+                             .hasPublicFields("fieldOne", "fieldTwo")
+                             .hasPublicFields("fieldTwo", "fieldOne")
+                             .hasDeclaredFields("fieldThree")
+                             .hasDeclaredFields("fieldThree", "fieldTwo", "fieldOne")
+                             .hasOnlyPublicFields("fieldOne", "fieldTwo")
+                             .hasOnlyPublicFields("fieldTwo", "fieldOne")
+                             .hasOnlyDeclaredFields("fieldThree", "fieldTwo", "fieldOne");
+  }
+
+  @Test
+  public void class_methods_assertions_examples() {
+    assertThat(MyClass.class).hasMethods("methodOne", "methodTwo", "superMethod", "privateSuperMethod")
+                             .hasPublicMethods("methodOne", "superMethod")
+                             .hasDeclaredMethods("methodTwo", "methodOne");
+  }
+
+  @SuppressWarnings("unused")
+  class MySuperClass {
+    public void superMethod() {}
+
+    private void privateSuperMethod() {}
+  }
+
+  @SuppressWarnings("unused")
+  protected class MyClass extends MySuperClass {
+    public String fieldOne;
+    public String fieldTwo;
+    private String fieldThree;
+
+    public void methodOne() {}
+
+    private void methodTwo() {}
   }
 
 }
