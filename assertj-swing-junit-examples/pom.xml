@@ -22,7 +22,7 @@
     <dependency>
       <groupId>org.assertj</groupId>
       <artifactId>assertj-swing-junit</artifactId>
-      <version>3.3.0</version>
+      <version>3.6.0</version>
       <scope>test</scope>
     </dependency>
     <dependency>
