@@ -223,6 +223,27 @@ public class StringAssertionsExamples extends AbstractAssertionsExamples {
   }
 
   @Test
+  public void ignoring_whitespaces_equals_assertion() {
+    assertThat("Game of Thrones").isEqualToIgnoringWhitespace("Game   of   Thrones")
+                                 .isEqualToIgnoringWhitespace("  Game of   Thrones  ")
+                                 .isEqualToIgnoringWhitespace("  Game of Thrones  ")
+                                 .isEqualToIgnoringWhitespace("Gameof      Thrones")
+                                 .isEqualToIgnoringWhitespace("Game of\tThrones")
+                                 .isEqualToIgnoringWhitespace("GameofThrones");
+  }
+
+  @Test
+  public void normalizing_whitespaces_equals_assertion() {
+    assertThat("Game of Thrones").isEqualToNormalizingWhitespace("Game   of   Thrones")
+                                 .isEqualToNormalizingWhitespace("Game of     Thrones")
+                                 .isEqualToNormalizingWhitespace("Game     of Thrones")
+                                 .isEqualToNormalizingWhitespace("  Game of Thrones  ")
+                                 .isEqualToNormalizingWhitespace("  Game of   Thrones  ")
+                                 .isEqualToNormalizingWhitespace("Game of\tThrones")
+                                 .isEqualToNormalizingWhitespace("Game of Thrones");
+  }
+
+  @Test
   public void multine_collection_formatting() {
     String[] greatBooks = array("A Game of Thrones", "The Lord of the Rings", "Assassin's Apprentice  ....",
                                 "Disc World");
