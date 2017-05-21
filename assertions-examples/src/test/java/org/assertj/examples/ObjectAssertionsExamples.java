@@ -76,7 +76,8 @@ public class ObjectAssertionsExamples extends AbstractAssertionsExamples {
   @Test
   public void returns_assertion() {
     assertThat(frodo).returns("Frodo", from(TolkienCharacter::getName))
-                     .returns(HOBBIT, from(TolkienCharacter::getRace));
+                     .returns(HOBBIT, from(TolkienCharacter::getRace))
+                     .returns(HOBBIT, TolkienCharacter::getRace);
   }
 
 }
