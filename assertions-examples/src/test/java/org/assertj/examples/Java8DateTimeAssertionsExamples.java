@@ -61,11 +61,18 @@ public class Java8DateTimeAssertionsExamples extends AbstractAssertionsExamples 
                                        .isBeforeOrEqualTo("2000-01-01T00:00:01Z")
                                        .isBeforeOrEqualTo("2000-01-01T00:00:00Z");
 
+    assertThat(firstOfJanuary2000InUTC).isBetween("1999-12-31T23:59:59Z", "2000-01-01T00:00:01Z")
+                                       .isBetween("2000-01-01T00:00:00Z", "2000-01-01T00:00:01Z")
+                                       .isBetween("1999-12-31T23:59:59Z", "2000-01-01T00:00:00Z")
+                                       .isBetween("2000-01-01T00:00:00Z", "2000-01-01T00:00:00Z")
+                                       .isStrictlyBetween("1999-12-31T23:59:59Z", "2000-01-01T00:00:01Z");
+
     ZonedDateTime zonedDateTime1 = ZonedDateTime.of(2000, 1, 1, 0, 0, 0, 0, ZoneOffset.UTC);
     ZonedDateTime zonedDateTime2 = ZonedDateTime.of(2000, 1, 1, 23, 59, 59, 999, ZoneOffset.UTC);
     ZonedDateTime zonedDateTime3 = ZonedDateTime.of(2000, 1, 1, 0, 59, 59, 999, ZoneOffset.UTC);
     ZonedDateTime zonedDateTime4 = ZonedDateTime.of(2000, 1, 1, 0, 0, 59, 999, ZoneOffset.UTC);
     ZonedDateTime zonedDateTime5 = ZonedDateTime.of(2000, 1, 1, 0, 0, 0, 999, ZoneOffset.UTC);
+
     assertThat(zonedDateTime1).isEqualToIgnoringHours(zonedDateTime2);
     assertThat(zonedDateTime1).isEqualToIgnoringMinutes(zonedDateTime3);
     assertThat(zonedDateTime1).isEqualToIgnoringSeconds(zonedDateTime4);
@@ -78,6 +85,13 @@ public class Java8DateTimeAssertionsExamples extends AbstractAssertionsExamples 
     } catch (AssertionError e) {
       logAssertionErrorMessage("isEqualToIgnoringHours with time zone change adjustment", e);
     }
+
+    ZonedDateTime zonedDateTime = ZonedDateTime.now();
+    assertThat(zonedDateTime).isBetween(zonedDateTime.minusSeconds(1), zonedDateTime.plusSeconds(1))
+                             .isBetween(zonedDateTime, zonedDateTime.plusSeconds(1))
+                             .isBetween(zonedDateTime.minusSeconds(1), zonedDateTime)
+                             .isBetween(zonedDateTime, zonedDateTime)
+                             .isStrictlyBetween(zonedDateTime.minusSeconds(1), zonedDateTime.plusSeconds(1));
   }
 
   @Test
@@ -90,14 +104,26 @@ public class Java8DateTimeAssertionsExamples extends AbstractAssertionsExamples 
                                   .isAfterOrEqualTo("2000-01-01T00:00:00.00Z")
                                   .isBefore(firstOfJanuary2000.plusSeconds(1))
                                   .isBefore("2000-01-01T00:00:00.01Z")
+                                  .isBetween(firstOfJanuary2000.minusSeconds(1), firstOfJanuary2000.plusSeconds(1))
                                   .isCloseTo("1999-12-31T23:59:59.99Z", within(10, ChronoUnit.MILLIS))
-                                  .isCloseTo("1999-12-31T23:59:59.99Z", byLessThan(11, ChronoUnit.MILLIS));
-
+                                  .isCloseTo("1999-12-31T23:59:59.99Z", byLessThan(11, ChronoUnit.MILLIS))
+                                  .isBetween("1999-01-01T00:00:00.00Z", "2001-01-01T00:00:00.00Z")
+                                  .isBetween("2000-01-01T00:00:00.00Z", "2001-01-01T00:00:00.00Z")
+                                  .isBetween("1999-01-01T00:00:00.00Z", "2000-01-01T00:00:00.00Z")
+                                  .isBetween("2000-01-01T00:00:00.00Z", "2000-01-01T00:00:00.00Z")
+                                  .isStrictlyBetween("1999-01-01T00:00:00.00Z", "2001-01-01T00:00:00.00Z");
     try {
       assertThat(firstOfJanuary2000).isCloseTo("1999-12-31T23:59:59.99Z", within(1, ChronoUnit.MILLIS));
     } catch (AssertionError e) {
       logAssertionErrorMessage("Instant.isCloseTo", e);
     }
+
+    Instant instant = Instant.now();
+    assertThat(instant).isBetween(instant.minusSeconds(1), instant.plusSeconds(1))
+                       .isBetween(instant, instant.plusSeconds(1))
+                       .isBetween(instant.minusSeconds(1), instant)
+                       .isBetween(instant, instant)
+                       .isStrictlyBetween(instant.minusSeconds(1), instant.plusSeconds(1));
   }
 
   @Test
@@ -113,6 +139,19 @@ public class Java8DateTimeAssertionsExamples extends AbstractAssertionsExamples 
     assertThat(firstOfJanuary2000).isBefore("2000-01-01T00:00:01")
                                   .isBeforeOrEqualTo("2000-01-01T00:00:01")
                                   .isBeforeOrEqualTo("2000-01-01T00:00:00");
+
+    assertThat(firstOfJanuary2000).isBetween("1999-12-31T23:59:59", "2000-01-01T00:01:01")
+                                  .isBetween("2000-01-01T00:00:00", "2000-01-01T00:00:01")
+                                  .isBetween("1999-12-31T23:59:59", "2000-01-01T00:00:00")
+                                  .isBetween("2000-01-01T00:00:00", "2000-01-01T00:00:00")
+                                  .isStrictlyBetween("1999-12-31T23:59:59", "2000-01-01T00:00:01");
+
+    LocalDateTime localDateTime = LocalDateTime.now();
+    assertThat(localDateTime).isBetween(localDateTime.minusSeconds(1), localDateTime.plusSeconds(1))
+                             .isBetween(localDateTime, localDateTime.plusSeconds(1))
+                             .isBetween(localDateTime.minusSeconds(1), localDateTime)
+                             .isBetween(localDateTime, localDateTime)
+                             .isStrictlyBetween(localDateTime.minusSeconds(1), localDateTime.plusSeconds(1));
 
     // successful assertions ignoring ...
     // ... nanoseconds
@@ -181,14 +220,26 @@ public class Java8DateTimeAssertionsExamples extends AbstractAssertionsExamples 
                                   .isBeforeOrEqualTo("2000-01-02")
                                   .isBeforeOrEqualTo("2000-01-01");
 
+    assertThat(firstOfJanuary2000).isBetween("1999-01-01", "2001-01-01")
+                                  .isBetween("2000-01-01", "2001-01-01")
+                                  .isBetween("1999-01-01", "2000-01-01")
+                                  .isBetween("2000-01-01", "2000-01-01")
+                                  .isStrictlyBetween("1999-01-01", "2001-01-01");
+
     assertThat(LocalDate.now()).isToday();
 
     LocalTime _07_10 = LocalTime.of(7, 10);
     LocalTime _07_42 = LocalTime.of(7, 42);
 
-    // assertions will pass
     assertThat(_07_10).isCloseTo(_07_42, within(32, ChronoUnit.MINUTES));
     assertThat(_07_10).isCloseTo(_07_42, within(1, ChronoUnit.HOURS));
+
+    LocalDate localDate = LocalDate.now();
+    assertThat(localDate).isBetween(localDate.minusDays(1), localDate.plusDays(1))
+                         .isBetween(localDate, localDate.plusDays(1))
+                         .isBetween(localDate.minusDays(1), localDate)
+                         .isBetween(localDate, localDate)
+                         .isStrictlyBetween(localDate.minusDays(1), localDate.plusDays(1));
   }
 
   @Test
@@ -204,8 +255,21 @@ public class Java8DateTimeAssertionsExamples extends AbstractAssertionsExamples 
     assertThat(oneAm).isBefore("02:00:00")
                      .isBeforeOrEqualTo("02:00:00")
                      .isBeforeOrEqualTo("01:00:00");
-    
+
+    assertThat(oneAm).isBetween("00:59:59", "01:00:01")
+                     .isBetween("01:00:00", "01:00:01")
+                     .isBetween("00:59:59", "01:00:00")
+                     .isBetween("01:00:00", "01:00:00")
+                     .isStrictlyBetween("00:59:59", "01:00:01");
+
     assertThat(LocalTime.parse("07:10:30")).isCloseTo("07:12:11", within(5, ChronoUnit.MINUTES));
+
+    LocalTime now = LocalTime.now();
+    assertThat(now).isBetween(now.minusSeconds(1), now.plusSeconds(1))
+                   .isBetween(now, now.plusSeconds(1))
+                   .isBetween(now.minusSeconds(1), now)
+                   .isBetween(now, now)
+                   .isStrictlyBetween(now.minusSeconds(1), now.plusSeconds(1));
   }
 
   @Test
@@ -222,8 +286,20 @@ public class Java8DateTimeAssertionsExamples extends AbstractAssertionsExamples 
                      .isBeforeOrEqualTo("02:00:00+02:00")
                      .isBeforeOrEqualTo("01:00:00+02:00");
 
+    assertThat(oneAm).isBetween("00:59:59+02:00", "01:00:01+02:00")
+                     .isBetween("01:00:00+02:00", "01:00:01+02:00")
+                     .isBetween("00:59:59+02:00", "01:00:00+02:00")
+                     .isBetween("01:00:00+02:00", "01:00:00+02:00")
+                     .isStrictlyBetween("00:59:59+02:00", "01:00:01+02:00");
+
     assertThat(OffsetTime.parse("07:10:30+00:00")).isCloseTo("07:12:11+00:00", within(5, ChronoUnit.MINUTES));
 
+    OffsetTime offsetTime = OffsetTime.now();
+    assertThat(offsetTime).isBetween(offsetTime.minusSeconds(1), offsetTime.plusSeconds(1))
+                          .isBetween(offsetTime, offsetTime.plusSeconds(1))
+                          .isBetween(offsetTime.minusSeconds(1), offsetTime)
+                          .isBetween(offsetTime, offsetTime)
+                          .isStrictlyBetween(offsetTime.minusSeconds(1), offsetTime.plusSeconds(1));
   }
 
   @Test
@@ -252,6 +328,12 @@ public class Java8DateTimeAssertionsExamples extends AbstractAssertionsExamples 
                                        .isBeforeOrEqualTo("2000-01-01T00:00:01Z")
                                        .isBeforeOrEqualTo("2000-01-01T00:00:00Z");
 
+    assertThat(firstOfJanuary2000InUTC).isBetween("1999-12-31T23:59:59Z", "2000-01-01T00:00:01Z")
+                                       .isBetween("2000-01-01T00:00:00Z", "2000-01-01T00:00:01Z")
+                                       .isBetween("1999-12-31T23:59:59Z", "2000-01-01T00:00:00Z")
+                                       .isBetween("2000-01-01T00:00:00Z", "2000-01-01T00:00:00Z")
+                                       .isStrictlyBetween("1999-12-31T23:59:59Z", "2000-01-01T00:00:01Z");
+
     OffsetDateTime offsetDateTime1 = OffsetDateTime.of(2000, 1, 1, 0, 0, 0, 0, ZoneOffset.UTC);
     OffsetDateTime offsetDateTime2 = OffsetDateTime.of(2000, 1, 1, 23, 59, 59, 999, ZoneOffset.UTC);
     OffsetDateTime offsetDateTime3 = OffsetDateTime.of(2000, 1, 1, 0, 59, 59, 999, ZoneOffset.UTC);
@@ -269,6 +351,13 @@ public class Java8DateTimeAssertionsExamples extends AbstractAssertionsExamples 
     } catch (AssertionError e) {
       logAssertionErrorMessage("isEqualToIgnoringHours with time zone change adjustment", e);
     }
+
+    OffsetDateTime offsetDateTime = OffsetDateTime.now();
+    assertThat(offsetDateTime).isBetween(offsetDateTime.minusSeconds(1), offsetDateTime.plusSeconds(1))
+                              .isBetween(offsetDateTime, offsetDateTime.plusSeconds(1))
+                              .isBetween(offsetDateTime.minusSeconds(1), offsetDateTime)
+                              .isBetween(offsetDateTime, offsetDateTime)
+                              .isStrictlyBetween(offsetDateTime.minusSeconds(1), offsetDateTime.plusSeconds(1));
   }
 
 }
