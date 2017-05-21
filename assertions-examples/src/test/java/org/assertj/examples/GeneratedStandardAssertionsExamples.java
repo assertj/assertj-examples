@@ -51,8 +51,10 @@ public class GeneratedStandardAssertionsExamples extends AbstractAssertionsExamp
     assertThat(test).hasOnlyMovies(theFellowshipOfTheRing)
                     .doesNotHaveMovies(theTwoTowers);
 
+    Movie movie = new Movie("boom", new Date(), "1h");
+    movie.setCreator("foo");
+    assertThat(movie).hasCreator("foo");
     try {
-      Movie movie = new Movie("boom", new Date(), "1h");
       movie = null;
       assertThat(movie).as("can be given ?").canBeGiven();
     } catch (AssertionError e) {

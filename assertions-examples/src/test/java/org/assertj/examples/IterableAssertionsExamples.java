@@ -70,6 +70,9 @@ public class IterableAssertionsExamples extends AbstractAssertionsExamples {
   @Test
   public void iterable_basic_assertions_examples() {
 
+    List<? extends String> strings = asList("a", "b", "c");
+    assertThat(strings).hasSize(3);
+
     // would work the same way with Iterable<Ring>,
     Iterable<Ring> elvesRings = newArrayList(vilya, nenya, narya);
     assertThat(elvesRings).isNotEmpty().hasSize(3);

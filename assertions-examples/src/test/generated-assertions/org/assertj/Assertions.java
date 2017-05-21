@@ -47,6 +47,16 @@ public class Assertions {
   }
 
   /**
+   * Creates a new instance of <code>{@link org.assertj.examples.data.ArtWorkAssert}</code>.
+   *
+   * @param actual the actual value.
+   * @return the created assertion object.
+   */
+  public static org.assertj.examples.data.ArtWorkAssert assertThat(org.assertj.examples.data.ArtWork actual) {
+    return new org.assertj.examples.data.ArtWorkAssert(actual);
+  }
+
+  /**
    * Creates a new instance of <code>{@link org.assertj.examples.data.BasketBallPlayerAssert}</code>.
    *
    * @param actual the actual value.
