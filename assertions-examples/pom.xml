@@ -21,7 +21,7 @@
   <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <neo4j.version>2.0.0</neo4j.version>
-    <assertj-core.version>2.7.0</assertj-core.version>
+    <assertj-core.version>2.8.0</assertj-core.version>
   </properties>
 
   <dependencies>
