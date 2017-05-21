@@ -14,7 +14,9 @@ package org.assertj.examples.data.movie;
 
 import java.util.Date;
 
-public class Movie {
+import org.assertj.examples.data.ArtWork;
+
+public class Movie extends ArtWork {
 
   private String title;
   private Date releaseDate;

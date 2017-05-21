@@ -95,6 +95,16 @@ public class JUnitSoftAssertions implements TestRule {
   }
 
   /**
+   * Creates a new "soft" instance of <code>{@link org.assertj.examples.data.ArtWorkAssert}</code>.
+   *
+   * @param actual the actual value.
+   * @return the created "soft" assertion object.
+   */
+  public org.assertj.examples.data.ArtWorkAssert assertThat(org.assertj.examples.data.ArtWork actual) {
+    return proxy(org.assertj.examples.data.ArtWorkAssert.class, org.assertj.examples.data.ArtWork.class, actual);
+  }
+
+  /**
    * Creates a new "soft" instance of <code>{@link org.assertj.examples.data.BasketBallPlayerAssert}</code>.
    *
    * @param actual the actual value.

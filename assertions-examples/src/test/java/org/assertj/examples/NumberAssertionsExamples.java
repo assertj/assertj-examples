@@ -13,9 +13,11 @@
 package org.assertj.examples;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.fail;
 import static org.assertj.core.api.Assertions.offset;
 import static org.assertj.core.api.Assertions.within;
 import static org.assertj.core.api.Assertions.withinPercentage;
+import static org.assertj.core.data.Percentage.withPercentage;
 
 import java.math.BigDecimal;
 import java.math.BigInteger;
@@ -204,6 +206,19 @@ public class NumberAssertionsExamples extends AbstractAssertionsExamples {
   @Test
   public void should_consider_primitive_negative_zero_as_zero_fixing_issue_919() {
     assertThat(-0.).isZero();
+  }
+
+  @Test
+  public void should_handle_NaN_and_infinity_correctly_fixing_issue_984() {
+    assertThat(Double.NaN).isEqualTo(Double.NaN);
+    assertThat(Double.POSITIVE_INFINITY).isEqualTo(Double.POSITIVE_INFINITY);
+    assertThat(Double.NEGATIVE_INFINITY).isEqualTo(Double.NEGATIVE_INFINITY);
+    try {
+      assertThat(Double.NaN).isCloseTo(0.007, withPercentage(0.1));
+    } catch (AssertionError e) {
+      return;
+    }
+    fail("assertThat(Double.NaN).isCloseTo(0.007, withPercentage(0.1)) should have failed");
   }
 
 }

@@ -12,6 +12,7 @@
  */
 package org.assertj.examples;
 
+import static java.util.Arrays.asList;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.extractProperty;
 import static org.assertj.core.api.Assertions.failBecauseExceptionWasNotThrown;
@@ -64,6 +65,9 @@ public class IterableAssertionsExamples extends AbstractAssertionsExamples {
 
   @Test
   public void iterable_basic_assertions_examples() {
+
+    List<? extends String> strings = asList("a", "b", "c");
+    assertThat(strings).hasSize(3);
 
     // would work the same way with Iterable<Ring>,
     Iterable<? extends Ring> elvesRings = newArrayList(vilya, nenya, narya);
