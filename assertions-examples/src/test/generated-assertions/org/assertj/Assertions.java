@@ -77,16 +77,6 @@ public class Assertions {
   }
 
   /**
-   * Creates a new instance of <code>{@link org.assertj.examples.data.BookTitleAssert}</code>.
-   *
-   * @param actual the actual value.
-   * @return the created assertion object.
-   */
-  public static org.assertj.examples.data.BookTitleAssert assertThat(org.assertj.examples.data.Book.Title actual) {
-    return new org.assertj.examples.data.BookTitleAssert(actual);
-  }
-
-  /**
    * Creates a new instance of <code>{@link org.assertj.examples.data.ClassUsingDifferentClassesWithSameNameAssert}</code>.
    *
    * @param actual the actual value.
@@ -104,6 +94,16 @@ public class Assertions {
    */
   public static org.assertj.examples.data.EmployeeAssert assertThat(org.assertj.examples.data.Employee actual) {
     return new org.assertj.examples.data.EmployeeAssert(actual);
+  }
+
+  /**
+   * Creates a new instance of <code>{@link org.assertj.examples.data.EmployeeTitleAssert}</code>.
+   *
+   * @param actual the actual value.
+   * @return the created assertion object.
+   */
+  public static org.assertj.examples.data.EmployeeTitleAssert assertThat(org.assertj.examples.data.Employee.Title actual) {
+    return new org.assertj.examples.data.EmployeeTitleAssert(actual);
   }
 
   /**

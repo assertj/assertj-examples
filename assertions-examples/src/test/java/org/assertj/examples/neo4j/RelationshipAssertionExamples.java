@@ -12,19 +12,16 @@
  */
 package org.assertj.examples.neo4j;
 
+import com.google.common.base.Predicate;
+import java.util.Iterator;
+import org.junit.Test;
+import org.neo4j.graphdb.Node;
+import org.neo4j.graphdb.Relationship;
+import org.neo4j.graphdb.RelationshipType;
+import org.neo4j.graphdb.Transaction;
 import static com.google.common.collect.Iterables.filter;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.neo4j.api.Assertions.assertThat;
-
-import java.util.Iterator;
-
-import org.junit.Test;
-import org.neo4j.graphdb.DynamicRelationshipType;
-import org.neo4j.graphdb.Node;
-import org.neo4j.graphdb.Relationship;
-import org.neo4j.graphdb.Transaction;
-
-import com.google.common.base.Predicate;
 
 public class RelationshipAssertionExamples extends Neo4jAssertionExamples {
 
@@ -35,7 +32,7 @@ public class RelationshipAssertionExamples extends Neo4jAssertionExamples {
       Iterable<Relationship> fusions = dragonBallGraph.fusions();
 
       // you can enjoy the usual assertj-core assertions ;-)
-      assertThat(fusions).hasSize(4); 
+      assertThat(fusions).hasSize(4);
       Iterable<Relationship> funnyFusions = filter(fusions, UselessFusion.FUNNY_ONLY());
       assertThat(funnyFusions).hasSize(2);
 
@@ -46,9 +43,9 @@ public class RelationshipAssertionExamples extends Neo4jAssertionExamples {
 
       assertThat(veku)
         .hasType("IN_FUSION_WITH")
-        .hasType(DynamicRelationshipType.withName("IN_FUSION_WITH"))
+        .hasType(RelationshipType.withName("IN_FUSION_WITH"))
         .doesNotHaveType("HAS_WORKED_FOR")
-        .doesNotHaveType(DynamicRelationshipType.withName("HAS_WORKED_FOR"));
+        .doesNotHaveType(RelationshipType.withName("HAS_WORKED_FOR"));
 
       // you can benefit from all PropertyContainer assertions
       // when you give a Relationship instance
@@ -78,7 +75,7 @@ public class RelationshipAssertionExamples extends Neo4jAssertionExamples {
       catch (AssertionError ae) {
         assertThat(ae).hasMessage("[[check Veku's start/end node]] \n" +
           "Expecting:\n" +
-          "  <Relationship[19]>\n" +
+          "  <(0)-[IN_FUSION_WITH,19]->(10)>\n" +
           "to either start or end with node:\n" +
           "  <Node[6]>\n"
         );
