@@ -115,16 +115,6 @@ public class JUnitSoftAssertions implements TestRule {
   }
 
   /**
-   * Creates a new "soft" instance of <code>{@link org.assertj.examples.data.BookTitleAssert}</code>.
-   *
-   * @param actual the actual value.
-   * @return the created "soft" assertion object.
-   */
-  public org.assertj.examples.data.BookTitleAssert assertThat(org.assertj.examples.data.Book.Title actual) {
-    return proxy(org.assertj.examples.data.BookTitleAssert.class, org.assertj.examples.data.Book.Title.class, actual);
-  }
-
-  /**
    * Creates a new "soft" instance of <code>{@link org.assertj.examples.data.ClassUsingDifferentClassesWithSameNameAssert}</code>.
    *
    * @param actual the actual value.
@@ -142,6 +132,16 @@ public class JUnitSoftAssertions implements TestRule {
    */
   public org.assertj.examples.data.EmployeeAssert assertThat(org.assertj.examples.data.Employee actual) {
     return proxy(org.assertj.examples.data.EmployeeAssert.class, org.assertj.examples.data.Employee.class, actual);
+  }
+
+  /**
+   * Creates a new "soft" instance of <code>{@link org.assertj.examples.data.EmployeeTitleAssert}</code>.
+   *
+   * @param actual the actual value.
+   * @return the created "soft" assertion object.
+   */
+  public org.assertj.examples.data.EmployeeTitleAssert assertThat(org.assertj.examples.data.Employee.Title actual) {
+    return proxy(org.assertj.examples.data.EmployeeTitleAssert.class, org.assertj.examples.data.Employee.Title.class, actual);
   }
 
   /**

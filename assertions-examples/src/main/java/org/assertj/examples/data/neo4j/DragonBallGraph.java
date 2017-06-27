@@ -12,11 +12,7 @@
  */
 package org.assertj.examples.data.neo4j;
 
-import static com.google.common.base.Splitter.on;
-import static com.google.common.collect.FluentIterable.from;
-import static com.google.common.collect.Maps.newHashMap;
-import static java.lang.String.format;
-
+import com.google.common.io.CharStreams;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
@@ -24,33 +20,31 @@ import java.util.Collection;
 import java.util.LinkedHashSet;
 import java.util.LinkedList;
 import java.util.Map;
-
-import org.neo4j.cypher.javacompat.ExecutionEngine;
-import org.neo4j.cypher.javacompat.ExecutionResult;
 import org.neo4j.graphdb.GraphDatabaseService;
 import org.neo4j.graphdb.Node;
 import org.neo4j.graphdb.Path;
 import org.neo4j.graphdb.Relationship;
 import org.neo4j.graphdb.ResourceIterator;
+import org.neo4j.graphdb.Result;
 import org.neo4j.graphdb.Transaction;
-
-import com.google.common.io.CharStreams;
+import static com.google.common.base.Splitter.on;
+import static com.google.common.collect.FluentIterable.from;
+import static com.google.common.collect.Maps.newHashMap;
+import static java.lang.String.format;
 
 public class DragonBallGraph {
 
   private final GraphDatabaseService graphDB;
-  private final ExecutionEngine cypherEngine;
 
   public DragonBallGraph(GraphDatabaseService graphDB) {
     this.graphDB = graphDB;
-    cypherEngine = new ExecutionEngine(this.graphDB);
   }
 
   public final void importGraph(InputStream dataFile) throws IOException {
     InputStreamReader reader = new InputStreamReader(dataFile);
     try (Transaction transaction = graphDB.beginTx()) {
       for (String statement : statements(reader)) {
-        cypherEngine.execute(statement);
+        graphDB.execute(statement);
       }
       transaction.success();
     }
@@ -69,17 +63,17 @@ public class DragonBallGraph {
     }
   }
 
-  public ExecutionResult discipleRowsOf(String masterName) {
+  public Result discipleRowsOf(String masterName) {
     Map<String, Object> parameters = newHashMap();
     parameters.put("name", masterName);
 
-    return cypherEngine.execute("MATCH (disciples:CHARACTER)-[:HAS_TRAINED_WITH]->(master:MASTER {name: {name}}) "
-        + "RETURN disciples, master", parameters);
+    return graphDB.execute("MATCH (disciples:CHARACTER)-[:HAS_TRAINED_WITH]->(master:MASTER {name: {name}}) "
+        + "RETURN disciples, master ORDER BY disciples.name", parameters);
   }
 
   public Iterable<Relationship> fusions() {
     try (Transaction tx = graphDB.beginTx();
-        ResourceIterator<Relationship> relationships = cypherEngine.execute(
+        ResourceIterator<Relationship> relationships = graphDB.execute(
             "MATCH (:CHARACTER)-[fusions:IN_FUSION_WITH]-(:CHARACTER) RETURN fusions").columnAs("fusions")) {
 
       Collection<Relationship> fusions = new LinkedHashSet<>();
@@ -93,7 +87,7 @@ public class DragonBallGraph {
 
   public ResourceIterator<String> fusionCharactersIterator() {
     try (Transaction tx = graphDB.beginTx()) {
-      ResourceIterator<String> relationships = cypherEngine.execute(
+      ResourceIterator<String> relationships = graphDB.execute(
           "MATCH (:CHARACTER)-[fusions:IN_FUSION_WITH]-(:CHARACTER) RETURN DISTINCT fusions.into ORDER BY fusions.into").columnAs("fusions.into");
 
       tx.success();
@@ -105,7 +99,7 @@ public class DragonBallGraph {
     Map<String, Object> parameters = newHashMap();
     parameters.put("name", characterName);
     try (Transaction transaction = graphDB.beginTx();
-        ResourceIterator<Node> relationships = cypherEngine.execute(
+        ResourceIterator<Node> relationships = graphDB.execute(
             "MATCH (character:CHARACTER {name: {name}}) RETURN character", parameters).columnAs("character")) {
 
       Collection<Node> characters = new LinkedHashSet<>();
@@ -125,7 +119,7 @@ public class DragonBallGraph {
     parameters.put("name1", characterOne);
     parameters.put("name2", characterTwo);
     try (Transaction transaction = graphDB.beginTx()) {
-      Path path = cypherEngine
+      Path path = graphDB
           .execute(
               "MATCH (character1:CHARACTER {name: {name1}}), " + "(character2:CHARACTER {name: {name2}}), "
                   + "path = shortestPath((character1)-[*..15]-(character2)) " + "RETURN path", parameters)
@@ -139,7 +133,7 @@ public class DragonBallGraph {
     Map<String, Object> parameters = newHashMap();
     parameters.put("name", characterName);
     try (Transaction transaction = graphDB.beginTx();
-        ResourceIterator<Relationship> relationships = cypherEngine.execute(
+        ResourceIterator<Relationship> relationships = graphDB.execute(
             "MATCH (:CHARACTER {name: {name}})-[training:HAS_TRAINED_WITH]->(:MASTER) RETURN training", parameters)
             .columnAs("training")) {
 
