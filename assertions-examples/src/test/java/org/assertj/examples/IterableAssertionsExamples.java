@@ -39,6 +39,7 @@ import static org.assertj.examples.extractor.TolkienCharactersExtractors.age;
 import static org.assertj.examples.extractor.TolkienCharactersExtractors.ageAndRace;
 import static org.assertj.examples.extractor.TolkienCharactersExtractors.race;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Iterator;
@@ -66,14 +67,21 @@ public class IterableAssertionsExamples extends AbstractAssertionsExamples {
   @Test
   public void iterable_basic_assertions_examples() {
 
-    List<? extends String> strings = asList("a", "b", "c");
-    assertThat(strings).hasSize(3);
+    List<? extends String> abc = asList("a", "b", "c");
+    assertThat(abc).hasSize(3)
+                   .containsAnyOf("b")
+                   .containsAnyOf("b", "c")
+                   .containsAnyOf("a", "b", "c")
+                   .containsAnyOf("a", "b", "c", "d")
+                   .containsAnyOf("e", "f", "g", "b");
 
     // would work the same way with Iterable<Ring>,
     Iterable<? extends Ring> elvesRings = newArrayList(vilya, nenya, narya);
     assertThat(elvesRings).isNotEmpty().hasSize(3);
     assertThat(elvesRings).hasSameSizeAs(trilogy);
-    assertThat(elvesRings).contains(nenya).doesNotContain(oneRing);
+    assertThat(elvesRings).contains(nenya)
+                          .doesNotContain(oneRing)
+                          .containsAnyOf(nenya, oneRing, dwarfRing);
 
     // with containsOnly, all the elements must be present (but the order is not important)
     assertThat(elvesRings).containsOnly(nenya, vilya, narya)
@@ -113,6 +121,7 @@ public class IterableAssertionsExamples extends AbstractAssertionsExamples {
                         .doesNotContainSequence(vilya, nenya, oneRing, narya)
                         .doesNotContainSequence(newArrayList(vilya, nenya, oneRing, narya));
     assertThat(allRings).containsAll(elvesRings);
+    assertThat(elvesRings).containsAnyElementsOf(allRings);
 
     // to show an error message
     try {
@@ -561,6 +570,18 @@ public class IterableAssertionsExamples extends AbstractAssertionsExamples {
     } catch (AssertionError error) {
       assertThat(error).hasMessageContaining("check hobbits");
     }
+  }
+
+  @Test
+  public void doesNotHaveAnyElementsOfTypes_example() {
+    List<Number> numbers = new ArrayList<>();
+    numbers.add(1);
+    numbers.add(2);
+    numbers.add(3.0);
+    numbers.add(4.1);
+    numbers.add(BigDecimal.ONE);
+
+    assertThat(numbers).doesNotHaveAnyElementsOfTypes(Long.class, Float.class);
   }
 
   public static class Foo {

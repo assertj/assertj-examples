@@ -57,9 +57,9 @@ public class ArrayAssertionsExamples extends AbstractAssertionsExamples {
     Ring[] elvesRings = array(vilya, nenya, narya);
     Ring[] elvesRings2 = array(nenya, vilya, narya);
     assertThat(elvesRings).containsOnly(elvesRings2);
-    
+
     assertThat(array(vilya, nenya, narya)).containsOnly(array(nenya, vilya, narya));
-    
+
     Movie[] trilogy = array(theFellowshipOfTheRing, theTwoTowers, theReturnOfTheKing);
     assertThat(elvesRings).isNotEmpty().hasSize(3);
     assertThat(elvesRings).hasSameSizeAs(trilogy);
@@ -94,9 +94,13 @@ public class ArrayAssertionsExamples extends AbstractAssertionsExamples {
     assertThat(fellowshipOfTheRingArray).isSortedAccordingTo(ageComparator);
     assertThat(fellowshipOfTheRingArray).usingElementComparator(ageComparator).isSorted();
 
-    // Uncomment when #131 is fixed
-    String[] arr = { "a", "b", "c" };
-    assertThat(arr).containsExactly("a", "b", "c");
+    String[] abc = { "a", "b", "c" };
+    assertThat(abc).containsExactly("a", "b", "c")
+                   .containsAnyOf("b")
+                   .containsAnyOf("b", "c")
+                   .containsAnyOf("a", "b", "c")
+                   .containsAnyOf("a", "b", "c", "d")
+                   .containsAnyOf("e", "f", "g", "b");
 
     array = new String[] { "--option", "a=b", "--option", "c=d" };
     assertThat(array).containsSequence("--option", "c=d");
@@ -145,7 +149,7 @@ public class ArrayAssertionsExamples extends AbstractAssertionsExamples {
   }
 
   @Test
-  public void arra_assertions_on_extracted_values_example() {
+  public void array_assertions_on_extracted_values_example() {
     TolkienCharacter[] fellowshipOfTheRingArray = fellowshipOfTheRing.toArray(new TolkienCharacter[0]);
 
     // extract simple property value (having a java standard type)
@@ -292,8 +296,8 @@ public class ArrayAssertionsExamples extends AbstractAssertionsExamples {
 
   @Test
   public void containsSubSequence_assertion_examples() {
-    assertThat(new String[] { "Batman", "is", "weaker", "than", "Superman", "but", "he", "is", "less", "annoying" })
-                                                                                                                    .containsSubsequence("Superman", "is", "annoying");
+    String[] stringArray = { "Batman", "is", "weaker", "than", "Superman", "but", "he", "is", "less", "annoying" };
+    assertThat(stringArray).containsSubsequence("Superman", "is", "annoying");
     assertThat(new String[] { "Breaking", "objects", "is", "pretty", "bad" }).containsSubsequence("Breaking", "bad");
     try {
       assertThat(new String[] { "A", "B", "C", "D" }).containsSubsequence("B", "A", "C");
@@ -345,7 +349,7 @@ public class ArrayAssertionsExamples extends AbstractAssertionsExamples {
   @Test
   public void use_hexadecimal_representation_in_error_messages() throws UnsupportedEncodingException {
     try {
-      assertThat(new Byte[]{0x10,0x20}).inHexadecimal().contains(new Byte[]{0x30});
+      assertThat(new Byte[] { 0x10, 0x20 }).inHexadecimal().contains(new Byte[] { 0x30 });
     } catch (AssertionError e) {
       logAssertionErrorMessage("asHexadecimal for byte array", e);
     }
@@ -378,29 +382,30 @@ public class ArrayAssertionsExamples extends AbstractAssertionsExamples {
     try {
       assertThat(trilogyArray).extracting("duration");
       failBecauseExceptionWasNotThrown(IntrospectionError.class);
-    } catch (Exception ignore) {
+    } catch (Exception ignored) {
+      // ignore
     } finally {
       // back to default value
       setAllowExtractingPrivateFields(true);
     }
   }
-  
+
   @Test
   public void array_assertions_testing_elements_type() throws Exception {
-	  Number[] numbers = { 2, 6L, 8.0 };
-	  assertThat(numbers).hasAtLeastOneElementOfType(Long.class);
-	  assertThat(numbers).hasOnlyElementsOfType(Number.class);
+    Number[] numbers = { 2, 6L, 8.0 };
+    assertThat(numbers).hasAtLeastOneElementOfType(Long.class);
+    assertThat(numbers).hasOnlyElementsOfType(Number.class);
   }
- 
+
   @Test
   public void iterable_is_subset_of_assertion_example() {
     Ring[] elvesRings = array(vilya, nenya, narya);
-	assertThat(elvesRings).isSubsetOf(ringsOfPower);
-	try {
-	  assertThat(elvesRings).isSubsetOf(newArrayList(nenya, narya));
-	} catch (AssertionError e) {
-	  logAssertionErrorMessage("isSubsetOf", e);
-	}
+    assertThat(elvesRings).isSubsetOf(ringsOfPower);
+    try {
+      assertThat(elvesRings).isSubsetOf(newArrayList(nenya, narya));
+    } catch (AssertionError e) {
+      logAssertionErrorMessage("isSubsetOf", e);
+    }
   }
 
   @Test
@@ -447,5 +452,39 @@ public class ArrayAssertionsExamples extends AbstractAssertionsExamples {
       logAssertionErrorMessage("contains for Iterable usingElementComparatorOnFields", e);
     }
   }
-  
+
+  @Test
+  public void primitive_arrays_assertion_examples() {
+    // int
+    int[] ints = new int[] { 1, 2, 3 };
+    assertThat(ints).containsExactly(1, 2, 3)
+                    .containsAnyOf(0, 2, 4);
+
+    // long
+    long[] longs = new long[] { 1, 2, 3 };
+    assertThat(longs).containsExactly(1, 2, 3)
+                     .containsAnyOf(0, 2, 4);
+
+    // short
+    short[] shorts = new short[] { 1, 2, 3 };
+    assertThat(shorts).containsExactly((short) 1, (short) 2, (short) 3)
+                      .containsAnyOf((short) 0, (short) 2, (short) 4);
+
+    // byte
+    byte[] bytes = new byte[] { 1, 2, 3 };
+    assertThat(bytes).containsExactly(1, 2, 3)
+                     .containsAnyOf((byte) 0, (byte) 2, (byte) 4);
+
+    // float
+    float[] floats = new float[] { 1, 2.0f, 3 };
+    assertThat(floats).containsExactly(1.0f, 2, 3)
+                      .containsAnyOf(0, 2.0f, 4);
+
+    // double
+    double[] doubles = new double[] { 1.0, 2, 3 };
+    assertThat(doubles).containsExactly(1.0, 2, 3)
+                       .containsAnyOf(0, 2.0, 4);
+
+  }
+
 }
