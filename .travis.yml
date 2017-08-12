@@ -1,0 +1,4 @@
+language: java
+script: 
+- cd assertions-examples
+- mvn clean verify
