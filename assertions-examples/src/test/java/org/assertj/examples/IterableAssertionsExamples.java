@@ -233,7 +233,7 @@ public class IterableAssertionsExamples extends AbstractAssertionsExamples {
     setAllowExtractingPrivateFields(false);
 
     try {
-      assertThat(trilogy).extracting("duration");
+      assertThat(trilogy).extracting("duration").isNotEmpty();
       failBecauseExceptionWasNotThrown(IntrospectionError.class);
     } catch (Exception ignore) {} finally {
       // back to default value

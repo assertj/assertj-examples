@@ -100,7 +100,7 @@ public class ArrayAssertionsExamples extends AbstractAssertionsExamples {
                    .containsAnyOf("b", "c")
                    .containsAnyOf("a", "b", "c")
                    .containsAnyOf("a", "b", "c", "d")
-                   .containsAnyOf("e", "f", "g", "b");
+                   .containsExactly("a", "b", "c");
 
     array = new String[] { "--option", "a=b", "--option", "c=d" };
     assertThat(array).containsSequence("--option", "c=d");
@@ -380,7 +380,7 @@ public class ArrayAssertionsExamples extends AbstractAssertionsExamples {
     setAllowExtractingPrivateFields(false);
 
     try {
-      assertThat(trilogyArray).extracting("duration");
+      assertThat(trilogyArray).extracting("duration").containsExactly("178 min", "179 min", "201 min");
       failBecauseExceptionWasNotThrown(IntrospectionError.class);
     } catch (Exception ignored) {
       // ignore

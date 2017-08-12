@@ -49,14 +49,12 @@ public class AtomicAssertionsExamples extends AbstractAssertionsExamples {
     AtomicLongArray atomicLongArray = new AtomicLongArray(new long[] { 1, 2, 3 });
     assertThat(atomicLongArray).isNotEmpty()
                                .startsWith(1, 2)
-                               .endsWith(3)
-                               .containsAnyOf(0, 2, 4);
+                               .endsWith(3);
 
     AtomicIntegerArray atomicIntegerArray = new AtomicIntegerArray(new int[] { 1, 2, 3 });
     assertThat(atomicIntegerArray).isNotEmpty()
                                   .startsWith(1, 2)
-                                  .endsWith(3)
-                                  .containsAnyOf(0, 2, 4);
+                                  .endsWith(3);
 
     AtomicReference<String> atomicReference = new AtomicReference<>("foo");
     assertThat(atomicReference).hasValue("foo")
