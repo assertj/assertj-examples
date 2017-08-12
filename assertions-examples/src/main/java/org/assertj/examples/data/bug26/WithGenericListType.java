@@ -18,6 +18,6 @@ import org.assertj.examples.data.movie.Movie;
 
 public class WithGenericListType {
 
-  public Iterable<? extends Movie> movies = new ArrayList<Movie>();
+  public Iterable<? extends Movie> movies = new ArrayList<>();
   
 }

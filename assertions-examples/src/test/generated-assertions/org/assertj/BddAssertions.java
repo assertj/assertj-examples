@@ -37,13 +37,13 @@ public class BddAssertions {
   }
 
   /**
-   * Creates a new instance of <code>{@link java.nio.file.PathAssert}</code>.
+   * Creates a new instance of <code>{@link org.apache.commons.lang3.exception.ContextedRuntimeExceptionAssert}</code>.
    *
    * @param actual the actual value.
    * @return the created assertion object.
    */
-  public static java.nio.file.PathAssert then(java.nio.file.Path actual) {
-    return new java.nio.file.PathAssert(actual);
+  public static org.apache.commons.lang3.exception.ContextedRuntimeExceptionAssert then(org.apache.commons.lang3.exception.ContextedRuntimeException actual) {
+    return new org.apache.commons.lang3.exception.ContextedRuntimeExceptionAssert(actual);
   }
 
   /**

@@ -72,13 +72,13 @@ public class SoftAssertions {
   }
 
   /**
-   * Creates a new "soft" instance of <code>{@link java.nio.file.PathAssert}</code>.
+   * Creates a new "soft" instance of <code>{@link org.apache.commons.lang3.exception.ContextedRuntimeExceptionAssert}</code>.
    *
    * @param actual the actual value.
    * @return the created "soft" assertion object.
    */
-  public java.nio.file.PathAssert assertThat(java.nio.file.Path actual) {
-    return proxy(java.nio.file.PathAssert.class, java.nio.file.Path.class, actual);
+  public org.apache.commons.lang3.exception.ContextedRuntimeExceptionAssert assertThat(org.apache.commons.lang3.exception.ContextedRuntimeException actual) {
+    return proxy(org.apache.commons.lang3.exception.ContextedRuntimeExceptionAssert.class, org.apache.commons.lang3.exception.ContextedRuntimeException.class, actual);
   }
 
   /**

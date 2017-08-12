@@ -32,7 +32,6 @@ public abstract class AbstractClassUsingDifferentClassesWithSameNameAssert<S ext
     
     // check
     org.assertj.examples.data.movie.Team actualMovieTeam = actual.getMovieTeam();
-    System.out.println("check MovieTeam");
     if (!Objects.areEqual(actualMovieTeam, movieTeam)) {
       failWithMessage(assertjErrorMessage, actual, movieTeam, actualMovieTeam);
     }
@@ -57,7 +56,6 @@ public abstract class AbstractClassUsingDifferentClassesWithSameNameAssert<S ext
     
     // check
     Team actualTeam = actual.getTeam();
-    System.out.println("check Team");
     if (!Objects.areEqual(actualTeam, team)) {
       failWithMessage(assertjErrorMessage, actual, team, actualTeam);
     }

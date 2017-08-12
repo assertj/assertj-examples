@@ -32,7 +32,6 @@ public abstract class AbstractEmployeeTitleAssert<S extends AbstractEmployeeTitl
     
     // check
     String actualPosition = actual.getPosition();
-    System.out.println("check Position");
     if (!Objects.areEqual(actualPosition, position)) {
       failWithMessage(assertjErrorMessage, actual, position, actualPosition);
     }

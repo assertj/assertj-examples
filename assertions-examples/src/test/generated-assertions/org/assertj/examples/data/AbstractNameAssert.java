@@ -32,7 +32,6 @@ public abstract class AbstractNameAssert<S extends AbstractNameAssert<S, A>, A e
     
     // check
     String actualFirst = actual.getFirst();
-    System.out.println("check First");
     if (!Objects.areEqual(actualFirst, first)) {
       failWithMessage(assertjErrorMessage, actual, first, actualFirst);
     }
@@ -57,7 +56,6 @@ public abstract class AbstractNameAssert<S extends AbstractNameAssert<S, A>, A e
     
     // check
     String actualLast = actual.getLast();
-    System.out.println("check Last");
     if (!Objects.areEqual(actualLast, last)) {
       failWithMessage(assertjErrorMessage, actual, last, actualLast);
     }

@@ -68,7 +68,6 @@ public abstract class AbstractMovieAssert<S extends AbstractMovieAssert<S, A>, A
     
     // check
     java.util.Date actualReleaseDate = actual.getReleaseDate();
-    System.out.println("check ReleaseDate");
     if (!Objects.areEqual(actualReleaseDate, releaseDate)) {
       failWithMessage(assertjErrorMessage, actual, releaseDate, actualReleaseDate);
     }
@@ -93,7 +92,6 @@ public abstract class AbstractMovieAssert<S extends AbstractMovieAssert<S, A>, A
     
     // check
     String actualTitle = actual.getTitle();
-    System.out.println("check Title");
     if (!Objects.areEqual(actualTitle, title)) {
       failWithMessage(assertjErrorMessage, actual, title, actualTitle);
     }

@@ -300,6 +300,11 @@ public class BasicAssertionsExamples extends AbstractAssertionsExamples {
                        .containsExactly(bird, snake);
   }
 
+  @Test
+  public void should_report_a_findbugs_violation() {
+    assertThat(false);
+  }
+
   private class Animal {
     private final String name;
 

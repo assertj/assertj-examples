@@ -58,7 +58,6 @@ public abstract class AbstractBasketBallPlayerAssert<S extends AbstractBasketBal
     
     // check
     Name actualName = actual.getName();
-    System.out.println("check Name");
     if (!Objects.areEqual(actualName, name)) {
       failWithMessage(assertjErrorMessage, actual, name, actualName);
     }
@@ -212,7 +211,6 @@ public abstract class AbstractBasketBallPlayerAssert<S extends AbstractBasketBal
     
     // check
     String actualTeam = actual.getTeam();
-    System.out.println("check Team");
     if (!Objects.areEqual(actualTeam, team)) {
       failWithMessage(assertjErrorMessage, actual, team, actualTeam);
     }

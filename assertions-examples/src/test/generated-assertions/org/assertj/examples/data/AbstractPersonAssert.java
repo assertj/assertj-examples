@@ -55,7 +55,6 @@ public abstract class AbstractPersonAssert<S extends AbstractPersonAssert<S, A>,
     
     // check
     String actualName = actual.getName();
-    System.out.println("check Name");
     if (!Objects.areEqual(actualName, name)) {
       failWithMessage(assertjErrorMessage, actual, name, actualName);
     }
