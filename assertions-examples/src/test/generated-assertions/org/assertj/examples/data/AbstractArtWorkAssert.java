@@ -32,7 +32,6 @@ public abstract class AbstractArtWorkAssert<S extends AbstractArtWorkAssert<S, A
     
     // check
     String actualCreator = actual.getCreator();
-    System.out.println("check Creator");
     if (!Objects.areEqual(actualCreator, creator)) {
       failWithMessage(assertjErrorMessage, actual, creator, actualCreator);
     }

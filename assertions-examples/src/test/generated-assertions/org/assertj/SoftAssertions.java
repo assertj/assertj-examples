@@ -72,6 +72,16 @@ public class SoftAssertions {
   }
 
   /**
+   * Creates a new "soft" instance of <code>{@link org.apache.commons.lang3.exception.ContextedRuntimeExceptionAssert}</code>.
+   *
+   * @param actual the actual value.
+   * @return the created "soft" assertion object.
+   */
+  public org.apache.commons.lang3.exception.ContextedRuntimeExceptionAssert assertThat(org.apache.commons.lang3.exception.ContextedRuntimeException actual) {
+    return proxy(org.apache.commons.lang3.exception.ContextedRuntimeExceptionAssert.class, org.apache.commons.lang3.exception.ContextedRuntimeException.class, actual);
+  }
+
+  /**
    * Creates a new "soft" instance of <code>{@link org.assertj.examples.data.AlignmentAssert}</code>.
    *
    * @param actual the actual value.

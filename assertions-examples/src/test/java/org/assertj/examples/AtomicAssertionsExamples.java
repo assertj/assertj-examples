@@ -19,6 +19,7 @@ import static org.assertj.core.api.Assertions.withinPercentage;
 
 import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.concurrent.atomic.AtomicInteger;
+import java.util.concurrent.atomic.AtomicIntegerArray;
 import java.util.concurrent.atomic.AtomicIntegerFieldUpdater;
 import java.util.concurrent.atomic.AtomicLongArray;
 import java.util.concurrent.atomic.AtomicReference;
@@ -49,6 +50,11 @@ public class AtomicAssertionsExamples extends AbstractAssertionsExamples {
     assertThat(atomicLongArray).isNotEmpty()
                                .startsWith(1, 2)
                                .endsWith(3);
+
+    AtomicIntegerArray atomicIntegerArray = new AtomicIntegerArray(new int[] { 1, 2, 3 });
+    assertThat(atomicIntegerArray).isNotEmpty()
+                                  .startsWith(1, 2)
+                                  .endsWith(3);
 
     AtomicReference<String> atomicReference = new AtomicReference<>("foo");
     assertThat(atomicReference).hasValue("foo")

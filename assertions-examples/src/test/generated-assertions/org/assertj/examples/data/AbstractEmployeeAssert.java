@@ -31,9 +31,32 @@ public abstract class AbstractEmployeeAssert<S extends AbstractEmployeeAssert<S,
     
     // check
     String actualCompany = actual.getCompany();
-    System.out.println("check Company");
     if (!Objects.areEqual(actualCompany, company)) {
       failWithMessage(assertjErrorMessage, actual, company, actualCompany);
+    }
+
+    // return the current assertion for method chaining
+    return myself;
+  }
+
+  /**
+   * Verifies that the actual Employee's rank is equal to the given one.
+   * @param rank the given rank to compare the actual Employee's rank to.
+   * @return this assertion object.
+   * @throws AssertionError - if the actual Employee's rank is not equal to the given one.
+   */
+  public S hasRank(String rank) {
+    // check that actual Employee we want to make assertions on is not null.
+    isNotNull();
+
+
+    // overrides the default error message with a more explicit one
+    String assertjErrorMessage = "\nExpecting rank of:\n  <%s>\nto be:\n  <%s>\nbut was:\n  <%s>";
+    
+    // check
+    String actualRank = actual.rank;
+    if (!Objects.areEqual(actualRank, rank)) {
+      failWithMessage(assertjErrorMessage, actual, rank, actualRank);
     }
 
     // return the current assertion for method chaining

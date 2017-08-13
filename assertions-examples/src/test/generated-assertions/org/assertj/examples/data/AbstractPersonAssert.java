@@ -55,7 +55,6 @@ public abstract class AbstractPersonAssert<S extends AbstractPersonAssert<S, A>,
     
     // check
     java.math.BigDecimal actualHeight = actual.getHeight();
-    System.out.println("check Height");
     if (!Objects.areEqual(actualHeight, height)) {
       failWithMessage(assertjErrorMessage, actual, height, actualHeight);
     }
@@ -80,7 +79,6 @@ public abstract class AbstractPersonAssert<S extends AbstractPersonAssert<S, A>,
     
     // check
     String actualName = actual.getName();
-    System.out.println("check Name");
     if (!Objects.areEqual(actualName, name)) {
       failWithMessage(assertjErrorMessage, actual, name, actualName);
     }
@@ -105,7 +103,6 @@ public abstract class AbstractPersonAssert<S extends AbstractPersonAssert<S, A>,
     
     // check
     java.util.Optional actualNickname = actual.getNickname();
-    System.out.println("check Nickname");
     if (!Objects.areEqual(actualNickname, nickname)) {
       failWithMessage(assertjErrorMessage, actual, nickname, actualNickname);
     }

@@ -32,7 +32,6 @@ public abstract class AbstractBookTitleAssert<S extends AbstractBookTitleAssert<
     
     // check
     String actualTitle = actual.getTitle();
-    System.out.println("check Title");
     if (!Objects.areEqual(actualTitle, title)) {
       failWithMessage(assertjErrorMessage, actual, title, actualTitle);
     }

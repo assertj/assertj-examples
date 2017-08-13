@@ -53,7 +53,8 @@ public class GeneratedStandardAssertionsExamples extends AbstractAssertionsExamp
 
     Movie movie = new Movie("boom", new Date(), "1h");
     movie.setCreator("foo");
-    assertThat(movie).hasCreator("foo");
+    assertThat(movie).hasCreator("foo")
+                     .hasTitle("boom");
     try {
       movie = null;
       assertThat(movie).as("can be given ?").canBeGiven();

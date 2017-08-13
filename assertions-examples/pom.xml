@@ -141,7 +141,7 @@
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-surefire-plugin</artifactId>
-        <version>2.12</version>
+        <version>2.20</version>
         <configuration>
           <includes>
             <include>**/*Examples.java</include>
@@ -163,8 +163,7 @@
           </execution>
         </executions>
         <configuration>
-          <!-- example of replacing generated assertions default templates
-          -->
+          <!-- example of replacing generated assertions default templates -->
           <templates>
             <templatesDirectory>src/test/resources/templates/</templatesDirectory>
             <objectAssertion>my_has_assertion_template.txt</objectAssertion>
@@ -177,6 +176,7 @@
           </packages>
           <classes>
             <param>com.fake.UnknownClass</param>
+            <param>org.apache.commons.lang3.exception.ContextedRuntimeException</param>
           </classes>
           <hierarchical>true</hierarchical>
           <entryPointClassPackage>org.assertj</entryPointClassPackage>
@@ -259,8 +259,8 @@
           </execution>
         </executions>
       </plugin>
-
     </plugins>
+    
     <pluginManagement>
       <plugins>
         <!--This plugin's configuration is used to store Eclipse m2e settings only. It has no influence on the Maven build itself.-->

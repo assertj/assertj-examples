@@ -32,7 +32,6 @@ public abstract class AbstractHostAndPortAssert<S extends AbstractHostAndPortAss
     
     // check
     String actualHostText = actual.getHostText();
-    System.out.println("check HostText");
     if (!Objects.areEqual(actualHostText, hostText)) {
       failWithMessage(assertjErrorMessage, actual, hostText, actualHostText);
     }

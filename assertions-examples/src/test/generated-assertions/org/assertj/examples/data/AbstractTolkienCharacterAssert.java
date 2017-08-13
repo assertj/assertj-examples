@@ -32,7 +32,6 @@ public abstract class AbstractTolkienCharacterAssert<S extends AbstractTolkienCh
     
     // check
     String actualName = actual.getName();
-    System.out.println("check Name");
     if (!Objects.areEqual(actualName, name)) {
       failWithMessage(assertjErrorMessage, actual, name, actualName);
     }
@@ -57,7 +56,6 @@ public abstract class AbstractTolkienCharacterAssert<S extends AbstractTolkienCh
     
     // check
     Race actualRace = actual.getRace();
-    System.out.println("check Race");
     if (!Objects.areEqual(actualRace, race)) {
       failWithMessage(assertjErrorMessage, actual, race, actualRace);
     }
@@ -82,7 +80,6 @@ public abstract class AbstractTolkienCharacterAssert<S extends AbstractTolkienCh
     
     // check
     String actualSurname = actual.getSurname();
-    System.out.println("check Surname");
     if (!Objects.areEqual(actualSurname, surname)) {
       failWithMessage(assertjErrorMessage, actual, surname, actualSurname);
     }

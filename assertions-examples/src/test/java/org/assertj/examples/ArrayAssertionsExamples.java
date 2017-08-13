@@ -95,9 +95,13 @@ public class ArrayAssertionsExamples extends AbstractAssertionsExamples {
     assertThat(fellowshipOfTheRingArray).isSortedAccordingTo(ageComparator);
     assertThat(fellowshipOfTheRingArray).usingElementComparator(ageComparator).isSorted();
 
-    // Uncomment when #131 is fixed
-    String[] arr = { "a", "b", "c" };
-    assertThat(arr).containsExactly("a", "b", "c");
+    String[] abc = { "a", "b", "c" };
+    assertThat(abc).containsExactly("a", "b", "c")
+                   .containsAnyOf("b")
+                   .containsAnyOf("b", "c")
+                   .containsAnyOf("a", "b", "c")
+                   .containsAnyOf("a", "b", "c", "d")
+                   .containsExactly("a", "b", "c");
 
     array = new String[] { "--option", "a=b", "--option", "c=d" };
     assertThat(array).containsSequence("--option", "c=d");
@@ -146,7 +150,7 @@ public class ArrayAssertionsExamples extends AbstractAssertionsExamples {
   }
 
   @Test
-  public void arra_assertions_on_extracted_values_example() {
+  public void array_assertions_on_extracted_values_example() {
     TolkienCharacter[] fellowshipOfTheRingArray = fellowshipOfTheRing.toArray(new TolkienCharacter[0]);
 
     // extract simple property value (having a java standard type)
@@ -293,10 +297,8 @@ public class ArrayAssertionsExamples extends AbstractAssertionsExamples {
 
   @Test
   public void containsSubSequence_assertion_examples() {
-    assertThat(new String[] { "Batman", "is", "weaker", "than", "Superman", "but", "he", "is", "less", "annoying" })
-                                                                                                                    .containsSubsequence("Superman",
-                                                                                                                                         "is",
-                                                                                                                                         "annoying");
+    String[] stringArray = { "Batman", "is", "weaker", "than", "Superman", "but", "he", "is", "less", "annoying" };
+    assertThat(stringArray).containsSubsequence("Superman", "is", "annoying");
     assertThat(new String[] { "Breaking", "objects", "is", "pretty", "bad" }).containsSubsequence("Breaking", "bad");
     try {
       assertThat(new String[] { "A", "B", "C", "D" }).containsSubsequence("B", "A", "C");
@@ -379,9 +381,11 @@ public class ArrayAssertionsExamples extends AbstractAssertionsExamples {
     setAllowExtractingPrivateFields(false);
 
     try {
-      assertThat(trilogyArray).extracting("duration");
+      assertThat(trilogyArray).extracting("duration").containsExactly("178 min", "179 min", "201 min");
       failBecauseExceptionWasNotThrown(IntrospectionError.class);
-    } catch (Exception ignore) {} finally {
+    } catch (Exception ignored) {
+      // ignore
+    } finally {
       // back to default value
       setAllowExtractingPrivateFields(true);
     }
@@ -468,4 +472,39 @@ public class ArrayAssertionsExamples extends AbstractAssertionsExamples {
       logAssertionErrorMessage("contains for Iterable usingElementComparatorOnFields", e);
     }
   }
+
+  @Test
+  public void primitive_arrays_assertion_examples() {
+    // int
+    int[] ints = new int[] { 1, 2, 3 };
+    assertThat(ints).containsExactly(1, 2, 3)
+                    .containsAnyOf(0, 2, 4);
+
+    // long
+    long[] longs = new long[] { 1, 2, 3 };
+    assertThat(longs).containsExactly(1, 2, 3)
+                     .containsAnyOf(0, 2, 4);
+
+    // short
+    short[] shorts = new short[] { 1, 2, 3 };
+    assertThat(shorts).containsExactly((short) 1, (short) 2, (short) 3)
+                      .containsAnyOf((short) 0, (short) 2, (short) 4);
+
+    // byte
+    byte[] bytes = new byte[] { 1, 2, 3 };
+    assertThat(bytes).containsExactly(1, 2, 3)
+                     .containsAnyOf((byte) 0, (byte) 2, (byte) 4);
+
+    // float
+    float[] floats = new float[] { 1, 2.0f, 3 };
+    assertThat(floats).containsExactly(1.0f, 2, 3)
+                      .containsAnyOf(0, 2.0f, 4);
+
+    // double
+    double[] doubles = new double[] { 1.0, 2, 3 };
+    assertThat(doubles).containsExactly(1.0, 2, 3)
+                       .containsAnyOf(0, 2.0, 4);
+
+  }
+
 }

@@ -32,7 +32,6 @@ public abstract class AbstractRaceAssert<S extends AbstractRaceAssert<S, A>, A e
     
     // check
     Alignment actualAlignment = actual.getAlignment();
-    System.out.println("check Alignment");
     if (!Objects.areEqual(actualAlignment, alignment)) {
       failWithMessage(assertjErrorMessage, actual, alignment, actualAlignment);
     }
@@ -57,7 +56,6 @@ public abstract class AbstractRaceAssert<S extends AbstractRaceAssert<S, A>, A e
     
     // check
     String actualFullname = actual.getFullname();
-    System.out.println("check Fullname");
     if (!Objects.areEqual(actualFullname, fullname)) {
       failWithMessage(assertjErrorMessage, actual, fullname, actualFullname);
     }
@@ -82,7 +80,6 @@ public abstract class AbstractRaceAssert<S extends AbstractRaceAssert<S, A>, A e
     
     // check
     String actualName = actual.getName();
-    System.out.println("check Name");
     if (!Objects.areEqual(actualName, name)) {
       failWithMessage(assertjErrorMessage, actual, name, actualName);
     }

@@ -32,7 +32,6 @@ public abstract class AbstractDollar$Assert<S extends AbstractDollar$Assert<S, A
     
     // check
     String actualTest = actual.test;
-    System.out.println("check Test");
     if (!Objects.areEqual(actualTest, test)) {
       failWithMessage(assertjErrorMessage, actual, test, actualTest);
     }
