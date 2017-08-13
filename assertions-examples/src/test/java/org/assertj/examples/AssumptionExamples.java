@@ -15,6 +15,7 @@ package org.assertj.examples;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.fail;
 import static org.assertj.core.api.Assumptions.assumeThat;
+import static org.assertj.core.api.Assumptions.assumeThatCode;
 import static org.assertj.examples.data.Race.HOBBIT;
 import static org.assertj.examples.data.Race.ORC;
 
@@ -68,6 +69,23 @@ public class AssumptionExamples extends AbstractAssertionsExamples {
     // ... this assertion should not be performed.
     assertThat(fellowshipOfTheRing).contains(sauron);
     fail("should not arrive here");
+  }
+
+  @Test
+  public void assumeThatCode_assumption_not_met_example() {
+    // since this assumption is obviously false ...
+    assumeThatCode(() -> fellowshipOfTheRing.get(1000)).doesNotThrowAnyException();
+    // ... this assertion should not be performed.
+    assertThat(fellowshipOfTheRing).contains(sauron);
+    fail("should not arrive here");
+  }
+
+  @Test
+  public void assumeThatCode_assumption_met_example() {
+    // since the given code throws an ArrayIndexOutOfBoundsException ...
+    assumeThatCode(() -> fellowshipOfTheRing.get(1000)).isInstanceOf(IndexOutOfBoundsException.class);
+    // ... this assertion should be performed.
+    assertThat(fellowshipOfTheRing).contains(frodo);
   }
 
   @Test
