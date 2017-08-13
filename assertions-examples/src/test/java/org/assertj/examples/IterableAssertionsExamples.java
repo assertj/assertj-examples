@@ -71,7 +71,7 @@ public class IterableAssertionsExamples extends AbstractAssertionsExamples {
   @Test
   public void iterable_basic_assertions_examples() {
 
-    List<? extends String> abc = asList("a", "b", "c");
+    List<String> abc = asList("a", "b", "c");
     assertThat(abc).hasSize(3)
                    .containsAnyOf("b")
                    .containsAnyOf("b", "c")
