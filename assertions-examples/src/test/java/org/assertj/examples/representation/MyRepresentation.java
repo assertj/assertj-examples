@@ -14,6 +14,7 @@ package org.assertj.examples.representation;
 
 import org.assertj.core.presentation.Representation;
 import org.assertj.core.presentation.StandardRepresentation;
+import org.assertj.examples.representation.CustomRepresentation.Example;
 
 /**
  * {@link MyRepresentation} is used as it has been registered as the default {@link Representation}.
@@ -25,9 +26,8 @@ public class MyRepresentation extends StandardRepresentation {
 
   // override needed to specify the format of classes not known by StandardRepresentation.
   @Override
-  public String toStringOf(Object o) {
-    if (o instanceof Example) return "EXAMPLE";
-    // fallback to default formatting.
-    return super.toStringOf(o);
+  protected String fallbackToStringOf(Object object) {
+    if (object instanceof Example) return "EXAMPLE";
+    return object.toString();
   }
 }

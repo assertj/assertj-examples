@@ -18,10 +18,9 @@ public class CustomRepresentation extends StandardRepresentation {
 
   // override needed to specify the format of classes not known by StandardRepresentation.
   @Override
-  public String toStringOf(Object o) {
-    if (o instanceof Example) return "EXAMPLE";
-    // fallback to default formatting.
-    return super.toStringOf(o);
+  protected String fallbackToStringOf(Object object) {
+    if (object instanceof Example) return "EXAMPLE";
+    return object.toString();
   }
 
   // override the String representation defined in StandardRepresentation
