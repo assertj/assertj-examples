@@ -13,46 +13,23 @@
 package org.assertj.examples;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.presentation.StandardRepresentation.STANDARD_REPRESENTATION;
 
-import org.assertj.core.api.Assertions;
-import org.assertj.examples.representation.CustomRepresentation;
 import org.assertj.examples.representation.CustomRepresentation.Example;
-import org.junit.After;
 import org.junit.Test;
 
-public class RepresentationExamples extends AbstractAssertionsExamples {
+public class UseRegisteredRepresentationExample extends AbstractAssertionsExamples {
 
-  @After
-  public void afterTest() {
-    Assertions.useRepresentation(STANDARD_REPRESENTATION);
-  }
-  
   @Test
   public void should_use_given_representation_in_assertion_error_messages() {
     
-    Assertions.useRepresentation(new CustomRepresentation());
+    //
+
     Example example = new Example();
     // this assertion fails with error : "expected:<[null]> but was:<[Example]>"
     try {
       assertThat(example).isNull(); // example is not null !
     } catch (AssertionError e1) {
       assertThat(e1).hasMessageContaining("EXAMPLE");
-    }
-    
-    try {
-      assertThat("foo").startsWith("bar");
-    } catch (AssertionError e) {
-      assertThat(e).hasMessageContaining("$foo$")
-                   .hasMessageContaining("$bar$");
-
-      Assertions.useRepresentation(STANDARD_REPRESENTATION);
-      try {
-        assertThat("foo").startsWith("bar");
-      } catch (AssertionError e2) {
-        assertThat(e2).hasMessageContaining("\"foo\"")
-                      .hasMessageContaining("\"bar\"");
-      }
     }
   }
   
