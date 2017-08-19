@@ -18,7 +18,7 @@ import java.util.Arrays;
 
 import org.junit.Test;
 
-public class Invalid_Assertj_usage extends AbstractAssertionsExamples {
+public class Assertj_INVALID_usage extends AbstractAssertionsExamples {
 
   @Test
   public void should_report_a_findbugs_violation_because_no_assertions_is_performed_after_assertThat() {
