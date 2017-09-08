@@ -65,6 +65,8 @@ public class StringAssertionsExamples extends AbstractAssertionsExamples {
     // using regex
     assertThat("Frodo").matches("..o.o").doesNotMatch(".*d");
 
+    assertThat("Element1 Element2").contains("Element2", "Element1");
+
     // check for empty string, or not.
     assertThat("").isEmpty();
     assertThat("").isNullOrEmpty();
