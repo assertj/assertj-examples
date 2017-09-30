@@ -208,11 +208,10 @@ public abstract class AbstractInternetDomainNameAssert<S extends AbstractInterne
     // check that actual InternetDomainName we want to make assertions on is not null.
     isNotNull();
 
-
     // overrides the default error message with a more explicit one
     String assertjErrorMessage = "\nExpecting name of:\n  <%s>\nto be:\n  <%s>\nbut was:\n  <%s>";
 
-    // check
+    // null safe check
     String actualName = org.assertj.core.util.introspection.FieldSupport.EXTRACTION.fieldValue("name", String.class, actual);
     if (!Objects.areEqual(actualName, name)) {
       failWithMessage(assertjErrorMessage, actual, name, actualName);

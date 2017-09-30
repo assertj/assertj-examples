@@ -63,11 +63,10 @@ public abstract class AbstractMovieAssert<S extends AbstractMovieAssert<S, A>, A
     // check that actual Movie we want to make assertions on is not null.
     isNotNull();
 
-
     // overrides the default error message with a more explicit one
     String assertjErrorMessage = "\nExpecting releaseDate of:\n  <%s>\nto be:\n  <%s>\nbut was:\n  <%s>";
 
-    // check
+    // null safe check
     java.util.Date actualReleaseDate = actual.getReleaseDate();
     if (!Objects.areEqual(actualReleaseDate, releaseDate)) {
       failWithMessage(assertjErrorMessage, actual, releaseDate, actualReleaseDate);
@@ -87,11 +86,10 @@ public abstract class AbstractMovieAssert<S extends AbstractMovieAssert<S, A>, A
     // check that actual Movie we want to make assertions on is not null.
     isNotNull();
 
-
     // overrides the default error message with a more explicit one
     String assertjErrorMessage = "\nExpecting title of:\n  <%s>\nto be:\n  <%s>\nbut was:\n  <%s>";
 
-    // check
+    // null safe check
     String actualTitle = actual.getTitle();
     if (!Objects.areEqual(actualTitle, title)) {
       failWithMessage(assertjErrorMessage, actual, title, actualTitle);
@@ -147,11 +145,10 @@ public abstract class AbstractMovieAssert<S extends AbstractMovieAssert<S, A>, A
     // check that actual Movie we want to make assertions on is not null.
     isNotNull();
 
-
     // overrides the default error message with a more explicit one
     String assertjErrorMessage = "\nExpecting duration of:\n  <%s>\nto be:\n  <%s>\nbut was:\n  <%s>";
 
-    // check
+    // null safe check
     String actualDuration = org.assertj.core.util.introspection.FieldSupport.EXTRACTION.fieldValue("duration", String.class, actual);
     if (!Objects.areEqual(actualDuration, duration)) {
       failWithMessage(assertjErrorMessage, actual, duration, actualDuration);

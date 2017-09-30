@@ -27,11 +27,10 @@ public abstract class AbstractGameServiceAssert<S extends AbstractGameServiceAss
     // check that actual GameService we want to make assertions on is not null.
     isNotNull();
 
-
     // overrides the default error message with a more explicit one
     String assertjErrorMessage = "\nExpecting teamManager of:\n  <%s>\nto be:\n  <%s>\nbut was:\n  <%s>";
 
-    // check
+    // null safe check
     TeamManager actualTeamManager = org.assertj.core.util.introspection.FieldSupport.EXTRACTION.fieldValue("teamManager", TeamManager.class, actual);
     if (!Objects.areEqual(actualTeamManager, teamManager)) {
       failWithMessage(assertjErrorMessage, actual, teamManager, actualTeamManager);

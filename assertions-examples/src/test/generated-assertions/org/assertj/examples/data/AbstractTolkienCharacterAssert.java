@@ -27,11 +27,10 @@ public abstract class AbstractTolkienCharacterAssert<S extends AbstractTolkienCh
     // check that actual TolkienCharacter we want to make assertions on is not null.
     isNotNull();
 
-
     // overrides the default error message with a more explicit one
     String assertjErrorMessage = "\nExpecting name of:\n  <%s>\nto be:\n  <%s>\nbut was:\n  <%s>";
 
-    // check
+    // null safe check
     String actualName = actual.getName();
     if (!Objects.areEqual(actualName, name)) {
       failWithMessage(assertjErrorMessage, actual, name, actualName);
@@ -51,11 +50,10 @@ public abstract class AbstractTolkienCharacterAssert<S extends AbstractTolkienCh
     // check that actual TolkienCharacter we want to make assertions on is not null.
     isNotNull();
 
-
     // overrides the default error message with a more explicit one
     String assertjErrorMessage = "\nExpecting race of:\n  <%s>\nto be:\n  <%s>\nbut was:\n  <%s>";
 
-    // check
+    // null safe check
     Race actualRace = actual.getRace();
     if (!Objects.areEqual(actualRace, race)) {
       failWithMessage(assertjErrorMessage, actual, race, actualRace);
@@ -75,11 +73,10 @@ public abstract class AbstractTolkienCharacterAssert<S extends AbstractTolkienCh
     // check that actual TolkienCharacter we want to make assertions on is not null.
     isNotNull();
 
-
     // overrides the default error message with a more explicit one
     String assertjErrorMessage = "\nExpecting surname of:\n  <%s>\nto be:\n  <%s>\nbut was:\n  <%s>";
 
-    // check
+    // null safe check
     String actualSurname = actual.getSurname();
     if (!Objects.areEqual(actualSurname, surname)) {
       failWithMessage(assertjErrorMessage, actual, surname, actualSurname);

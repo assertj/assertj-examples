@@ -27,11 +27,10 @@ public abstract class AbstractArtWorkAssert<S extends AbstractArtWorkAssert<S, A
     // check that actual ArtWork we want to make assertions on is not null.
     isNotNull();
 
-
     // overrides the default error message with a more explicit one
     String assertjErrorMessage = "\nExpecting creator of:\n  <%s>\nto be:\n  <%s>\nbut was:\n  <%s>";
 
-    // check
+    // null safe check
     String actualCreator = actual.getCreator();
     if (!Objects.areEqual(actualCreator, creator)) {
       failWithMessage(assertjErrorMessage, actual, creator, actualCreator);

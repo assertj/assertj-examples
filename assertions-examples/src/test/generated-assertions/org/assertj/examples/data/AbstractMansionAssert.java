@@ -27,11 +27,10 @@ public abstract class AbstractMansionAssert<S extends AbstractMansionAssert<S, A
     // check that actual Mansion we want to make assertions on is not null.
     isNotNull();
 
-
     // overrides the default error message with a more explicit one
     String assertjErrorMessage = "\nExpecting candlestick of:\n  <%s>\nto be:\n  <%s>\nbut was:\n  <%s>";
 
-    // check
+    // null safe check
     String actualCandlestick = org.assertj.core.util.introspection.FieldSupport.EXTRACTION.fieldValue("candlestick", String.class, actual);
     if (!Objects.areEqual(actualCandlestick, candlestick)) {
       failWithMessage(assertjErrorMessage, actual, candlestick, actualCandlestick);
@@ -51,11 +50,10 @@ public abstract class AbstractMansionAssert<S extends AbstractMansionAssert<S, A
     // check that actual Mansion we want to make assertions on is not null.
     isNotNull();
 
-
     // overrides the default error message with a more explicit one
     String assertjErrorMessage = "\nExpecting colonel of:\n  <%s>\nto be:\n  <%s>\nbut was:\n  <%s>";
 
-    // check
+    // null safe check
     String actualColonel = org.assertj.core.util.introspection.FieldSupport.EXTRACTION.fieldValue("colonel", String.class, actual);
     if (!Objects.areEqual(actualColonel, colonel)) {
       failWithMessage(assertjErrorMessage, actual, colonel, actualColonel);
@@ -98,11 +96,10 @@ public abstract class AbstractMansionAssert<S extends AbstractMansionAssert<S, A
     // check that actual Mansion we want to make assertions on is not null.
     isNotNull();
 
-
     // overrides the default error message with a more explicit one
     String assertjErrorMessage = "\nExpecting kitchen of:\n  <%s>\nto be:\n  <%s>\nbut was:\n  <%s>";
 
-    // check
+    // null safe check
     String actualKitchen = org.assertj.core.util.introspection.FieldSupport.EXTRACTION.fieldValue("kitchen", String.class, actual);
     if (!Objects.areEqual(actualKitchen, kitchen)) {
       failWithMessage(assertjErrorMessage, actual, kitchen, actualKitchen);
@@ -122,11 +119,10 @@ public abstract class AbstractMansionAssert<S extends AbstractMansionAssert<S, A
     // check that actual Mansion we want to make assertions on is not null.
     isNotNull();
 
-
     // overrides the default error message with a more explicit one
     String assertjErrorMessage = "\nExpecting library of:\n  <%s>\nto be:\n  <%s>\nbut was:\n  <%s>";
 
-    // check
+    // null safe check
     String actualLibrary = org.assertj.core.util.introspection.FieldSupport.EXTRACTION.fieldValue("library", String.class, actual);
     if (!Objects.areEqual(actualLibrary, library)) {
       failWithMessage(assertjErrorMessage, actual, library, actualLibrary);
@@ -146,11 +142,10 @@ public abstract class AbstractMansionAssert<S extends AbstractMansionAssert<S, A
     // check that actual Mansion we want to make assertions on is not null.
     isNotNull();
 
-
     // overrides the default error message with a more explicit one
     String assertjErrorMessage = "\nExpecting professor of:\n  <%s>\nto be:\n  <%s>\nbut was:\n  <%s>";
 
-    // check
+    // null safe check
     String actualProfessor = org.assertj.core.util.introspection.FieldSupport.EXTRACTION.fieldValue("professor", String.class, actual);
     if (!Objects.areEqual(actualProfessor, professor)) {
       failWithMessage(assertjErrorMessage, actual, professor, actualProfessor);

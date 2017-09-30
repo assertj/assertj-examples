@@ -27,11 +27,10 @@ public abstract class AbstractDragonBallGraphAssert<S extends AbstractDragonBall
     // check that actual DragonBallGraph we want to make assertions on is not null.
     isNotNull();
 
-
     // overrides the default error message with a more explicit one
     String assertjErrorMessage = "\nExpecting cypherEngine of:\n  <%s>\nto be:\n  <%s>\nbut was:\n  <%s>";
 
-    // check
+    // null safe check
     org.neo4j.cypher.javacompat.ExecutionEngine actualCypherEngine = org.assertj.core.util.introspection.FieldSupport.EXTRACTION.fieldValue("cypherEngine", org.neo4j.cypher.javacompat.ExecutionEngine.class, actual);
     if (!Objects.areEqual(actualCypherEngine, cypherEngine)) {
       failWithMessage(assertjErrorMessage, actual, cypherEngine, actualCypherEngine);
@@ -51,11 +50,10 @@ public abstract class AbstractDragonBallGraphAssert<S extends AbstractDragonBall
     // check that actual DragonBallGraph we want to make assertions on is not null.
     isNotNull();
 
-
     // overrides the default error message with a more explicit one
     String assertjErrorMessage = "\nExpecting graphDB of:\n  <%s>\nto be:\n  <%s>\nbut was:\n  <%s>";
 
-    // check
+    // null safe check
     org.neo4j.graphdb.GraphDatabaseService actualGraphDB = org.assertj.core.util.introspection.FieldSupport.EXTRACTION.fieldValue("graphDB", org.neo4j.graphdb.GraphDatabaseService.class, actual);
     if (!Objects.areEqual(actualGraphDB, graphDB)) {
       failWithMessage(assertjErrorMessage, actual, graphDB, actualGraphDB);

@@ -27,11 +27,10 @@ public abstract class AbstractMyModelClassAssert<S extends AbstractMyModelClassA
     // check that actual MyModelClass we want to make assertions on is not null.
     isNotNull();
 
-
     // overrides the default error message with a more explicit one
     String assertjErrorMessage = "\nExpecting iterator of:\n  <%s>\nto be:\n  <%s>\nbut was:\n  <%s>";
 
-    // check
+    // null safe check
     MyIteratorWrapper actualIterator = org.assertj.core.util.introspection.FieldSupport.EXTRACTION.fieldValue("iterator", MyIteratorWrapper.class, actual);
     if (!Objects.areEqual(actualIterator, iterator)) {
       failWithMessage(assertjErrorMessage, actual, iterator, actualIterator);

@@ -334,11 +334,10 @@ public abstract class AbstractContextedRuntimeExceptionAssert<S extends Abstract
     // check that actual ContextedRuntimeException we want to make assertions on is not null.
     isNotNull();
 
-
     // overrides the default error message with a more explicit one
     String assertjErrorMessage = "\nExpecting message of:\n  <%s>\nto be:\n  <%s>\nbut was:\n  <%s>";
 
-    // check
+    // null safe check
     String actualMessage = actual.getMessage();
     if (!Objects.areEqual(actualMessage, message)) {
       failWithMessage(assertjErrorMessage, actual, message, actualMessage);
@@ -358,11 +357,10 @@ public abstract class AbstractContextedRuntimeExceptionAssert<S extends Abstract
     // check that actual ContextedRuntimeException we want to make assertions on is not null.
     isNotNull();
 
-
     // overrides the default error message with a more explicit one
     String assertjErrorMessage = "\nExpecting rawMessage of:\n  <%s>\nto be:\n  <%s>\nbut was:\n  <%s>";
 
-    // check
+    // null safe check
     String actualRawMessage = actual.getRawMessage();
     if (!Objects.areEqual(actualRawMessage, rawMessage)) {
       failWithMessage(assertjErrorMessage, actual, rawMessage, actualRawMessage);
@@ -382,11 +380,10 @@ public abstract class AbstractContextedRuntimeExceptionAssert<S extends Abstract
     // check that actual ContextedRuntimeException we want to make assertions on is not null.
     isNotNull();
 
-
     // overrides the default error message with a more explicit one
     String assertjErrorMessage = "\nExpecting exceptionContext of:\n  <%s>\nto be:\n  <%s>\nbut was:\n  <%s>";
 
-    // check
+    // null safe check
     ExceptionContext actualExceptionContext = org.assertj.core.util.introspection.FieldSupport.EXTRACTION.fieldValue("exceptionContext", ExceptionContext.class, actual);
     if (!Objects.areEqual(actualExceptionContext, exceptionContext)) {
       failWithMessage(assertjErrorMessage, actual, exceptionContext, actualExceptionContext);

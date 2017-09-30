@@ -100,11 +100,10 @@ public abstract class AbstractBookAssert<S extends AbstractBookAssert<S, A>, A e
     // check that actual Book we want to make assertions on is not null.
     isNotNull();
 
-
     // overrides the default error message with a more explicit one
     String assertjErrorMessage = "\nExpecting title of:\n  <%s>\nto be:\n  <%s>\nbut was:\n  <%s>";
 
-    // check
+    // null safe check
     Book.Title actualTitle = actual.getTitle();
     if (!Objects.areEqual(actualTitle, title)) {
       failWithMessage(assertjErrorMessage, actual, title, actualTitle);
@@ -124,11 +123,10 @@ public abstract class AbstractBookAssert<S extends AbstractBookAssert<S, A>, A e
     // check that actual Book we want to make assertions on is not null.
     isNotNull();
 
-
     // overrides the default error message with a more explicit one
     String assertjErrorMessage = "\nExpecting realAuthor of:\n  <%s>\nto be:\n  <%s>\nbut was:\n  <%s>";
 
-    // check
+    // null safe check
     String actualRealAuthor = org.assertj.core.util.introspection.FieldSupport.EXTRACTION.fieldValue("realAuthor", String.class, actual);
     if (!Objects.areEqual(actualRealAuthor, realAuthor)) {
       failWithMessage(assertjErrorMessage, actual, realAuthor, actualRealAuthor);

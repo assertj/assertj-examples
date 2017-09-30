@@ -26,11 +26,10 @@ public abstract class AbstractEmployeeAssert<S extends AbstractEmployeeAssert<S,
     // check that actual Employee we want to make assertions on is not null.
     isNotNull();
 
-
     // overrides the default error message with a more explicit one
     String assertjErrorMessage = "\nExpecting company of:\n  <%s>\nto be:\n  <%s>\nbut was:\n  <%s>";
 
-    // check
+    // null safe check
     String actualCompany = actual.getCompany();
     if (!Objects.areEqual(actualCompany, company)) {
       failWithMessage(assertjErrorMessage, actual, company, actualCompany);
@@ -50,11 +49,10 @@ public abstract class AbstractEmployeeAssert<S extends AbstractEmployeeAssert<S,
     // check that actual Employee we want to make assertions on is not null.
     isNotNull();
 
-
     // overrides the default error message with a more explicit one
     String assertjErrorMessage = "\nExpecting rank of:\n  <%s>\nto be:\n  <%s>\nbut was:\n  <%s>";
 
-    // check
+    // null safe check
     String actualRank = actual.rank;
     if (!Objects.areEqual(actualRank, rank)) {
       failWithMessage(assertjErrorMessage, actual, rank, actualRank);

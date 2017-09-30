@@ -177,8 +177,6 @@
           <!-- example of replacing generated assertions default templates -->
           <templates>
             <templatesDirectory>src/test/resources/templates/</templatesDirectory>
-            <objectAssertion>my_has_assertion_template.txt</objectAssertion>
-            <hierarchicalAssertionConcreteClass>my_assertion_class_template.txt</hierarchicalAssertionConcreteClass>
           </templates>
           <packages>
             <param>org.assertj.examples.rpg</param>
@@ -204,9 +202,7 @@
           <generateBddAssertions>true</generateBddAssertions>
           <generateSoftAssertions>true</generateSoftAssertions>
           <generateJUnitSoftAssertions>true</generateJUnitSoftAssertions>
-          <cleanTargetDir>true</cleanTargetDir>
           <quiet>false</quiet>
-          <writeReportInFile>target/report.txt</writeReportInFile>
           <generateAssertionsForAllFields>true</generateAssertionsForAllFields>
         </configuration>
         <dependencies>

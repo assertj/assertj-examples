@@ -53,11 +53,10 @@ public abstract class AbstractBasketBallPlayerAssert<S extends AbstractBasketBal
     // check that actual BasketBallPlayer we want to make assertions on is not null.
     isNotNull();
 
-
     // overrides the default error message with a more explicit one
     String assertjErrorMessage = "\nExpecting name of:\n  <%s>\nto be:\n  <%s>\nbut was:\n  <%s>";
 
-    // check
+    // null safe check
     Name actualName = actual.getName();
     if (!Objects.areEqual(actualName, name)) {
       failWithMessage(assertjErrorMessage, actual, name, actualName);
@@ -312,11 +311,10 @@ public abstract class AbstractBasketBallPlayerAssert<S extends AbstractBasketBal
     // check that actual BasketBallPlayer we want to make assertions on is not null.
     isNotNull();
 
-
     // overrides the default error message with a more explicit one
     String assertjErrorMessage = "\nExpecting team of:\n  <%s>\nto be:\n  <%s>\nbut was:\n  <%s>";
 
-    // check
+    // null safe check
     String actualTeam = actual.getTeam();
     if (!Objects.areEqual(actualTeam, team)) {
       failWithMessage(assertjErrorMessage, actual, team, actualTeam);
