@@ -45,4 +45,21 @@ public class PathAssertionExamples extends Neo4jAssertionExamples {
         .doesNotContainNull();
     }
   }
+
+  @Test
+  public void path_assertion_examples_introduced_in_2_0_0_and_2_0_1() throws Exception {
+    try (Transaction ignored = graphDatabase().beginTx()) {
+      // let us find the shortest path between Son Goku and Dr. Flappe
+      DragonBallGraphRepository dragonBallGraphRepository = dragonBallGraphRepository();
+      Path sonGokuToDoctorFlappe = dragonBallGraphRepository.findShortestPathBetween("Son Goku", "Dr. Flappe");
+      Node doctorGero = dragonBallGraphRepository.findUniqueCharacter("Dr. Gero");
+      Node tienShinhan = dragonBallGraphRepository.findUniqueCharacter("Tien Shinhan");
+      final Relationship masterShenTraining = dragonBallGraphRepository.findUniqueTraining("Master Shen");
+      // enjoy the negation assertions!
+      assertThat(sonGokuToDoctorFlappe)
+          .doesNotStartWithNode(doctorGero)
+          .doesNotEndWithNode(tienShinhan)
+          .doesNotEndWithRelationship(masterShenTraining);
+    }
+  }
 }
