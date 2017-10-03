@@ -82,6 +82,21 @@ public class RelationshipAssertionExamples extends Neo4jAssertionExamples {
     }
   }
 
+  @Test
+  public void relationship_assertion_examples_added_in_2_0_0() throws Exception {
+    try (Transaction ignored = graphDatabase().beginTx()) {
+      DragonBallGraphRepository dragonBallGraphRepository = dragonBallGraphRepository();
+      Relationship masterRoshiTraining = dragonBallGraphRepository.findUniqueTraining("Master Roshi");
+      Node chiaotzu = dragonBallGraphRepository.findUniqueCharacter("Chiaotzu");
+      Node masterShen = dragonBallGraphRepository.findUniqueCharacter("Master Shen");
+      // enjoy the new negation assertions!
+      assertThat(masterRoshiTraining)
+          .doesNotStartWithNode(chiaotzu)
+          .doesNotEndWithNode(masterShen);
+    }
+
+  }
+
   private static boolean isUselessFusion(Relationship rel) {
     return (boolean) rel.getProperty("useless", false);
   }
