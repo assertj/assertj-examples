@@ -12,21 +12,21 @@
  */
 package org.assertj.examples.neo4j;
 
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.neo4j.api.Assertions.assertThat;
-
 import org.junit.Test;
-import org.neo4j.graphdb.DynamicLabel;
+import org.neo4j.graphdb.Label;
 import org.neo4j.graphdb.Node;
 import org.neo4j.graphdb.Transaction;
+
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.neo4j.api.Assertions.assertThat;
 
 public class NodeAssertionExamples extends Neo4jAssertionExamples {
 
   @Test
-  public void node_assertions_examples() {
-    try (Transaction tx = graphDB.beginTx()) {
+  public void node_assertion_examples() {
+    try (Transaction ignored = graphDatabase().beginTx()) {
       // let us find the disciples of Master Roshi persisted in Neo4j
-      Iterable<Node> disciples = dragonBallGraph.disciplesOf("Master Roshi");
+      Iterable<Node> disciples = dragonBallGraphRepository().findDisciplesOfMaster("Master Roshi");
 
       // you can enjoy the usual assertj-core assertions ;-)
       assertThat(disciples).hasSize(3);
@@ -35,39 +35,34 @@ public class NodeAssertionExamples extends Neo4jAssertionExamples {
       // when you give a Node instance
       Node firstDisciple = disciples.iterator().next();
       assertThat(firstDisciple)
-        .hasPropertyKey("name")
-        .hasProperty("name", "Son Goku")
-        .doesNotHavePropertyKey("firstName")
-        .doesNotHaveProperty("name", "Bulma")
+          .hasPropertyKey("name")
+          .hasProperty("name", "Krillin")
+          .doesNotHavePropertyKey("firstName")
+          .doesNotHaveProperty("name", "Bulma")
 
           // you can test against node labels: their String representation or
           // the equivalent Label object
-        .hasLabel("CHARACTER")
-        .hasLabel(DynamicLabel.label("HERO"))
-        .doesNotHaveLabel("VILLAIN")
-        .doesNotHaveLabel(DynamicLabel.label("MASTER"));
+          .hasLabel("Character")
+          .hasLabel(Label.label("Hero"))
+          .doesNotHaveLabel("Villain")
+          .doesNotHaveLabel(Label.label("Master"));
 
       // and you can enjoy the same error message mechanism from assertj-core !
       try {
         assertThat(firstDisciple)
-          .as("[check %s's name]", firstDisciple.getProperty("name"))
-          .doesNotHaveProperty("name", "Son Goku");
+            .as("[check %s's name]", firstDisciple.getProperty("name"))
+            .doesNotHaveProperty("name", "Krillin");
+      } catch (AssertionError ae) {
+        assertThat(ae).hasMessageContaining(
+            "not to have property with key:\n" +
+            "  <\"name\">\n" +
+            "and value:\n" +
+            "  <\"Krillin\">\n" +
+            "but actually found such property ");
       }
-      catch (AssertionError ae) {
-        assertThat(ae).hasMessage("[[check Son Goku's name]] \n" +
-          "Expecting:\n" +
-          "  <Node[0]>\n" +
-          "not to have property with key:\n" +
-          "  <\"name\">\n" +
-          "and value:\n" +
-          "  <\"Son Goku\">\n" +
-          "but actually found such property ");
-      }
-
-      tx.close();
-
-      // just check that we can use standard assertions along with Neo4j ones
-      assertThat("hello world").startsWith("hello");
     }
+
+    // just check that we can use standard assertions along with Neo4j ones
+    assertThat("hello world").startsWith("hello");
   }
 }

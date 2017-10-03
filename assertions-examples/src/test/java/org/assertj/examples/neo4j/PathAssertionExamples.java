@@ -14,6 +14,7 @@ package org.assertj.examples.neo4j;
 
 import static org.assertj.neo4j.api.Assertions.assertThat;
 
+import org.assertj.examples.data.neo4j.DragonBallGraphRepository;
 import org.junit.Test;
 import org.neo4j.graphdb.Node;
 import org.neo4j.graphdb.Path;
@@ -24,25 +25,24 @@ public class PathAssertionExamples extends Neo4jAssertionExamples {
 
   @Test
   public void path_assertion_examples() {
-    try (Transaction tx = graphDB.beginTx()) {
+    try (Transaction ignored = graphDatabase().beginTx()) {
       // let us find the shortest path between Bulma and Master Roshi
-      Path bulmaToMasterRoshiPath = dragonBallGraph.findShortestPathBetween("Bulma", "Master Roshi");
+      DragonBallGraphRepository dragonBallGraphRepository = dragonBallGraphRepository();
+      Path bulmaToMasterRoshiPath = dragonBallGraphRepository.findShortestPathBetween("Bulma", "Master Roshi");
 
       // you can test several Path properties such as length,
       // start/end node and last relationship
-      final Node bulmaNode = dragonBallGraph.findCharacter("Bulma");
-      final Node masterRoshiNode = dragonBallGraph.findCharacter("Master Roshi");
-      final Relationship trainingFromSonGoku = dragonBallGraph.findTrainingFrom("Son Goku");
+      final Node bulmaNode = dragonBallGraphRepository.findUniqueCharacter("Bulma");
+      final Node masterRoshiNode = dragonBallGraphRepository.findUniqueCharacter("Master Roshi");
+      final Relationship sonGokuTraining = dragonBallGraphRepository.findUniqueTraining("Son Goku");
       assertThat(bulmaToMasterRoshiPath)
         .hasLength(3)
         .startsWithNode(bulmaNode)
         .endsWithNode(masterRoshiNode)
-        .endsWithRelationship(trainingFromSonGoku)
+        .endsWithRelationship(sonGokuTraining)
 
           // you can enjoy the usual assertj-core assertions (Path is an Iterable) ;-)
         .doesNotContainNull();
-
-      tx.close();
     }
   }
 }

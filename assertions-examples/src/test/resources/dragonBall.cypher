@@ -1,36 +1,36 @@
-CREATE  (n:CHARACTER:HERO {name : 'Son Goku'}) RETURN n;
-CREATE  (n:CHARACTER:HERO {name : 'Bulma'}) RETURN n;
-CREATE  (n:CHARACTER:HERO:MASTER {name : 'Master Roshi'}) RETURN n;
-CREATE  (n:CHARACTER:VILLAIN:MASTER {name : 'Master Shen'}) RETURN n;
-CREATE  (n:CHARACTER:HERO:MASTER {name : 'Master Mutaito'}) RETURN n;
-CREATE  (n:CHARACTER:HERO {name : 'Yamcha'}) RETURN n;
-CREATE  (n:CHARACTER:HERO {name : 'Krillin'}) RETURN n;
-CREATE  (n:CHARACTER:HERO {name : 'Tien Shinhan'}) RETURN n;
-CREATE  (n:CHARACTER:HERO {name : 'Chiaotzu'}) RETURN n;
+CREATE  (:Character:Hero {name : 'Son Goku'});
+CREATE  (:Character:Hero {name : 'Bulma'});
+CREATE  (:Character:Hero:Master {name : 'Master Roshi'});
+CREATE  (:Character:Villain:Master {name : 'Master Shen'});
+CREATE  (:Character:Hero:Master {name : 'Master Mutaito'});
+CREATE  (:Character:Hero {name : 'Yamcha'});
+CREATE  (:Character:Hero {name : 'Krillin'});
+CREATE  (:Character:Hero {name : 'Tien Shinhan'});
+CREATE  (:Character:Hero {name : 'Chiaotzu'});
 
-CREATE  (n:CHARACTER:HERO:VILLAIN {name : 'Piccolo'}) RETURN n;
-CREATE  (n:CHARACTER:HERO:VILLAIN {name : 'Vegeta'}) RETURN n;
+CREATE  (:Character:Hero:Villain {name : 'Piccolo'});
+CREATE  (:Character:Hero:Villain {name : 'Vegeta'});
 
-CREATE  (n:CHARACTER:VILLAIN {name : 'Commander Red'}) RETURN n;
-CREATE  (n:CHARACTER:VILLAIN {name : 'Dr. Gero'}) RETURN n;
-CREATE  (n:CHARACTER:VILLAIN {name : 'Dr. Flappe'}) RETURN n;
+CREATE  (:Character:Villain {name : 'Commander Red'});
+CREATE  (:Character:Villain {name : 'Dr. Gero'});
+CREATE  (:Character:Villain {name : 'Dr. Flappe'});
 
-CREATE  (n:CHARACTER:VILLAIN:ANDROID {name : 'Android 8'}) RETURN n;
-CREATE  (n:CHARACTER:VILLAIN:ANDROID {name : 'Android 17'}) RETURN n;
-CREATE  (n:CHARACTER:HERO:VILLAIN:ANDROID {name : 'Android 18'}) RETURN n;
-CREATE  (n:CHARACTER:VILLAIN:ANDROID {name : 'Cell'}) RETURN n;
+CREATE  (:Character:Villain:Android {name : 'Android 8'});
+CREATE  (:Character:Villain:Android {name : 'Android 17'});
+CREATE  (:Character:Hero:Villain:Android {name : 'Android 18'});
+CREATE  (:Character:Villain:Android {name : 'Cell'});
 
-CREATE  (n:ORGANIZATION {name : 'Red Ribbon Army'}) RETURN n;
-CREATE  (n:ORGANIZATION {name : 'Planet Trade Organization'}) RETURN n;
+CREATE  (:Organization {name : 'Red Ribbon Army'});
+CREATE  (:Organization {name : 'Planet Trade Organization'});
 
-MATCH   (sonGoku:CHARACTER:HERO {name : 'Son Goku'}),
-        (yamcha:CHARACTER:HERO {name : 'Yamcha'}),
-        (krillin:CHARACTER:HERO {name : 'Krillin'}),
-        (tien_shinhan:CHARACTER:HERO {name : 'Tien Shinhan'}),
-        (chiaotzu:CHARACTER:HERO {name : 'Chiaotzu'}),
-        (master_roshi:CHARACTER:HERO:MASTER {name : 'Master Roshi'}),
-        (master_shen:CHARACTER:VILLAIN:MASTER {name : 'Master Shen'}),
-        (master_mutaito:CHARACTER:HERO:MASTER {name : 'Master Mutaito'})
+MATCH   (sonGoku:Character:Hero {name : 'Son Goku'}),
+        (yamcha:Character:Hero {name : 'Yamcha'}),
+        (krillin:Character:Hero {name : 'Krillin'}),
+        (tien_shinhan:Character:Hero {name : 'Tien Shinhan'}),
+        (chiaotzu:Character:Hero {name : 'Chiaotzu'}),
+        (master_roshi:Character:Hero:Master {name : 'Master Roshi'}),
+        (master_shen:Character:Villain:Master {name : 'Master Shen'}),
+        (master_mutaito:Character:Hero:Master {name : 'Master Mutaito'})
 CREATE  (sonGoku)-[sonGoku_master_roshi:HAS_TRAINED_WITH]->(master_roshi),
         (krillin)-[krillin_master_roshi:HAS_TRAINED_WITH]->(master_roshi),
         (yamcha)-[yamcha_master_roshi:HAS_TRAINED_WITH]->(master_roshi),
@@ -43,50 +43,50 @@ RETURN  sonGoku_master_roshi, krillin_master_roshi, yamcha_master_roshi,
         master_roshi_master_mutaito, master_shen_master_mutaito;
 
 
-MATCH   (commander:CHARACTER:VILLAIN {name : 'Commander Red'}),
-        (drGero:CHARACTER:VILLAIN {name : 'Dr. Gero'}),
-        (drFlappe:CHARACTER:VILLAIN {name : 'Dr. Flappe'}),
-        (android8:CHARACTER:VILLAIN:ANDROID {name : 'Android 8'}),
-        (redRibbon:ORGANIZATION {name : 'Red Ribbon Army'})
+MATCH   (commander:Character:Villain {name : 'Commander Red'}),
+        (drGero:Character:Villain {name : 'Dr. Gero'}),
+        (drFlappe:Character:Villain {name : 'Dr. Flappe'}),
+        (android8:Character:Villain:Android {name : 'Android 8'}),
+        (redRibbon:Organization {name : 'Red Ribbon Army'})
 CREATE  (commander)-[commander_rr:HAS_WORKED_FOR]->(redRibbon),
         (drGero)-[drGero_rr:HAS_WORKED_FOR]->(redRibbon),
         (drFlappe)-[drFlappe_rr:HAS_WORKED_FOR]->(redRibbon),
         (android8)-[android8_rr:HAS_WORKED_FOR]->(redRibbon)
 RETURN  commander_rr, drGero_rr, drFlappe_rr, android8_rr;
 
-MATCH   (vegeta:CHARACTER:VILLAIN {name : 'Vegeta'}),
-        (planetTrade:ORGANIZATION {name : 'Planet Trade Organization'})
+MATCH   (vegeta:Character:Villain {name : 'Vegeta'}),
+        (planetTrade:Organization {name : 'Planet Trade Organization'})
 CREATE  (vegeta)-[vegeta_planetTrade:HAS_WORKED_FOR {past: true}]->(planetTrade)
 RETURN  vegeta_planetTrade;
 
-MATCH   (drGero:CHARACTER:VILLAIN {name : 'Dr. Gero'}),
-        (drFlappe:CHARACTER:VILLAIN {name : 'Dr. Flappe'}),
-        (android8:CHARACTER:VILLAIN:ANDROID {name : 'Android 8'}),
-        (android17:CHARACTER:VILLAIN:ANDROID {name : 'Android 17'}),
-        (android18:CHARACTER:VILLAIN:ANDROID {name : 'Android 18'}),
-        (cell:CHARACTER:VILLAIN:ANDROID {name : 'Cell'})
+MATCH   (drGero:Character:Villain {name : 'Dr. Gero'}),
+        (drFlappe:Character:Villain {name : 'Dr. Flappe'}),
+        (android8:Character:Villain:Android {name : 'Android 8'}),
+        (android17:Character:Villain:Android {name : 'Android 17'}),
+        (android18:Character:Villain:Android {name : 'Android 18'}),
+        (cell:Character:Villain:Android {name : 'Cell'})
 CREATE  (drFlappe)-[drFlappe_android8:PRODUCED]->(android8),
         (drGero)-[drGero_android17:PRODUCED]->(android17),
         (drGero)-[drGero_android18:PRODUCED]->(android18),
         (drGero)-[drGero_cell:PRODUCED]->(cell)
 RETURN  drFlappe_android8, drGero_android17, drGero_android18, drGero_cell;
 
-MATCH   (krillin:CHARACTER:HERO {name : 'Krillin'}),
-        (android18:CHARACTER:HERO:VILLAIN:ANDROID {name : 'Android 18'}),
-        (bulma:CHARACTER:HERO {name : 'Bulma'}),
-        (vegeta:CHARACTER:HERO:VILLAIN {name : 'Vegeta'})
+MATCH   (krillin:Character:Hero {name : 'Krillin'}),
+        (android18:Character:Hero:Villain:Android {name : 'Android 18'}),
+        (bulma:Character:Hero {name : 'Bulma'}),
+        (vegeta:Character:Hero:Villain {name : 'Vegeta'})
 CREATE  (krillin)-[krillin_android18:IS_MARRIED_TO]->(android18),
         (vegeta)-[vegeta_bulma:IS_MARRIED_TO]->(bulma)
 RETURN  krillin_android18, vegeta_bulma;
 
-MATCH   (sonGoku:CHARACTER:HERO {name : 'Son Goku'}),
-        (vegeta:CHARACTER:VILLAIN {name : 'Vegeta'}),
-        (krillin:CHARACTER:HERO {name : 'Krillin'}),
-        (piccolo:CHARACTER:HERO:VILLAIN {name : 'Piccolo'}),
-        (tien_shinhan:CHARACTER:HERO {name : 'Tien Shinhan'}),
-        (yamcha:CHARACTER:HERO {name : 'Yamcha'})
-CREATE  (sonGoku)-[gogeta:IN_FUSION_WITH {into: 'Gogeta'}]->(vegeta),
-        (sonGoku)-[veku:IN_FUSION_WITH {into: 'Veku', useless: true}]->(vegeta),
-        (krillin)-[prilin:IN_FUSION_WITH {into: 'Prilin', useless: true}]->(piccolo),
-        (tien_shinhan)-[tiencha:IN_FUSION_WITH {into: 'Tiencha'}]->(yamcha)
+MATCH   (sonGoku:Character:Hero {name : 'Son Goku'}),
+        (vegeta:Character:Villain {name : 'Vegeta'}),
+        (krillin:Character:Hero {name : 'Krillin'}),
+        (piccolo:Character:Hero:Villain {name : 'Piccolo'}),
+        (tien_shinhan:Character:Hero {name : 'Tien Shinhan'}),
+        (yamcha:Character:Hero {name : 'Yamcha'})
+CREATE  (sonGoku)-[gogeta:IN_FUSION_WITH {fusion_character_name: 'Gogeta'}]->(vegeta),
+        (sonGoku)-[veku:IN_FUSION_WITH {fusion_character_name: 'Veku', useless: true}]->(vegeta),
+        (krillin)-[prilin:IN_FUSION_WITH {fusion_character_name: 'Prilin', useless: true}]->(piccolo),
+        (tien_shinhan)-[tiencha:IN_FUSION_WITH {fusion_character_name: 'Tiencha'}]->(yamcha)
 RETURN  gogeta, veku, prilin, tiencha;
