@@ -20,9 +20,9 @@ public class ThreadDumpOnErrorExample {
 
     System.err.println("--------------- no thread dump on error -----------------");
     try {
-	  assertThat("Messi").isEqualTo("Ronaldo");
+      assertThat("Messi").isEqualTo("Ronaldo");
     } catch (AssertionError e) {
-	  e.printStackTrace();
+      e.printStackTrace();
     }
     System.err.println("\n\n--------------- thread dump on error -----------------");
     assertThat("Messi").withThreadDumpOnError().isEqualTo("Ronaldo");

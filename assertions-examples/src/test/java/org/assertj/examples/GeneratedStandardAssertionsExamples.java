@@ -68,8 +68,7 @@ public class GeneratedStandardAssertionsExamples extends AbstractAssertionsExamp
     // Name should have comparable assertions
     assertThat(new Name("A", "BC")).isLessThan(new Name("D", "EF"));
 
-    assertThat(new Book("Death Notes")).hasTitle(new Title("Death Notes"))
-                                       .hasRealAuthor(null);
+    assertThat(new Book("Death Notes")).hasTitle(new Title("Death Notes"));
   }
 
 }
