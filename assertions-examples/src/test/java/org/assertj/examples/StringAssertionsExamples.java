@@ -253,4 +253,14 @@ public class StringAssertionsExamples extends AbstractAssertionsExamples {
     log.info(smartFormat);
   }
 
+  @Test
+  public void ignoring_newlines_equals_assertion() {
+    assertThat("Game of Thrones").isEqualToIgnoringNewLines("Game of Thrones\n")
+                                 .isEqualToIgnoringNewLines("Game of Thrones\r\n")
+                                 .isEqualToIgnoringNewLines("Game of Thrones\r\n\n");
+    assertThat("Game of\n Thrones").isEqualToIgnoringNewLines("Game of Thrones\n")
+                                   .isEqualToIgnoringNewLines("Game of \n\n\nThrones\r\n")
+                                   .isEqualToIgnoringNewLines("Game of Thrones");
+  }
+
 }
