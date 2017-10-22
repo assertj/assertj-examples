@@ -12,6 +12,7 @@
  */
 package org.assertj.examples;
 
+import static java.util.Arrays.asList;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.presentation.StandardRepresentation.STANDARD_REPRESENTATION;
 import static org.assertj.core.util.Arrays.array;
@@ -49,11 +50,19 @@ public class StringAssertionsExamples extends AbstractAssertionsExamples {
       logAssertionErrorMessage("String contains with several values", e);
     }
 
-    String bookDescription = "{ 'title':'Games of Thrones', 'author':'George Martin'}";
-    assertThat(bookDescription).containsSequence("{", "title", "Games of Thrones", "}");
+    String bookDescription = "{ 'title':'A Game of Thrones', 'author':'George Martin'}";
+
+    assertThat(bookDescription).containsSequence("'title'", ":", "'A Game of Thrones'")
+                               .containsSequence(asList("'title'", ":", "'A Game of Thrones'"))
+                               .containsSequence("George", " ", "Martin");
+
+    assertThat(bookDescription).containsSubsequence("'title'", ":", "'A Game of Thrones'")
+                               .containsSubsequence("{", "title", "A Game of Thrones", "}")
+                               .containsSubsequence(asList("{", "title", "A Game of Thrones", "}"))
+                               .containsSubsequence("A", "Game", "of", "George");
 
     try {
-      assertThat(bookDescription).containsSequence("{", "title", "author", "Games of Thrones", "}");
+      assertThat(bookDescription).containsSequence(":", "'title'", "'A Game of Thrones'");
     } catch (AssertionError e) {
       logAssertionErrorMessage("String containsSequence with incorrect order", e);
     }
