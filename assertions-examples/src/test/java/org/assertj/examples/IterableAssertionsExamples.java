@@ -363,6 +363,8 @@ public class IterableAssertionsExamples extends AbstractAssertionsExamples {
     assertThat(list).doesNotContainSubsequence("Superman", "is", "great")
                     .doesNotContainSubsequence(newArrayList("Superman", "is", "great"));
 
+    List<String> title = newArrayList("A", " ", "Game", " ", "of", " ", "Thrones", " ");
+    assertThat(title).containsSubsequence("Game", "Thrones");
   }
 
   @Test

@@ -57,15 +57,23 @@ public class StringAssertionsExamples extends AbstractAssertionsExamples {
                                .containsSequence("George", " ", "Martin");
 
     assertThat(bookDescription).containsSubsequence("'title'", ":", "'A Game of Thrones'")
+                               .containsSubsequence("{", "A Game of Thrones", "George Martin", "}")
                                .containsSubsequence("{", "title", "A Game of Thrones", "}")
                                .containsSubsequence(asList("{", "title", "A Game of Thrones", "}"))
                                .containsSubsequence("A", "Game", "of", "George");
 
     try {
-      assertThat(bookDescription).containsSequence(":", "'title'", "'A Game of Thrones'");
+      assertThat(bookDescription).containsSubsequence(":", "'title'", "'A Game of Thrones'");
     } catch (AssertionError e) {
       logAssertionErrorMessage("String containsSequence with incorrect order", e);
     }
+
+    assertThat("a-b-c").containsSubsequence("b", "-", "c")
+                       .containsSubsequence("a", "c")
+                       .containsSubsequence("b", "c")
+                       .containsSubsequence("-", "-")
+                       .containsSubsequence("-", "b", "-")
+                       .containsSubsequence("-", "c");
 
     // you can ignore case for equals check
     assertThat("Frodo").isEqualToIgnoringCase("FROdO").hasSameSizeAs("12345");
