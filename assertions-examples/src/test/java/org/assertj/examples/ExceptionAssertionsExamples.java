@@ -264,11 +264,30 @@ public class ExceptionAssertionsExamples extends AbstractAssertionsExamples {
   @Test
   public void use_as_with_exception_testing() {
     // @format:off
-    assertThat(catchThrowable(() -> { throw new Exception("boom!"); }))
-              .as("boom expected")
-              .isInstanceOf(Exception.class)
-              .hasMessageContaining("boom");
+    Throwable assertionError = catchThrowable(() -> {
+      assertThat(catchThrowable(() -> { throw new Exception("boom!"); }))
+         .as("boom expected")
+         .isInstanceOf(Exception.class)
+         // make the assertion fail 
+         .hasMessageContaining("bam");
+    });
     // @format:on
+    assertThat(assertionError).isInstanceOf(AssertionError.class)
+                              .hasMessageContaining("[boom expected]");
+
+    // same stuff with assertThatCode
+    // @format:off
+    assertionError = catchThrowable(() -> {
+      assertThatCode(() -> { throw new Exception("boom!");})
+         .as("boom expected")
+         .isInstanceOf(Exception.class)
+         // make the assertion fail 
+         .hasMessageContaining("bam");
+    });
+    // @format:on
+    assertThat(assertionError).isInstanceOf(AssertionError.class)
+                              .hasMessageContaining("[boom expected]");
+
   }
 
   @Test
