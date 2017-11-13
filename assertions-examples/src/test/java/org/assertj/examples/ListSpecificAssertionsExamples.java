@@ -31,78 +31,77 @@ import java.util.List;
 import org.assertj.examples.data.Ring;
 import org.junit.Test;
 
-
 /**
  * Assertions examples specific to {@link List}.
- * 
+ *
  * @author Joel Costigliola
  */
 public class ListSpecificAssertionsExamples extends AbstractAssertionsExamples {
 
-  @Test
-  public void newArrayList_contains_at_index_assertions_examples() {
-    // You can check element at a given index (we use Assertions.atIndex(int) synthetic sugar for better readability).
-    List<Ring> elvesRings = newArrayList(vilya, nenya, narya);
-    assertThat(elvesRings).contains(vilya, atIndex(0)).contains(nenya, atIndex(1)).contains(narya, atIndex(2));
-  }
+	@Test
+	public void newArrayList_contains_at_index_assertions_examples() {
+		// You can check element at a given index (we use Assertions.atIndex(int) synthetic sugar for better readability).
+		final List<Ring> elvesRings = newArrayList(vilya, nenya, narya);
+		assertThat(elvesRings).contains(vilya, atIndex(0)).contains(nenya, atIndex(1)).contains(narya, atIndex(2));
+	}
 
+	@Test
+	public void newArrayList_is_sorted_assertion_example() {
 
-  @Test
-  public void newArrayList_is_sorted_assertion_example() {
+		// You can check that a newArrayList is sorted
+		Collections.sort(this.fellowshipOfTheRing, this.ageComparator);
+		assertThat(this.fellowshipOfTheRing).contains(this.frodo).isSortedAccordingTo(this.ageComparator);
+		assertThat(this.fellowshipOfTheRing).usingElementComparator(this.ageComparator).isSorted();
 
-    // You can check that a newArrayList is sorted
-    Collections.sort(fellowshipOfTheRing, ageComparator);
-    assertThat(fellowshipOfTheRing).contains(frodo).isSortedAccordingTo(ageComparator);
-    assertThat(fellowshipOfTheRing).usingElementComparator(ageComparator).isSorted();
-    
-    // You can use iterable assertion and after that list specific ones
-    assertThat(fellowshipOfTheRing).contains(frodo).contains(frodo, atIndex(1));
+		// You can use iterable assertion and after that list specific ones
+		assertThat(this.fellowshipOfTheRing).contains(this.frodo).contains(this.frodo, atIndex(1));
 
-    // enum order = order of declaration = ring power
-    assertThat(newArrayList(oneRing, vilya, nenya, narya, dwarfRing, manRing)).isSorted();
+		// enum order = order of declaration = ring power
+		assertThat(newArrayList(oneRing, vilya, nenya, narya, dwarfRing, manRing)).isSorted();
 
-    // ring comparison by increasing power
-    Comparator<Ring> increasingPowerRingComparator = new Comparator<Ring>() {
-      public int compare(Ring ring1, Ring ring2) {
-        return -ring1.compareTo(ring2);
-      }
-    };
-    assertThat(newArrayList(manRing, dwarfRing, narya, nenya, vilya, oneRing)).isSortedAccordingTo(
-        increasingPowerRingComparator);
-  }
+		// ring comparison by increasing power
+		final Comparator<Ring> increasingPowerRingComparator = new Comparator<Ring>() {
 
-  @Test
-  public void newArrayList_element_satisfies_condition_at_index_example() {
-    // You can check that a newArrayList element satisfies a condition
-    assertThat(newArrayList(rose, noah)).has(doubleDoubleStats, atIndex(1));
-    assertThat(newArrayList(rose, noah)).is(potentialMvp, atIndex(0));
-  }
+			@Override
+			public int compare(final Ring ring1, final Ring ring2) {
+				return -ring1.compareTo(ring2);
+			}
+		};
+		assertThat(newArrayList(manRing, dwarfRing, narya, nenya, vilya, oneRing)).isSortedAccordingTo(
+				increasingPowerRingComparator);
+	}
 
+	@Test
+	public void newArrayList_element_satisfies_condition_at_index_example() {
+		// You can check that a newArrayList element satisfies a condition
+		assertThat(newArrayList(rose, noah)).has(doubleDoubleStats, atIndex(1));
+		assertThat(newArrayList(rose, noah)).is(potentialMvp, atIndex(0));
+	}
 
-  @Test
-  public void iterable_is_subset_of_assertion_example() {
-    Collection<Ring> elvesRings = newArrayList(vilya, nenya, narya);
-    assertThat(elvesRings).isSubsetOf(ringsOfPower);
-  }
+	@Test
+	public void iterable_is_subset_of_assertion_example() {
+		final Collection<Ring> elvesRings = newArrayList(vilya, nenya, narya);
+		assertThat(elvesRings).isSubsetOf(this.ringsOfPower);
+	}
 
-  @Test
-  public void switch_to_List_assertion() {
-    Object elvesRings = newArrayList(nenya, vilya, narya);
-    assertThat(elvesRings).asList().contains(nenya, atIndex(0));
-  }
-  
-  @Test
-  public void containsOnlyOnce_assertion_should_not_require_objects_to_be_comparable() {
-    // Rectangles are not Comparable.
-    Rectangle r0 = new Rectangle(0, 0);
-    Rectangle r1 = new Rectangle(1, 1);
-    Rectangle r2 = new Rectangle(2, 2);
-    assertThat(newArrayList(r1, r2, r2)).containsOnlyOnce(r1);
-    try {
-      assertThat(newArrayList(r1, r2, r2)).containsOnlyOnce(r0, r1, r2);
-    } catch (AssertionError e) {
-      logAssertionErrorMessage("containsOnlyOnce", e);
-    }
-  }
+	@Test
+	public void switch_to_List_assertion() {
+		final Object elvesRings = newArrayList(nenya, vilya, narya);
+		assertThat(elvesRings).asList().contains(nenya, atIndex(0));
+	}
+
+	@Test
+	public void containsOnlyOnce_assertion_should_not_require_objects_to_be_comparable() {
+		// Rectangles are not Comparable.
+		final Rectangle r0 = new Rectangle(0, 0);
+		final Rectangle r1 = new Rectangle(1, 1);
+		final Rectangle r2 = new Rectangle(2, 2);
+		assertThat(newArrayList(r1, r2, r2)).containsOnlyOnce(r1);
+		try {
+			assertThat(newArrayList(r1, r2, r2)).containsOnlyOnce(r0, r1, r2);
+		} catch (final AssertionError e) {
+			logAssertionErrorMessage("containsOnlyOnce", e);
+		}
+	}
 
 }
