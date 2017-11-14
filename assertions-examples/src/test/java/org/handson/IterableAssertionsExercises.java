@@ -10,7 +10,7 @@
  *
  * Copyright 2012-2016 the original author or authors.
  */
-package org.handson.basic;
+package org.handson;
 
 import static org.assertj.core.util.Lists.newArrayList;
 import static org.assertj.examples.data.Ring.narya;
@@ -50,7 +50,8 @@ public class IterableAssertionsExercises extends AbstractAssertionsExamples {
 		// TODO Step 3: extract the names and the race of all TokienCharacter in fellowshipOfTheRing, check the content
 		// hint: use tuple to group the expected values, shoulld look like: tuple("Sam", 38)
 
-		// Optional TODO Step 4: extract the names and the race's name of all TokienCharacter in fellowshipOfTheRing, check the content
+		// Optional TODO Step 4: extract the names and the race's name of all non Hobbit TokienCharacter in fellowshipOfTheRing
+		// check the content
 	}
 
 	@Test

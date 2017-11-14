@@ -10,10 +10,11 @@
  *
  * Copyright 2012-2016 the original author or authors.
  */
-package org.handson.basic;
+package org.handson;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.util.Lists.newArrayList;
+import static org.assertj.examples.data.Race.HOBBIT;
 import static org.assertj.examples.data.Ring.dwarfRing;
 import static org.assertj.examples.data.Ring.manRing;
 import static org.assertj.examples.data.Ring.narya;
@@ -38,7 +39,7 @@ public class AssertionsDemo extends AbstractAssertionsExamples {
 		assertThat(this.frodo.getName())
 				.as("Checking Mr Frodo's name")
 				.isNotNull()
-				.isEqualTo("rodo")
+				.isEqualTo("Frodo")
 				.isNotEqualTo("Frodon");
 
 		assertThat(this.frodo).isInstanceOf(TolkienCharacter.class)
@@ -72,6 +73,20 @@ public class AssertionsDemo extends AbstractAssertionsExamples {
 				.containsSequence(nenya, narya, dwarfRing)
 				.containsSubsequence(oneRing, nenya, dwarfRing)
 				.doesNotContainSequence(vilya, nenya, oneRing, narya);
+	}
+
+	@Test
+	public void collection_filter_and_extracting_examples() {
+
+		assertThat(this.fellowshipOfTheRing)
+				.filteredOn(tc -> tc.getRace().equals(HOBBIT))
+				.containsOnly(this.sam, this.frodo, this.pippin, this.merry);
+
+		assertThat(this.fellowshipOfTheRing)
+				.filteredOn(tc -> tc.getRace().equals(HOBBIT))
+				.extracting(tc -> tc.getName())
+				.containsOnly("Sam", "Frodo", "Pippin", "Merry");
+
 	}
 
 }

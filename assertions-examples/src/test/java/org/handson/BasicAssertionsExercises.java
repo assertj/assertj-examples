@@ -10,7 +10,7 @@
  *
  * Copyright 2012-2016 the original author or authors.
  */
-package org.handson.basic;
+package org.handson;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.examples.data.Race.ELF;
@@ -41,6 +41,10 @@ public class BasicAssertionsExercises extends AbstractAssertionsExamples {
 		// THEN
 		// TODO check that it starts with "Real" ands with "time" and contains "stupidity"
 		// bonus points if you know who said that :)
+
+		// TODO do the same assertions with Hamcrest,
+		// - what is the easiest to use ? the more readable ?
+		// - make the assertions fail and check the error messages of both.
 	}
 
 	@Test
