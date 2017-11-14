@@ -13,6 +13,11 @@
 package org.handson;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatCode;
+import static org.assertj.core.api.Assertions.assertThatExceptionOfType;
+import static org.assertj.core.api.Assertions.assertThatIllegalStateException;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
+import static org.assertj.core.api.Assertions.catchThrowable;
 import static org.assertj.core.util.Lists.newArrayList;
 import static org.assertj.examples.data.Race.HOBBIT;
 import static org.assertj.examples.data.Ring.dwarfRing;
@@ -22,6 +27,7 @@ import static org.assertj.examples.data.Ring.nenya;
 import static org.assertj.examples.data.Ring.oneRing;
 import static org.assertj.examples.data.Ring.vilya;
 
+import org.assertj.core.api.ThrowableAssert.ThrowingCallable;
 import org.assertj.examples.AbstractAssertionsExamples;
 import org.assertj.examples.data.Ring;
 import org.assertj.examples.data.TolkienCharacter;
@@ -73,6 +79,9 @@ public class AssertionsDemo extends AbstractAssertionsExamples {
 				.containsSequence(nenya, narya, dwarfRing)
 				.containsSubsequence(oneRing, nenya, dwarfRing)
 				.doesNotContainSequence(vilya, nenya, oneRing, narya);
+
+		// uncomment to show how a collection with many items is displayed
+		// assertThat(this.fellowshipOfTheRing).contains(this.sauron);
 	}
 
 	@Test
@@ -87,6 +96,71 @@ public class AssertionsDemo extends AbstractAssertionsExamples {
 				.extracting(tc -> tc.getName())
 				.containsOnly("Sam", "Frodo", "Pippin", "Merry");
 
+	}
+
+	@Test
+	public void exceptions_assertions_examples() {
+
+		// basic testing way
+		try {
+			boom();
+		} catch (final Exception exception) {
+			// you can check exception type
+			assertThat(exception)
+					.isInstanceOf(IllegalStateException.class)
+					.hasMessageStartingWith("boo")
+					.hasMessageContaining("oo")
+					.hasMessageEndingWith("!")
+					.hasMessage("boom!")
+					.hasMessage("%sm!", "boo")
+					.hasMessageMatching("boo..")
+					.hasCauseInstanceOf(RuntimeException.class)
+					.hasStackTraceContaining("let's push that red button");
+		}
+
+		final ThrowingCallable callable = () -> boom();
+		assertThatThrownBy(callable)
+				.isInstanceOf(IllegalStateException.class)
+				.hasMessageStartingWith("boo");
+
+		// assertThatExceptionOfType
+		assertThatExceptionOfType(IllegalStateException.class)
+				.isThrownBy(callable)
+				.withMessage("boom!")
+				.withCauseInstanceOf(RuntimeException.class)
+				.withMessageContaining("boo");
+
+		// use predefined falvour for common exception
+		assertThatIllegalStateException()
+				.isThrownBy(callable)
+				.withMessage("boom!")
+				.withMessageContaining("boo");
+
+		// BDD testing way, separating the assertions from the code
+
+		// WHEN
+		final Throwable thrown = catchThrowable(callable);
+
+		// THEN
+		assertThat(thrown)
+				.isInstanceOf(IllegalStateException.class)
+				.hasMessageStartingWith("boo")
+				.hasMessageContaining("oo")
+				.hasMessageEndingWith("!")
+				.hasMessage("boom!")
+				.hasNoSuppressedExceptions()
+				.hasCauseInstanceOf(RuntimeException.class)
+				.hasStackTraceContaining("let's push that red button");
+
+		// check that code does not throw anything
+		// @formatter:off
+		assertThatCode(() -> { }).doesNotThrowAnyException();
+		// @formatter:on
+	}
+
+	void boom() {
+		final RuntimeException cause = new RuntimeException("let's push that red button");
+		throw new IllegalStateException("boom!", cause);
 	}
 
 }
