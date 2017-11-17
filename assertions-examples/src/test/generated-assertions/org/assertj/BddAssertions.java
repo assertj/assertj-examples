@@ -77,16 +77,6 @@ public class BddAssertions {
   }
 
   /**
-   * Creates a new instance of <code>{@link org.assertj.examples.data.BookTitleAssert}</code>.
-   *
-   * @param actual the actual value.
-   * @return the created assertion object.
-   */
-  public static org.assertj.examples.data.BookTitleAssert then(org.assertj.examples.data.Book.Title actual) {
-    return new org.assertj.examples.data.BookTitleAssert(actual);
-  }
-
-  /**
    * Creates a new instance of <code>{@link org.assertj.examples.data.ClassUsingDifferentClassesWithSameNameAssert}</code>.
    *
    * @param actual the actual value.
@@ -104,6 +94,16 @@ public class BddAssertions {
    */
   public static org.assertj.examples.data.EmployeeAssert then(org.assertj.examples.data.Employee actual) {
     return new org.assertj.examples.data.EmployeeAssert(actual);
+  }
+
+  /**
+   * Creates a new instance of <code>{@link org.assertj.examples.data.EmployeeTitleAssert}</code>.
+   *
+   * @param actual the actual value.
+   * @return the created assertion object.
+   */
+  public static org.assertj.examples.data.EmployeeTitleAssert then(org.assertj.examples.data.Employee.Title actual) {
+    return new org.assertj.examples.data.EmployeeTitleAssert(actual);
   }
 
   /**
