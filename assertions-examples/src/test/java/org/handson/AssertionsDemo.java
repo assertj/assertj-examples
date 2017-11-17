@@ -12,12 +12,14 @@
  */
 package org.handson;
 
+import static java.util.Arrays.asList;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatCode;
 import static org.assertj.core.api.Assertions.assertThatExceptionOfType;
 import static org.assertj.core.api.Assertions.assertThatIllegalStateException;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.assertj.core.api.Assertions.catchThrowable;
+import static org.assertj.core.condition.AnyOf.anyOf;
 import static org.assertj.core.util.Lists.newArrayList;
 import static org.assertj.examples.data.Race.HOBBIT;
 import static org.assertj.examples.data.Ring.dwarfRing;
@@ -27,6 +29,10 @@ import static org.assertj.examples.data.Ring.nenya;
 import static org.assertj.examples.data.Ring.oneRing;
 import static org.assertj.examples.data.Ring.vilya;
 
+import java.util.Comparator;
+import java.util.List;
+
+import org.assertj.core.api.Condition;
 import org.assertj.core.api.ThrowableAssert.ThrowingCallable;
 import org.assertj.examples.AbstractAssertionsExamples;
 import org.assertj.examples.data.Ring;
@@ -161,6 +167,59 @@ public class AssertionsDemo extends AbstractAssertionsExamples {
 	void boom() {
 		final RuntimeException cause = new RuntimeException("let's push that red button");
 		throw new IllegalStateException("boom!", cause);
+	}
+
+	@Test
+	public void conditions_example() {
+		final List<String> jedis = asList("Luke", "Yoda", "Obiwan");
+		final List<String> siths = asList("Sidious", "Vader", "Plagueis");
+
+		final Condition<String> jedi = new Condition<>(jedis::contains, "jedi");
+		final Condition<String> sith = new Condition<>(siths::contains, "sith");
+		assertThat("Yoda").is(jedi);
+		assertThat("Vader").isNot(jedi).is(sith).is(anyOf(jedi, sith));
+
+		// alias
+		final Condition<String> jediPowers = new Condition<>(jedis::contains, "jedi powers");
+		assertThat("Yoda").has(jediPowers);
+		assertThat("Sponge Bob").doesNotHave(jediPowers);
+
+		// collections
+
+		assertThat(asList("Luke", "Yoda")).are(jedi);
+		assertThat(asList("Luke", "Yoda")).have(jediPowers);
+
+		assertThat(asList("Chewbacca", "Solo")).areNot(jedi);
+		assertThat(asList("Chewbacca", "Solo")).doNotHave(jediPowers);
+
+		final List<String> characters = asList("Luke", "Yoda", "Chewbacca");
+		assertThat(characters).areAtLeast(2, jedi);
+		assertThat(characters).haveAtLeast(2, jediPowers);
+
+		assertThat(characters).areAtMost(2, jedi);
+		assertThat(characters).haveAtMost(2, jediPowers);
+
+		assertThat(characters).areExactly(2, jedi);
+		assertThat(characters).haveExactly(2, jediPowers);
+
+	}
+
+	@Test
+	public void using_comparators() {
+		// standard comparison : frodo is not equal to sam ...
+		assertThat(this.frodo).isNotEqualTo(this.sam);
+		// ... but if we compare only character's race frodo is equal to sam
+		final Comparator<TolkienCharacter> raceComparator = (tc1, tc2) -> tc1.getRace().compareTo(tc2.getRace());
+		assertThat(this.frodo)
+				.usingComparator(raceComparator)
+				.isEqualTo(this.sam)
+				.isIn(this.merry, this.pippin, this.sam);
+
+		// comparators on collection
+		assertThat(this.fellowshipOfTheRing)
+				.usingElementComparator(raceComparator)
+				// Succeeds because Sauron is a Maia like Gandalf
+				.contains(this.gandalf, this.sauron);
 	}
 
 }
