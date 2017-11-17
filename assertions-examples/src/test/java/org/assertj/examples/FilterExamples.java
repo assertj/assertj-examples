@@ -96,13 +96,13 @@ public class FilterExamples extends AbstractAssertionsExamples {
         return player.getPointsPerGame() > 20 && (player.getAssistsPerGame() >= 8 || player.getReboundsPerGame() >= 8);
       }
     };
-    assertThat(filter(basketBallPlayers).having(mvpStats).get()).containsOnly(rose, james, dwayne);
-    assertThat(basketBallPlayers).filteredOn(mvpStats).containsOnly(rose, james, dwayne);
+    assertThat(filter(basketBallPlayers).having(mvpStats).get()).containsOnly(rose, james, wade);
+    assertThat(basketBallPlayers).filteredOn(mvpStats).containsOnly(rose, james, wade);
 
     // being(condition) example : same condition can be applied but is renamed to be more readable
     Condition<BasketBallPlayer> potentialMvp = mvpStats;
-    assertThat(filter(basketBallPlayers).being(potentialMvp).get()).containsOnly(rose, james, dwayne);
-    assertThat(basketBallPlayers).filteredOn(potentialMvp).containsOnly(rose, james, dwayne);
+    assertThat(filter(basketBallPlayers).being(potentialMvp).get()).containsOnly(rose, james, wade);
+    assertThat(basketBallPlayers).filteredOn(potentialMvp).containsOnly(rose, james, wade);
   }
 
   @Test
@@ -148,7 +148,7 @@ public class FilterExamples extends AbstractAssertionsExamples {
         return player.getPointsPerGame() > 20 && (player.getAssistsPerGame() >= 8 || player.getReboundsPerGame() >= 8);
       }
     };
-    assertThat(basketBallPlayers).filteredOn(potentialMvp).containsOnly(rose, james, dwayne);
+    assertThat(basketBallPlayers).filteredOn(potentialMvp).containsOnly(rose, james, wade);
   }
 
   @Test

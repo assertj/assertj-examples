@@ -28,7 +28,7 @@ public class GeneratedJunitSoftAssertionsExamples extends AbstractAssertionsExam
     // use the generated soft assertions
     softly.assertThat(rose)
           .hasName(new Name("Derrick", "Rose"))
-          .hasTeamMates(noah);
+          .hasTeamMates(james, wade);
   }
 
 }
