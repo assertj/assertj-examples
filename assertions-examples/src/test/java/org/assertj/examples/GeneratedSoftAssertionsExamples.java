@@ -27,7 +27,7 @@ public class GeneratedSoftAssertionsExamples extends AbstractAssertionsExamples 
     SoftAssertions softly = new SoftAssertions();
     softly.assertThat(rose)
           .hasName(new Name("Derrick", "Rose"))
-          .hasTeamMates(noah);
+          .hasTeamMates(james, wade);
     softly.assertAll();
   }
 

@@ -114,46 +114,52 @@ public abstract class AbstractAssertionsExamples {
   protected static BasketBallPlayer james;
   protected static BasketBallPlayer durant;
   protected static BasketBallPlayer noah;
-  protected static BasketBallPlayer tonyParker;
-  protected static BasketBallPlayer dwayne;
+  protected static BasketBallPlayer parker;
+  protected static BasketBallPlayer wade;
+  protected static BasketBallPlayer antetokounmpo;
   protected static List<BasketBallPlayer> basketBallPlayers;
   protected static PotentialMvpCondition potentialMvp;
   protected static Condition<BasketBallPlayer> doubleDoubleStats;
 
   @BeforeClass
   public static void setUpOnce() {
-    rose = new BasketBallPlayer(new Name("Derrick", "Rose"), "Chicago Bulls");
+    rose = new BasketBallPlayer(new Name("Derrick", "Rose"), "Cavs");
     rose.setAssistsPerGame(8);
     rose.setPointsPerGame(25);
     rose.setReboundsPerGame(5);
-    tonyParker = new BasketBallPlayer(new Name("Tony", "Parker"), "Spurs");
-    tonyParker.setAssistsPerGame(9);
-    tonyParker.setPointsPerGame(21);
-    tonyParker.setReboundsPerGame(5);
-    james = new BasketBallPlayer(new Name("Lebron", "James"), "Miami Heat");
+    parker = new BasketBallPlayer(new Name("Tony", "Parker"), "Spurs");
+    parker.setAssistsPerGame(9);
+    parker.setPointsPerGame(21);
+    parker.setReboundsPerGame(5);
+    james = new BasketBallPlayer(new Name("Lebron", "James"), "Cavs");
     james.setAssistsPerGame(6);
     james.setPointsPerGame(27);
     james.setReboundsPerGame(8);
-    dwayne = new BasketBallPlayer(new Name("Dwayne", "Wade"), "Miami Heat");
-    dwayne.setAssistsPerGame(16);
-    dwayne.setPointsPerGame(55);
-    dwayne.setReboundsPerGame(16);
-    durant = new BasketBallPlayer(new Name("Kevin", "Durant"), "OKC");
+    wade = new BasketBallPlayer(new Name("Dwayne", "Wade"), "Cavs");
+    wade.setAssistsPerGame(16);
+    wade.setPointsPerGame(55);
+    wade.setReboundsPerGame(16);
+    durant = new BasketBallPlayer(new Name("Kevin", "Durant"), "Warriors");
     durant.setAssistsPerGame(4);
     durant.setPointsPerGame(30);
     durant.setReboundsPerGame(5);
-    noah = new BasketBallPlayer(new Name("Joachim", "Noah"), "Chicago Bulls");
+    noah = new BasketBallPlayer(new Name("Joachim", "Noah"), "Knicks");
     noah.setAssistsPerGame(4);
     noah.setPointsPerGame(10);
     noah.setReboundsPerGame(11);
+    antetokounmpo = new BasketBallPlayer(new Name("Giannis", "Antetokounmpo"), "Bucks");
+    antetokounmpo.setAssistsPerGame(5);
+    antetokounmpo.setPointsPerGame(30);
+    antetokounmpo.setReboundsPerGame(10);
 
-    noah.getTeamMates().add(rose);
-    rose.getTeamMates().add(noah);
+    wade.getTeamMates().add(james);
+    james.getTeamMates().add(wade);
+    james.getTeamMates().add(rose);
+    rose.getTeamMates().add(james);
+    rose.getTeamMates().add(wade);
+    wade.getTeamMates().add(rose);
 
-    dwayne.getTeamMates().add(james);
-    james.getTeamMates().add(dwayne);
-
-    basketBallPlayers = newArrayList(rose, james, dwayne, durant, noah);
+    basketBallPlayers = newArrayList(rose, james, wade, durant, noah);
     potentialMvp = new PotentialMvpCondition();
     doubleDoubleStats = new Condition<BasketBallPlayer>("double double stats") {
       @Override

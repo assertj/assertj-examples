@@ -29,14 +29,14 @@ public class GeneratedStandardAssertionsExamples extends AbstractAssertionsExamp
   @Test
   public void generated_bdd_assertions_example() throws NameException {
     // use the generated assertions
-    assertThat(rose).hasName(new Name("Derrick", "Rose")).hasTeamMates(noah).hasOnlyTeamMates(noah);
+    assertThat(rose).hasName(new Name("Derrick", "Rose")).hasTeamMates(james, wade).hasOnlyTeamMates(james, wade);
     
     // 
-    Team bulls = new Team(newArrayList(rose, noah));
-    assertThat(bulls).as("bulls players").hasPlayers(rose, noah).doesNotHavePlayers(james);
+    Team cavs = new Team(newArrayList(rose, james, wade));
+    assertThat(cavs).as("cavs players").hasPlayers(rose, james, wade).doesNotHavePlayers(antetokounmpo);
     
     try {
-	  assertThat(bulls).as("bulls players").hasPlayers(rose, noah, james);
+	  assertThat(cavs).as("cavs players").hasPlayers(rose, noah, james);
     } catch (AssertionError e) {
       AbstractAssertionsExamples.logger.info(e.getMessage());
     }
