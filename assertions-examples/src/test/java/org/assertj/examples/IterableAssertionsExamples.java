@@ -75,6 +75,8 @@ public class IterableAssertionsExamples extends AbstractAssertionsExamples {
                    .containsAnyOf("a", "b", "c", "d")
                    .containsAnyOf("e", "f", "g", "b");
 
+    assertThat(asList("a", "a", "b")).containsOnly("a", "a", "b", "b");
+
     // would work the same way with Iterable<Ring>,
     Iterable<? extends Ring> elvesRings = newArrayList(vilya, nenya, narya);
     assertThat(elvesRings).isNotEmpty().hasSize(3);
