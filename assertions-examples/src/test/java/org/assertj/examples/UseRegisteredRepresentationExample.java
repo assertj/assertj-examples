@@ -22,13 +22,13 @@ public class UseRegisteredRepresentationExample extends AbstractAssertionsExampl
   @Test
   public void should_use_given_representation_in_assertion_error_messages() {
     
-    //
-
     Example example = new Example();
     // this assertion fails with error : "expected:<[null]> but was:<[Example]>"
     try {
       assertThat(example).isNull(); // example is not null !
     } catch (AssertionError e1) {
+      // example is represented with MyRepresentation that was registered as a service in
+      // src/test/resources/META-INF/services/org.assertj.core.presentation.Representation
       assertThat(e1).hasMessageContaining("EXAMPLE");
     }
   }
