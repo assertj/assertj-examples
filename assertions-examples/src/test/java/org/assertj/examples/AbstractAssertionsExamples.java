@@ -34,6 +34,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.assertj.core.api.Assertions;
 import org.assertj.core.api.Condition;
 import org.assertj.examples.comparator.AbsValueComparator;
 import org.assertj.examples.comparator.AgeComparator;
@@ -167,6 +168,8 @@ public abstract class AbstractAssertionsExamples {
         return false;
       }
     };
+
+    Assertions.setRemoveAssertJRelatedElementsFromStackTrace(false);
   }
 
   @Before
