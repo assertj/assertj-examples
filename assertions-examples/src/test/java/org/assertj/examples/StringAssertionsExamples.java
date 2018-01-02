@@ -50,7 +50,8 @@ public class StringAssertionsExamples extends AbstractAssertionsExamples {
     }
 
     String bookDescription = "{ 'title':'Games of Thrones', 'author':'George Martin'}";
-    assertThat(bookDescription).containsSequence("{", "title", "Games of Thrones", "}");
+    assertThat(bookDescription).containsSubsequence("{", "title", "Games of Thrones", "}");
+    assertThat(bookDescription).containsSequence("'title'", ":", "'Games of Thrones'");
 
     try {
       assertThat(bookDescription).containsSequence("{", "title", "author", "Games of Thrones", "}");

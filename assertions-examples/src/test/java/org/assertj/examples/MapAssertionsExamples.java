@@ -14,6 +14,8 @@ package org.assertj.examples;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.entry;
+import static org.assertj.examples.data.Race.ELF;
+import static org.assertj.examples.data.Race.MAIA;
 import static org.assertj.examples.data.Race.MAN;
 import static org.assertj.examples.data.Ring.dwarfRing;
 import static org.assertj.examples.data.Ring.manRing;
@@ -209,6 +211,19 @@ public class MapAssertionsExamples extends AbstractAssertionsExamples {
     assertThat(ringBearers).hasEntrySatisfying(isMan, oneRingBearer);
     assertThat(ringBearers).hasKeySatisfying(isMan);
     assertThat(ringBearers).hasValueSatisfying(oneRingBearer);
+  }
+
+  @Test
+  public void allSatisfy_example() {
+    Map<TolkienCharacter, Ring> elvesRingBearers = new HashMap<>();
+    elvesRingBearers.put(galadriel, nenya);
+    elvesRingBearers.put(gandalf, narya);
+    elvesRingBearers.put(elrond, vilya);
+
+    assertThat(elvesRingBearers).allSatisfy((character, ring) -> {
+      assertThat(character.getRace()).isIn(ELF, MAIA);
+      assertThat(ring).isIn(nenya, narya, vilya);
+    });
   }
 
   private static <K, V> Map.Entry<K, V> javaMapEntry(K key, V value) {

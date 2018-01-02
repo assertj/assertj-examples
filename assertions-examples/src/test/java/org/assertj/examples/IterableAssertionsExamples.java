@@ -378,9 +378,11 @@ public class IterableAssertionsExamples extends AbstractAssertionsExamples {
   }
 
   @Test
-  public void allMatch_iterable_assertion_example() {
-    List<TolkienCharacter> hobbits = newArrayList(frodo, sam, pippin);
-    assertThat(hobbits).allMatch(character -> character.getRace() == HOBBIT, "hobbits");
+  public void xxxMatch_iterable_assertion_example() {
+    List<TolkienCharacter> hobbits = newArrayList(frodo, sam, pippin, merry);
+    assertThat(hobbits).allMatch(character -> character.getRace() == HOBBIT, "hobbits")
+                       .anyMatch(character -> character.getName().contains("pp"))
+                       .noneMatch(character -> character.getRace() == ORC);
   }
 
   @Test
@@ -656,6 +658,15 @@ public class IterableAssertionsExamples extends AbstractAssertionsExamples {
   }
 
   @Test
+  public void zipStatisfy_example() {
+    Iterable<Ring> elvesRings = newArrayList(vilya, nenya, narya);
+    Iterable<String> elvesRingsToString = newArrayList("vilya", "nenya", "narya");
+
+    assertThat(elvesRings).zipSatisfy(elvesRingsToString,
+                                      (ring, desc) -> assertThat(ring).hasToString(desc));
+  }
+
+  @Test
   public void should_not_produce_warning_for_varargs_parameter() {
     List<Entry<String, String>> list = new ArrayList<>();
     list.add(Pair.of("A", "B"));
@@ -714,9 +725,24 @@ public class IterableAssertionsExamples extends AbstractAssertionsExamples {
   public void should_extract_properties_from_default_method() {
     // GIVEN
     List<Person> people = asList(new Person());
-
     // THEN
     assertThat(people).extracting("name").containsOnly("John Doe");
+  }
+
+  @Test
+  public void anyMatch_examples() {
+    // GIVEN
+    Iterable<String> abcc = newArrayList("a", "b", "cc");
+    // THEN
+    assertThat(abcc).noneMatch(String::isEmpty);
+  }
+
+  @Test
+  public void noneMatch_examples() {
+    // GIVEN
+    Iterable<String> abcc = newArrayList("a", "b", "cc");
+    // THEN
+    assertThat(abcc).anyMatch(s -> s.length() == 2);
   }
 
   @Test

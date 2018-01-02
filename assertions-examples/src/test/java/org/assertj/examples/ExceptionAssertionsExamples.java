@@ -20,6 +20,7 @@ import static org.assertj.core.api.Assertions.assertThatIllegalArgumentException
 import static org.assertj.core.api.Assertions.assertThatNullPointerException;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.assertj.core.api.Assertions.catchThrowable;
+import static org.assertj.core.api.Assertions.catchThrowableOfType;
 
 import java.io.IOException;
 
@@ -231,10 +232,12 @@ public class ExceptionAssertionsExamples extends AbstractAssertionsExamples {
     
     // assertion will pass
     assertThatExceptionOfType(RuntimeException.class)
+               .as("check passage")
                .isThrownBy(() -> {throw runtime;})
                .withStackTraceContaining("you shall not pass");
 
     assertThatNullPointerException()
+                .as("check explosion")
                .isThrownBy(() -> {throw new NullPointerException("null !");})
                .withMessage("null !");
     assertThatIllegalArgumentException()
@@ -247,7 +250,7 @@ public class ExceptionAssertionsExamples extends AbstractAssertionsExamples {
                            .withMessage("%s!", "boom")
                            .withStackTraceContaining("IOException")
                            .withNoCause();
-    // @format:on
+    // @format:on    
   }
 
   @Test
@@ -294,4 +297,10 @@ public class ExceptionAssertionsExamples extends AbstractAssertionsExamples {
   public void check_code_does_not_throw_exceptions() {
     assertThatCode(() -> {}).doesNotThrowAnyException();
   }
+
+  @Test
+  public void catchThrowableOfType_examples() {
+    assertThat(catchThrowableOfType(() -> {}, Exception.class)).isNull();
+  }
+
 }

@@ -34,6 +34,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.assertj.core.api.Assertions;
 import org.assertj.core.api.Condition;
 import org.assertj.examples.comparator.AbsValueComparator;
 import org.assertj.examples.comparator.AgeComparator;
@@ -59,6 +60,10 @@ import org.slf4j.LoggerFactory;
  * @author Joel Costigliola
  */
 public abstract class AbstractAssertionsExamples {
+
+  {
+    Assertions.setRemoveAssertJRelatedElementsFromStackTrace(false);
+  }
 
   static final String ERROR_MESSAGE_EXAMPLE_FOR_ASSERTION = "{} assertion : {}\n";
   protected static final Logger logger = LoggerFactory.getLogger("[ERROR MESSAGE EXAMPLE]");
@@ -91,6 +96,7 @@ public abstract class AbstractAssertionsExamples {
 
   // Rings and their bearer
   protected final List<Ring> ringsOfPower = newArrayList(oneRing, vilya, nenya, narya, dwarfRing, manRing);
+  protected final List<Ring> elvesRings = newArrayList(vilya, nenya, narya);
   protected final Map<Ring, TolkienCharacter> ringBearers = new HashMap<>();
 
   // Lord of the Rings movies

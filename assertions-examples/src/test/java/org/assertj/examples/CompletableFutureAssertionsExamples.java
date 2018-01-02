@@ -12,9 +12,11 @@
  */
 package org.assertj.examples;
 
+import static java.util.concurrent.CompletableFuture.completedFuture;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import java.util.concurrent.CompletableFuture;
+import java.util.concurrent.CompletionStage;
 
 import org.junit.Test;
 
@@ -42,12 +44,15 @@ public class CompletableFutureAssertionsExamples extends AbstractAssertionsExamp
 
     // failed = CompletedExceptionally() + isNotCancelled()
     assertThat(futureExplosion).hasFailed()
-                               .hasFailedWithThrowableThat().isInstanceOf(RuntimeException.class).hasMessage("boom !");
+                               .hasFailedWithThrowableThat()
+                               .isInstanceOf(RuntimeException.class)
+                               .hasMessage("boom !");
 
     CompletableFuture<?> cancelledFuture = new CompletableFuture<>();
     cancelledFuture.cancel(true);
     assertThat(cancelledFuture).isCancelled()
                                .isDone()
+                               .isCompletedExceptionally()
                                .hasNotFailed();
 
     // log some error messages to have a look at them
@@ -61,6 +66,13 @@ public class CompletableFutureAssertionsExamples extends AbstractAssertionsExamp
     } catch (AssertionError e) {
       logAssertionErrorMessage("CompletableFutureAssert.hasFailed", e);
     }
+  }
+
+  @Test
+  public void completionStage_assertions_examples() {
+    CompletionStage<String> actual = completedFuture("done");
+    assertThat(actual).isDone()
+                      .hasNotFailed();
   }
 
 }

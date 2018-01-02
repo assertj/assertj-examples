@@ -12,7 +12,7 @@
  */
 package org.assertj.examples;
 
-import static org.assertj.core.api.Assertions.*;
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.examples.condition.UsingConditionExamples.JEDI;
 import static org.assertj.examples.data.Race.ELF;
 import static org.assertj.examples.data.Race.HOBBIT;
@@ -23,8 +23,8 @@ import java.util.OptionalInt;
 import java.util.function.Function;
 
 import org.assertj.core.api.Condition;
-import org.assertj.examples.data.TolkienCharacter;
 import org.assertj.examples.data.Race;
+import org.assertj.examples.data.TolkienCharacter;
 import org.junit.Test;
 
 /**
@@ -119,12 +119,12 @@ public class OptionalAssertionsExamples extends AbstractAssertionsExamples {
   @Test
   public void hasValueSatisfying_with_condition_assertion_example() {
     assertThat(Optional.of("Yoda")).hasValueSatisfying(JEDI);
-    
-    Condition<TolkienCharacter> isAnElf = new Condition<>(character -> character.getRace() == ELF, "an elf"); 
-    
+
+    Condition<TolkienCharacter> isAnElf = new Condition<>(character -> character.getRace() == ELF, "an elf");
+
     TolkienCharacter legolas = new TolkienCharacter("Legolas", 1000, ELF);
     TolkienCharacter frodo = new TolkienCharacter("Frodo", 33, HOBBIT);
-    
+
     // assertion succeeds
     assertThat(Optional.of(legolas)).hasValueSatisfying(isAnElf);
     try {
@@ -133,7 +133,7 @@ public class OptionalAssertionsExamples extends AbstractAssertionsExamples {
       logAssertionErrorMessage("OptionalAssert.hasValueSatisfying with condition", e);
     }
   }
-  
+
   @Test
   public void flatMap_optional_assertion_example() {
     Function<String, Optional<String>> UPPER_CASE_OPTIONAL_STRING = s -> s == null ? Optional.empty()
@@ -149,6 +149,14 @@ public class OptionalAssertionsExamples extends AbstractAssertionsExamples {
 
     assertThat(Optional.<String> ofNullable(null)).flatMap(UPPER_CASE_OPTIONAL_STRING)
                                                   .isEmpty();
+  }
+
+  @Test
+  public void get_optional_assertion_example() {
+    TolkienCharacter frodo = new TolkienCharacter("Frodo", 33, HOBBIT);
+
+    // Use get() to navigate to perform assertions on frodo.
+    assertThat(Optional.of(frodo)).get().isNotNull();
   }
 
 }

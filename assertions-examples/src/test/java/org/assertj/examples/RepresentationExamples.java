@@ -70,7 +70,7 @@ public class RepresentationExamples extends AbstractAssertionsExamples {
     Assertions.registerFormatterForType(String.class, value -> "$" + value + "$");
     // THEN
     assertThat(STANDARD_REPRESENTATION.toStringOf(string)).isEqualTo("$foo$");
-    Assertions.useDefaultRepresentation();
+    StandardRepresentation.removeAllRegisteredFormatters();
     assertThat(STANDARD_REPRESENTATION.toStringOf(string)).isEqualTo("\"foo\"");
   }
 

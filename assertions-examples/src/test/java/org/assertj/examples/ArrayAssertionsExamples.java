@@ -507,4 +507,13 @@ public class ArrayAssertionsExamples extends AbstractAssertionsExamples {
 
   }
 
+  @Test
+  public void zipStatisfy_example() {
+    Ring[] elvesRings = { vilya, nenya, narya };
+    String[] elvesRingsToString = { "vilya", "nenya", "narya" };
+
+    assertThat(elvesRings).zipSatisfy(elvesRingsToString,
+                                      (ring, desc) -> assertThat(ring).hasToString(desc));
+  }
+
 }

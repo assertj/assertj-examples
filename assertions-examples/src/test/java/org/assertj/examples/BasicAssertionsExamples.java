@@ -30,6 +30,7 @@ import java.util.Map;
 
 import org.assertj.core.api.Assertions;
 import org.assertj.core.util.BigDecimalComparator;
+import org.assertj.core.util.introspection.FieldSupport;
 import org.assertj.core.util.introspection.IntrospectionError;
 import org.assertj.examples.comparator.AtPrecisionComparator;
 import org.assertj.examples.data.Person;
@@ -255,6 +256,20 @@ public class BasicAssertionsExamples extends AbstractAssertionsExamples {
                                  character -> character.age,
                                  character -> character.getRace().getName())
                      .containsExactly("Frodo", 33, "Hobbit");
+
+    assertThat(frodo).extracting("name", "age", "race.name")
+                     .containsExactly("Frodo", 33, "Hobbit");
+
+    System.out.println("FieldSupport.extraction().fieldValue(\"age\", Integer.class, frodo)"
+                       + FieldSupport.extraction().fieldValue("age", Integer.class, frodo));
+    System.out.println("FieldSupport.extraction().fieldValue(\"age\", Integer.class, frodo)"
+                       + FieldSupport.extraction().fieldValue("age", Object.class, frodo));
+  }
+
+  @Test
+  public void should_be_able_to_extract_primitive_values() {
+    assertThat(FieldSupport.extraction().fieldValue("age", Integer.class, frodo)).isEqualTo(33);
+    assertThat(FieldSupport.extraction().fieldValue("age", int.class, frodo)).isEqualTo(33);
   }
 
   @Test
@@ -273,7 +288,7 @@ public class BasicAssertionsExamples extends AbstractAssertionsExamples {
     TolkienCharacter sam = new TolkienCharacter(null, 38, HOBBIT);
     assertThat(sam).hasNoNullFieldsOrPropertiesExcept("name");
   }
-  
+
   @Test
   public void extracting_field_or_property_examples() {
     assertThat(frodo).extracting("name", "age", "race.name")
@@ -357,7 +372,8 @@ public class BasicAssertionsExamples extends AbstractAssertionsExamples {
                        .containsExactly(bird, snake);
   }
 
-  @Test @Ignore
+  @Test
+  @Ignore
   public void use_BigDecimal_comparator_with_extracting() {
     // GIVEN
     Person joe = new Person("Joe", 25);
