@@ -14,6 +14,7 @@ package org.assertj.examples;
 
 import static java.util.concurrent.atomic.AtomicIntegerFieldUpdater.newUpdater;
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.byLessThan;
 import static org.assertj.core.api.Assertions.within;
 import static org.assertj.core.api.Assertions.withinPercentage;
 
@@ -21,6 +22,7 @@ import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.concurrent.atomic.AtomicIntegerArray;
 import java.util.concurrent.atomic.AtomicIntegerFieldUpdater;
+import java.util.concurrent.atomic.AtomicLong;
 import java.util.concurrent.atomic.AtomicLongArray;
 import java.util.concurrent.atomic.AtomicReference;
 import java.util.concurrent.atomic.AtomicReferenceArray;
@@ -70,6 +72,14 @@ public class AtomicAssertionsExamples extends AbstractAssertionsExamples {
     ageUpdater.set(gandalf, 25);
     assertThat(ageUpdater).hasValue(25, gandalf);
     ageUpdater.set(gandalf, age);
+
+    assertThat(new AtomicLong(5)).hasValueCloseTo(7L, within(3L))
+                                 .hasValueCloseTo(7L, byLessThan(3L))
+                                 .hasValueCloseTo(7, within(2L));
+
+    assertThat(new AtomicInteger(5)).hasValueCloseTo(7, within(3))
+                                    .hasValueCloseTo(7, byLessThan(3))
+                                    .hasValueCloseTo(7, within(2));
   }
 
 }
