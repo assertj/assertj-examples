@@ -434,7 +434,7 @@ public class StreamAssertionsExamples extends AbstractAssertionsExamples {
 
   @Test
   public void stream_assertions_on_flat_extracted_values_examples() throws Exception {
-    assertThat(Stream.of(noah, james)).flatExtracting(teammates()).contains(dwayne, rose);
+    assertThat(Stream.of(noah, james)).flatExtracting(teammates()).contains(wade, rose);
   }
 
   @Test

@@ -25,7 +25,7 @@ public class GeneratedBddAssertionsExamples extends AbstractAssertionsExamples {
   public void generated_bdd_assertions_example() throws NameException {
     // use the generated BDD assertions
     // Given Derrick Rose basket ball player
-    then(rose).hasName(new Name("Derrick", "Rose")).hasTeamMates(noah);
+    then(rose).hasName(new Name("Derrick", "Rose")).hasTeamMates(james, wade);
   }
 
 }

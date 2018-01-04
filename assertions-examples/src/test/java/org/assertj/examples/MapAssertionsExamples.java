@@ -231,11 +231,11 @@ public class MapAssertionsExamples extends AbstractAssertionsExamples {
 
   public void map_flatExtracting_examples() {
     Map<String, List<BasketBallPlayer>> teams = new HashMap<>();
-    teams.put("spurs", asList(tonyParker, ginobili));
-    teams.put("cavs", asList(james, dwayne));
+    teams.put("spurs", asList(parker));
+    teams.put("cavs", asList(james, wade));
 
     assertThat(teams).flatExtracting("spurs", "cavs")
-                     .containsExactly(tonyParker, ginobili, james, dwayne);
+                     .containsExactly(parker, james, wade);
   }
 
   private static <K, V> Map.Entry<K, V> javaMapEntry(K key, V value) {

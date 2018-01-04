@@ -12,30 +12,63 @@
  */
 package org.assertj.examples.neo4j;
 
+import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.util.Arrays;
+import java.util.Collection;
+import java.util.function.Predicate;
+import java.util.stream.Collectors;
 
-import org.assertj.examples.data.neo4j.DragonBallGraph;
+import org.assertj.examples.data.neo4j.DragonBallGraphRepository;
 import org.junit.AfterClass;
 import org.junit.BeforeClass;
 import org.neo4j.graphdb.GraphDatabaseService;
+import org.neo4j.graphdb.Transaction;
 import org.neo4j.test.TestGraphDatabaseFactory;
 
 public class Neo4jAssertionExamples {
 
-  protected static GraphDatabaseService graphDB;
-  protected static DragonBallGraph dragonBallGraph;
+  private static GraphDatabaseService graphDatabase;
+  private static DragonBallGraphRepository dragonBallGraphRepository;
 
   @BeforeClass
-  public static void prepare_graph() throws IOException {
-    graphDB = new TestGraphDatabaseFactory().newImpermanentDatabase();
-    dragonBallGraph = new DragonBallGraph(graphDB);
-    dragonBallGraph.importGraph(
-      Neo4jAssertionExamples.class.getResourceAsStream("/dragonBall.cypher")
-    );
+  public static void prepare_graph() {
+    graphDatabase = new TestGraphDatabaseFactory().newImpermanentDatabase();
+    importGraph(graphDatabase);
+    dragonBallGraphRepository = new DragonBallGraphRepository(graphDatabase);
   }
 
   @AfterClass
   public static void cleanUp() {
-    graphDB.shutdown();
+    graphDatabase.shutdown();
+  }
+
+  static GraphDatabaseService graphDatabase() {
+    return graphDatabase;
+  }
+
+  static DragonBallGraphRepository dragonBallGraphRepository() {
+    return dragonBallGraphRepository;
+  }
+
+  private static void importGraph(GraphDatabaseService graphDatabase) {
+    try (InputStream dumpFile = Neo4jAssertionExamples.class.getResourceAsStream("/dragonBall.cypher");
+        Transaction transaction = graphDatabase.beginTx()) {
+
+      cypherStatements(dumpFile).forEach(graphDatabase::execute);
+      transaction.success();
+    } catch (IOException e) {
+      throw new RuntimeException(e.getMessage(), e);
+    }
+  }
+
+  private static Collection<String> cypherStatements(InputStream inputStream) throws IOException {
+    try (BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream))) {
+      Predicate<String> isEmpty = String::isEmpty;
+      String statements = reader.lines().filter(isEmpty.negate()).collect(Collectors.joining("\n"));
+      return Arrays.asList(statements.split(";"));
+    }
   }
 }

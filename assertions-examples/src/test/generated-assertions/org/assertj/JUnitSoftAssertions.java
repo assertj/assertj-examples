@@ -319,14 +319,14 @@ public class JUnitSoftAssertions extends org.assertj.core.api.JUnitSoftAssertion
   }
 
   /**
-   * Creates a new "soft" instance of <code>{@link org.assertj.examples.data.neo4j.DragonBallGraphAssert}</code>.
+   * Creates a new "soft" instance of <code>{@link org.assertj.examples.data.neo4j.DragonBallGraphRepositoryAssert}</code>.
    *
    * @param actual the actual value.
    * @return the created "soft" assertion object.
    */
   @org.assertj.core.util.CheckReturnValue
-  public org.assertj.examples.data.neo4j.DragonBallGraphAssert assertThat(org.assertj.examples.data.neo4j.DragonBallGraph actual) {
-    return proxy(org.assertj.examples.data.neo4j.DragonBallGraphAssert.class, org.assertj.examples.data.neo4j.DragonBallGraph.class, actual);
+  public org.assertj.examples.data.neo4j.DragonBallGraphRepositoryAssert assertThat(org.assertj.examples.data.neo4j.DragonBallGraphRepository actual) {
+    return proxy(org.assertj.examples.data.neo4j.DragonBallGraphRepositoryAssert.class, org.assertj.examples.data.neo4j.DragonBallGraphRepository.class, actual);
   }
 
   /**

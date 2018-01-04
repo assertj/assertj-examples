@@ -305,14 +305,14 @@ public class Assertions {
   }
 
   /**
-   * Creates a new instance of <code>{@link org.assertj.examples.data.neo4j.DragonBallGraphAssert}</code>.
+   * Creates a new instance of <code>{@link org.assertj.examples.data.neo4j.DragonBallGraphRepositoryAssert}</code>.
    *
    * @param actual the actual value.
    * @return the created assertion object.
    */
   @org.assertj.core.util.CheckReturnValue
-  public static org.assertj.examples.data.neo4j.DragonBallGraphAssert assertThat(org.assertj.examples.data.neo4j.DragonBallGraph actual) {
-    return new org.assertj.examples.data.neo4j.DragonBallGraphAssert(actual);
+  public static org.assertj.examples.data.neo4j.DragonBallGraphRepositoryAssert assertThat(org.assertj.examples.data.neo4j.DragonBallGraphRepository actual) {
+    return new org.assertj.examples.data.neo4j.DragonBallGraphRepositoryAssert(actual);
   }
 
   /**

@@ -508,8 +508,8 @@ public class IterableAssertionsExamples extends AbstractAssertionsExamples {
 
   @Test
   public void iterable_assertions_on_flat_extracted_values_examples() throws Exception {
-    assertThat(newArrayList(noah, james)).flatExtracting(teammates()).contains(dwayne, rose);
-    assertThat(newArrayList(noah, james)).flatExtracting("teamMates").contains(dwayne, rose);
+    assertThat(newArrayList(noah, james)).flatExtracting(teammates()).contains(wade, rose);
+    assertThat(newArrayList(noah, james)).flatExtracting("teamMates").contains(wade, rose);
 
     // extract a list of values, flatten them and use contains assertion
     assertThat(fellowshipOfTheRing).flatExtracting(c -> asList(c.getName(), c.getRace().getName()))
@@ -574,7 +574,7 @@ public class IterableAssertionsExamples extends AbstractAssertionsExamples {
         return player.getPointsPerGame() > 20 && (player.getAssistsPerGame() >= 8 || player.getReboundsPerGame() >= 8);
       }
     };
-    assertThat(basketBallPlayers).filteredOn(potentialMvp).containsOnly(rose, james, dwayne);
+    assertThat(basketBallPlayers).filteredOn(potentialMvp).containsOnly(rose, james, wade);
   }
 
   @Test
