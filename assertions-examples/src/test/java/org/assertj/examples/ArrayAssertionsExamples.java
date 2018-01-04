@@ -87,7 +87,9 @@ public class ArrayAssertionsExamples extends AbstractAssertionsExamples {
     assertThat(array).isNullOrEmpty();
     // you can also check the start or end of your collection/iterable
     Ring[] allRings = array(oneRing, vilya, nenya, narya, dwarfRing, manRing);
-    assertThat(allRings).startsWith(oneRing, vilya).endsWith(dwarfRing, manRing);
+    assertThat(allRings).startsWith(oneRing, vilya)
+                        .endsWith(dwarfRing, manRing)
+                        .endsWith(manRing);
     assertThat(allRings).containsSequence(nenya, narya, dwarfRing);
     // you can check that an array is sorted
     TolkienCharacter[] fellowshipOfTheRingArray = fellowshipOfTheRing.toArray(new TolkienCharacter[0]);

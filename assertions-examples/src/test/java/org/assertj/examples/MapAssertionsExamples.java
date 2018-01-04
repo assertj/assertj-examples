@@ -12,6 +12,7 @@
  */
 package org.assertj.examples;
 
+import static java.util.Arrays.asList;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.entry;
 import static org.assertj.examples.data.Race.ELF;
@@ -27,10 +28,12 @@ import static org.assertj.examples.data.Ring.vilya;
 import java.util.AbstractMap.SimpleImmutableEntry;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
+import java.util.List;
 import java.util.Map;
 
 import org.apache.commons.lang3.tuple.Pair;
 import org.assertj.core.api.Condition;
+import org.assertj.examples.data.BasketBallPlayer;
 import org.assertj.examples.data.Ring;
 import org.assertj.examples.data.TolkienCharacter;
 import org.junit.Test;
@@ -224,6 +227,15 @@ public class MapAssertionsExamples extends AbstractAssertionsExamples {
       assertThat(character.getRace()).isIn(ELF, MAIA);
       assertThat(ring).isIn(nenya, narya, vilya);
     });
+  }
+
+  public void map_flatExtracting_examples() {
+    Map<String, List<BasketBallPlayer>> teams = new HashMap<>();
+    teams.put("spurs", asList(tonyParker, ginobili));
+    teams.put("cavs", asList(james, dwayne));
+
+    assertThat(teams).flatExtracting("spurs", "cavs")
+                     .containsExactly(tonyParker, ginobili, james, dwayne);
   }
 
   private static <K, V> Map.Entry<K, V> javaMapEntry(K key, V value) {

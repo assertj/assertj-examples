@@ -109,4 +109,27 @@ public abstract class AbstractTolkienCharacterAssert<S extends AbstractTolkienCh
     return myself;
   }
 
+  /**
+   * Verifies that the actual TolkienCharacter's notAccessibleField is equal to the given one.
+   * @param notAccessibleField the given notAccessibleField to compare the actual TolkienCharacter's notAccessibleField to.
+   * @return this assertion object.
+   * @throws AssertionError - if the actual TolkienCharacter's notAccessibleField is not equal to the given one.
+   */
+  public S hasNotAccessibleField(long notAccessibleField) {
+    // check that actual TolkienCharacter we want to make assertions on is not null.
+    isNotNull();
+
+    // overrides the default error message with a more explicit one
+    String assertjErrorMessage = "\nExpecting notAccessibleField of:\n  <%s>\nto be:\n  <%s>\nbut was:\n  <%s>";
+
+    // check
+    long actualNotAccessibleField = org.assertj.core.util.introspection.FieldSupport.EXTRACTION.fieldValue("notAccessibleField", long.class, actual);
+    if (actualNotAccessibleField != notAccessibleField) {
+      failWithMessage(assertjErrorMessage, actual, notAccessibleField, actualNotAccessibleField);
+    }
+
+    // return the current assertion for method chaining
+    return myself;
+  }
+
 }

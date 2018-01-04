@@ -113,4 +113,27 @@ public abstract class AbstractBookAssert<S extends AbstractBookAssert<S, A>, A e
     return myself;
   }
 
+  /**
+   * Verifies that the actual Book's realAuthor is equal to the given one.
+   * @param realAuthor the given realAuthor to compare the actual Book's realAuthor to.
+   * @return this assertion object.
+   * @throws AssertionError - if the actual Book's realAuthor is not equal to the given one.
+   */
+  public S hasRealAuthor(String realAuthor) {
+    // check that actual Book we want to make assertions on is not null.
+    isNotNull();
+
+    // overrides the default error message with a more explicit one
+    String assertjErrorMessage = "\nExpecting realAuthor of:\n  <%s>\nto be:\n  <%s>\nbut was:\n  <%s>";
+
+    // null safe check
+    String actualRealAuthor = org.assertj.core.util.introspection.FieldSupport.EXTRACTION.fieldValue("realAuthor", String.class, actual);
+    if (!Objects.areEqual(actualRealAuthor, realAuthor)) {
+      failWithMessage(assertjErrorMessage, actual, realAuthor, actualRealAuthor);
+    }
+
+    // return the current assertion for method chaining
+    return myself;
+  }
+
 }

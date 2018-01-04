@@ -20,5 +20,4 @@ package org.assertj.examples.data;
 @Magical
 public enum Ring {
   oneRing, vilya, nenya, narya, dwarfRing, manRing;
-  
 }

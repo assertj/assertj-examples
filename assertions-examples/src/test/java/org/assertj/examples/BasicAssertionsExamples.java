@@ -293,6 +293,15 @@ public class BasicAssertionsExamples extends AbstractAssertionsExamples {
   public void extracting_field_or_property_examples() {
     assertThat(frodo).extracting("name", "age", "race.name")
                      .containsExactly("Frodo", 33, "Hobbit");
+
+    assertThat(frodo).extracting("name", "age", "race.name")
+                     .usingComparatorForType(caseInsensitiveStringComparator, String.class)
+                     .containsExactly("FRODO", 33, "hoBBit");
+
+    assertThat(frodo).extracting("name", "age", "race.name")
+                     .usingComparatorForType(caseInsensitiveStringComparator, String.class)
+                     .usingComparatorForType(absValueComparator, Integer.class)
+                     .containsExactly("FRODO", -33, "hoBBit");
   }
 
   @SuppressWarnings("unchecked")

@@ -13,6 +13,7 @@
 package org.assertj.examples;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.byLessThan;
 import static org.assertj.core.api.Assertions.fail;
 import static org.assertj.core.api.Assertions.offset;
 import static org.assertj.core.api.Assertions.within;
@@ -23,6 +24,7 @@ import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.util.Comparator;
 
+import org.assertj.core.data.Offset;
 import org.assertj.examples.comparator.AbsValueComparator;
 import org.junit.Test;
 
@@ -123,6 +125,8 @@ public class NumberAssertionsExamples extends AbstractAssertionsExamples {
 
     // same stuff using within instead of offset
     assertThat(8.1).isCloseTo(8.0, within(0.1));
+    assertThat(0.2).isCloseTo(0.0, within(0.2));
+    assertThat(0.2).isCloseTo(0.0, byLessThan(0.20001));
     assertThat(5.0).isCloseTo(6.0, withinPercentage(20.0));
     assertThat(5.0).isCloseTo(6.0, withinPercentage(20));
     assertThat(5).isCloseTo(6, withinPercentage(20));
@@ -147,9 +151,124 @@ public class NumberAssertionsExamples extends AbstractAssertionsExamples {
     assertThat(10l).isCloseTo(8l, within(2l));
     assertThat((short) 5).isCloseTo((short) 7, within((short) 3));
     assertThat((byte) 5).isCloseTo((byte) 7, within((byte) 3));
-    
-    // double[] x = {1.0, 2.0};
-    // assertThat(x).isCloseTo(x);
+
+    assertThat(8.1).isCloseTo(8.0, byLessThan(0.2));
+    // assertions succeed when the difference == offset value ...
+    assertThat(8.1).isCloseTo(8.0, within(0.1));
+
+    // ok as byLessThan is a strict offset
+    assertThat(8.1).isNotCloseTo(8.0, byLessThan(0.01));
+    assertThat(8.1).isNotCloseTo(8.0, within(0.01));
+    assertThat(8.1).isNotCloseTo(8.0, offset(0.01));
+    // diff == offset but isNotCloseTo succeeds as we use byLessThan
+    assertThat(0.1).isNotCloseTo(0.0, byLessThan(0.1));
+    try {
+      assertThat(8).isNotCloseTo(10, within(2));
+    } catch (AssertionError e) {
+      logAssertionErrorMessage("int isNotCloseTo within ", e);
+    }
+
+    assertThat(8.1f).isCloseTo(8.0f, within(0.2f));
+    assertThat(8.1f).isCloseTo(8.0f, offset(0.2f)); // alias of within
+    assertThat(8.1f).isCloseTo(8.0f, byLessThan(0.2f)); // strict
+
+    assertThat(8.1f).isNotCloseTo(8.0f, byLessThan(0.01f));
+    assertThat(8.1f).isNotCloseTo(8.0f, within(0.01f));
+    assertThat(8.1f).isNotCloseTo(8.0f, offset(0.01f));
+    // diff == offset but isNotCloseTo succeeds as we use byLessThan
+    assertThat(0.1f).isNotCloseTo(0.0f, byLessThan(0.1f));
+    assertThat(8.1f).isEqualTo(8.0f, within(0.2f));
+    assertThat(8.1f).isEqualTo(8.0f, offset(0.2f)); // alias of within
+    assertThat(8.1f).isEqualTo(8.0f, byLessThan(0.2f)); // strict
+
+    // assertions succeed when the difference == offset value ...
+    assertThat(0.1f).isCloseTo(0.0f, within(0.1f));
+    assertThat(0.1f).isEqualTo(0.0f, within(0.1f));
+
+    assertThat(8.1f).isNotCloseTo(8.0f, byLessThan(0.01f));
+    assertThat(8.1f).isNotCloseTo(8.0f, within(0.01f));
+    assertThat(8.1f).isNotCloseTo(8.0f, offset(0.01f));
+    // diff == offset but isNotCloseTo succeeds as we use byLessThan
+
+    assertThat(0.1f).isNotCloseTo(0.0f, byLessThan(0.1f));
+    assertThat(8.1f).isEqualTo(8.0f, within(0.2f));
+    assertThat(8.1f).isEqualTo(8.0f, offset(0.2f)); // alias of within
+    assertThat(8.1f).isEqualTo(8.0f, byLessThan(0.2f)); // strict
+
+    // assertions succeed when the difference == offset value ...
+    assertThat(0.1f).isEqualTo(0.0f, within(0.1f));
+    assertThat(0.1f).isEqualTo(0.0f, offset(0.1f));
+    // ... except when using byLessThan which implies a strict comparison
+    // assertThat(0.1f).isEqualTo(0.0f, byLessThan(0.1f)); // strict => fail
+    assertThat(8.1f).isEqualTo(8.0f, within(0.2f));
+    assertThat(8.1f).isEqualTo(8.0f, offset(0.2f)); // alias of within
+    assertThat(8.1f).isEqualTo(8.0f, byLessThan(0.2f)); // strict
+
+    // assertions succeed when the difference == offset value ...
+    assertThat(0.1f).isEqualTo(0.0f, within(0.1f));
+    assertThat(0.1f).isEqualTo(0.0f, offset(0.1f));
+
+    assertThat(5).isCloseTo(7, within(3));
+    assertThat(5).isCloseTo(7, byLessThan(3));
+
+    // if difference is exactly equals to the offset, it's ok ...
+    assertThat(5).isNotCloseTo(7, byLessThan(1));
+    assertThat(5).isNotCloseTo(7, within(1));
+    // diff == offset but isNotCloseTo succeeds as we use byLessThan
+    assertThat(5).isNotCloseTo(7, byLessThan(2));
+
+    final BigDecimal eightDotOne = new BigDecimal("8.1");
+    final BigDecimal eight = new BigDecimal("8.0");
+
+    // assertions succeed
+    assertThat(eightDotOne).isCloseTo(eight, within(new BigDecimal("0.2")));
+    assertThat(eightDotOne).isCloseTo(eight, Offset.offset(new BigDecimal("0.2"))); // alias of within
+    assertThat(eightDotOne).isCloseTo(eight, byLessThan(new BigDecimal("0.2"))); // strict
+
+    assertThat(eightDotOne).isCloseTo(eight, within(new BigDecimal("0.1")));
+    assertThat(eightDotOne).isCloseTo(eight, Offset.offset(new BigDecimal("0.1")));
+
+    // assertions succeed
+    assertThat(eightDotOne).isNotCloseTo(eight, byLessThan(new BigDecimal("0.01")));
+    assertThat(eightDotOne).isNotCloseTo(eight, within(new BigDecimal("0.01")));
+    assertThat(eightDotOne).isNotCloseTo(eight, Offset.offset(new BigDecimal("0.01")));
+    // diff == offset but isNotCloseTo succeeds as we use byLessThan
+    assertThat(eightDotOne).isNotCloseTo(eight, byLessThan(new BigDecimal("0.1")));
+
+    assertThat(5l).isNotCloseTo(7l, byLessThan(1l));
+    assertThat(5l).isNotCloseTo(7l, within(1l));
+    // diff == offset but isNotCloseTo succeeds as we use byLessThan
+    assertThat(5l).isNotCloseTo(7l, byLessThan(2l));
+
+    assertThat(5L).isCloseTo(7L, within(3L));
+    assertThat(5L).isCloseTo(7L, byLessThan(3L));
+
+    // if difference is exactly equals to the offset, it's ok ...
+    assertThat(5L).isCloseTo(7L, within(2L));
+    // ... but not with byLessThan which implies a strict comparison
+    assertThat((short) 10).isCloseTo((short) 11, byLessThan((short) 2));
+
+    final BigInteger ten = BigInteger.TEN;
+    assertThat(new BigInteger("8")).isCloseTo(ten, within(new BigInteger("3")));
+    assertThat(new BigInteger("8")).isCloseTo(ten, byLessThan(new BigInteger("3")));
+
+    // if difference is exactly equals to given offset value, it's ok
+    assertThat(new BigInteger("8")).isCloseTo(ten, within(new BigInteger("2")));
+    assertThat(new BigInteger("8")).isCloseTo(ten, within(new BigInteger("2")));
+
+  }
+
+  @Test
+  public void testName() {
+    final BigInteger eight = new BigInteger("8");
+    final BigInteger ten = BigInteger.TEN;
+
+    // this assertion succeeds
+    assertThat(eight).isNotCloseTo(ten, byLessThan(BigInteger.ONE));
+    assertThat(eight).isNotCloseTo(ten, within(BigInteger.ONE));
+
+    // diff == offset but isNotCloseTo succeeds as we use byLessThan
+    assertThat(eight).isNotCloseTo(ten, byLessThan(new BigInteger("2")));
   }
 
   @Test
@@ -158,7 +277,7 @@ public class NumberAssertionsExamples extends AbstractAssertionsExamples {
     try {
       assertThat(1).inBinary().isEqualTo(2);
     } catch (AssertionError e) {
-      logAssertionErrorMessage("isEqualTo with binary representation_", e);
+      logAssertionErrorMessage("isEqualTo with binary representation ", e);
     }
   }
 
@@ -196,6 +315,7 @@ public class NumberAssertionsExamples extends AbstractAssertionsExamples {
                               .isLessThanOrEqualTo(BigInteger.TEN)
                               .isBetween(BigInteger.ONE, eleven)
                               .isCloseTo(eleven, within(BigInteger.ONE))
+                              .isCloseTo(eleven, byLessThan(BigInteger.TEN))
                               .isCloseTo(eleven, withinPercentage(20))
                               .isPositive()
                               .isNotNegative();

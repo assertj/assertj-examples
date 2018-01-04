@@ -10,23 +10,7 @@
  *
  * Copyright 2012-2016 the original author or authors.
  */
-package org.assertj.examples.comparator;
+package org.assertj.examples.representation;
 
-import static java.lang.Math.abs;
-
-import java.util.Comparator;
-
-public class AbsValueComparator<NUMBER extends Number> implements Comparator<NUMBER> {
-
-  @Override
-  public int compare(NUMBER i1, NUMBER i2) {
-    double diff = abs(i1.doubleValue()) - abs(i2.doubleValue());
-    if (diff == 0.0) return 0;
-    return diff < 0.0 ? -1 : 1;
-  }
-
-  @Override
-  public String toString() {
-    return "Absolute value comparator";
-  }
+public class Example {
 }

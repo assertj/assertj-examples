@@ -26,7 +26,7 @@ public class RepresentationExamples extends AbstractAssertionsExamples {
 
   @After
   public void afterTest() {
-    Assertions.useDefaultRepresentation();
+    Assertions.useRepresentation(STANDARD_REPRESENTATION);
   }
 
   @Test
@@ -46,7 +46,8 @@ public class RepresentationExamples extends AbstractAssertionsExamples {
     } catch (AssertionError e) {
       assertThat(e).hasMessageContaining("$foo$")
                    .hasMessageContaining("$bar$");
-      Assertions.useDefaultRepresentation();
+
+      Assertions.useRepresentation(STANDARD_REPRESENTATION);
       try {
         assertThat("foo").startsWith("bar");
       } catch (AssertionError e2) {

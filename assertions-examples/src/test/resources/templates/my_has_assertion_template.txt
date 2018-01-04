@@ -9,12 +9,11 @@
     // check that actual ${class_to_assert} we want to make assertions on is not null.
     isNotNull();
 
-
     // overrides the default error message with a more explicit one
     String assertjErrorMessage = "\nExpecting ${property} of:\n  <%s>\nto be:\n  <%s>\nbut was:\n  <%s>";
-    
-    // check
-    ${propertyType} actual${Property} = actual.get${Property}();
+
+    // null safe check
+    ${propertyType} actual${Property} = actual.${getter}();
     if (!Objects.areEqual(actual${Property}, ${property_safe})) {
       failWithMessage(assertjErrorMessage, actual, ${property_safe}, actual${Property});
     }

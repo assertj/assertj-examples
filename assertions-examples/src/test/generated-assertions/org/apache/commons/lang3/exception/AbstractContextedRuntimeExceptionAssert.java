@@ -370,4 +370,27 @@ public abstract class AbstractContextedRuntimeExceptionAssert<S extends Abstract
     return myself;
   }
 
+  /**
+   * Verifies that the actual ContextedRuntimeException's exceptionContext is equal to the given one.
+   * @param exceptionContext the given exceptionContext to compare the actual ContextedRuntimeException's exceptionContext to.
+   * @return this assertion object.
+   * @throws AssertionError - if the actual ContextedRuntimeException's exceptionContext is not equal to the given one.
+   */
+  public S hasExceptionContext(ExceptionContext exceptionContext) {
+    // check that actual ContextedRuntimeException we want to make assertions on is not null.
+    isNotNull();
+
+    // overrides the default error message with a more explicit one
+    String assertjErrorMessage = "\nExpecting exceptionContext of:\n  <%s>\nto be:\n  <%s>\nbut was:\n  <%s>";
+
+    // null safe check
+    ExceptionContext actualExceptionContext = org.assertj.core.util.introspection.FieldSupport.EXTRACTION.fieldValue("exceptionContext", ExceptionContext.class, actual);
+    if (!Objects.areEqual(actualExceptionContext, exceptionContext)) {
+      failWithMessage(assertjErrorMessage, actual, exceptionContext, actualExceptionContext);
+    }
+
+    // return the current assertion for method chaining
+    return myself;
+  }
+
 }

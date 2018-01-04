@@ -28,4 +28,9 @@ public class AgeComparator implements Comparator<TolkienCharacter> {
     return age1.compareTo(tolkienCharacter2.age);
   }
 
+  @Override
+  public String toString() {
+    return "TolkienCharacterAgeComparator";
+  }
+
 }

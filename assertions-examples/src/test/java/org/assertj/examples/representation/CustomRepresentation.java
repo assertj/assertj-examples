@@ -10,23 +10,25 @@
  *
  * Copyright 2012-2016 the original author or authors.
  */
-package org.assertj.examples.comparator;
+package org.assertj.examples.representation;
 
-import static java.lang.Math.abs;
+import org.assertj.core.presentation.StandardRepresentation;
 
-import java.util.Comparator;
+public class CustomRepresentation extends StandardRepresentation {
 
-public class AbsValueComparator<NUMBER extends Number> implements Comparator<NUMBER> {
-
+  // override needed to specify the format of classes not known by StandardRepresentation.
   @Override
-  public int compare(NUMBER i1, NUMBER i2) {
-    double diff = abs(i1.doubleValue()) - abs(i2.doubleValue());
-    if (diff == 0.0) return 0;
-    return diff < 0.0 ? -1 : 1;
+  protected String fallbackToStringOf(Object object) {
+    if (object instanceof Example) return "EXAMPLE";
+    return object.toString();
   }
 
+  // override the String representation defined in StandardRepresentation
   @Override
-  public String toString() {
-    return "Absolute value comparator";
+  protected String toStringOf(String s) {
+    return "$" + s + "$";
+  }
+
+  public static class Example {
   }
 }

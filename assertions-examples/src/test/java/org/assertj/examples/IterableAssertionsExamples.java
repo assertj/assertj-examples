@@ -79,6 +79,8 @@ public class IterableAssertionsExamples extends AbstractAssertionsExamples {
                    .containsAnyOf("a", "b", "c", "d")
                    .containsAnyOf("e", "f", "g", "b");
 
+    assertThat(asList("a", "a", "b")).containsOnly("a", "a", "b", "b");
+
     // would work the same way with Iterable<Ring>,
     Iterable<Ring> elvesRings = newArrayList(vilya, nenya, narya);
     assertThat(elvesRings).isNotEmpty().hasSize(3);
@@ -368,6 +370,8 @@ public class IterableAssertionsExamples extends AbstractAssertionsExamples {
     assertThat(list).doesNotContainSubsequence("Superman", "is", "great")
                     .doesNotContainSubsequence(newArrayList("Superman", "is", "great"));
 
+    List<String> title = newArrayList("A", " ", "Game", " ", "of", " ", "Thrones", " ");
+    assertThat(title).containsSubsequence("Game", "Thrones");
   }
 
   @Test

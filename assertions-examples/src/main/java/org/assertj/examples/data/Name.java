@@ -16,7 +16,7 @@ package org.assertj.examples.data;
 /**
  * @author Yvonne Wang
  */
-public class Name {
+public class Name implements Comparable<Name>{
 
   private String first;
   private String last;
@@ -70,5 +70,10 @@ public class Name {
     int result = first != null ? first.hashCode() : 0;
     result = 31 * result + (last != null ? last.hashCode() : 0);
     return result;
+  }
+
+  @Override
+  public int compareTo(Name other) {
+    return last.compareTo(other.last);
   }
 }

@@ -136,6 +136,29 @@ public abstract class AbstractMovieAssert<S extends AbstractMovieAssert<S, A>, A
   }
 
   /**
+   * Verifies that the actual Movie's duration is equal to the given one.
+   * @param duration the given duration to compare the actual Movie's duration to.
+   * @return this assertion object.
+   * @throws AssertionError - if the actual Movie's duration is not equal to the given one.
+   */
+  public S hasDuration(String duration) {
+    // check that actual Movie we want to make assertions on is not null.
+    isNotNull();
+
+    // overrides the default error message with a more explicit one
+    String assertjErrorMessage = "\nExpecting duration of:\n  <%s>\nto be:\n  <%s>\nbut was:\n  <%s>";
+
+    // null safe check
+    String actualDuration = org.assertj.core.util.introspection.FieldSupport.EXTRACTION.fieldValue("duration", String.class, actual);
+    if (!Objects.areEqual(actualDuration, duration)) {
+      failWithMessage(assertjErrorMessage, actual, duration, actualDuration);
+    }
+
+    // return the current assertion for method chaining
+    return myself;
+  }
+
+  /**
    * Verifies that the actual Movie is xrated.
    * @return this assertion object.
    * @throws AssertionError - if the actual Movie is not xrated.

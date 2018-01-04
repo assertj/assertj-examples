@@ -26,4 +26,9 @@ public class YearAndMonthDateComparator implements Comparator<Date> {
     return yearDifference != 0 ? yearDifference : monthOf(d1) - monthOf(d2);
   }
 
+  @Override
+  public String toString() {
+    return "YearAndMonthDateComparator";
+  }
+
 }

@@ -154,7 +154,7 @@
       <plugin>
         <groupId>org.assertj</groupId>
         <artifactId>assertj-assertions-generator-maven-plugin</artifactId>
-        <version>2.1.0-SNAPSHOT</version>
+        <version>2.1.0</version>
         <executions>
           <execution>
             <goals>
@@ -166,7 +166,6 @@
           <!-- example of replacing generated assertions default templates -->
           <templates>
             <templatesDirectory>src/test/resources/templates/</templatesDirectory>
-            <hierarchicalAssertionConcreteClass>my_assertion_class_template.txt</hierarchicalAssertionConcreteClass>
           </templates>
           <packages>
             <param>org.assertj.examples.rpg</param>
@@ -192,12 +191,8 @@
           <generateBddAssertions>true</generateBddAssertions>
           <generateSoftAssertions>true</generateSoftAssertions>
           <generateJUnitSoftAssertions>true</generateJUnitSoftAssertions>
-          <!-- 
-          <templates>
-            <templatesDirectory>src/test/resources/templates/</templatesDirectory>
-            <assertionsEntryPointClass>my_Assertions_class_template.txt</assertionsEntryPointClass>
-          </templates>
-           -->
+          <quiet>false</quiet>
+          <generateAssertionsForAllFields>true</generateAssertionsForAllFields>
         </configuration>
         <dependencies>
           <dependency>
@@ -259,7 +254,7 @@
         </executions>
       </plugin>
     </plugins>
-    
+
     <pluginManagement>
       <plugins>
         <!--This plugin's configuration is used to store Eclipse m2e settings only. It has no influence on the Maven build itself.-->

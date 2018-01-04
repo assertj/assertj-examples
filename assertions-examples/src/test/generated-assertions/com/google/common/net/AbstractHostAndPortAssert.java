@@ -122,4 +122,40 @@ public abstract class AbstractHostAndPortAssert<S extends AbstractHostAndPortAss
     return myself;
   }
 
+  /**
+   * Verifies that the actual HostAndPort has bracketless colons.
+   * @return this assertion object.
+   * @throws AssertionError - if the actual HostAndPort does not have bracketless colons.
+   */
+  public S hasBracketlessColons() {
+    // check that actual HostAndPort we want to make assertions on is not null.
+    isNotNull();
+
+    // check that property call/field access is true
+    if (!org.assertj.core.util.introspection.FieldSupport.EXTRACTION.fieldValue("hasBracketlessColons", Boolean.class, actual)) {
+      failWithMessage("\nExpecting that actual HostAndPort has bracketless colons but does not have.");
+    }
+
+    // return the current assertion for method chaining
+    return myself;
+  }
+
+  /**
+   * Verifies that the actual HostAndPort does not have bracketless colons.
+   * @return this assertion object.
+   * @throws AssertionError - if the actual HostAndPort has bracketless colons.
+   */
+  public S doesNotHaveBracketlessColons() {
+    // check that actual HostAndPort we want to make assertions on is not null.
+    isNotNull();
+
+    // check that property call/field access is false
+    if (org.assertj.core.util.introspection.FieldSupport.EXTRACTION.fieldValue("hasBracketlessColons", Boolean.class, actual)) {
+      failWithMessage("\nExpecting that actual HostAndPort does not have bracketless colons but has.");
+    }
+
+    // return the current assertion for method chaining
+    return myself;
+  }
+
 }

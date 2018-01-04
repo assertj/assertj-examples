@@ -12,6 +12,7 @@
  */
 package org.assertj.examples;
 
+import static java.util.Arrays.asList;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.presentation.StandardRepresentation.STANDARD_REPRESENTATION;
 import static org.assertj.core.util.Arrays.array;
@@ -49,15 +50,30 @@ public class StringAssertionsExamples extends AbstractAssertionsExamples {
       logAssertionErrorMessage("String contains with several values", e);
     }
 
-    String bookDescription = "{ 'title':'Games of Thrones', 'author':'George Martin'}";
-    assertThat(bookDescription).containsSubsequence("{", "title", "Games of Thrones", "}");
-    assertThat(bookDescription).containsSequence("'title'", ":", "'Games of Thrones'");
+    String bookDescription = "{ 'title':'A Game of Thrones', 'author':'George Martin'}";
+
+    assertThat(bookDescription).containsSequence("'title'", ":", "'A Game of Thrones'")
+                               .containsSequence(asList("'title'", ":", "'A Game of Thrones'"))
+                               .containsSequence("George", " ", "Martin");
+
+    assertThat(bookDescription).containsSubsequence("'title'", ":", "'A Game of Thrones'")
+                               .containsSubsequence("{", "A Game of Thrones", "George Martin", "}")
+                               .containsSubsequence("{", "title", "A Game of Thrones", "}")
+                               .containsSubsequence(asList("{", "title", "A Game of Thrones", "}"))
+                               .containsSubsequence("A", "Game", "of", "George");
 
     try {
-      assertThat(bookDescription).containsSequence("{", "title", "author", "Games of Thrones", "}");
+      assertThat(bookDescription).containsSubsequence(":", "'title'", "'A Game of Thrones'");
     } catch (AssertionError e) {
       logAssertionErrorMessage("String containsSequence with incorrect order", e);
     }
+
+    assertThat("a-b-c").containsSubsequence("b", "-", "c")
+                       .containsSubsequence("a", "c")
+                       .containsSubsequence("b", "c")
+                       .containsSubsequence("-", "-")
+                       .containsSubsequence("-", "b", "-")
+                       .containsSubsequence("-", "c");
 
     // you can ignore case for equals check
     assertThat("Frodo").isEqualToIgnoringCase("FROdO").hasSameSizeAs("12345");
@@ -65,6 +81,8 @@ public class StringAssertionsExamples extends AbstractAssertionsExamples {
 
     // using regex
     assertThat("Frodo").matches("..o.o").doesNotMatch(".*d");
+
+    assertThat("Element1 Element2").contains("Element2", "Element1");
 
     // check for empty string, or not.
     assertThat("").isEmpty();
@@ -250,6 +268,16 @@ public class StringAssertionsExamples extends AbstractAssertionsExamples {
                                 "Disc World");
     String smartFormat = STANDARD_REPRESENTATION.toStringOf(newArrayList(greatBooks));
     log.info(smartFormat);
+  }
+
+  @Test
+  public void ignoring_newlines_equals_assertion() {
+    assertThat("Game of Thrones").isEqualToIgnoringNewLines("Game of Thrones\n")
+                                 .isEqualToIgnoringNewLines("Game of Thrones\r\n")
+                                 .isEqualToIgnoringNewLines("Game of Thrones\r\n\n");
+    assertThat("Game of\n Thrones").isEqualToIgnoringNewLines("Game of Thrones\n")
+                                   .isEqualToIgnoringNewLines("Game of \n\n\nThrones\r\n")
+                                   .isEqualToIgnoringNewLines("Game of Thrones");
   }
 
 }
