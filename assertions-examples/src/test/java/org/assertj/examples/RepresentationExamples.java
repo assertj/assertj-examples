@@ -13,9 +13,11 @@
 package org.assertj.examples;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.presentation.StandardRepresentation.STANDARD_REPRESENTATION;
 
 import org.assertj.core.api.Assertions;
-import org.assertj.core.presentation.StandardRepresentation;
+import org.assertj.examples.representation.CustomRepresentation;
+import org.assertj.examples.representation.CustomRepresentation.Example;
 import org.junit.After;
 import org.junit.Test;
 
@@ -23,7 +25,7 @@ public class RepresentationExamples extends AbstractAssertionsExamples {
 
   @After
   public void afterTest() {
-    Assertions.useDefaultRepresentation();
+    Assertions.useRepresentation(STANDARD_REPRESENTATION);
   }
   
   @Test
@@ -43,32 +45,14 @@ public class RepresentationExamples extends AbstractAssertionsExamples {
     } catch (AssertionError e) {
       assertThat(e).hasMessageContaining("$foo$")
                    .hasMessageContaining("$bar$");
-      Assertions.useDefaultRepresentation();
+
+      Assertions.useRepresentation(STANDARD_REPRESENTATION);
       try {
         assertThat("foo").startsWith("bar");
       } catch (AssertionError e2) {
         assertThat(e2).hasMessageContaining("\"foo\"")
                       .hasMessageContaining("\"bar\"");
       }
-    }
-  }
-  
-  private class Example {}
-
-  private class CustomRepresentation extends StandardRepresentation {
-  
-    // override needed to hook specific formatting  
-    @Override
-    public String toStringOf(Object o) {
-      if (o instanceof Example) return "EXAMPLE";
-      // fallback to default formatting.  
-      return super.toStringOf(o);
-    }
-    
-    // change String representation  
-    @Override
-    protected String toStringOf(String s) {
-      return "$" + s + "$";
     }
   }
   

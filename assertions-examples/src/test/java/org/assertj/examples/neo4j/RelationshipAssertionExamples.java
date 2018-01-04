@@ -12,19 +12,18 @@
  */
 package org.assertj.examples.neo4j;
 
-import static com.google.common.collect.Iterables.filter;
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.util.Lists.newArrayList;
 import static org.assertj.neo4j.api.Assertions.assertThat;
 
 import java.util.Iterator;
+import java.util.List;
 
 import org.junit.Test;
 import org.neo4j.graphdb.DynamicRelationshipType;
 import org.neo4j.graphdb.Node;
 import org.neo4j.graphdb.Relationship;
 import org.neo4j.graphdb.Transaction;
-
-import com.google.common.base.Predicate;
 
 public class RelationshipAssertionExamples extends Neo4jAssertionExamples {
 
@@ -36,7 +35,12 @@ public class RelationshipAssertionExamples extends Neo4jAssertionExamples {
 
       // you can enjoy the usual assertj-core assertions ;-)
       assertThat(fusions).hasSize(4); 
-      Iterable<Relationship> funnyFusions = filter(fusions, UselessFusion.FUNNY_ONLY());
+      List<Relationship> funnyFusions = newArrayList();
+      for (Relationship relationship : fusions) {
+        if (relationship != null && (boolean) relationship.getProperty("useless", Boolean.FALSE)) {
+          funnyFusions.add(relationship);
+        }
+      }
       assertThat(funnyFusions).hasSize(2);
 
       // you can chain assertions on relationship types: their String representation
@@ -88,20 +92,11 @@ public class RelationshipAssertionExamples extends Neo4jAssertionExamples {
     }
   }
 
-  private static class UselessFusion implements Predicate<Relationship> {
-
-    private UselessFusion() {}
-
-    public static UselessFusion FUNNY_ONLY() {
-      return new UselessFusion();
-    }
-
-    @Override
-    public boolean apply(Relationship input) {
-      if (input == null) {
-        return false;
-      }
-      return (boolean) input.getProperty("useless", Boolean.FALSE);
-    }
-  }
+  // @Override
+  // public boolean apply(Relationship input) {
+  // if (input == null) {
+  // return false;
+  // }
+  // return (boolean) input.getProperty("useless", Boolean.FALSE);
+  // }
 }

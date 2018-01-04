@@ -30,4 +30,10 @@ public class AtPrecisionComparator<NUMBER extends Number> implements Comparator<
     if (diff <= precision.doubleValue()) return 0;
     return diff < 0.0 ? -1 : 1;
   }
+
+  @Override
+  public String toString() {
+    return String.format("At precision %s Comparator", precision);
+  }
+
 }

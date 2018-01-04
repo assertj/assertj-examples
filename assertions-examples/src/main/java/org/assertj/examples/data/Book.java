@@ -17,19 +17,21 @@ public class Book {
   private Title title;
   private int numberOfPages;
   private double pryce;
+  @SuppressWarnings("unused")
+  private String realAuthor;
 
   public Book(String title) {
     this.title = new Title(title);
   }
-  
+
   public int getNumberOfPages() {
     return numberOfPages;
   }
-  
+
   public double getPryce() {
     return pryce;
   }
-  
+
   public Title getTitle() {
     return title;
   }
@@ -45,6 +47,27 @@ public class Book {
     public String getTitle() {
       return title;
     }
+
+    @Override
+    public int hashCode() {
+      final int prime = 31;
+      int result = 1;
+      result = prime * result + ((title == null) ? 0 : title.hashCode());
+      return result;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+      if (this == obj) return true;
+      if (obj == null) return false;
+      if (!(obj instanceof Title)) return false;
+      Title other = (Title) obj;
+      if (title == null) {
+        if (other.title != null) return false;
+      } else if (!title.equals(other.title)) return false;
+      return true;
+    }
+
   }
 
 }

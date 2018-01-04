@@ -34,6 +34,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.assertj.core.api.Assertions;
 import org.assertj.core.api.Condition;
 import org.assertj.examples.comparator.AbsValueComparator;
 import org.assertj.examples.comparator.AgeComparator;
@@ -113,6 +114,7 @@ public abstract class AbstractAssertionsExamples {
   protected static BasketBallPlayer durant;
   protected static BasketBallPlayer noah;
   protected static BasketBallPlayer tonyParker;
+  protected static BasketBallPlayer ginobili;
   protected static BasketBallPlayer dwayne;
   protected static List<BasketBallPlayer> basketBallPlayers;
   protected static PotentialMvpCondition potentialMvp;
@@ -128,11 +130,15 @@ public abstract class AbstractAssertionsExamples {
     tonyParker.setAssistsPerGame(9);
     tonyParker.setPointsPerGame(21);
     tonyParker.setReboundsPerGame(5);
-    james = new BasketBallPlayer(new Name("Lebron", "James"), "Miami Heat");
+    ginobili = new BasketBallPlayer(new Name("Manu", "Ginobili"), "Spurs");
+    ginobili.setAssistsPerGame(6);
+    ginobili.setPointsPerGame(11);
+    ginobili.setReboundsPerGame(5);
+    james = new BasketBallPlayer(new Name("Lebron", "James"), "Cleveland");
     james.setAssistsPerGame(6);
     james.setPointsPerGame(27);
     james.setReboundsPerGame(8);
-    dwayne = new BasketBallPlayer(new Name("Dwayne", "Wade"), "Miami Heat");
+    dwayne = new BasketBallPlayer(new Name("Dwayne", "Wade"), "Cleveland");
     dwayne.setAssistsPerGame(16);
     dwayne.setPointsPerGame(55);
     dwayne.setReboundsPerGame(16);
@@ -162,6 +168,8 @@ public abstract class AbstractAssertionsExamples {
         return false;
       }
     };
+
+    Assertions.setRemoveAssertJRelatedElementsFromStackTrace(false);
   }
 
   @Before

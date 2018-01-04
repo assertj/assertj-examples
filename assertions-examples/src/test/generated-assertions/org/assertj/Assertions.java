@@ -4,6 +4,7 @@ package org.assertj;
  * Entry point for assertions of different data types. Each method in this class is a static factory for the
  * type-specific assertion objects.
  */
+@javax.annotation.Generated(value="assertj-assertions-generator")
 public class Assertions {
 
   /**
@@ -12,6 +13,7 @@ public class Assertions {
    * @param actual the actual value.
    * @return the created assertion object.
    */
+  @org.assertj.core.util.CheckReturnValue
   public static com.google.common.net.HostAndPortAssert assertThat(com.google.common.net.HostAndPort actual) {
     return new com.google.common.net.HostAndPortAssert(actual);
   }
@@ -22,6 +24,7 @@ public class Assertions {
    * @param actual the actual value.
    * @return the created assertion object.
    */
+  @org.assertj.core.util.CheckReturnValue
   public static com.google.common.net.InetAddressesAssert assertThat(com.google.common.net.InetAddresses actual) {
     return new com.google.common.net.InetAddressesAssert(actual);
   }
@@ -32,18 +35,20 @@ public class Assertions {
    * @param actual the actual value.
    * @return the created assertion object.
    */
+  @org.assertj.core.util.CheckReturnValue
   public static com.google.common.net.InternetDomainNameAssert assertThat(com.google.common.net.InternetDomainName actual) {
     return new com.google.common.net.InternetDomainNameAssert(actual);
   }
 
   /**
-   * Creates a new instance of <code>{@link java.nio.file.PathAssert}</code>.
+   * Creates a new instance of <code>{@link org.apache.commons.lang3.exception.ContextedRuntimeExceptionAssert}</code>.
    *
    * @param actual the actual value.
    * @return the created assertion object.
    */
-  public static java.nio.file.PathAssert assertThat(java.nio.file.Path actual) {
-    return new java.nio.file.PathAssert(actual);
+  @org.assertj.core.util.CheckReturnValue
+  public static org.apache.commons.lang3.exception.ContextedRuntimeExceptionAssert assertThat(org.apache.commons.lang3.exception.ContextedRuntimeException actual) {
+    return new org.apache.commons.lang3.exception.ContextedRuntimeExceptionAssert(actual);
   }
 
   /**
@@ -52,6 +57,7 @@ public class Assertions {
    * @param actual the actual value.
    * @return the created assertion object.
    */
+  @org.assertj.core.util.CheckReturnValue
   public static org.assertj.examples.data.AlignmentAssert assertThat(org.assertj.examples.data.Alignment actual) {
     return new org.assertj.examples.data.AlignmentAssert(actual);
   }
@@ -62,6 +68,7 @@ public class Assertions {
    * @param actual the actual value.
    * @return the created assertion object.
    */
+  @org.assertj.core.util.CheckReturnValue
   public static org.assertj.examples.data.ArtWorkAssert assertThat(org.assertj.examples.data.ArtWork actual) {
     return new org.assertj.examples.data.ArtWorkAssert(actual);
   }
@@ -72,6 +79,7 @@ public class Assertions {
    * @param actual the actual value.
    * @return the created assertion object.
    */
+  @org.assertj.core.util.CheckReturnValue
   public static org.assertj.examples.data.BasketBallPlayerAssert assertThat(org.assertj.examples.data.BasketBallPlayer actual) {
     return new org.assertj.examples.data.BasketBallPlayerAssert(actual);
   }
@@ -82,6 +90,7 @@ public class Assertions {
    * @param actual the actual value.
    * @return the created assertion object.
    */
+  @org.assertj.core.util.CheckReturnValue
   public static org.assertj.examples.data.BookAssert assertThat(org.assertj.examples.data.Book actual) {
     return new org.assertj.examples.data.BookAssert(actual);
   }
@@ -92,6 +101,7 @@ public class Assertions {
    * @param actual the actual value.
    * @return the created assertion object.
    */
+  @org.assertj.core.util.CheckReturnValue
   public static org.assertj.examples.data.BookTitleAssert assertThat(org.assertj.examples.data.Book.Title actual) {
     return new org.assertj.examples.data.BookTitleAssert(actual);
   }
@@ -102,6 +112,7 @@ public class Assertions {
    * @param actual the actual value.
    * @return the created assertion object.
    */
+  @org.assertj.core.util.CheckReturnValue
   public static org.assertj.examples.data.ClassUsingDifferentClassesWithSameNameAssert assertThat(org.assertj.examples.data.ClassUsingDifferentClassesWithSameName actual) {
     return new org.assertj.examples.data.ClassUsingDifferentClassesWithSameNameAssert(actual);
   }
@@ -112,8 +123,20 @@ public class Assertions {
    * @param actual the actual value.
    * @return the created assertion object.
    */
+  @org.assertj.core.util.CheckReturnValue
   public static org.assertj.examples.data.EmployeeAssert assertThat(org.assertj.examples.data.Employee actual) {
     return new org.assertj.examples.data.EmployeeAssert(actual);
+  }
+
+  /**
+   * Creates a new instance of <code>{@link org.assertj.examples.data.EmployeeTitleAssert}</code>.
+   *
+   * @param actual the actual value.
+   * @return the created assertion object.
+   */
+  @org.assertj.core.util.CheckReturnValue
+  public static org.assertj.examples.data.EmployeeTitleAssert assertThat(org.assertj.examples.data.Employee.Title actual) {
+    return new org.assertj.examples.data.EmployeeTitleAssert(actual);
   }
 
   /**
@@ -122,6 +145,7 @@ public class Assertions {
    * @param actual the actual value.
    * @return the created assertion object.
    */
+  @org.assertj.core.util.CheckReturnValue
   public static org.assertj.examples.data.MagicalAssert assertThat(org.assertj.examples.data.Magical actual) {
     return new org.assertj.examples.data.MagicalAssert(actual);
   }
@@ -132,6 +156,7 @@ public class Assertions {
    * @param actual the actual value.
    * @return the created assertion object.
    */
+  @org.assertj.core.util.CheckReturnValue
   public static org.assertj.examples.data.MansionAssert assertThat(org.assertj.examples.data.Mansion actual) {
     return new org.assertj.examples.data.MansionAssert(actual);
   }
@@ -142,6 +167,7 @@ public class Assertions {
    * @param actual the actual value.
    * @return the created assertion object.
    */
+  @org.assertj.core.util.CheckReturnValue
   public static org.assertj.examples.data.NameAssert assertThat(org.assertj.examples.data.Name actual) {
     return new org.assertj.examples.data.NameAssert(actual);
   }
@@ -152,6 +178,7 @@ public class Assertions {
    * @param actual the actual value.
    * @return the created assertion object.
    */
+  @org.assertj.core.util.CheckReturnValue
   public static org.assertj.examples.data.PersonAssert assertThat(org.assertj.examples.data.Person actual) {
     return new org.assertj.examples.data.PersonAssert(actual);
   }
@@ -162,6 +189,7 @@ public class Assertions {
    * @param actual the actual value.
    * @return the created assertion object.
    */
+  @org.assertj.core.util.CheckReturnValue
   public static org.assertj.examples.data.RaceAssert assertThat(org.assertj.examples.data.Race actual) {
     return new org.assertj.examples.data.RaceAssert(actual);
   }
@@ -172,6 +200,7 @@ public class Assertions {
    * @param actual the actual value.
    * @return the created assertion object.
    */
+  @org.assertj.core.util.CheckReturnValue
   public static org.assertj.examples.data.RingAssert assertThat(org.assertj.examples.data.Ring actual) {
     return new org.assertj.examples.data.RingAssert(actual);
   }
@@ -182,6 +211,7 @@ public class Assertions {
    * @param actual the actual value.
    * @return the created assertion object.
    */
+  @org.assertj.core.util.CheckReturnValue
   public static org.assertj.examples.data.TeamAssert assertThat(org.assertj.examples.data.Team actual) {
     return new org.assertj.examples.data.TeamAssert(actual);
   }
@@ -192,6 +222,7 @@ public class Assertions {
    * @param actual the actual value.
    * @return the created assertion object.
    */
+  @org.assertj.core.util.CheckReturnValue
   public static org.assertj.examples.data.TolkienCharacterAssert assertThat(org.assertj.examples.data.TolkienCharacter actual) {
     return new org.assertj.examples.data.TolkienCharacterAssert(actual);
   }
@@ -202,6 +233,7 @@ public class Assertions {
    * @param actual the actual value.
    * @return the created assertion object.
    */
+  @org.assertj.core.util.CheckReturnValue
   public static org.assertj.examples.data.bug18.Dollar$Assert assertThat(org.assertj.examples.data.bug18.Dollar$ actual) {
     return new org.assertj.examples.data.bug18.Dollar$Assert(actual);
   }
@@ -212,6 +244,7 @@ public class Assertions {
    * @param actual the actual value.
    * @return the created assertion object.
    */
+  @org.assertj.core.util.CheckReturnValue
   public static org.assertj.examples.data.bug26.WithGenericListTypeAssert assertThat(org.assertj.examples.data.bug26.WithGenericListType actual) {
     return new org.assertj.examples.data.bug26.WithGenericListTypeAssert(actual);
   }
@@ -222,6 +255,7 @@ public class Assertions {
    * @param actual the actual value.
    * @return the created assertion object.
    */
+  @org.assertj.core.util.CheckReturnValue
   public static org.assertj.examples.data.bug27.MyIteratorWrapperAssert assertThat(org.assertj.examples.data.bug27.MyIteratorWrapper actual) {
     return new org.assertj.examples.data.bug27.MyIteratorWrapperAssert(actual);
   }
@@ -232,6 +266,7 @@ public class Assertions {
    * @param actual the actual value.
    * @return the created assertion object.
    */
+  @org.assertj.core.util.CheckReturnValue
   public static org.assertj.examples.data.bug27.MyModelClassAssert assertThat(org.assertj.examples.data.bug27.MyModelClass actual) {
     return new org.assertj.examples.data.bug27.MyModelClassAssert(actual);
   }
@@ -242,6 +277,7 @@ public class Assertions {
    * @param actual the actual value.
    * @return the created assertion object.
    */
+  @org.assertj.core.util.CheckReturnValue
   public static org.assertj.examples.data.bug27.MyModelClassMyBeanAssert assertThat(org.assertj.examples.data.bug27.MyModelClass.MyBean actual) {
     return new org.assertj.examples.data.bug27.MyModelClassMyBeanAssert(actual);
   }
@@ -252,6 +288,7 @@ public class Assertions {
    * @param actual the actual value.
    * @return the created assertion object.
    */
+  @org.assertj.core.util.CheckReturnValue
   public static org.assertj.examples.data.movie.MovieAssert assertThat(org.assertj.examples.data.movie.Movie actual) {
     return new org.assertj.examples.data.movie.MovieAssert(actual);
   }
@@ -262,6 +299,7 @@ public class Assertions {
    * @param actual the actual value.
    * @return the created assertion object.
    */
+  @org.assertj.core.util.CheckReturnValue
   public static org.assertj.examples.data.movie.TeamAssert assertThat(org.assertj.examples.data.movie.Team actual) {
     return new org.assertj.examples.data.movie.TeamAssert(actual);
   }
@@ -272,6 +310,7 @@ public class Assertions {
    * @param actual the actual value.
    * @return the created assertion object.
    */
+  @org.assertj.core.util.CheckReturnValue
   public static org.assertj.examples.data.neo4j.DragonBallGraphAssert assertThat(org.assertj.examples.data.neo4j.DragonBallGraph actual) {
     return new org.assertj.examples.data.neo4j.DragonBallGraphAssert(actual);
   }
@@ -282,6 +321,7 @@ public class Assertions {
    * @param actual the actual value.
    * @return the created assertion object.
    */
+  @org.assertj.core.util.CheckReturnValue
   public static org.assertj.examples.data.service.GameServiceAssert assertThat(org.assertj.examples.data.service.GameService actual) {
     return new org.assertj.examples.data.service.GameServiceAssert(actual);
   }
@@ -292,6 +332,7 @@ public class Assertions {
    * @param actual the actual value.
    * @return the created assertion object.
    */
+  @org.assertj.core.util.CheckReturnValue
   public static org.assertj.examples.data.service.TeamManagerAssert assertThat(org.assertj.examples.data.service.TeamManager actual) {
     return new org.assertj.examples.data.service.TeamManagerAssert(actual);
   }

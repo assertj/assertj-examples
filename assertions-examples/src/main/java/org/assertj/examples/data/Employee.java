@@ -16,6 +16,8 @@ public class Employee extends Person {
 
   private String company;
 
+  public String rank;
+
   public Employee(String name, int age, String company) {
     super(name, age);
     this.company = company;
@@ -30,6 +32,10 @@ public class Employee extends Person {
     
     public String getPosition() {
       return position;
+    }
+
+    public void setPosition(String position) {
+      this.position = position;
     }
   }
 

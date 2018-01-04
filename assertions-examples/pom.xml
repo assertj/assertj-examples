@@ -21,7 +21,7 @@
   <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <neo4j.version>2.0.0</neo4j.version>
-    <assertj-core.version>2.8.0</assertj-core.version>
+    <assertj-core.version>2.9.0</assertj-core.version>
   </properties>
 
   <dependencies>
@@ -83,7 +83,7 @@
     <dependency>
       <groupId>com.google.guava</groupId>
       <artifactId>guava</artifactId>
-      <version>18.0</version>
+      <version>20.0</version>
     </dependency>
     <dependency>
       <groupId>joda-time</groupId>
@@ -152,7 +152,7 @@
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-surefire-plugin</artifactId>
-        <version>2.12</version>
+        <version>2.20</version>
         <configuration>
           <includes>
             <include>**/*Examples.java</include>
@@ -165,7 +165,7 @@
       <plugin>
         <groupId>org.assertj</groupId>
         <artifactId>assertj-assertions-generator-maven-plugin</artifactId>
-        <version>2.0.0</version>
+        <version>2.1.0</version>
         <executions>
           <execution>
             <goals>
@@ -174,12 +174,9 @@
           </execution>
         </executions>
         <configuration>
-          <!-- example of replacing generated assertions default templates
-          -->
+          <!-- example of replacing generated assertions default templates -->
           <templates>
             <templatesDirectory>src/test/resources/templates/</templatesDirectory>
-            <objectAssertion>my_has_assertion_template.txt</objectAssertion>
-            <hierarchicalAssertionConcreteClass>my_assertion_class_template.txt</hierarchicalAssertionConcreteClass>
           </templates>
           <packages>
             <param>org.assertj.examples.rpg</param>
@@ -187,8 +184,8 @@
             <param>com.google.common.net</param>
           </packages>
           <classes>
-            <param>java.nio.file.Path</param>
             <param>com.fake.UnknownClass</param>
+            <param>org.apache.commons.lang3.exception.ContextedRuntimeException</param>
           </classes>
           <hierarchical>true</hierarchical>
           <entryPointClassPackage>org.assertj</entryPointClassPackage>
@@ -205,6 +202,8 @@
           <generateBddAssertions>true</generateBddAssertions>
           <generateSoftAssertions>true</generateSoftAssertions>
           <generateJUnitSoftAssertions>true</generateJUnitSoftAssertions>
+          <quiet>false</quiet>
+          <generateAssertionsForAllFields>true</generateAssertionsForAllFields>
         </configuration>
         <dependencies>
           <dependency>
@@ -265,8 +264,8 @@
           </execution>
         </executions>
       </plugin>
-
     </plugins>
+
     <pluginManagement>
       <plugins>
         <!--This plugin's configuration is used to store Eclipse m2e settings only. It has no influence on the Maven build itself.-->

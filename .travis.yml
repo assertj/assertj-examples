@@ -1,0 +1,8 @@
+language: java
+script: 
+- cd assertions-examples
+- mvn clean verify
+branches:
+  only:
+    - master
+    - java-7
