@@ -42,191 +42,194 @@ import com.google.common.collect.ImmutableMap;
  */
 public class MapAssertionsExamples extends AbstractAssertionsExamples {
 
-  private final class OneRingManCondition extends Condition<Map.Entry<TolkienCharacter, Ring>> {
-    @Override
-    public boolean matches(Map.Entry<TolkienCharacter, Ring> entry) {
-      return entry.getKey().getRace() == MAN && entry.getValue() == oneRing;
-    }
-  }
+	private final class OneRingManCondition extends Condition<Map.Entry<TolkienCharacter, Ring>> {
 
-  @Test
-  public void map_assertions_examples() {
-    // ringBearers is a Map of TolkienCharacter indexed by the Ring they are wearing.
-    assertThat(ringBearers).isNotEmpty().hasSize(4);
+		@Override
+		public boolean matches(final Map.Entry<TolkienCharacter, Ring> entry) {
+			return entry.getKey().getRace() == MAN && entry.getValue() == oneRing;
+		}
+	}
 
-    // note the usage of Assertions.entry(key, value) synthetic sugar for better readability (similar to
-    // MapEntry.entry(key, value)).
-    assertThat(ringBearers).contains(entry(oneRing, frodo), entry(nenya, galadriel));
-    // using java util Map.Entry
-    assertThat(ringBearers).contains(javaMapEntry(oneRing, frodo), javaMapEntry(nenya, galadriel));
-    // same assertion but different way of expressing it : no entry call needed but no varargs support.
-    assertThat(ringBearers).containsEntry(oneRing, frodo).containsEntry(nenya, galadriel);
-    // opposite of contains/containsEntry
-    assertThat(ringBearers).doesNotContain(entry(oneRing, sauron), entry(nenya, aragorn));
-    assertThat(ringBearers).doesNotContainEntry(oneRing, aragorn);
+	@Test
+	public void map_assertions_examples() {
+		// ringBearers is a Map of TolkienCharacter indexed by the Ring they are wearing.
+		assertThat(this.ringBearers).isNotEmpty().hasSize(4);
 
-    // Assertion on key
-    assertThat(ringBearers).containsKey(nenya);
-    assertThat(ringBearers).containsKeys(nenya, narya);
-    assertThat(ringBearers).containsValues(frodo, galadriel);
-    assertThat(ringBearers).containsOnlyKeys(nenya, narya, vilya, oneRing);
-    assertThat(ringBearers).doesNotContainKey(manRing);
-    assertThat(ringBearers).doesNotContainKeys(manRing, dwarfRing);
+		// note the usage of Assertions.entry(key, value) synthetic sugar for better readability (similar to
+		// MapEntry.entry(key, value)).
+		assertThat(this.ringBearers).contains(entry(oneRing, this.frodo), entry(nenya, this.galadriel));
+		// using java util Map.Entry
+		assertThat(this.ringBearers).contains(javaMapEntry(oneRing, this.frodo), javaMapEntry(nenya, this.galadriel));
+		// same assertion but different way of expressing it : no entry call needed but no varargs support.
+		assertThat(this.ringBearers).containsEntry(oneRing, this.frodo).containsEntry(nenya, this.galadriel);
+		// opposite of contains/containsEntry
+		assertThat(this.ringBearers).doesNotContain(entry(oneRing, this.sauron), entry(nenya, this.aragorn));
+		assertThat(this.ringBearers).doesNotContainEntry(oneRing, this.aragorn);
 
-    try {
-      assertThat(ringBearers).containsOnlyKeys(nenya, narya, dwarfRing);
-    } catch (AssertionError e) {
-      logAssertionErrorMessage("containsOnlyKeys with not found and not expected keys.", e);
-    }
+		// Assertion on key
+		assertThat(this.ringBearers).containsKey(nenya);
+		assertThat(this.ringBearers).containsKeys(nenya, narya);
+		assertThat(this.ringBearers).containsValues(this.frodo, this.galadriel);
+		assertThat(this.ringBearers).containsOnlyKeys(nenya, narya, vilya, oneRing);
+		assertThat(this.ringBearers).doesNotContainKey(manRing);
+		assertThat(this.ringBearers).doesNotContainKeys(manRing, dwarfRing);
 
-    // Assertion on value
-    assertThat(ringBearers).containsValue(frodo);
-    assertThat(ringBearers).doesNotContainValue(sam);
+		try {
+			assertThat(this.ringBearers).containsOnlyKeys(nenya, narya, dwarfRing);
+		} catch (final AssertionError e) {
+			logAssertionErrorMessage("containsOnlyKeys with not found and not expected keys.", e);
+		}
 
-    assertThat(ringBearers).hasSameSizeAs(ringBearers);
-    ringBearers.clear();
-    assertThat(ringBearers).contains();
-    assertThat(ringBearers).containsAllEntriesOf(ringBearers);
-  }
+		// Assertion on value
+		assertThat(this.ringBearers).containsValue(this.frodo);
+		assertThat(this.ringBearers).doesNotContainValue(this.sam);
 
-  @Test
-  public void containsAllEntriesOf_example() {
-    Map<Ring, TolkienCharacter> elvesRingBearer = new HashMap<>();
-    elvesRingBearer.put(nenya, galadriel);
-    elvesRingBearer.put(narya, gandalf);
-    elvesRingBearer.put(vilya, elrond);
+		assertThat(this.ringBearers).hasSameSizeAs(this.ringBearers);
+		this.ringBearers.clear();
+		assertThat(this.ringBearers).contains();
+		assertThat(this.ringBearers).containsAllEntriesOf(this.ringBearers);
+	}
 
-    assertThat(ringBearers).containsAllEntriesOf(elvesRingBearer);
-  }
+	@Test
+	public void containsAllEntriesOf_example() {
+		final Map<Ring, TolkienCharacter> elvesRingBearer = new HashMap<>();
+		elvesRingBearer.put(nenya, this.galadriel);
+		elvesRingBearer.put(narya, this.gandalf);
+		elvesRingBearer.put(vilya, this.elrond);
 
-  @Test
-  public void map_contains_entries_examples() throws Exception {
-    Map<String, TolkienCharacter> characters = new LinkedHashMap<>();
-    characters.put(frodo.getName(), frodo);
-    characters.put(galadriel.getName(), galadriel);
-    characters.put(gandalf.getName(), gandalf);
-    characters.put(sam.getName(), sam);
+		assertThat(this.ringBearers).containsAllEntriesOf(elvesRingBearer);
+	}
 
-    assertThat(characters).containsOnly(entry(sam.getName(), sam),
-                                        entry(frodo.getName(), frodo),
-                                        entry(gandalf.getName(), gandalf),
-                                        entry(galadriel.getName(), galadriel));
+	@Test
+	public void map_contains_entries_examples() throws Exception {
+		final Map<String, TolkienCharacter> characters = new LinkedHashMap<>();
+		characters.put(this.frodo.getName(), this.frodo);
+		characters.put(this.galadriel.getName(), this.galadriel);
+		characters.put(this.gandalf.getName(), this.gandalf);
+		characters.put(this.sam.getName(), this.sam);
 
-    try {
-      assertThat(characters).containsOnly(entry(sam.getName(), sam),
-                                          entry(frodo.getName(), frodo),
-                                          entry(aragorn.getName(), aragorn));
-    } catch (AssertionError e) {
-      logAssertionErrorMessage("containsOnly with not found and not expected elements.", e);
-    }
+		assertThat(characters).containsOnly(entry(this.sam.getName(), this.sam),
+				entry(this.frodo.getName(), this.frodo),
+				entry(this.gandalf.getName(), this.gandalf),
+				entry(this.galadriel.getName(), this.galadriel));
 
-    assertThat(characters).containsExactly(entry(frodo.getName(), frodo),
-                                           entry(galadriel.getName(), galadriel),
-                                           entry(gandalf.getName(), gandalf),
-                                           entry(sam.getName(), sam));
+		try {
+			assertThat(characters).containsOnly(entry(this.sam.getName(), this.sam),
+					entry(this.frodo.getName(), this.frodo),
+					entry(this.aragorn.getName(), this.aragorn));
+		} catch (final AssertionError e) {
+			logAssertionErrorMessage("containsOnly with not found and not expected elements.", e);
+		}
 
-    try {
-      assertThat(characters).containsExactly(entry(frodo.getName(), frodo),
-                                             entry(sam.getName(), sam),
-                                             entry(gandalf.getName(), gandalf),
-                                             entry(galadriel.getName(), galadriel));
-    } catch (AssertionError e) {
-      logAssertionErrorMessage("containsExactly is disorder.", e);
-    }
-  }
+		assertThat(characters).containsExactly(entry(this.frodo.getName(), this.frodo),
+				entry(this.galadriel.getName(), this.galadriel),
+				entry(this.gandalf.getName(), this.gandalf),
+				entry(this.sam.getName(), this.sam));
 
-  @Test
-  public void map_extracting_example() {
-    Map<String, Object> basketballPlayer = new HashMap<>();
-    basketballPlayer.put("name", "kawhi");
-    basketballPlayer.put("age", 25);
+		try {
+			assertThat(characters).containsExactly(entry(this.frodo.getName(), this.frodo),
+					entry(this.sam.getName(), this.sam),
+					entry(this.gandalf.getName(), this.gandalf),
+					entry(this.galadriel.getName(), this.galadriel));
+		} catch (final AssertionError e) {
+			logAssertionErrorMessage("containsExactly is disorder.", e);
+		}
+	}
 
-    assertThat(basketballPlayer).extracting("name", "age")
-                                .contains("kawhi", 25);
-  }
+	@Test
+	public void map_extracting_example() {
+		final Map<String, Object> basketballPlayer = new HashMap<>();
+		basketballPlayer.put("name", "kawhi");
+		basketballPlayer.put("age", 25);
 
-  @Test
-  public void display_sorted_maps_in_error_message() {
-    try {
-      Map<String, Integer> expected = ImmutableMap.<String, Integer> builder().put("a", 1).put("b", 2).build();
-      Map<String, Integer> actual = ImmutableMap.<String, Integer> builder().put("b", 1).put("a", 1).build();
-      assertThat(expected).isEqualTo(actual);
-    } catch (AssertionError e) {
-      logAssertionErrorMessage("display sorted maps in error message", e);
-    }
-  }
+		assertThat(basketballPlayer).extracting("name", "age")
+				.contains("kawhi", 25);
+	}
 
-  @SuppressWarnings({ "unchecked", "rawtypes" })
-  @Test
-  public void test_bug_485() {
-    // https://github.com/joel-costigliola/assertj-core/issues/485
-    Map map1 = new HashMap();
-    map1.put("Key1", "Value1");
-    map1.put("Key2", "Value2");
+	@Test
+	public void display_sorted_maps_in_error_message() {
+		try {
+			final Map<String, Integer> expected = ImmutableMap.<String, Integer> builder().put("a", 1).put("b", 2).build();
+			final Map<String, Integer> actual = ImmutableMap.<String, Integer> builder().put("b", 1).put("a", 1).build();
+			assertThat(expected).isEqualTo(actual);
+		} catch (final AssertionError e) {
+			logAssertionErrorMessage("display sorted maps in error message", e);
+		}
+	}
 
-    assertThat(map1).as("").containsOnlyKeys("Key1", "Key2");
-  }
+	@SuppressWarnings({ "unchecked", "rawtypes" })
+	@Test
+	public void test_bug_485() {
+		// https://github.com/joel-costigliola/assertj-core/issues/485
+		final Map map1 = new HashMap();
+		map1.put("Key1", "Value1");
+		map1.put("Key2", "Value2");
 
-  @Test
-  public void test_navigable_size_assertions() throws Exception {
-    Map<Ring, TolkienCharacter> ringBearers = new HashMap<>();
-    ringBearers.put(nenya, galadriel);
-    ringBearers.put(narya, gandalf);
-    ringBearers.put(oneRing, frodo);
+		assertThat(map1).as("").containsOnlyKeys("Key1", "Key2");
+	}
 
-    // assertion will pass:
-    assertThat(ringBearers).size().isGreaterThan(1)
-                           .isLessThanOrEqualTo(3)
-                           .returnToMap()
-                           .containsKeys(oneRing, nenya, narya)
-                           .containsEntry(oneRing, frodo);
-  }
+	@Test
+	public void test_navigable_size_assertions() throws Exception {
+		final Map<Ring, TolkienCharacter> ringBearers = new HashMap<>();
+		ringBearers.put(nenya, this.galadriel);
+		ringBearers.put(narya, this.gandalf);
+		ringBearers.put(oneRing, this.frodo);
 
-  @Test
-  public void should_not_produce_warning_for_varargs_parameter() {
-    Map<String, String> map = new HashMap<>();
-    map.put("A", "B");
-    assertThat(map.entrySet()).containsExactly(Pair.of("A", "B"));
-  }
+		// assertion will pass:
+		assertThat(ringBearers).size().isGreaterThan(1)
+				.isLessThanOrEqualTo(3)
+				.returnToMap()
+				.containsKeys(oneRing, nenya, narya)
+				.containsEntry(oneRing, this.frodo);
+	}
 
-  @Test
-  public void containsAnyOf_example() {
-    assertThat(ringBearers).containsAnyOf(entry(oneRing, frodo), entry(oneRing, sauron));
-    ringBearers.clear();
-    assertThat(ringBearers).containsAnyOf();
-  }
+	@Test
+	public void should_not_produce_warning_for_varargs_parameter() {
+		final Map<String, String> map = new HashMap<>();
+		map.put("A", "B");
+		assertThat(map.entrySet()).containsExactly(Pair.of("A", "B"));
+	}
 
-  @Test
-  public void map_with_condition_examples() {
-    Map<TolkienCharacter, Ring> ringBearers = new HashMap<>();
-    ringBearers.put(galadriel, nenya);
-    ringBearers.put(gandalf, narya);
-    ringBearers.put(elrond, vilya);
-    ringBearers.put(frodo, oneRing);
-    ringBearers.put(isildur, oneRing);
+	@Test
+	public void containsAnyOf_example() {
+		assertThat(this.ringBearers).containsAnyOf(entry(oneRing, this.frodo), entry(oneRing, this.sauron));
+		this.ringBearers.clear();
+		assertThat(this.ringBearers).containsAnyOf();
+	}
 
-    assertThat(ringBearers).hasEntrySatisfying(new OneRingManCondition());
-    assertThat(ringBearers).hasEntrySatisfying(isMan, oneRingBearer);
-    assertThat(ringBearers).hasKeySatisfying(isMan);
-    assertThat(ringBearers).hasValueSatisfying(oneRingBearer);
-  }
+	@Test
+	public void map_with_condition_examples() {
+		final Map<TolkienCharacter, Ring> ringBearers = new HashMap<>();
+		ringBearers.put(this.galadriel, nenya);
+		ringBearers.put(this.gandalf, narya);
+		ringBearers.put(this.elrond, vilya);
+		ringBearers.put(this.frodo, oneRing);
+		ringBearers.put(this.isildur, oneRing);
 
-  private static <K, V> Map.Entry<K, V> javaMapEntry(K key, V value) {
-    return new SimpleImmutableEntry<>(key, value);
-  }
+		assertThat(ringBearers).hasEntrySatisfying(new OneRingManCondition());
+		assertThat(ringBearers).hasEntrySatisfying(this.isMan, this.oneRingBearer);
+		assertThat(ringBearers).hasKeySatisfying(this.isMan);
+		assertThat(ringBearers).hasValueSatisfying(this.oneRingBearer);
+	}
 
-  Condition<TolkienCharacter> isMan = new Condition<TolkienCharacter>("is man") {
-    @Override
-    public boolean matches(TolkienCharacter value) {
-      return value.getRace() == MAN;
-    }
-  };
+	private static <K, V> Map.Entry<K, V> javaMapEntry(final K key, final V value) {
+		return new SimpleImmutableEntry<>(key, value);
+	}
 
-  Condition<Ring> oneRingBearer = new Condition<Ring>("One ring bearer") {
-    @Override
-    public boolean matches(Ring value) {
-      return value == oneRing;
-    }
-  };
+	Condition<TolkienCharacter> isMan = new Condition<TolkienCharacter>("is man") {
+
+		@Override
+		public boolean matches(final TolkienCharacter value) {
+			return value.getRace() == MAN;
+		}
+	};
+
+	Condition<Ring> oneRingBearer = new Condition<Ring>("One ring bearer") {
+
+		@Override
+		public boolean matches(final Ring value) {
+			return value == oneRing;
+		}
+	};
 
 }

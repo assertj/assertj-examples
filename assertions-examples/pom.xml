@@ -21,7 +21,7 @@
   <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <neo4j.version>3.0.0</neo4j.version>
-    <assertj-core.version>3.8.0</assertj-core.version>
+    <assertj-core.version>3.9.0</assertj-core.version>
   </properties>
 
   <dependencies>
@@ -194,7 +194,7 @@
           <generateBddAssertions>true</generateBddAssertions>
           <generateSoftAssertions>true</generateSoftAssertions>
           <generateJUnitSoftAssertions>true</generateJUnitSoftAssertions>
-          <!-- 
+          <!--
           <templates>
             <templatesDirectory>src/test/resources/templates/</templatesDirectory>
             <assertionsEntryPointClass>my_Assertions_class_template.txt</assertionsEntryPointClass>

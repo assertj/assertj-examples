@@ -52,420 +52,422 @@ import org.junit.Test;
  */
 public class ArrayAssertionsExamples extends AbstractAssertionsExamples {
 
-  @Test
-  public void array_assertions_examples() {
-    // array assertion are very similar to newArrayList assertions
-    Ring[] elvesRings = array(vilya, nenya, narya);
-    Ring[] elvesRings2 = array(nenya, vilya, narya);
-    assertThat(elvesRings).containsOnly(elvesRings2);
+	@Test
+	public void array_assertions_examples() {
+		// array assertion are very similar to newArrayList assertions
+		final Ring[] elvesRings = array(vilya, nenya, narya);
+		final Ring[] elvesRings2 = array(nenya, vilya, narya);
+		assertThat(elvesRings).containsOnly(elvesRings2);
 
-    assertThat(array(vilya, nenya, narya)).containsOnly(array(nenya, vilya, narya));
+		assertThat(array(vilya, nenya, narya)).containsOnly(array(nenya, vilya, narya));
 
-    Movie[] trilogy = array(theFellowshipOfTheRing, theTwoTowers, theReturnOfTheKing);
-    assertThat(elvesRings).isNotEmpty().hasSize(3);
-    assertThat(elvesRings).hasSameSizeAs(trilogy);
-    assertThat(elvesRings).hasSameSizeAs(newArrayList(trilogy));
-    assertThat(elvesRings).contains(nenya).doesNotContain(oneRing);
-    assertThat(elvesRings).containsExactly(vilya, nenya, narya);
-    assertThat(elvesRings).containsExactlyElementsOf(newArrayList(vilya, nenya, narya));
+		final Movie[] trilogy = array(this.theFellowshipOfTheRing, this.theTwoTowers, this.theReturnOfTheKing);
+		assertThat(elvesRings).isNotEmpty().hasSize(3);
+		assertThat(elvesRings).hasSameSizeAs(trilogy);
+		assertThat(elvesRings).hasSameSizeAs(newArrayList(trilogy));
+		assertThat(elvesRings).contains(nenya).doesNotContain(oneRing);
+		assertThat(elvesRings).containsExactly(vilya, nenya, narya);
+		assertThat(elvesRings).containsExactlyElementsOf(newArrayList(vilya, nenya, narya));
 
-    // you can check element at a given index (we use Index.atIndex(int) synthetic sugar for better readability).
-    assertThat(elvesRings).contains(vilya, atIndex(0)).contains(nenya, atIndex(1)).contains(narya, atIndex(2));
-    // with containsOnly, all the elements must be present (but the order is not important)
-    assertThat(elvesRings).containsOnly(nenya, vilya, narya);
-    assertThat(elvesRings).containsOnlyElementsOf(newArrayList(nenya, vilya, narya));
-    assertThat(elvesRings).hasSameElementsAs(newArrayList(nenya, vilya, narya));
-    assertThat(elvesRings).doesNotContainNull().doesNotHaveDuplicates();
-    assertThat(elvesRings).doesNotContainAnyElementsOf(newArrayList(oneRing, manRing, dwarfRing));
-    // special check for null, empty collection or both
-    assertThat(newArrayList(frodo, null, sam)).containsNull();
-    Object[] array = array();
-    assertThat(array).isEmpty();
-    assertThat(array).contains();
-    assertThat(array).isNullOrEmpty();
-    array = null;
-    assertThat(array).isNullOrEmpty();
-    // you can also check the start or end of your collection/iterable
-    Ring[] allRings = array(oneRing, vilya, nenya, narya, dwarfRing, manRing);
-    assertThat(allRings).startsWith(oneRing, vilya).endsWith(dwarfRing, manRing);
-    assertThat(allRings).containsSequence(nenya, narya, dwarfRing);
-    // you can check that an array is sorted
-    TolkienCharacter[] fellowshipOfTheRingArray = fellowshipOfTheRing.toArray(new TolkienCharacter[0]);
-    Arrays.sort(fellowshipOfTheRingArray, ageComparator);
-    assertThat(fellowshipOfTheRingArray).isSortedAccordingTo(ageComparator);
-    assertThat(fellowshipOfTheRingArray).usingElementComparator(ageComparator).isSorted();
+		// you can check element at a given index (we use Index.atIndex(int) synthetic sugar for better readability).
+		assertThat(elvesRings).contains(vilya, atIndex(0)).contains(nenya, atIndex(1)).contains(narya, atIndex(2));
+		// with containsOnly, all the elements must be present (but the order is not important)
+		assertThat(elvesRings).containsOnly(nenya, vilya, narya);
+		assertThat(elvesRings).containsOnlyElementsOf(newArrayList(nenya, vilya, narya));
+		assertThat(elvesRings).hasSameElementsAs(newArrayList(nenya, vilya, narya));
+		assertThat(elvesRings).doesNotContainNull().doesNotHaveDuplicates();
+		assertThat(elvesRings).doesNotContainAnyElementsOf(newArrayList(oneRing, manRing, dwarfRing));
+		// special check for null, empty collection or both
+		assertThat(newArrayList(this.frodo, null, this.sam)).containsNull();
+		Object[] array = array();
+		assertThat(array).isEmpty();
+		assertThat(array).contains();
+		assertThat(array).isNullOrEmpty();
+		array = null;
+		assertThat(array).isNullOrEmpty();
+		// you can also check the start or end of your collection/iterable
+		final Ring[] allRings = array(oneRing, vilya, nenya, narya, dwarfRing, manRing);
+		assertThat(allRings).startsWith(oneRing, vilya).endsWith(dwarfRing, manRing);
+		assertThat(allRings).containsSequence(nenya, narya, dwarfRing);
+		// you can check that an array is sorted
+		final TolkienCharacter[] fellowshipOfTheRingArray = this.fellowshipOfTheRing.toArray(new TolkienCharacter[0]);
+		Arrays.sort(fellowshipOfTheRingArray, this.ageComparator);
+		assertThat(fellowshipOfTheRingArray).isSortedAccordingTo(this.ageComparator);
+		assertThat(fellowshipOfTheRingArray).usingElementComparator(this.ageComparator).isSorted();
 
-    // Uncomment when #131 is fixed
-    String[] arr = { "a", "b", "c" };
-    assertThat(arr).containsExactly("a", "b", "c");
+		// Uncomment when #131 is fixed
+		final String[] arr = { "a", "b", "c" };
+		assertThat(arr).containsExactly("a", "b", "c");
 
-    array = new String[] { "--option", "a=b", "--option", "c=d" };
-    assertThat(array).containsSequence("--option", "c=d");
-    // containsSequence would fail but not containsSubsequence.
-    assertThat(array).as("").containsSubsequence("a=b", "c=d");
-  }
+		array = new String[] { "--option", "a=b", "--option", "c=d" };
+		assertThat(array).containsSequence("--option", "c=d");
+		// containsSequence would fail but not containsSubsequence.
+		assertThat(array).as("").containsSubsequence("a=b", "c=d");
+	}
 
-  @Test
-  public void display_array_with_one_element_per_line() throws Exception {
-    TolkienCharacter[] fellowshipOfTheRingArray = fellowshipOfTheRing.toArray(new TolkienCharacter[0]);
-    try {
-      assertThat(fellowshipOfTheRingArray).contains(sauron);
-    } catch (AssertionError e) {
-      logAssertionErrorMessage("isSorted with custom element comparator", e);
-    }
-  }
+	@Test
+	public void display_array_with_one_element_per_line() throws Exception {
+		final TolkienCharacter[] fellowshipOfTheRingArray = this.fellowshipOfTheRing.toArray(new TolkienCharacter[0]);
+		try {
+			assertThat(fellowshipOfTheRingArray).contains(this.sauron);
+		} catch (final AssertionError e) {
+			logAssertionErrorMessage("isSorted with custom element comparator", e);
+		}
+	}
 
-  @Test
-  public void array_assertions_with_custom_comparison_examples() {
-    TolkienCharacter[] fellowshipOfTheRingCharacters = fellowshipOfTheRing.toArray(new TolkienCharacter[0]);
+	@Test
+	public void array_assertions_with_custom_comparison_examples() {
+		final TolkienCharacter[] fellowshipOfTheRingCharacters = this.fellowshipOfTheRing.toArray(new TolkienCharacter[0]);
 
-    // standard comparison : the fellowshipOfTheRing includes Gandalf but not Sauron ...
-    assertThat(fellowshipOfTheRingCharacters).contains(gandalf).doesNotContain(sauron);
-    // ... but if we compare only race name Sauron is in fellowshipOfTheRing because he's a Maia like Gandalf.
-    assertThat(fellowshipOfTheRingCharacters).usingElementComparator(raceNameComparator).contains(sauron);
+		// standard comparison : the fellowshipOfTheRing includes Gandalf but not Sauron ...
+		assertThat(fellowshipOfTheRingCharacters).contains(this.gandalf).doesNotContain(this.sauron);
+		// ... but if we compare only race name Sauron is in fellowshipOfTheRing because he's a Maia like Gandalf.
+		assertThat(fellowshipOfTheRingCharacters).usingElementComparator(this.raceNameComparator).contains(this.sauron);
 
-    // isSorted assertion honors custom comparator
-    assertThat(array(sam, gandalf)).isSortedAccordingTo(ageComparator);
-    assertThat(array(sam, gandalf)).usingElementComparator(ageComparator).isSorted();
+		// isSorted assertion honors custom comparator
+		assertThat(array(this.sam, this.gandalf)).isSortedAccordingTo(this.ageComparator);
+		assertThat(array(this.sam, this.gandalf)).usingElementComparator(this.ageComparator).isSorted();
 
-    // note that error message mentions the comparator used to better understand the failure
-    try {
-      assertThat(array(gandalf, sam)).usingElementComparator(ageComparator).isSorted();
-    } catch (AssertionError e) {
-      logAssertionErrorMessage("isSorted with custom element comparator", e);
-    }
+		// note that error message mentions the comparator used to better understand the failure
+		try {
+			assertThat(array(this.gandalf, this.sam)).usingElementComparator(this.ageComparator).isSorted();
+		} catch (final AssertionError e) {
+			logAssertionErrorMessage("isSorted with custom element comparator", e);
+		}
 
-    // duplicates assertion honors custom comparator :
-    assertThat(fellowshipOfTheRingCharacters).doesNotHaveDuplicates();
-    assertThat(array(sam, gandalf)).usingElementComparator(raceNameComparator).doesNotHaveDuplicates();
-    try {
-      assertThat(array(sam, gandalf, frodo)).usingElementComparator(raceNameComparator).doesNotHaveDuplicates();
-    } catch (AssertionError e) {
-      logAssertionErrorMessage("doesNotHaveDuplicates with custom element comparator", e);
-    }
-  }
+		// duplicates assertion honors custom comparator :
+		assertThat(fellowshipOfTheRingCharacters).doesNotHaveDuplicates();
+		assertThat(array(this.sam, this.gandalf)).usingElementComparator(this.raceNameComparator).doesNotHaveDuplicates();
+		try {
+			assertThat(array(this.sam, this.gandalf, this.frodo)).usingElementComparator(this.raceNameComparator).doesNotHaveDuplicates();
+		} catch (final AssertionError e) {
+			logAssertionErrorMessage("doesNotHaveDuplicates with custom element comparator", e);
+		}
+	}
 
-  @Test
-  public void arra_assertions_on_extracted_values_example() {
-    TolkienCharacter[] fellowshipOfTheRingArray = fellowshipOfTheRing.toArray(new TolkienCharacter[0]);
+	@Test
+	public void arra_assertions_on_extracted_values_example() {
+		final TolkienCharacter[] fellowshipOfTheRingArray = this.fellowshipOfTheRing.toArray(new TolkienCharacter[0]);
 
-    // extract simple property value (having a java standard type)
-    assertThat(extractProperty("name").from(fellowshipOfTheRingArray)).contains("Boromir", "Gandalf", "Frodo",
-                                                                                "Legolas")
-                                                                      .doesNotContain("Sauron", "Elrond");
+		// extract simple property value (having a java standard type)
+		assertThat(extractProperty("name").from(fellowshipOfTheRingArray)).contains("Boromir", "Gandalf", "Frodo",
+				"Legolas")
+				.doesNotContain("Sauron", "Elrond");
 
-    // extracting property works also with user's types (here Race)
-    assertThat(extractProperty("race").from(fellowshipOfTheRingArray)).contains(HOBBIT, ELF).doesNotContain(ORC);
+		// extracting property works also with user's types (here Race)
+		assertThat(extractProperty("race").from(fellowshipOfTheRingArray)).contains(HOBBIT, ELF).doesNotContain(ORC);
 
-    // same assertion but specifying the type of the extracted values (here Race)
-    assertThat(fellowshipOfTheRingArray).extracting("race", Race.class)
-                                        .contains(HOBBIT, ELF)
-                                        .doesNotContain(ORC);
+		// same assertion but specifying the type of the extracted values (here Race)
+		assertThat(fellowshipOfTheRingArray).extracting("race", Race.class)
+				.contains(HOBBIT, ELF)
+				.doesNotContain(ORC);
 
-    // extract nested property on Race
-    assertThat(extractProperty("race.name").from(fellowshipOfTheRingArray)).contains("Hobbit", "Elf")
-                                                                           .doesNotContain("Orc");
+		// extract nested property on Race
+		assertThat(extractProperty("race.name").from(fellowshipOfTheRingArray)).contains("Hobbit", "Elf")
+				.doesNotContain("Orc");
 
-    // same assertions but written with extracting(), it has the advantage of being able to extract field values as well
-    // as property values
+		// same assertions but written with extracting(), it has the advantage of being able to extract field values as well
+		// as property values
 
-    // extract 'name' property values.
-    assertThat(fellowshipOfTheRing).extracting("name")
-                                   .contains("Boromir", "Gandalf", "Frodo", "Legolas")
-                                   .doesNotContain("Sauron", "Elrond");
+		// extract 'name' property values.
+		assertThat(this.fellowshipOfTheRing).extracting("name")
+				.contains("Boromir", "Gandalf", "Frodo", "Legolas")
+				.doesNotContain("Sauron", "Elrond");
 
-    // extract 'age' field values, it works because 'age' is public in TolkienCharacter class.
-    assertThat(fellowshipOfTheRing).extracting("age")
-                                   .contains(33, 38, 36);
+		// extract 'age' field values, it works because 'age' is public in TolkienCharacter class.
+		assertThat(this.fellowshipOfTheRing).extracting("age")
+				.contains(33, 38, 36);
 
-    // extracting works also with user's types (here Race),
-    assertThat(fellowshipOfTheRing).extracting("race")
-                                   .contains(HOBBIT, ELF)
-                                   .doesNotContain(ORC);
+		// extracting works also with user's types (here Race),
+		assertThat(this.fellowshipOfTheRing).extracting("race")
+				.contains(HOBBIT, ELF)
+				.doesNotContain(ORC);
 
-    // extract nested property values on Race
-    assertThat(fellowshipOfTheRing).extracting("race.name")
-                                   .contains("Hobbit", "Elf")
-                                   .doesNotContain("Orc");
-  }
+		// extract nested property values on Race
+		assertThat(this.fellowshipOfTheRing).extracting("race.name")
+				.contains("Hobbit", "Elf")
+				.doesNotContain("Orc");
+	}
 
-  @Test
-  public void array_is_sorted_assertion_example() {
+	@Test
+	public void array_is_sorted_assertion_example() {
 
-    // enum order = order of declaration = ring power
-    assertThat(new Ring[] { oneRing, vilya, nenya, narya, dwarfRing, manRing }).isSorted();
+		// enum order = order of declaration = ring power
+		assertThat(new Ring[] { oneRing, vilya, nenya, narya, dwarfRing, manRing }).isSorted();
 
-    // ring comparison by increasing power
-    Comparator<Ring> increasingPowerRingComparator = new Comparator<Ring>() {
-      @Override
-      public int compare(Ring ring1, Ring ring2) {
-        return -ring1.compareTo(ring2);
-      }
-    };
-    assertThat(new Ring[] { manRing, dwarfRing, narya, nenya, vilya, oneRing }).isSortedAccordingTo(
-                                                                                                    increasingPowerRingComparator);
-  }
+		// ring comparison by increasing power
+		final Comparator<Ring> increasingPowerRingComparator = new Comparator<Ring>() {
 
-  @Test
-  public void filter_then_extract_assertion_example() {
-    Iterable<TolkienCharacter> badBadGuys = filter(orcsWithHobbitPrisoners).with("race.alignment", EVIL).get();
-    assertThat(badBadGuys).extracting("name").containsOnly("Guruk");
-  }
+			@Override
+			public int compare(final Ring ring1, final Ring ring2) {
+				return -ring1.compareTo(ring2);
+			}
+		};
+		assertThat(new Ring[] { manRing, dwarfRing, narya, nenya, vilya, oneRing }).isSortedAccordingTo(
+				increasingPowerRingComparator);
+	}
 
-  @Test
-  public void contains_exactly_for_primitive_types_assertion_examples() {
-    // int
-    assertThat(new int[] { 1, 2, 3 }).containsExactly(1, 2, 3);
-    try {
-      assertThat(new int[] { 1, 2, 3 }).containsExactly(2, 1, 3);
-    } catch (AssertionError e) {
-      logAssertionErrorMessage("containsExactly for int array", e);
-    }
+	@Test
+	public void filter_then_extract_assertion_example() {
+		final Iterable<TolkienCharacter> badBadGuys = filter(this.orcsWithHobbitPrisoners).with("race.alignment", EVIL).get();
+		assertThat(badBadGuys).extracting("name").containsOnly("Guruk");
+	}
 
-    // long
-    assertThat(new long[] { 1, 2, 3 }).containsExactly(1, 2, 3);
-    try {
-      assertThat(new long[] { 1, 2, 3 }).containsExactly(2, 1, 3);
-    } catch (AssertionError e) {
-      logAssertionErrorMessage("containsExactly for long array", e);
-    }
+	@Test
+	public void contains_exactly_for_primitive_types_assertion_examples() {
+		// int
+		assertThat(new int[] { 1, 2, 3 }).containsExactly(1, 2, 3);
+		try {
+			assertThat(new int[] { 1, 2, 3 }).containsExactly(2, 1, 3);
+		} catch (final AssertionError e) {
+			logAssertionErrorMessage("containsExactly for int array", e);
+		}
 
-    // short
-    assertThat(new short[] { 1, 2, 3 }).containsExactly((short) 1, (short) 2, (short) 3);
-    try {
-      assertThat(new short[] { 1, 2, 3 }).containsExactly((short) 2, (short) 1, (short) 3);
-    } catch (AssertionError e) {
-      logAssertionErrorMessage("containsExactly for long array", e);
-    }
+		// long
+		assertThat(new long[] { 1, 2, 3 }).containsExactly(1, 2, 3);
+		try {
+			assertThat(new long[] { 1, 2, 3 }).containsExactly(2, 1, 3);
+		} catch (final AssertionError e) {
+			logAssertionErrorMessage("containsExactly for long array", e);
+		}
 
-    // byte
-    assertThat(new byte[] { 1, 2, 3 }).containsExactly((byte) 1, (byte) 2, (byte) 3);
-    try {
-      assertThat(new byte[] { 1, 2, 3 }).containsExactly((byte) 2, (byte) 1, (byte) 3);
-    } catch (AssertionError e) {
-      logAssertionErrorMessage("containsExactly for long array", e);
-    }
+		// short
+		assertThat(new short[] { 1, 2, 3 }).containsExactly((short) 1, (short) 2, (short) 3);
+		try {
+			assertThat(new short[] { 1, 2, 3 }).containsExactly((short) 2, (short) 1, (short) 3);
+		} catch (final AssertionError e) {
+			logAssertionErrorMessage("containsExactly for long array", e);
+		}
 
-    // float
-    assertThat(new float[] { 1, 2.0f, 3 }).containsExactly(1.0f, 2, 3);
-    try {
-      assertThat(new float[] { 1.0f, 2, 3 }).containsExactly(2.0f, 1, 3);
-    } catch (AssertionError e) {
-      logAssertionErrorMessage("containsExactly for float array", e);
-    }
+		// byte
+		assertThat(new byte[] { 1, 2, 3 }).containsExactly((byte) 1, (byte) 2, (byte) 3);
+		try {
+			assertThat(new byte[] { 1, 2, 3 }).containsExactly((byte) 2, (byte) 1, (byte) 3);
+		} catch (final AssertionError e) {
+			logAssertionErrorMessage("containsExactly for long array", e);
+		}
 
-    // double
-    assertThat(new double[] { 1.0, 2, 3 }).containsExactly(1.0, 2, 3);
-    try {
-      assertThat(new double[] { 1.0, 2, 3 }).containsExactly(2.0, 1.0, 3.0);
-    } catch (AssertionError e) {
-      logAssertionErrorMessage("containsExactly for double array", e);
-    }
-  }
+		// float
+		assertThat(new float[] { 1, 2.0f, 3 }).containsExactly(1.0f, 2, 3);
+		try {
+			assertThat(new float[] { 1.0f, 2, 3 }).containsExactly(2.0f, 1, 3);
+		} catch (final AssertionError e) {
+			logAssertionErrorMessage("containsExactly for float array", e);
+		}
 
-  @Test
-  public void containsOnlyOnce_for_primitive_types_assertion_examples() {
-    // int
-    assertThat(new int[] { 1, 2, 3 }).containsOnlyOnce(1);
-    assertThat(new int[] { 1, 2, 3 }).containsOnlyOnce(1, 2);
-    assertThat(new int[] { 1, 2, 3 }).containsOnlyOnce(1, 2, 3);
-    assertThat(new int[] { 1, 2, 3 }).containsOnlyOnce(3, 2, 3);
-    try {
-      assertThat(new int[] { 1, 2, 1 }).containsOnlyOnce(1);
-    } catch (AssertionError e) {
-      logAssertionErrorMessage("containsOnlyOnce for int array", e);
-    }
+		// double
+		assertThat(new double[] { 1.0, 2, 3 }).containsExactly(1.0, 2, 3);
+		try {
+			assertThat(new double[] { 1.0, 2, 3 }).containsExactly(2.0, 1.0, 3.0);
+		} catch (final AssertionError e) {
+			logAssertionErrorMessage("containsExactly for double array", e);
+		}
+	}
 
-    try {
-      assertThat(new int[] { 1, 2, 3 }).containsOnlyOnce(4);
-    } catch (AssertionError e) {
-      logAssertionErrorMessage("containsOnlyOnce for int array", e);
-    }
+	@Test
+	public void containsOnlyOnce_for_primitive_types_assertion_examples() {
+		// int
+		assertThat(new int[] { 1, 2, 3 }).containsOnlyOnce(1);
+		assertThat(new int[] { 1, 2, 3 }).containsOnlyOnce(1, 2);
+		assertThat(new int[] { 1, 2, 3 }).containsOnlyOnce(1, 2, 3);
+		assertThat(new int[] { 1, 2, 3 }).containsOnlyOnce(3, 2, 3);
+		try {
+			assertThat(new int[] { 1, 2, 1 }).containsOnlyOnce(1);
+		} catch (final AssertionError e) {
+			logAssertionErrorMessage("containsOnlyOnce for int array", e);
+		}
 
-    try {
-      assertThat(new int[] { 1, 2, 3, 3, 1 }).containsOnlyOnce(0, 1, 2, 3, 4, 5);
-    } catch (AssertionError e) {
-      logAssertionErrorMessage("containsOnlyOnce for int array", e);
-    }
+		try {
+			assertThat(new int[] { 1, 2, 3 }).containsOnlyOnce(4);
+		} catch (final AssertionError e) {
+			logAssertionErrorMessage("containsOnlyOnce for int array", e);
+		}
 
-    assertThat(new char[] { 'a', 'b', 'c' }).containsOnlyOnce('a', 'b');
-  }
+		try {
+			assertThat(new int[] { 1, 2, 3, 3, 1 }).containsOnlyOnce(0, 1, 2, 3, 4, 5);
+		} catch (final AssertionError e) {
+			logAssertionErrorMessage("containsOnlyOnce for int array", e);
+		}
 
-  @Test
-  public void containsSubSequence_assertion_examples() {
-    assertThat(new String[] { "Batman", "is", "weaker", "than", "Superman", "but", "he", "is", "less", "annoying" })
-                                                                                                                    .containsSubsequence("Superman",
-                                                                                                                                         "is",
-                                                                                                                                         "annoying");
-    assertThat(new String[] { "Breaking", "objects", "is", "pretty", "bad" }).containsSubsequence("Breaking", "bad");
-    try {
-      assertThat(new String[] { "A", "B", "C", "D" }).containsSubsequence("B", "A", "C");
-    } catch (AssertionError e) {
-      logAssertionErrorMessage("containsSubsequence for Array", e);
-    }
-  }
+		assertThat(new char[] { 'a', 'b', 'c' }).containsOnlyOnce('a', 'b');
+	}
 
-  @Test
-  public void containsOnlyOnce_assertion_should_not_require_objects_to_be_comparable() {
-    // Rectangles are not Comparable.
-    Rectangle r0 = new Rectangle(0, 0);
-    Rectangle r1 = new Rectangle(1, 1);
-    Rectangle r2 = new Rectangle(2, 2);
-    assertThat(new Rectangle[] { r1, r2, r2 }).containsOnlyOnce(r1);
-    try {
-      assertThat(new Rectangle[] { r1, r2, r2 }).containsOnlyOnce(r0, r1, r2);
-    } catch (AssertionError e) {
-      logAssertionErrorMessage("containsOnlyOnce", e);
-    }
-  }
+	@Test
+	public void containsSubSequence_assertion_examples() {
+		assertThat(new String[] { "Batman", "is", "weaker", "than", "Superman", "but", "he", "is", "less", "annoying" })
+				.containsSubsequence("Superman",
+						"is",
+						"annoying");
+		assertThat(new String[] { "Breaking", "objects", "is", "pretty", "bad" }).containsSubsequence("Breaking", "bad");
+		try {
+			assertThat(new String[] { "A", "B", "C", "D" }).containsSubsequence("B", "A", "C");
+		} catch (final AssertionError e) {
+			logAssertionErrorMessage("containsSubsequence for Array", e);
+		}
+	}
 
-  @Test
-  public void hasSameSizeAs_assertion_examples() {
-    // comparing primitive arrays with primitive arrays
-    assertThat(new byte[] { 1, 2 }).hasSameSizeAs(new byte[] { 2, 3 });
-    assertThat(new byte[] { 1, 2 }).hasSameSizeAs(new int[] { 2, 3 });
-    // comparing primitive arrays with Object array
-    assertThat(new byte[] { 1, 2 }).hasSameSizeAs(new Byte[] { 2, 3 });
-    assertThat(new byte[] { 1, 2 }).hasSameSizeAs(new String[] { "1", "2" });
-    // comparing primitive arrays with Iterable
-    assertThat(new long[] { 1, 2, 3 }).hasSameSizeAs(newArrayList(vilya, nenya, narya));
+	@Test
+	public void containsOnlyOnce_assertion_should_not_require_objects_to_be_comparable() {
+		// Rectangles are not Comparable.
+		final Rectangle r0 = new Rectangle(0, 0);
+		final Rectangle r1 = new Rectangle(1, 1);
+		final Rectangle r2 = new Rectangle(2, 2);
+		assertThat(new Rectangle[] { r1, r2, r2 }).containsOnlyOnce(r1);
+		try {
+			assertThat(new Rectangle[] { r1, r2, r2 }).containsOnlyOnce(r0, r1, r2);
+		} catch (final AssertionError e) {
+			logAssertionErrorMessage("containsOnlyOnce", e);
+		}
+	}
 
-    // comparing Iterable with object array
-    assertThat(newArrayList(vilya, nenya, narya)).hasSameSizeAs(new Long[] { 1L, 2L, 3L });
-    // comparing Iterable with primitive array
-    assertThat(newArrayList(vilya, nenya, narya)).hasSameSizeAs(new long[] { 1, 2, 3 });
-    // comparing Iterable with Iterable
-    assertThat(newArrayList(vilya, nenya, narya)).hasSameSizeAs(newArrayList("vilya", "nenya", "narya"));
+	@Test
+	public void hasSameSizeAs_assertion_examples() {
+		// comparing primitive arrays with primitive arrays
+		assertThat(new byte[] { 1, 2 }).hasSameSizeAs(new byte[] { 2, 3 });
+		assertThat(new byte[] { 1, 2 }).hasSameSizeAs(new int[] { 2, 3 });
+		// comparing primitive arrays with Object array
+		assertThat(new byte[] { 1, 2 }).hasSameSizeAs(new Byte[] { 2, 3 });
+		assertThat(new byte[] { 1, 2 }).hasSameSizeAs(new String[] { "1", "2" });
+		// comparing primitive arrays with Iterable
+		assertThat(new long[] { 1, 2, 3 }).hasSameSizeAs(newArrayList(vilya, nenya, narya));
 
-    // comparing Object array with primitive arrays
-    assertThat(array(vilya, nenya, narya)).hasSameSizeAs(new long[] { 1, 2, 3 });
-    // comparing Object array with Iterable
-    assertThat(array(vilya, nenya, narya)).hasSameSizeAs(newArrayList(nenya, nenya, nenya));
-    // comparing Object array with Iterable
-    assertThat(array(vilya, nenya, narya)).hasSameSizeAs(array(nenya, nenya, nenya));
-  }
+		// comparing Iterable with object array
+		assertThat(newArrayList(vilya, nenya, narya)).hasSameSizeAs(new Long[] { 1L, 2L, 3L });
+		// comparing Iterable with primitive array
+		assertThat(newArrayList(vilya, nenya, narya)).hasSameSizeAs(new long[] { 1, 2, 3 });
+		// comparing Iterable with Iterable
+		assertThat(newArrayList(vilya, nenya, narya)).hasSameSizeAs(newArrayList("vilya", "nenya", "narya"));
 
-  @Test
-  public void use_hexadecimal_representation_in_error_messages() throws UnsupportedEncodingException {
-    try {
-      assertThat(new Byte[] { 0x10, 0x20 }).inHexadecimal().contains(new Byte[] { 0x30 });
-    } catch (AssertionError e) {
-      logAssertionErrorMessage("asHexadecimal for byte array", e);
-    }
-    try {
-      assertThat("zólc".getBytes()).inHexadecimal().contains("żółć".getBytes("ISO-8859-2"));
-    } catch (AssertionError e) {
-      logAssertionErrorMessage("asHexadecimal for byte array", e);
-    }
-  }
+		// comparing Object array with primitive arrays
+		assertThat(array(vilya, nenya, narya)).hasSameSizeAs(new long[] { 1, 2, 3 });
+		// comparing Object array with Iterable
+		assertThat(array(vilya, nenya, narya)).hasSameSizeAs(newArrayList(nenya, nenya, nenya));
+		// comparing Object array with Iterable
+		assertThat(array(vilya, nenya, narya)).hasSameSizeAs(array(nenya, nenya, nenya));
+	}
 
-  @Test
-  public void use_unicode_representation_in_error_messages() {
-    try {
-      assertThat("a6c".toCharArray()).inUnicode().isEqualTo("abó".toCharArray());
-    } catch (AssertionError e) {
-      logAssertionErrorMessage("inUnicode for char array", e);
-    }
-  }
+	@Test
+	public void use_hexadecimal_representation_in_error_messages() throws UnsupportedEncodingException {
+		try {
+			assertThat(new Byte[] { 0x10, 0x20 }).inHexadecimal().contains(new Byte[] { 0x30 });
+		} catch (final AssertionError e) {
+			logAssertionErrorMessage("asHexadecimal for byte array", e);
+		}
+		try {
+			assertThat("zólc".getBytes()).inHexadecimal().contains("żółć".getBytes("ISO-8859-2"));
+		} catch (final AssertionError e) {
+			logAssertionErrorMessage("asHexadecimal for byte array", e);
+		}
+	}
 
-  @Test
-  public void iterable_assertions_on_extracted_private_fields_values_example() {
+	@Test
+	public void use_unicode_representation_in_error_messages() {
+		try {
+			assertThat("a6c".toCharArray()).inUnicode().isEqualTo("abó".toCharArray());
+		} catch (final AssertionError e) {
+			logAssertionErrorMessage("inUnicode for char array", e);
+		}
+	}
 
-    // extract private fields
-    final Object[] trilogyArray = trilogy.toArray();
-    assertThat(trilogyArray).extracting("duration").containsExactly("178 min", "179 min", "201 min");
+	@Test
+	public void iterable_assertions_on_extracted_private_fields_values_example() {
 
-    // disable private field extraction
-    setAllowExtractingPrivateFields(false);
+		// extract private fields
+		final Object[] trilogyArray = this.trilogy.toArray();
+		assertThat(trilogyArray).extracting("duration").containsExactly("178 min", "179 min", "201 min");
 
-    try {
-      assertThat(trilogyArray).extracting("duration");
-      failBecauseExceptionWasNotThrown(IntrospectionError.class);
-    } catch (Exception ignore) {} finally {
-      // back to default value
-      setAllowExtractingPrivateFields(true);
-    }
-  }
+		// disable private field extraction
+		setAllowExtractingPrivateFields(false);
 
-  @Test
-  public void array_assertions_testing_elements_type() throws Exception {
-    Number[] numbers = { 2, 6L, 8.0 };
-    assertThat(numbers).hasAtLeastOneElementOfType(Long.class);
-    assertThat(numbers).hasOnlyElementsOfType(Number.class);
-  }
+		try {
+			assertThat(trilogyArray).extracting("duration");
+			failBecauseExceptionWasNotThrown(IntrospectionError.class);
+		} catch (final Exception ignore) {
+		} finally {
+			// back to default value
+			setAllowExtractingPrivateFields(true);
+		}
+	}
 
-  @Test
-  public void iterable_is_subset_of_assertion_example() {
-    Ring[] elvesRings = array(vilya, nenya, narya);
-    assertThat(elvesRings).isSubsetOf(ringsOfPower);
-    try {
-      assertThat(elvesRings).isSubsetOf(newArrayList(nenya, narya));
-    } catch (AssertionError e) {
-      logAssertionErrorMessage("isSubsetOf", e);
-    }
-  }
+	@Test
+	public void array_assertions_testing_elements_type() {
+		final Number[] numbers = { 2, 6L, 8.0 };
+		assertThat(numbers).hasAtLeastOneElementOfType(Long.class);
+		assertThat(numbers).hasOnlyElementsOfType(Number.class);
+	}
 
-  @Test
-  public void allMatch_iterable_assertion_example() {
-    TolkienCharacter[] hobbits = { frodo, sam, pippin };
-    assertThat(hobbits).allMatch(character -> character.getRace() == HOBBIT);
-  }
+	@Test
+	public void iterable_is_subset_of_assertion_example() {
+		final Ring[] elvesRings = array(vilya, nenya, narya);
+		assertThat(elvesRings).isSubsetOf(this.ringsOfPower);
+		try {
+			assertThat(elvesRings).isSubsetOf(newArrayList(nenya, narya));
+		} catch (final AssertionError e) {
+			logAssertionErrorMessage("isSubsetOf", e);
+		}
+	}
 
-  @Test
-  public void extracting_with_lambdas_example() {
-    TolkienCharacter[] fellowshipOfTheRingArray = fellowshipOfTheRing.toArray(new TolkienCharacter[0]);
+	@Test
+	public void allMatch_iterable_assertion_example() {
+		final TolkienCharacter[] hobbits = { this.frodo, this.sam, this.pippin };
+		assertThat(hobbits).allMatch(character -> character.getRace() == HOBBIT);
+	}
 
-    assertThat(fellowshipOfTheRingArray).extracting(TolkienCharacter::getName)
-                                        .contains("Boromir", "Sam", "Legolas");
+	@Test
+	public void extracting_with_lambdas_example() {
+		final TolkienCharacter[] fellowshipOfTheRingArray = this.fellowshipOfTheRing.toArray(new TolkienCharacter[0]);
 
-    assertThat(fellowshipOfTheRingArray).extracting(TolkienCharacter::getName, tc -> tc.age)
-                                        .contains(tuple("Boromir", 37),
-                                                  tuple("Sam", 38),
-                                                  tuple("Legolas", 1000));
-  }
+		assertThat(fellowshipOfTheRingArray).extracting(TolkienCharacter::getName)
+				.contains("Boromir", "Sam", "Legolas");
 
-  @Test
-  public void array_assertions_comparing_elements_field_by_field_example() {
-    // this is useful if elements don't have a good equals method implementation.
-    Employee bill = new Employee("Bill", 60, "Micro$oft");
-    final Employee[] micro$oftEmployees = array(bill);
-    Employee appleBill = new Employee("Bill", 60, "Apple");
+		assertThat(fellowshipOfTheRingArray).extracting(TolkienCharacter::getName, tc -> tc.age)
+				.contains(tuple("Boromir", 37),
+						tuple("Sam", 38),
+						tuple("Legolas", 1000));
+	}
 
-    // this assertion should fail as the company differs but it passes since Employee equals ignores company fields.
-    assertThat(micro$oftEmployees).contains(appleBill);
+	@Test
+	public void array_assertions_comparing_elements_field_by_field_example() {
+		// this is useful if elements don't have a good equals method implementation.
+		final Employee bill = new Employee("Bill", 60, "Micro$oft");
+		final Employee[] micro$oftEmployees = array(bill);
+		final Employee appleBill = new Employee("Bill", 60, "Apple");
 
-    // let's make the assertion fails by comparing all Employee's fields instead of using equals.
-    try {
-      assertThat(micro$oftEmployees).usingFieldByFieldElementComparator().contains(appleBill);
-    } catch (AssertionError e) {
-      logAssertionErrorMessage("contains for Iterable using field by field element comparator", e);
-    }
-    // if we don't compare company, appleBill is equivalent to bill.
-    assertThat(micro$oftEmployees).usingElementComparatorIgnoringFields("company").contains(appleBill);
+		// this assertion should fail as the company differs but it passes since Employee equals ignores company fields.
+		assertThat(micro$oftEmployees).contains(appleBill);
 
-    // if we compare only name and company, youngBill is equivalent to bill ...
-    Employee youngBill = new Employee("Bill", 25, "Micro$oft");
-    assertThat(micro$oftEmployees).usingElementComparatorOnFields("company").contains(youngBill);
-    // ... but not if we compare only age.
-    try {
-      assertThat(micro$oftEmployees).usingElementComparatorOnFields("age").contains(youngBill);
-    } catch (AssertionError e) {
-      logAssertionErrorMessage("contains for Iterable usingElementComparatorOnFields", e);
-    }
+		// let's make the assertion fails by comparing all Employee's fields instead of using equals.
+		try {
+			assertThat(micro$oftEmployees).usingFieldByFieldElementComparator().contains(appleBill);
+		} catch (final AssertionError e) {
+			logAssertionErrorMessage("contains for Iterable using field by field element comparator", e);
+		}
+		// if we don't compare company, appleBill is equivalent to bill.
+		assertThat(micro$oftEmployees).usingElementComparatorIgnoringFields("company").contains(appleBill);
 
-    // another example with usingElementComparatorOnFields
-    TolkienCharacter frodo = new TolkienCharacter("Frodo", 33, HOBBIT);
-    TolkienCharacter sam = new TolkienCharacter("Sam", 38, HOBBIT);
+		// if we compare only name and company, youngBill is equivalent to bill ...
+		final Employee youngBill = new Employee("Bill", 25, "Micro$oft");
+		assertThat(micro$oftEmployees).usingElementComparatorOnFields("company").contains(youngBill);
+		// ... but not if we compare only age.
+		try {
+			assertThat(micro$oftEmployees).usingElementComparatorOnFields("age").contains(youngBill);
+		} catch (final AssertionError e) {
+			logAssertionErrorMessage("contains for Iterable usingElementComparatorOnFields", e);
+		}
 
-    // frodo and sam both are hobbits, so they are equals when comparing only race ...
-    TolkienCharacter[] array = array(frodo);
-    assertThat(array).usingElementComparatorOnFields("race").contains(sam);
-    assertThat(array).usingElementComparatorOnFields("race").isEqualTo(array(sam));
-    // ... but not when comparing both name and race
-    try {
-      assertThat(array).usingElementComparatorOnFields("name", "race").contains(sam);
-    } catch (AssertionError e) {
-      logAssertionErrorMessage("contains for Iterable usingElementComparatorOnFields", e);
-    }
-  }
+		// another example with usingElementComparatorOnFields
+		final TolkienCharacter frodo = new TolkienCharacter("Frodo", 33, HOBBIT);
+		final TolkienCharacter sam = new TolkienCharacter("Sam", 38, HOBBIT);
+
+		// frodo and sam both are hobbits, so they are equals when comparing only race ...
+		final TolkienCharacter[] array = array(frodo);
+		assertThat(array).usingElementComparatorOnFields("race").contains(sam);
+		assertThat(array).usingElementComparatorOnFields("race").isEqualTo(array(sam));
+		// ... but not when comparing both name and race
+		try {
+			assertThat(array).usingElementComparatorOnFields("name", "race").contains(sam);
+		} catch (final AssertionError e) {
+			logAssertionErrorMessage("contains for Iterable usingElementComparatorOnFields", e);
+		}
+	}
 }

@@ -15,6 +15,8 @@ package org.assertj.examples;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assumptions.assumeThat;
 
+import java.util.stream.Stream;
+
 import org.junit.Test;
 
 public class AssumptionExamples extends AbstractAssertionsExamples {
@@ -22,6 +24,13 @@ public class AssumptionExamples extends AbstractAssertionsExamples {
 	@Test
 	public void should_be_skipped_as_assumption_is_not_met() {
 		assumeThat(this.fellowshipOfTheRing).contains(this.sauron);
+		// never executed, the whole test is skipped !
+		assertThat(true).isFalse();
+	}
+
+	@Test
+	public void should_be_skipped_as_assumption_is_not_met2() {
+		assumeThat(Stream.of("test")).isNotNull().contains("other");
 		// never executed, the whole test is skipped !
 		assertThat(true).isFalse();
 	}

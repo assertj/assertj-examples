@@ -30,133 +30,134 @@ import org.junit.Test;
 
 public class UsingConditionExamples extends AbstractAssertionsExamples {
 
-  private static final LinkedHashSet<String> JEDIS = newLinkedHashSet("Luke", "Yoda", "Obiwan");
+	private static final LinkedHashSet<String> JEDIS = newLinkedHashSet("Luke", "Yoda", "Obiwan");
 
-  public static final Condition<String> JEDI = new Condition<>(JEDIS::contains, "jedi");
+	public static final Condition<String> JEDI = new Condition<>(JEDIS::contains, "jedi");
 
-  @Test
-  public void is_condition_example() {
-    assertThat("Yoda").is(JEDI);
-    assertThat("Vador").isNot(JEDI);
-    assertThat(rose).is(potentialMvp);
-    assertThat(james).is(potentialMvp);
-    assertThat(noah).isNot(potentialMvp);
-    List<BasketBallPlayer> bullsPlayers = newArrayList(noah, rose);
-    assertThat(bullsPlayers).haveAtLeastOne(potentialMvp);
-    
-    
-    Condition<? super List<? extends BasketBallPlayer>> listCond = new Condition<>(list -> true, "test");
+	@Test
+	public void is_condition_example() {
+		assertThat("Yoda").is(JEDI);
+		assertThat("Vador").isNot(JEDI);
+		assertThat(rose).is(potentialMvp);
+		assertThat(james).is(potentialMvp);
+		assertThat(noah).isNot(potentialMvp);
+		final List<BasketBallPlayer> bullsPlayers = newArrayList(noah, rose);
+		assertThat(bullsPlayers).haveAtLeastOne(potentialMvp);
 
-    assertThat(bullsPlayers).has(listCond);
-  }
+		final Condition<? super List<? extends BasketBallPlayer>> listCond = new Condition<>(list -> true, "test");
 
-  @Test
-  public void has_condition_example() {
-    assertThat("Yoda").has(jediPower);
-    assertThat("Solo").doesNotHave(jediPower);
-    assertThat(noah).has(doubleDoubleStats);
-    assertThat(durant).doesNotHave(doubleDoubleStats);
-    try {
-      assertThat(rose).has(doubleDoubleStats);
-    } catch (AssertionError e) {
-      logAssertionErrorMessage("has_condition_example", e);
-    }
-  }
+		assertThat(bullsPlayers).has(listCond);
+	}
 
-  @Test
-  public void anyOf_condition_example() {
-    assertThat("Vader").is(anyOf(JEDI, sith));
-  }
+	@Test
+	public void has_condition_example() {
+		assertThat("Yoda").has(this.jediPower);
+		assertThat("Solo").doesNotHave(this.jediPower);
+		assertThat(noah).has(doubleDoubleStats);
+		assertThat(durant).doesNotHave(doubleDoubleStats);
+		try {
+			assertThat(rose).has(doubleDoubleStats);
+		} catch (final AssertionError e) {
+			logAssertionErrorMessage("has_condition_example", e);
+		}
+	}
 
-  @Test
-  public void condition_built_with_predicate_example() {
-    Condition<String> fairyTale = new Condition<String>(s -> s.startsWith("Once upon a time"), "a %s tale", "fairy");
-    String littleRedCap = "Once upon a time there was a dear little girl ...";
-    assertThat(littleRedCap).is(fairyTale);
-  }
+	@Test
+	public void anyOf_condition_example() {
+		assertThat("Vader").is(anyOf(JEDI, this.sith));
+	}
 
-  @Test
-  public void condition_with_supertype_example() {
-    assertThat("string").is(new Condition<Object>() {
+	@Test
+	public void condition_built_with_predicate_example() {
+		final Condition<String> fairyTale = new Condition<>(s -> s.startsWith("Once upon a time"), "a %s tale", "fairy");
+		final String littleRedCap = "Once upon a time there was a dear little girl ...";
+		assertThat(littleRedCap).is(fairyTale);
+	}
 
-      @Override
-      public boolean matches(Object value) {
-        return value instanceof String;
-      }
-    });
-  }
+	@Test
+	public void condition_with_supertype_example() {
+		assertThat("string").is(new Condition<Object>() {
 
-  @Test
-  public void condition_example_on_multiple_elements() {
-    // are & areNot
-    assertThat(newLinkedHashSet("Luke", "Yoda")).are(JEDI);
-    assertThat(newLinkedHashSet("Leia", "Solo")).areNot(JEDI);
-    assertThat(newLinkedHashSet(rose, james)).are(potentialMvp);
-    try {
-      // noah is not a potential MVP !
-      assertThat(newLinkedHashSet(rose, noah)).are(potentialMvp);
-    } catch (AssertionError e) {
-      logAssertionErrorMessage("condition_example_on_multiple_elements", e);
-    }
+			@Override
+			public boolean matches(final Object value) {
+				return value instanceof String;
+			}
+		});
+	}
 
-    // have & doNotHave
-    assertThat(newLinkedHashSet("Luke", "Yoda")).have(jediPower);
-    assertThat(newLinkedHashSet("Leia", "Solo")).doNotHave(jediPower);
+	@Test
+	public void condition_example_on_multiple_elements() {
+		// are & areNot
+		assertThat(newLinkedHashSet("Luke", "Yoda")).are(JEDI);
+		assertThat(newLinkedHashSet("Leia", "Solo")).areNot(JEDI);
+		assertThat(newLinkedHashSet(rose, james)).are(potentialMvp);
+		try {
+			// noah is not a potential MVP !
+			assertThat(newLinkedHashSet(rose, noah)).are(potentialMvp);
+		} catch (final AssertionError e) {
+			logAssertionErrorMessage("condition_example_on_multiple_elements", e);
+		}
 
-    // areAtLeast & areNotAtLeast
-    assertThat(newLinkedHashSet("Luke", "Yoda", "Leia")).areAtLeastOne(JEDI);
-    assertThat(newLinkedHashSet("Luke", "Yoda", "Leia")).areAtLeast(2, JEDI);
-    assertThat(newLinkedHashSet("Luke", "Yoda", "Obiwan")).areAtLeast(2, JEDI);
+		// have & doNotHave
+		assertThat(newLinkedHashSet("Luke", "Yoda")).have(this.jediPower);
+		assertThat(newLinkedHashSet("Leia", "Solo")).doNotHave(this.jediPower);
 
-    // haveAtLeast & doNotHaveAtLeast
-    assertThat(newLinkedHashSet("Luke", "Leia")).haveAtLeastOne(jediPower);
-    assertThat(newLinkedHashSet("Luke", "Yoda", "Leia")).haveAtLeast(2, jediPower);
-    assertThat(newLinkedHashSet("Luke", "Yoda", "Obiwan")).haveAtLeast(2, jediPower);
+		// areAtLeast & areNotAtLeast
+		assertThat(newLinkedHashSet("Luke", "Yoda", "Leia")).areAtLeastOne(JEDI);
+		assertThat(newLinkedHashSet("Luke", "Yoda", "Leia")).areAtLeast(2, JEDI);
+		assertThat(newLinkedHashSet("Luke", "Yoda", "Obiwan")).areAtLeast(2, JEDI);
 
-    // areAtMost
-    assertThat(newLinkedHashSet("Luke", "Yoda", "Leia")).areAtMost(2, JEDI);
-    assertThat(newLinkedHashSet("Luke", "Solo", "Leia")).areAtMost(2, JEDI);
+		// haveAtLeast & doNotHaveAtLeast
+		assertThat(newLinkedHashSet("Luke", "Leia")).haveAtLeastOne(this.jediPower);
+		assertThat(newLinkedHashSet("Luke", "Yoda", "Leia")).haveAtLeast(2, this.jediPower);
+		assertThat(newLinkedHashSet("Luke", "Yoda", "Obiwan")).haveAtLeast(2, this.jediPower);
 
-    // haveAtMost
-    assertThat(newLinkedHashSet("Luke", "Yoda", "Leia")).haveAtMost(2, jediPower);
-    assertThat(newLinkedHashSet("Luke", "Solo", "Leia")).haveAtMost(2, jediPower);
+		// areAtMost
+		assertThat(newLinkedHashSet("Luke", "Yoda", "Leia")).areAtMost(2, JEDI);
+		assertThat(newLinkedHashSet("Luke", "Solo", "Leia")).areAtMost(2, JEDI);
 
-    // areExactly
-    assertThat(newLinkedHashSet("Luke", "Yoda", "Leia")).areExactly(2, JEDI);
+		// haveAtMost
+		assertThat(newLinkedHashSet("Luke", "Yoda", "Leia")).haveAtMost(2, this.jediPower);
+		assertThat(newLinkedHashSet("Luke", "Solo", "Leia")).haveAtMost(2, this.jediPower);
 
-    // haveExactly
-    assertThat(newLinkedHashSet("Luke", "Yoda", "Leia")).haveExactly(2, jediPower);
-  }
+		// areExactly
+		assertThat(newLinkedHashSet("Luke", "Yoda", "Leia")).areExactly(2, JEDI);
 
-  @Test
-  public void combined_condition_example() {
-    assertThat("Yoda").has(jediPower);
-    assertThat("Yoda").has(allOf(jediPower, not(sithPower)));
-    assertThat("Solo").has(not(jediPower));
-    assertThat("Solo").doesNotHave(jediPower);
-    assertThat("Solo").is(allOf(not(JEDI), not(sith)));
-    assertThat("Solo").isNot(anyOf(JEDI, sith));
-    assertThat("Solo").doesNotHave(anyOf(jediPower, sithPower));
-  }
+		// haveExactly
+		assertThat(newLinkedHashSet("Luke", "Yoda", "Leia")).haveExactly(2, this.jediPower);
+	}
 
-  private final Condition<String> jediPower = JEDI;
+	@Test
+	public void combined_condition_example() {
+		assertThat("Yoda").has(this.jediPower);
+		assertThat("Yoda").has(allOf(this.jediPower, not(this.sithPower)));
+		assertThat("Solo").has(not(this.jediPower));
+		assertThat("Solo").doesNotHave(this.jediPower);
+		assertThat("Solo").is(allOf(not(JEDI), not(this.sith)));
+		assertThat("Solo").isNot(anyOf(JEDI, this.sith));
+		assertThat("Solo").doesNotHave(anyOf(this.jediPower, this.sithPower));
+	}
 
-  private final Condition<String> sith = new Condition<String>("sith") {
-    private final Set<String> siths = newLinkedHashSet("Sidious", "Vader", "Plagueis");
+	private final Condition<String> jediPower = JEDI;
 
-    @Override
-    public boolean matches(String value) {
-      return siths.contains(value);
-    }
-  };
+	private final Condition<String> sith = new Condition<String>("sith") {
 
-  private final Condition<String> sithPower = new Condition<String>("sith power") {
-    private final Set<String> siths = newLinkedHashSet("Sidious", "Vader", "Plagueis");
+		private final Set<String> siths = newLinkedHashSet("Sidious", "Vader", "Plagueis");
 
-    @Override
-    public boolean matches(String value) {
-      return siths.contains(value);
-    }
-  };
+		@Override
+		public boolean matches(final String value) {
+			return this.siths.contains(value);
+		}
+	};
+
+	private final Condition<String> sithPower = new Condition<String>("sith power") {
+
+		private final Set<String> siths = newLinkedHashSet("Sidious", "Vader", "Plagueis");
+
+		@Override
+		public boolean matches(final String value) {
+			return this.siths.contains(value);
+		}
+	};
 
 }

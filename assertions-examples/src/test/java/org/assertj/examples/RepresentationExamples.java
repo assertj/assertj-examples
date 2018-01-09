@@ -22,76 +22,77 @@ import org.junit.Test;
 
 public class RepresentationExamples extends AbstractAssertionsExamples {
 
-  private static final CustomRepresentation CUSTOM_REPRESENTATION = new CustomRepresentation();
+	private static final CustomRepresentation CUSTOM_REPRESENTATION = new CustomRepresentation();
 
-  @After
-  public void afterTest() {
-    Assertions.useDefaultRepresentation();
-  }
+	@After
+	public void afterTest() {
+		Assertions.useDefaultRepresentation();
+	}
 
-  @Test
-  public void should_use_given_representation_in_assertion_error_messages() {
+	@Test
+	public void should_use_given_representation_in_assertion_error_messages() {
 
-    Assertions.useRepresentation(CUSTOM_REPRESENTATION);
-    Example example = new Example();
-    // this assertion fails with error : "expected:<[null]> but was:<[Example]>"
-    try {
-      assertThat(example).isNull(); // example is not null !
-    } catch (AssertionError e1) {
-      assertThat(e1).hasMessageContaining("EXAMPLE");
-    }
+		Assertions.useRepresentation(CUSTOM_REPRESENTATION);
+		final Example example = new Example();
+		// this assertion fails with error : "expected:<[null]> but was:<[Example]>"
+		try {
+			assertThat(example).isNull(); // example is not null !
+		} catch (final AssertionError e1) {
+			assertThat(e1).hasMessageContaining("EXAMPLE");
+		}
 
-    try {
-      assertThat("foo").startsWith("bar");
-    } catch (AssertionError e) {
-      assertThat(e).hasMessageContaining("$foo$")
-                   .hasMessageContaining("$bar$");
-      Assertions.useDefaultRepresentation();
-      try {
-        assertThat("foo").startsWith("bar");
-      } catch (AssertionError e2) {
-        assertThat(e2).hasMessageContaining("\"foo\"")
-                      .hasMessageContaining("\"bar\"");
-      }
-    }
-    try {
-      assertThat("foo").withRepresentation(CUSTOM_REPRESENTATION).startsWith("bar");
-    } catch (AssertionError e) {
-      logAssertionErrorMessage("withRepresentation changing the way String are displayed", e);
-    }
-  }
+		try {
+			assertThat("foo").startsWith("bar");
+		} catch (final AssertionError e) {
+			assertThat(e).hasMessageContaining("$foo$")
+					.hasMessageContaining("$bar$");
+			Assertions.useDefaultRepresentation();
+			try {
+				assertThat("foo").startsWith("bar");
+			} catch (final AssertionError e2) {
+				assertThat(e2).hasMessageContaining("\"foo\"")
+						.hasMessageContaining("\"bar\"");
+			}
+		}
+		try {
+			assertThat("foo").withRepresentation(CUSTOM_REPRESENTATION).startsWith("bar");
+		} catch (final AssertionError e) {
+			logAssertionErrorMessage("withRepresentation changing the way String are displayed", e);
+		}
+	}
 
-  @Test
-  public void should_use_registered_formatter_for_type_for_any_representations() {
-    // GIVEN
-    Object string = "foo"; // need to declare as an Object otherwise toStringOf(String) is used
-    assertThat(STANDARD_REPRESENTATION.toStringOf(string)).isEqualTo("\"foo\"");
-    // WHEN
-    Assertions.registerFormatterForType(String.class, value -> "$" + value + "$");
-    // THEN
-    assertThat(STANDARD_REPRESENTATION.toStringOf(string)).isEqualTo("$foo$");
-    Assertions.useDefaultRepresentation();
-    assertThat(STANDARD_REPRESENTATION.toStringOf(string)).isEqualTo("\"foo\"");
-  }
+	@Test
+	public void should_use_registered_formatter_for_type_for_any_representations() {
+		// GIVEN
+		final Object string = "foo"; // need to declare as an Object otherwise toStringOf(String) is used
+		assertThat(STANDARD_REPRESENTATION.toStringOf(string)).isEqualTo("\"foo\"");
+		// WHEN
+		Assertions.registerFormatterForType(String.class, value -> "$" + value + "$");
+		// THEN
+		assertThat(STANDARD_REPRESENTATION.toStringOf(string)).isEqualTo("$foo$");
+		StandardRepresentation.removeAllRegisteredFormatters();
+		assertThat(STANDARD_REPRESENTATION.toStringOf(string)).isEqualTo("\"foo\"");
+	}
 
-  private class Example {
-  }
+	private class Example {
+	}
 
-  private static class CustomRepresentation extends StandardRepresentation {
+	private static class CustomRepresentation extends StandardRepresentation {
 
-    // override needed to hook specific formatting
-    @Override
-    public String toStringOf(Object o) {
-      if (o instanceof Example) return "EXAMPLE";
-      // fallback to default formatting.
-      return super.toStringOf(o);
-    }
+		// override needed to hook specific formatting
+		@Override
+		public String toStringOf(final Object o) {
+			if (o instanceof Example)
+				return "EXAMPLE";
+			// fallback to default formatting.
+			return super.toStringOf(o);
+		}
 
-    // change String representation
-    @Override
-    protected String toStringOf(String s) {
-      return "$" + s + "$";
-    }
-  }
+		// change String representation
+		@Override
+		protected String toStringOf(final String s) {
+			return "$" + s + "$";
+		}
+	}
 
 }
