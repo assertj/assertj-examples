@@ -13,6 +13,7 @@
 package org.assertj.examples;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.entry;
 import static org.assertj.core.api.Assertions.extractProperty;
 import static org.assertj.core.api.Assertions.failBecauseExceptionWasNotThrown;
 import static org.assertj.core.api.Assertions.filter;
@@ -37,6 +38,7 @@ import java.io.UnsupportedEncodingException;
 import java.util.Arrays;
 import java.util.Comparator;
 
+import org.assertj.core.data.MapEntry;
 import org.assertj.core.util.introspection.IntrospectionError;
 import org.assertj.examples.data.Employee;
 import org.assertj.examples.data.Race;
@@ -516,6 +518,12 @@ public class ArrayAssertionsExamples extends AbstractAssertionsExamples {
 
     assertThat(elvesRings).zipSatisfy(elvesRingsToString,
                                       (ring, desc) -> assertThat(ring).hasToString(desc));
+  }
+
+  @Test
+  public void should_not_produce_warning_for_varargs_parameter() {
+    MapEntry<Ring, TolkienCharacter>[] ringBearers = array(entry(oneRing, frodo), entry(narya, gandalf));
+    assertThat(ringBearers).contains(entry(oneRing, frodo), entry(narya, gandalf));
   }
 
 }

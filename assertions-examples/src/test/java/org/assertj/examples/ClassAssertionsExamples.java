@@ -17,6 +17,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 import org.assertj.examples.data.Employee;
 import org.assertj.examples.data.Magical;
 import org.assertj.examples.data.Person;
+import org.assertj.examples.data.Powerful;
 import org.assertj.examples.data.Ring;
 import org.assertj.examples.data.TolkienCharacter;
 import org.junit.Test;
@@ -91,6 +92,11 @@ public class ClassAssertionsExamples extends AbstractAssertionsExamples {
     assertThat(MyClass.class).hasMethods("methodOne", "methodTwo", "superMethod", "privateSuperMethod")
                              .hasPublicMethods("methodOne", "superMethod")
                              .hasDeclaredMethods("methodTwo", "methodOne");
+  }
+
+  @Test
+  public void should_not_produce_warning_for_varargs_parameter() {
+    assertThat(Ring.class).hasAnnotations(Magical.class, Powerful.class);
   }
 
   @SuppressWarnings("unused")

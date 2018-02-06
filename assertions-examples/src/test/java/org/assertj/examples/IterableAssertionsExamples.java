@@ -85,7 +85,7 @@ public class IterableAssertionsExamples extends AbstractAssertionsExamples {
     Iterable<Ring> elvesRings = newArrayList(vilya, nenya, narya);
     assertThat(elvesRings).isNotEmpty().hasSize(3);
     assertThat(elvesRings).hasSameSizeAs(trilogy);
-    assertThat(elvesRings).contains(nenya)
+    assertThat(elvesRings).contains(nenya, narya)
                           .doesNotContain(oneRing)
                           .containsAnyOf(nenya, oneRing, dwarfRing);
 
@@ -127,7 +127,10 @@ public class IterableAssertionsExamples extends AbstractAssertionsExamples {
                         .doesNotContainSequence(vilya, nenya, oneRing, narya)
                         .doesNotContainSequence(newArrayList(vilya, nenya, oneRing, narya));
     assertThat(allRings).containsAll(elvesRings);
-    assertThat(elvesRings).containsAnyElementsOf(allRings);
+    assertThat(elvesRings).containsAnyElementsOf(allRings)
+                          .containsAnyOf(oneRing, nenya);
+
+    assertThat(fellowshipOfTheRing).contains(frodo, sam);
 
     // to show an error message
     try {
@@ -516,8 +519,7 @@ public class IterableAssertionsExamples extends AbstractAssertionsExamples {
                                    .contains("Hobbit", "Frodo", "Elf", "Legolas");
 
     // same goal but instead of extracting a list of values, give the list properties/fields to extract :
-    assertThat(fellowshipOfTheRing).flatExtracting("name",
-                                                   "race.name")
+    assertThat(fellowshipOfTheRing).flatExtracting("name", "race.name")
                                    .contains("Hobbit", "Frodo", "Elf", "Legolas");
 
     // same goal but specify a list of single value extractors instead of a list extractor :
@@ -674,7 +676,9 @@ public class IterableAssertionsExamples extends AbstractAssertionsExamples {
   public void should_not_produce_warning_for_varargs_parameter() {
     List<Entry<String, String>> list = new ArrayList<>();
     list.add(Pair.of("A", "B"));
+    assertThat(list).containsAnyOf(Pair.of("A", "B"), Pair.of("C", "D"));
     assertThat(list).containsExactly(Pair.of("A", "B"));
+    assertThat(list).contains(Pair.of("A", "B"));
   }
 
   @Test

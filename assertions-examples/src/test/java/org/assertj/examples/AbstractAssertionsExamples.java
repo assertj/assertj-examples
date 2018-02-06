@@ -30,7 +30,7 @@ import static org.assertj.examples.data.Ring.vilya;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.Date;
-import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -97,7 +97,7 @@ public abstract class AbstractAssertionsExamples {
   // Rings and their bearer
   protected final List<Ring> ringsOfPower = newArrayList(oneRing, vilya, nenya, narya, dwarfRing, manRing);
   protected final List<Ring> elvesRings = newArrayList(vilya, nenya, narya);
-  protected final Map<Ring, TolkienCharacter> ringBearers = new HashMap<>();
+  protected final Map<Ring, TolkienCharacter> ringBearers = new LinkedHashMap<>();
 
   // Lord of the Rings movies
   protected final Movie theFellowshipOfTheRing = new Movie("the fellowship of the Ring", parse("2001-12-19"),

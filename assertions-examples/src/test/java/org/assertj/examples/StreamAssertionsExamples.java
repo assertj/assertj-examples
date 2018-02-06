@@ -12,6 +12,7 @@
  */
 package org.assertj.examples;
 
+import static java.util.Arrays.asList;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.extractProperty;
 import static org.assertj.core.api.Assertions.failBecauseExceptionWasNotThrown;
@@ -473,6 +474,26 @@ public class StreamAssertionsExamples extends AbstractAssertionsExamples {
     } catch (AssertionError e) {
       logAssertionErrorMessage("asBinary for byte stream", e);
     }
+  }
+
+  @Test
+  public void iterable_assertions_on_flat_extracted_values_examples() throws Exception {
+    assertThat(newArrayList(noah, james).stream()).flatExtracting(teammates()).contains(wade, rose);
+    assertThat(newArrayList(noah, james).stream()).flatExtracting("teamMates").contains(wade, rose);
+
+    // extract a list of values, flatten them and use contains assertion
+    assertThat(fellowshipOfTheRing.stream()).flatExtracting(c -> asList(c.getName(), c.getRace().getName()))
+                                            .contains("Hobbit", "Frodo", "Elf", "Legolas");
+
+    // same goal but instead of extracting a list of values, give the list properties/fields to extract :
+    assertThat(fellowshipOfTheRing.stream()).flatExtracting("name", "race.name")
+                                            .contains("Hobbit", "Frodo", "Elf", "Legolas");
+
+    // same goal but specify a list of single value extractors instead of a list extractor :
+    assertThat(fellowshipOfTheRing.stream()).flatExtracting(TolkienCharacter::getName,
+                                                            tc -> tc.getRace().getName())
+                                            .contains("Hobbit", "Frodo", "Elf", "Legolas");
+
   }
 
   public static class Foo {

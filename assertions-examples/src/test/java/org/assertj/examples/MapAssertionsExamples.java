@@ -31,7 +31,7 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
-import org.apache.commons.lang3.tuple.Pair;
+import org.assertj.core.api.AutoCloseableSoftAssertions;
 import org.assertj.core.api.Condition;
 import org.assertj.examples.data.BasketBallPlayer;
 import org.assertj.examples.data.Ring;
@@ -47,12 +47,13 @@ import com.google.common.collect.ImmutableMap;
  */
 public class MapAssertionsExamples extends AbstractAssertionsExamples {
 
-  private final class OneRingManCondition extends Condition<Map.Entry<TolkienCharacter, Ring>> {
-    @Override
-    public boolean matches(Map.Entry<TolkienCharacter, Ring> entry) {
-      return entry.getKey().getRace() == MAN && entry.getValue() == oneRing;
-    }
-  }
+  private Condition<Ring> oneRingBearer = new Condition<>(ring -> ring == oneRing, "One ring bearer");
+
+  // @format:off
+  private Condition<Map.Entry<TolkienCharacter, Ring>> oneRingManBearer = new Condition<>(entry -> entry.getKey().getRace() == MAN 
+                                                                                                   && entry.getValue() == oneRing, 
+                                                                                          "One ring man bearer");
+  // @format:on
 
   @Test
   public void map_assertions_examples() {
@@ -188,13 +189,6 @@ public class MapAssertionsExamples extends AbstractAssertionsExamples {
   }
 
   @Test
-  public void should_not_produce_warning_for_varargs_parameter() {
-    Map<String, String> map = new HashMap<>();
-    map.put("A", "B");
-    assertThat(map.entrySet()).containsExactly(Pair.of("A", "B"));
-  }
-
-  @Test
   public void containsAnyOf_example() {
     assertThat(ringBearers).containsAnyOf(entry(oneRing, frodo), entry(oneRing, sauron));
     ringBearers.clear();
@@ -210,7 +204,7 @@ public class MapAssertionsExamples extends AbstractAssertionsExamples {
     ringBearers.put(frodo, oneRing);
     ringBearers.put(isildur, oneRing);
 
-    assertThat(ringBearers).hasEntrySatisfying(new OneRingManCondition());
+    assertThat(ringBearers).hasEntrySatisfying(oneRingManBearer);
     assertThat(ringBearers).hasEntrySatisfying(isMan, oneRingBearer);
     assertThat(ringBearers).hasKeySatisfying(isMan);
     assertThat(ringBearers).hasValueSatisfying(oneRingBearer);
@@ -238,6 +232,58 @@ public class MapAssertionsExamples extends AbstractAssertionsExamples {
                      .containsExactly(parker, james, wade);
   }
 
+  @Test
+  public void bug_1146() {
+    // GIVEN
+    Map<String, String> data = new HashMap<>();
+    data.put("one", "1");
+    data.put("two", "2");
+    data.put("three", "3");
+    // THEN
+    try (final AutoCloseableSoftAssertions softly = new AutoCloseableSoftAssertions()) {
+      softly.assertThat(data).extracting("one").containsExactly("1");
+    }
+  }
+
+  @Test
+  public void should_not_produce_warning_for_varargs_parameter() {
+    assertThat(ringBearers).contains(entry(oneRing, frodo),
+                                     entry(nenya, galadriel))
+                           .containsAnyOf(entry(oneRing, frodo),
+                                          entry(nenya, aragorn))
+                           .containsExactly(entry(nenya, galadriel),
+                                            entry(narya, gandalf),
+                                            entry(vilya, elrond),
+                                            entry(oneRing, frodo))
+                           .containsOnly(entry(nenya, galadriel),
+                                         entry(narya, gandalf),
+                                         entry(vilya, elrond),
+                                         entry(oneRing, frodo))
+                           .doesNotContain(entry(oneRing, galadriel),
+                                           entry(nenya, aragorn));
+    // build a map with generic keys
+    Map<Map.Entry<Ring, TolkienCharacter>, Ring> map = new HashMap<>();
+    map.put(entry(nenya, galadriel), nenya);
+    map.put(entry(oneRing, frodo), oneRing);
+    assertThat(map).containsKeys(entry(nenya, galadriel),
+                                 entry(oneRing, frodo))
+                   .containsOnlyKeys(entry(nenya, galadriel),
+                                     entry(oneRing, frodo))
+                   .doesNotContainKeys(entry(oneRing, gandalf),
+                                       entry(oneRing, galadriel));
+
+    Map<String, Object> nba = new HashMap<>();
+    nba.put("name", "kawhi");
+    nba.put("age", 25);
+
+    assertThat(nba).extracting("name", "age")
+                   .contains("kawhi", 25);
+
+    assertThat(nba).extracting(m -> m.get("name"), m -> m.get("age"))
+                   .contains("kawhi", 25);
+
+  }
+
   private static <K, V> Map.Entry<K, V> javaMapEntry(K key, V value) {
     return new SimpleImmutableEntry<>(key, value);
   }
@@ -246,13 +292,6 @@ public class MapAssertionsExamples extends AbstractAssertionsExamples {
     @Override
     public boolean matches(TolkienCharacter value) {
       return value.getRace() == MAN;
-    }
-  };
-
-  Condition<Ring> oneRingBearer = new Condition<Ring>("One ring bearer") {
-    @Override
-    public boolean matches(Ring value) {
-      return value == oneRing;
     }
   };
 

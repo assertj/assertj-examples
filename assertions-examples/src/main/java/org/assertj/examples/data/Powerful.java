@@ -12,13 +12,13 @@
  */
 package org.assertj.examples.data;
 
-/**
- * Rings of Power in Tolkien's Lord of the Rings.
- * 
- * @author Joel Costigliola
- */
-@Magical
-@Powerful
-public enum Ring {
-  oneRing, vilya, nenya, narya, dwarfRing, manRing;
+import java.lang.annotation.ElementType;
+import java.lang.annotation.Retention;
+import java.lang.annotation.RetentionPolicy;
+import java.lang.annotation.Target;
+
+@Target(ElementType.TYPE)
+@Retention(RetentionPolicy.RUNTIME)
+public @interface Powerful {
+
 }

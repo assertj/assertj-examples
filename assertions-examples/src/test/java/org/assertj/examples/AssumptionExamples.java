@@ -19,6 +19,7 @@ import static org.assertj.core.api.Assumptions.assumeThatCode;
 import static org.assertj.examples.data.Race.HOBBIT;
 import static org.assertj.examples.data.Race.ORC;
 
+import org.assertj.examples.data.TolkienCharacter;
 import org.junit.AfterClass;
 import org.junit.Test;
 
@@ -96,6 +97,19 @@ public class AssumptionExamples extends AbstractAssertionsExamples {
                                    .contains(ORC);
     // ... this assertion should not be performed.
     assertThat(fellowshipOfTheRing).contains(sauron);
+    fail("should not arrive here");
+  }
+
+  @Test
+  public void assumptions_still_work_when_switching_the_object_under_test() {
+    assumeThat(fellowshipOfTheRing).size()
+                                   .isLessThan(100)
+                                   .returnToIterable()
+                                   .filteredOn("race", HOBBIT)
+                                   .containsOnly(sam, frodo, pippin, merry)
+                                   .extracting(TolkienCharacter::getName)
+                                   .contains("Frodo")
+                                   .contains("Elrond"); // fail
     fail("should not arrive here");
   }
 

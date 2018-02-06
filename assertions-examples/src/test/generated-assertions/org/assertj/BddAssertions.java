@@ -172,6 +172,17 @@ public class BddAssertions {
   }
 
   /**
+   * Creates a new instance of <code>{@link org.assertj.examples.data.PowerfulAssert}</code>.
+   *
+   * @param actual the actual value.
+   * @return the created assertion object.
+   */
+  @org.assertj.core.util.CheckReturnValue
+  public static org.assertj.examples.data.PowerfulAssert then(org.assertj.examples.data.Powerful actual) {
+    return new org.assertj.examples.data.PowerfulAssert(actual);
+  }
+
+  /**
    * Creates a new instance of <code>{@link org.assertj.examples.data.RaceAssert}</code>.
    *
    * @param actual the actual value.

@@ -46,7 +46,6 @@ public class ListSpecificAssertionsExamples extends AbstractAssertionsExamples {
     assertThat(elvesRings).contains(vilya, atIndex(0)).contains(nenya, atIndex(1)).contains(narya, atIndex(2));
   }
 
-
   @Test
   public void newArrayList_is_sorted_assertion_example() {
 
@@ -63,6 +62,7 @@ public class ListSpecificAssertionsExamples extends AbstractAssertionsExamples {
 
     // ring comparison by increasing power
     Comparator<Ring> increasingPowerRingComparator = new Comparator<Ring>() {
+      @Override
       public int compare(Ring ring1, Ring ring2) {
         return -ring1.compareTo(ring2);
       }

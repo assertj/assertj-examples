@@ -19,13 +19,20 @@ import org.junit.Test;
 
 import com.google.common.base.Optional;
 
-
 /**
  * {@link Optional} assertions example.
  * 
  * @author Joel Costigliola
  */
 public class OptionalAssertionsExamples extends AbstractAssertionsExamples {
+
+  @Test
+  public void bug() {
+    Optional<String> op = Optional.of("Test");
+    assertThat(op)
+                  .extractingValue()
+                  .isEqualTo("Test");
+  }
 
   @Test
   public void optional_assertions_examples() {
@@ -36,7 +43,7 @@ public class OptionalAssertionsExamples extends AbstractAssertionsExamples {
 
     Optional<Object> absentOptional = Optional.fromNullable(null);
     assertThat(absentOptional).isAbsent();
-    
+
     // log some error messages to have a look at them
     try {
       assertThat(absentOptional).isPresent();
@@ -59,5 +66,5 @@ public class OptionalAssertionsExamples extends AbstractAssertionsExamples {
       logAssertionErrorMessage("OptionalAssert.isAbsent", e);
     }
   }
-  
+
 }

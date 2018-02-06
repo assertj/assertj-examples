@@ -14,8 +14,10 @@ package org.assertj.examples;
 
 import static java.util.Collections.singleton;
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.entry;
 import static org.assertj.core.api.Assertions.from;
 import static org.assertj.examples.data.Race.HOBBIT;
+import static org.assertj.examples.data.Ring.oneRing;
 
 import java.math.BigDecimal;
 import java.util.Set;
@@ -74,10 +76,21 @@ public class ObjectAssertionsExamples extends AbstractAssertionsExamples {
   }
 
   @Test
+  public void object_extracting_example() {
+    assertThat(frodo).extracting(TolkienCharacter::getName, TolkienCharacter::getRace)
+                     .containsExactly("Frodo", HOBBIT);
+  }
+
+  @Test
   public void returns_assertion() {
     assertThat(frodo).returns("Frodo", from(TolkienCharacter::getName))
                      .returns(HOBBIT, from(TolkienCharacter::getRace))
                      .returns(HOBBIT, TolkienCharacter::getRace);
   }
 
+  @Test
+  public void should_not_produce_warning_for_varargs_parameter() {
+    assertThat(entry(oneRing, frodo)).extracting(entry -> entry.key, entry -> entry.value)
+                                     .containsExactly(oneRing, frodo);
+  }
 }

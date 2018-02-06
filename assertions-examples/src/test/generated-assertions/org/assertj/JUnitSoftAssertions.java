@@ -187,6 +187,17 @@ public class JUnitSoftAssertions extends org.assertj.core.api.JUnitSoftAssertion
   }
 
   /**
+   * Creates a new "soft" instance of <code>{@link org.assertj.examples.data.PowerfulAssert}</code>.
+   *
+   * @param actual the actual value.
+   * @return the created "soft" assertion object.
+   */
+  @org.assertj.core.util.CheckReturnValue
+  public org.assertj.examples.data.PowerfulAssert assertThat(org.assertj.examples.data.Powerful actual) {
+    return proxy(org.assertj.examples.data.PowerfulAssert.class, org.assertj.examples.data.Powerful.class, actual);
+  }
+
+  /**
    * Creates a new "soft" instance of <code>{@link org.assertj.examples.data.RaceAssert}</code>.
    *
    * @param actual the actual value.
