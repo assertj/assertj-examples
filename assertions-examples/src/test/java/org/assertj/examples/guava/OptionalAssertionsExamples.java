@@ -15,16 +15,17 @@ package org.assertj.examples.guava;
 import static org.assertj.guava.api.Assertions.assertThat;
 
 import org.assertj.examples.AbstractAssertionsExamples;
+import org.junit.Ignore;
 import org.junit.Test;
 
 import com.google.common.base.Optional;
 
-
 /**
  * {@link Optional} assertions example.
- * 
+ *
  * @author Joel Costigliola
  */
+@Ignore
 public class OptionalAssertionsExamples extends AbstractAssertionsExamples {
 
   @Test
