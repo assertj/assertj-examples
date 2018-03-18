@@ -128,6 +128,17 @@ public class BddAssertions {
   }
 
   /**
+   * Creates a new instance of <code>{@link org.assertj.examples.data.EmployeeOfTheMonthAssert}</code>.
+   *
+   * @param actual the actual value.
+   * @return the created assertion object.
+   */
+  @org.assertj.core.util.CheckReturnValue
+  public static org.assertj.examples.data.EmployeeOfTheMonthAssert then(org.assertj.examples.data.EmployeeOfTheMonth actual) {
+    return new org.assertj.examples.data.EmployeeOfTheMonthAssert(actual);
+  }
+
+  /**
    * Creates a new instance of <code>{@link org.assertj.examples.data.MagicalAssert}</code>.
    *
    * @param actual the actual value.

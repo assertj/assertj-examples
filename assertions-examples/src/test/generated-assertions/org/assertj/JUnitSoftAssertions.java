@@ -143,6 +143,17 @@ public class JUnitSoftAssertions extends org.assertj.core.api.JUnitSoftAssertion
   }
 
   /**
+   * Creates a new "soft" instance of <code>{@link org.assertj.examples.data.EmployeeOfTheMonthAssert}</code>.
+   *
+   * @param actual the actual value.
+   * @return the created "soft" assertion object.
+   */
+  @org.assertj.core.util.CheckReturnValue
+  public org.assertj.examples.data.EmployeeOfTheMonthAssert assertThat(org.assertj.examples.data.EmployeeOfTheMonth actual) {
+    return proxy(org.assertj.examples.data.EmployeeOfTheMonthAssert.class, org.assertj.examples.data.EmployeeOfTheMonth.class, actual);
+  }
+
+  /**
    * Creates a new "soft" instance of <code>{@link org.assertj.examples.data.MagicalAssert}</code>.
    *
    * @param actual the actual value.
