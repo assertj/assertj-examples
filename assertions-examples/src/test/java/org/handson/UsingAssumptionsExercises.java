@@ -22,7 +22,8 @@ public class UsingAssumptionsExercises extends AbstractAssertionsExamples {
 	@Test
 	public void exercise_1_run_test_if_in_Pacific_Auckland_timezone_only() {
 		// TODO step 1: write an assumption verifying that we are in the Pacific/Auckland timezone
-		// hint: use ZoneId.systemDefault().getId();
+		// hint: start writing assumptions with Assumptions.assumeThat(...
+		// hint: use ZoneId.systemDefault().getId(); to get the timezone
 		// TODO step 2: write some code proving the test is executed (e.g. failing assertion or a log)
 		// TODO step 3: change the assumption so that it is not met anymore, run the test again, what is the result ?
 	}
@@ -33,4 +34,5 @@ public class UsingAssumptionsExercises extends AbstractAssertionsExamples {
 		System.out.println("We wants it. We needs it. Must have the precious. They stole it from us. Sneaky little Hobbitses");
 	}
 
+	// assumptions doc: http://joel-costigliola.github.io/assertj/assertj-core-news.html#assertj-core-2.9.0-assumptions
 }

@@ -38,4 +38,6 @@ public class UsingComparatorsExercises extends AbstractAssertionsExamples {
 		// TODO : play with usingRecursiveFieldByFieldElementComparator collections !
 	}
 
+	// if you struggle finding how ot use comparators, have a look at:
+	// http://joel-costigliola.github.io/assertj/assertj-core-features-highlight.html#custom-comparison-strategy
 }

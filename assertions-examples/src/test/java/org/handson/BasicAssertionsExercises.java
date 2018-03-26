@@ -16,6 +16,8 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.examples.data.Race.ELF;
 import static org.hamcrest.CoreMatchers.equalTo;
 
+import java.util.concurrent.ThreadLocalRandom;
+
 import org.assertj.examples.AbstractAssertionsExamples;
 import org.hamcrest.MatcherAssert;
 import org.junit.Test;
@@ -31,7 +33,7 @@ public class BasicAssertionsExercises extends AbstractAssertionsExamples {
 	public void exercise_1_describe_your_assertion_with_as() {
 		// this assertion obviously fails (frodo is a hobbit !) but the error message is not really clear
 		// TODO make it clearer by describing the context useing .as() before the isTrue() assertion
-		assertThat(this.frodo.getRace().equals(ELF)).isTrue();
+		assertThat(this.frodo.getRace() == ELF).isTrue();
 	}
 
 	@Test
@@ -67,28 +69,38 @@ public class BasicAssertionsExercises extends AbstractAssertionsExamples {
 	@Test
 	public void exercise_4_helpful_error_messages() {
 		// these dices have the same toString()
-		final Dice dice = new Dice();
-		final AlwaysLosingDice losingDice = new AlwaysLosingDice();
+		final Dice dice = new NormalDice();
+		final Dice losingDice = new AlwaysLosingDice();
 		// Hamcrest gives an unhelpful error message ...
 		MatcherAssert.assertThat(dice, equalTo(losingDice));
 		// TODO check assertj error message, is it better ?
 		assertThat(dice).isEqualTo(losingDice);
 	}
 
-	public class Dice {
+	public class NormalDice implements Dice {
 
 		@Override
 		public String toString() {
 			return "Dice";
 		}
+
+		@Override
+		public int throwDice() {
+			return ThreadLocalRandom.current().nextInt(6) + 1;
+		}
 	}
 
-	public class AlwaysLosingDice {
+	public class AlwaysLosingDice implements Dice {
 
 		@Override
 		public String toString() {
 			// To trick you, I pretend I'm a normal dice - AH AH AH !
 			return "Dice";
+		}
+
+		@Override
+		public int throwDice() {
+			return 1;
 		}
 	}
 

@@ -222,4 +222,17 @@ public class AssertionsDemo extends AbstractAssertionsExamples {
 				.contains(this.gandalf, this.sauron);
 	}
 
+	@Test
+	public void poster_code() {
+		final List<TolkienCharacter> hobbits = asList(frodo, sam, pippin, merry);
+
+		assertThat(hobbits)
+				.hasSize(4)
+				.contains(frodo, sam)
+				.doesNotContain(gandalf, sauron)
+				.allMatch(character -> character.getRace() == HOBBIT)
+				.extracting(TolkienCharacter::getRace)
+				.containsOnly(HOBBIT);
+	}
+
 }
