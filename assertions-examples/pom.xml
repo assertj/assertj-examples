@@ -25,12 +25,6 @@
   </properties>
 
   <dependencies>
-    <!-- not used but there to check that soft assertions are compatible with cglib -->
-    <dependency>
-      <groupId>cglib</groupId>
-      <artifactId>cglib</artifactId>
-      <version>3.2.5</version>
-    </dependency>
     <dependency>
       <groupId>org.assertj</groupId>
       <artifactId>assertj-core</artifactId>
