@@ -13,6 +13,7 @@ At any time, feel free to
 - try to think of a real case where AssertJ would help
 - try some AssertJ feature highlights: http://joel-costigliola.github.io/assertj/assertj-core-features-highlight.html
 
+Once you have done a few exercises, I suggest to setup AssertJ on your current project(s) and start using for real!
 
 Here's an example of using AssertJ in a typical ivy.xml PB2 test project:
 
