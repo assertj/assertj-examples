@@ -14,6 +14,7 @@ At any time, feel free to
 - try some AssertJ feature highlights: http://joel-costigliola.github.io/assertj/assertj-core-features-highlight.html
 
 Once you have done a few exercises, I suggest to setup AssertJ on your current project(s) and start using for real!
+Tools exist to migrate existing assertions to AssertJ, see http://joel-costigliola.github.io/assertj/assertj-core-converting-junit-assertions-to-assertj.html.
 
 Here's an example of using AssertJ in a typical ivy.xml PB2 test project:
 
