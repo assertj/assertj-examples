@@ -19,18 +19,19 @@ import org.assertj.core.api.AbstractBigDecimalAssert;
 // public class MyBigDecimalAssert extends BigDecimalAssert {
 public class MyAbstractBigDecimalAssert<S extends MyAbstractBigDecimalAssert<S>> extends AbstractBigDecimalAssert<S> {
 
-  protected MyAbstractBigDecimalAssert(BigDecimal actual, Class<S> selfType) {
-    super(actual, selfType);
-  }
+	protected MyAbstractBigDecimalAssert(final BigDecimal actual, final Class<S> selfType) {
+		super(actual, selfType);
+	}
 
-  public S isOne() {
-    // check condition
-    if (actual != null && actual.compareTo(BigDecimal.ONE) != 0) {
-      failWithMessage("Expected BigDecimal to be one but was <%s>", actual);
-    }
+	@Override
+	public S isOne() {
+		// check condition
+		if (actual != null && actual.compareTo(BigDecimal.ONE) != 0) {
+			failWithMessage("Expected BigDecimal to be one but was <%s>", actual);
+		}
 
-    // return the current assertion for method chaining
-    return myself;
-  }
+		// return the current assertion for method chaining
+		return myself;
+	}
 
 }
