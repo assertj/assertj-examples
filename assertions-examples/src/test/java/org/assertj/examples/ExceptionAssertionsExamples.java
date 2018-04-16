@@ -20,7 +20,6 @@ import static org.assertj.core.api.Assertions.assertThatIllegalArgumentException
 import static org.assertj.core.api.Assertions.assertThatNullPointerException;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.assertj.core.api.Assertions.catchThrowable;
-import static org.assertj.core.api.Assertions.fail;
 
 import java.io.IOException;
 
@@ -289,12 +288,8 @@ public class ExceptionAssertionsExamples extends AbstractAssertionsExamples {
 
 	@Test
 	public void check_code_does_not_throw_exceptions() {
-
-		fail("baaaa", new Exception("bam!"));
-		assertThatCode(() -> {
-		}).doesNotThrowAnyException();
-		assertThatCode(() -> {
-			throw new Exception("boom!");
-		}).doesNotThrowAnyException();
+		// @formatter:off
+		assertThatCode(() -> {}).doesNotThrowAnyException();
+		// @formatter:on
 	}
 }
