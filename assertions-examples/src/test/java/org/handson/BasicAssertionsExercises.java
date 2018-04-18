@@ -41,10 +41,10 @@ public class BasicAssertionsExercises extends AbstractAssertionsExamples {
 		// GIVEN
 		final String quote = "Real stupidity beats artificial intelligence all the time";
 		// THEN
-		// TODO check that it starts with "Real" ands with "time" and contains "stupidity"
+		// TODO check that it starts with "Real", ends with "time" and contains "stupidity"
 		// bonus points if you know who said that :)
 
-		// TODO do the same assertions with Hamcrest,
+		// Optional TODO : try to do the same assertions with Hamcrest
 		// - what is the easiest to use ? the more readable ?
 		// - make the assertions fail and check the error messages of both.
 	}
@@ -54,9 +54,10 @@ public class BasicAssertionsExercises extends AbstractAssertionsExamples {
 		final String actual = "";
 		final String expected = "";
 		// BAD USAGE : no assertion is performed, one must call an assertion after assertThat(expression).
-		assertThat(actual.equals(expected)); // does not do anything
-		assertThat(false == true); // won't fail since no assertion is performed.
+		assertThat(actual.equals(expected)); // does not do anything!
+		assertThat(false == true); // won't fail since no assertion is performed!
 		// assertThat(false).isTrue(); // this one fails as expected.
+
 		// TODO : fix the previous assertion
 		// Optional TODO : use findbugs to detect this incorrect usage (and ask your manager for a well deserved raise).
 
@@ -73,7 +74,7 @@ public class BasicAssertionsExercises extends AbstractAssertionsExamples {
 		final Dice losingDice = new AlwaysLosingDice();
 		// Hamcrest gives an unhelpful error message ...
 		MatcherAssert.assertThat(dice, equalTo(losingDice));
-		// TODO check assertj error message, is it better ?
+		// TODO check assertj error message, is it better ? (just comment the Hamcrest assertion and rereun the test)
 		assertThat(dice).isEqualTo(losingDice);
 	}
 
