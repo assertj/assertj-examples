@@ -7,17 +7,6 @@ package org.assertj;
 public class SoftAssertions extends org.assertj.core.api.SoftAssertions {
 
   /**
-   * Creates a new "soft" instance of <code>{@link com.google.common.net.HostAndPortAssert}</code>.
-   *
-   * @param actual the actual value.
-   * @return the created "soft" assertion object.
-   */
-  @org.assertj.core.util.CheckReturnValue
-  public com.google.common.net.HostAndPortAssert assertThat(com.google.common.net.HostAndPort actual) {
-    return proxy(com.google.common.net.HostAndPortAssert.class, com.google.common.net.HostAndPort.class, actual);
-  }
-
-  /**
    * Creates a new "soft" instance of <code>{@link com.google.common.net.InetAddressesAssert}</code>.
    *
    * @param actual the actual value.
