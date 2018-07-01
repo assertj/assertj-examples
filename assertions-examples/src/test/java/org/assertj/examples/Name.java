@@ -12,7 +12,6 @@
  */
 package org.assertj.examples;
 
-
 /**
  * @author Yvonne Wang
  * @author Joel Costigliola
@@ -51,7 +50,7 @@ public class Name {
   public void setLast(String last) {
     this.last = last;
   }
-  
+
   // property without field in order to test field/property combinations
   public String getName(){
     return String.format("%s %s", getFirst(), getLast());
@@ -85,6 +84,5 @@ public class Name {
     } else if (!last.equals(other.last)) return false;
     return true;
   }
-  
-  
+
 }

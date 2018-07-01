@@ -33,10 +33,13 @@ public class StringAssertionsExamples extends AbstractAssertionsExamples {
 
   @Test
   public void string_assertions_examples() {
-    assertThat("Frodo").startsWith("Fro").endsWith("do").hasSize(5);
-    assertThat("Frodo").contains("rod").doesNotContain("fro");
-    assertThat("Frodo").containsOnlyOnce("do");
-    assertThat("Frodo").isSubstringOf("Frodon");
+    assertThat("Frodo").startsWith("Fro")
+                       .endsWith("do")
+                       .hasSize(5).contains("rod")
+                       .doesNotContain("fro")
+                       .containsOnlyOnce("do")
+                       .isSubstringOf("Frodon")
+                       .doesNotContainAnyWhitespaces();
     try {
       assertThat("Frodo").containsOnlyOnce("o");
     } catch (AssertionError e) {

@@ -348,6 +348,28 @@ public class BddAssertions {
   }
 
   /**
+   * Creates a new instance of <code>{@link org.assertj.examples.rpg.ItemAssert}</code>.
+   *
+   * @param actual the actual value.
+   * @return the created assertion object.
+   */
+  @org.assertj.core.util.CheckReturnValue
+  public static org.assertj.examples.rpg.ItemAssert then(org.assertj.examples.rpg.Item actual) {
+    return new org.assertj.examples.rpg.ItemAssert(actual);
+  }
+
+  /**
+   * Creates a new instance of <code>{@link org.assertj.examples.rpg.WandAssert}</code>.
+   *
+   * @param actual the actual value.
+   * @return the created assertion object.
+   */
+  @org.assertj.core.util.CheckReturnValue
+  public static org.assertj.examples.rpg.WandAssert then(org.assertj.examples.rpg.Wand actual) {
+    return new org.assertj.examples.rpg.WandAssert(actual);
+  }
+
+  /**
    * Creates a new <code>{@link BddAssertions}</code>.
    */
   protected BddAssertions() {

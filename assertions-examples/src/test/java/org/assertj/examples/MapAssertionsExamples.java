@@ -50,8 +50,8 @@ public class MapAssertionsExamples extends AbstractAssertionsExamples {
   private Condition<Ring> oneRingBearer = new Condition<>(ring -> ring == oneRing, "One ring bearer");
 
   // @format:off
-  private Condition<Map.Entry<TolkienCharacter, Ring>> oneRingManBearer = new Condition<>(entry -> entry.getKey().getRace() == MAN 
-                                                                                                   && entry.getValue() == oneRing, 
+  private Condition<Map.Entry<TolkienCharacter, Ring>> oneRingManBearer = new Condition<>(entry -> entry.getKey().getRace() == MAN
+                                                                                                   && entry.getValue() == oneRing,
                                                                                           "One ring man bearer");
   // @format:on
 

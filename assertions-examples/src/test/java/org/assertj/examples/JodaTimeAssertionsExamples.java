@@ -17,12 +17,14 @@ import static org.assertj.jodatime.api.Assertions.assertThat;
 import static org.joda.time.DateTimeZone.UTC;
 
 import org.joda.time.DateTime;
+import org.joda.time.DateTimeZone;
+import org.joda.time.LocalDate;
 import org.joda.time.LocalDateTime;
 import org.junit.Test;
 
 /**
  * Joda Time assertions examples.
- * 
+ *
  * @author Joel Costigliola
  */
 public class JodaTimeAssertionsExamples extends AbstractAssertionsExamples {
@@ -31,7 +33,7 @@ public class JodaTimeAssertionsExamples extends AbstractAssertionsExamples {
   public void dateTime_assertions_examples() {
 
     assertThat(new DateTime("2000-01-01")).isEqualTo(new DateTime("2000-01-01")).isNotEqualTo(
-        new DateTime("2000-01-15"));
+                                                                                              new DateTime("2000-01-15"));
     // same assertions but parameters is String based representation of DateTime
     assertThat(new DateTime("2000-01-01")).isEqualTo("2000-01-01").isNotEqualTo("2000-01-15");
 
@@ -45,26 +47,44 @@ public class JodaTimeAssertionsExamples extends AbstractAssertionsExamples {
     assertThat(new DateTime("2000-01-01")).isNotIn(new DateTime("1999-12-31"), new DateTime("2000-01-02"));
     // same assertions but parameters is String based representation of DateTime
     assertThat(new DateTime("2000-01-01")).isIn("1999-12-31", "2000-01-01").isNotIn("1999-12-31", "2000-01-02");
+
+    DateTime dateTime = new DateTime(1999, 12, 31, 23, 59, 59, 999, DateTimeZone.UTC);
+    assertThat(dateTime).hasYear(1999)
+                        .hasMonthOfYear(12)
+                        .hasDayOfMonth(31)
+                        .hasHourOfDay(23)
+                        .hasMinuteOfHour(59)
+                        .hasSecondOfMinute(59)
+                        .hasMillisOfSecond(999);
   }
 
   @Test
   public void localDateTime_assertions_examples() {
 
     assertThat(new LocalDateTime("2000-01-01")).isEqualTo(new LocalDateTime("2000-01-01")).isNotEqualTo(
-        new LocalDateTime("2000-01-15"));
+                                                                                                        new LocalDateTime("2000-01-15"));
     // same assertions but parameters is String based representation of LocalDateTime
     assertThat(new LocalDateTime("2000-01-01")).isEqualTo("2000-01-01").isNotEqualTo("2000-01-15");
 
     assertThat(new LocalDateTime("2000-01-01")).isBefore(new LocalDateTime("2000-01-02")).isAfter(
-        new LocalDateTime("1999-12-31"));
+                                                                                                  new LocalDateTime("1999-12-31"));
     // same assertions but parameters is String based representation of LocalDateTime
     assertThat(new LocalDateTime("2000-01-01")).isBefore("2000-01-02").isAfter("1999-12-31");
 
     assertThat(new LocalDateTime("2000-01-01")).isIn(new LocalDateTime("1999-12-31"), new LocalDateTime("2000-01-01"));
     assertThat(new LocalDateTime("2000-01-01")).isNotIn(new LocalDateTime("1999-12-31"),
-        new LocalDateTime("2000-01-02"));
+                                                        new LocalDateTime("2000-01-02"));
     // same assertions but parameters is String based representation of LocalDateTime
     assertThat(new LocalDateTime("2000-01-01")).isIn("1999-12-31", "2000-01-01").isNotIn("1999-12-31", "2000-01-02");
+
+    LocalDateTime localDateTime = new LocalDateTime(1999, 12, 31, 23, 59, 59, 999);
+    assertThat(localDateTime).hasYear(1999)
+                             .hasMonthOfYear(12)
+                             .hasDayOfMonth(31)
+                             .hasHourOfDay(23)
+                             .hasMinuteOfHour(59)
+                             .hasSecondOfMinute(59)
+                             .hasMillisOfSecond(999);
   }
 
   @Test
@@ -134,7 +154,7 @@ public class JodaTimeAssertionsExamples extends AbstractAssertionsExamples {
       logAssertionErrorMessage("DateTimeAssert.isEqualToIgnoringHours", e);
     }
   }
-  
+
   @Test
   public void local_date_time_comparison_with_precision_level_examples() {
     // successful assertions ignoring ...
@@ -154,7 +174,7 @@ public class JodaTimeAssertionsExamples extends AbstractAssertionsExamples {
     localDateTime1 = new LocalDateTime(2000, 1, 1, 23, 59, 59, 999);
     localDateTime2 = new LocalDateTime(2000, 1, 1, 00, 00, 00, 000);
     assertThat(localDateTime1).isEqualToIgnoringHours(localDateTime2);
-    
+
     // failing assertions even if time difference is 1ms (compared fields differ)
     try {
       LocalDateTime localDateTimeA = new LocalDateTime(2000, 1, 1, 0, 0, 1, 0);
@@ -186,4 +206,51 @@ public class JodaTimeAssertionsExamples extends AbstractAssertionsExamples {
     }
   }
 
+  @Test
+  public void localDate_assertions_examples() {
+
+    assertThat(new LocalDate("2000-01-01")).isEqualTo(new LocalDate("2000-01-01"))
+                                           .isNotEqualTo(new LocalDate("2000-01-15"));
+    // same assertions but parameters is String based representation of LocalDate
+    assertThat(new LocalDate("2000-01-01")).isEqualTo("2000-01-01")
+                                           .isNotEqualTo("2000-01-15");
+
+    assertThat(new LocalDate("2000-01-01")).isBefore(new LocalDate("2000-01-02"))
+                                           .isAfter(new LocalDate("1999-12-31"));
+    // same assertions but parameters is String based representation of LocalDate
+    assertThat(new LocalDate("2000-01-01")).isBefore("2000-01-02")
+                                           .isAfter("1999-12-31");
+
+    assertThat(new LocalDate("2000-01-01")).isIn(new LocalDate("1999-12-31"),
+                                                 new LocalDate("2000-01-01"));
+    assertThat(new LocalDate("2000-01-01")).isNotIn(new LocalDate("1999-12-31"),
+                                                    new LocalDate("2000-01-02"));
+    // same assertions but parameters is String based representation of LocalDate
+    assertThat(new LocalDate("2000-01-01")).isIn("1999-12-31", "2000-01-01")
+                                           .isNotIn("1999-12-31", "2000-01-02");
+    LocalDate localDate = new LocalDate(2000, 1, 1);
+    assertThat(localDate).hasYear(2000)
+                         .hasMonthOfYear(1)
+                         .hasDayOfMonth(1)
+                         .isBefore(new LocalDate(2000, 1, 2))
+                         .isBefore("2000-01-02")
+                         .isBeforeOrEqualTo(new LocalDate(2000, 1, 1))
+                         .isBeforeOrEqualTo("2000-01-01")
+                         .isBeforeOrEqualTo(new LocalDate(2000, 1, 2))
+                         .isBeforeOrEqualTo("2000-01-02")
+                         .isEqualTo(new LocalDate(2000, 1, 1))
+                         .isEqualTo("2000-01-01")
+                         .isAfterOrEqualTo(new LocalDate(2000, 1, 1))
+                         .isAfterOrEqualTo("2000-01-01")
+                         .isAfterOrEqualTo(new LocalDate(1999, 12, 31))
+                         .isAfterOrEqualTo("1999-12-31")
+                         .isAfter(new LocalDate(1999, 12, 31))
+                         .isAfter("1999-12-31")
+                         .isNotEqualTo("2000-01-15")
+                         .isNotEqualTo(new LocalDate(2000, 1, 15))
+                         .isIn(new LocalDate(1999, 12, 31), new LocalDate(2000, 1, 1))
+                         .isIn("1999-12-31", "2000-01-01")
+                         .isNotIn(new LocalDate(1999, 12, 31), new LocalDate(2000, 1, 2))
+                         .isNotIn("1999-12-31", "2000-01-02");
+  }
 }

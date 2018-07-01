@@ -349,6 +349,28 @@ public class Assertions {
   }
 
   /**
+   * Creates a new instance of <code>{@link org.assertj.examples.rpg.ItemAssert}</code>.
+   *
+   * @param actual the actual value.
+   * @return the created assertion object.
+   */
+  @org.assertj.core.util.CheckReturnValue
+  public static org.assertj.examples.rpg.ItemAssert assertThat(org.assertj.examples.rpg.Item actual) {
+    return new org.assertj.examples.rpg.ItemAssert(actual);
+  }
+
+  /**
+   * Creates a new instance of <code>{@link org.assertj.examples.rpg.WandAssert}</code>.
+   *
+   * @param actual the actual value.
+   * @return the created assertion object.
+   */
+  @org.assertj.core.util.CheckReturnValue
+  public static org.assertj.examples.rpg.WandAssert assertThat(org.assertj.examples.rpg.Wand actual) {
+    return new org.assertj.examples.rpg.WandAssert(actual);
+  }
+
+  /**
    * Creates a new <code>{@link Assertions}</code>.
    */
   protected Assertions() {

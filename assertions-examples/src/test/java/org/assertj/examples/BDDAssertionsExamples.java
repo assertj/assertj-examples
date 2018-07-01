@@ -19,16 +19,15 @@ import static org.mockito.BDDMockito.given;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.mockito.InjectMocks;
-import org.mockito.Mock;
-import org.mockito.runners.MockitoJUnitRunner;
-
 import org.assertj.examples.data.BasketBallPlayer;
 import org.assertj.examples.data.Mansion;
 import org.assertj.examples.data.service.GameService;
 import org.assertj.examples.data.service.TeamManager;
+import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
+import org.mockito.junit.MockitoJUnitRunner;
 
 /**
  * BDD Style Assertions examples
@@ -51,7 +50,7 @@ public class BDDAssertionsExamples extends AbstractAssertionsExamples {
 
     given(teamManager.getPlayers()).willReturn(asList(rose, james, durant));
 
-    //when
+    // when
     boolean result = sut.play();
 
     then(result).isTrue();
@@ -60,10 +59,10 @@ public class BDDAssertionsExamples extends AbstractAssertionsExamples {
   @Test
   public void bdd_host_dinner_party_where_nobody_dies() {
 
-    //given
+    // given
     Mansion mansion = new Mansion();
 
-    //when
+    // when
     mansion.hostPotentiallyMurderousDinnerParty();
 
     then(mansion.guests()).isEqualTo(6);
@@ -75,13 +74,12 @@ public class BDDAssertionsExamples extends AbstractAssertionsExamples {
     then(mansion.professor()).isEqualTo("bloodied and disheveled");
   }
 
-
   @Test
   public void bdd_assertions_examples() {
-    //given
-    List<BasketBallPlayer> bulls = new ArrayList<BasketBallPlayer>();
+    // given
+    List<BasketBallPlayer> bulls = new ArrayList<>();
 
-    //when
+    // when
     bulls.add(rose);
     bulls.add(noah);
 
@@ -90,14 +88,14 @@ public class BDDAssertionsExamples extends AbstractAssertionsExamples {
 
   @Test
   public void bdd_soft_assertions_examples() {
-	//given
-	List<BasketBallPlayer> bulls = new ArrayList<BasketBallPlayer>();
-	
-	//when
-	bulls.add(rose);
-	bulls.add(noah);
-	
-	then(bulls).contains(rose, noah).doesNotContain(james);
+    // given
+    List<BasketBallPlayer> bulls = new ArrayList<>();
+
+    // when
+    bulls.add(rose);
+    bulls.add(noah);
+
+    then(bulls).contains(rose, noah).doesNotContain(james);
   }
-  
+
 }

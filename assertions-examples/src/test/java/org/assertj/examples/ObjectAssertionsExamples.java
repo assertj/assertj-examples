@@ -77,6 +77,10 @@ public class ObjectAssertionsExamples extends AbstractAssertionsExamples {
 
   @Test
   public void object_extracting_example() {
+    // single value extracted
+    assertThat(frodo).extracting(TolkienCharacter::getName)
+                     .isEqualTo("Frodo");
+    // multiple values extracted
     assertThat(frodo).extracting(TolkienCharacter::getName, TolkienCharacter::getRace)
                      .containsExactly("Frodo", HOBBIT);
   }

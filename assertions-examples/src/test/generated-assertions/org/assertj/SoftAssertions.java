@@ -347,4 +347,26 @@ public class SoftAssertions extends org.assertj.core.api.SoftAssertions {
     return proxy(org.assertj.examples.data.service.TeamManagerAssert.class, org.assertj.examples.data.service.TeamManager.class, actual);
   }
 
+  /**
+   * Creates a new "soft" instance of <code>{@link org.assertj.examples.rpg.ItemAssert}</code>.
+   *
+   * @param actual the actual value.
+   * @return the created "soft" assertion object.
+   */
+  @org.assertj.core.util.CheckReturnValue
+  public org.assertj.examples.rpg.ItemAssert assertThat(org.assertj.examples.rpg.Item actual) {
+    return proxy(org.assertj.examples.rpg.ItemAssert.class, org.assertj.examples.rpg.Item.class, actual);
+  }
+
+  /**
+   * Creates a new "soft" instance of <code>{@link org.assertj.examples.rpg.WandAssert}</code>.
+   *
+   * @param actual the actual value.
+   * @return the created "soft" assertion object.
+   */
+  @org.assertj.core.util.CheckReturnValue
+  public org.assertj.examples.rpg.WandAssert assertThat(org.assertj.examples.rpg.Wand actual) {
+    return proxy(org.assertj.examples.rpg.WandAssert.class, org.assertj.examples.rpg.Wand.class, actual);
+  }
+
 }
