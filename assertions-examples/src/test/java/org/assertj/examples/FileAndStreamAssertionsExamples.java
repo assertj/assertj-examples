@@ -21,12 +21,13 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.OutputStreamWriter;
 import java.nio.charset.Charset;
+import java.security.MessageDigest;
 
 import org.junit.Test;
 
 /**
  * File and stream usage examples.
- * 
+ *
  * @author Joel Costigliola
  */
 public class FileAndStreamAssertionsExamples extends AbstractAssertionsExamples {
@@ -50,11 +51,11 @@ public class FileAndStreamAssertionsExamples extends AbstractAssertionsExamples 
     Charset turkishCharset = Charset.forName("windows-1254");
     File xFileWithTurkishCharset = writeFile("xFileWithTurkishCharset", "La Vérité Est Ailleurs", turkishCharset);
     assertThat(xFileWithTurkishCharset).usingCharset(turkishCharset).hasContent("La Vérité Est Ailleurs");
-    
+
     // compare content with a binary array
     byte[] binaryContent = "The Truth Is Out There".getBytes();
     assertThat(xFile).hasBinaryContent(binaryContent);
-    
+
     // compare content with a binary array
     binaryContent = "La Vérité Est Ailleurs".getBytes(turkishCharset.name());
     assertThat(xFileWithTurkishCharset).hasBinaryContent(binaryContent);
@@ -121,6 +122,25 @@ public class FileAndStreamAssertionsExamples extends AbstractAssertionsExamples 
     } catch (AssertionError e) {
       logAssertionErrorMessage("file diff", e);
     }
+  }
+
+  @Test
+  public void should_check_digests() throws Exception {
+    // GIVEN
+    File tested = new File("src/test/resources/assertj-core-2.9.0.jar");
+    byte[] md5Bytes = new byte[] { -36, -77, 1, 92, -46, -124, 71, 100, 76, -127, 10, -13, 82, -125, 44, 25 };
+    byte[] sha1Bytes = new byte[] { 92, 90, -28, 91, 88, -15, 32, 35, -127, 122, -66, 73, 36, 71, -51, -57, -111, 44,
+        26, 44 };
+    // THEN
+    assertThat(tested).hasDigest("SHA1", "5c5ae45b58f12023817abe492447cdc7912c1a2c")
+                      .hasDigest(MessageDigest.getInstance("SHA1"), "5c5ae45b58f12023817abe492447cdc7912c1a2c")
+                      .hasDigest("SHA1", sha1Bytes)
+                      .hasDigest(MessageDigest.getInstance("SHA1"), sha1Bytes)
+                      .hasDigest("MD5", "dcb3015cd28447644c810af352832c19")
+                      .hasDigest(MessageDigest.getInstance("MD5"), "dcb3015cd28447644c810af352832c19")
+                      .hasDigest("MD5", md5Bytes)
+                      .hasDigest(MessageDigest.getInstance("MD5"), md5Bytes);
+
   }
 
   // helper methods
