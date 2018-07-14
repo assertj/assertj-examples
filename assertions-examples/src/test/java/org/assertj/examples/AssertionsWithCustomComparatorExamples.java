@@ -26,10 +26,9 @@ import org.assertj.examples.comparator.AbsValueComparator;
 import org.assertj.examples.data.TolkienCharacter;
 import org.junit.Test;
 
-
 /**
  * Examples of assertions using a specific comparator.
- * 
+ *
  * @author Joel Costigliola
  */
 public class AssertionsWithCustomComparatorExamples extends AbstractAssertionsExamples {
@@ -49,6 +48,12 @@ public class AssertionsWithCustomComparatorExamples extends AbstractAssertionsEx
     assertThat("Frodo").usingComparator(caseInsensitiveStringComparator).contains("fro").doesNotContain("don");
     // ... but a new assertion is not
     // assertThat("Frodo").startsWith("fr").endsWith("ODO"); // FAILS !!!
+
+    // usingComparator is honored for Comparable assertions
+    assertThat("abc").usingComparator(caseInsensitiveStringComparator)
+                     .isLessThanOrEqualTo("ABC")
+                     .usingDefaultComparator()
+                     .isGreaterThan("ABC");
   }
 
   @Test
@@ -144,7 +149,7 @@ public class AssertionsWithCustomComparatorExamples extends AbstractAssertionsEx
     assertThat(-8.0).usingComparator(new AbsValueComparator<Double>()).isEqualTo(8.0);
     assertThat((byte) -8).usingComparator(new AbsValueComparator<Byte>()).isEqualTo((byte) 8);
     assertThat(new BigDecimal("-8")).usingComparator(new AbsValueComparator<BigDecimal>()).isEqualTo(
-        new BigDecimal("8"));
+                                                                                                     new BigDecimal("8"));
 
     // works with arrays !
     assertThat(new int[] { -1, 2, 3 }).usingElementComparator(absValueComparator).contains(1, 2, -3);
@@ -161,12 +166,12 @@ public class AssertionsWithCustomComparatorExamples extends AbstractAssertionsEx
 
     // theTwoTowers.getReleaseDate() : 2002-12-18
     assertThat(theTwoTowers.getReleaseDate()).usingComparator(yearAndMonthComparator)
-        .isEqualTo("2002-12-01").isEqualTo("2002-12-02") // same year and month
-        .isNotEqualTo("2002-11-18") // same year but different month
-        .isBetween("2002-12-01", "2002-12-10", true, true)
-        .isNotBetween("2002-12-01", "2002-12-10") // second date is excluded !
-        .isIn("2002-12-01") // ok same year and month
-        .isNotIn("2002-11-01", "2002-10-01"); // same year but different month
+                                             .isEqualTo("2002-12-01").isEqualTo("2002-12-02") // same year and month
+                                             .isNotEqualTo("2002-11-18") // same year but different month
+                                             .isBetween("2002-12-01", "2002-12-10", true, true)
+                                             .isNotBetween("2002-12-01", "2002-12-10") // second date is excluded !
+                                             .isIn("2002-12-01") // ok same year and month
+                                             .isNotIn("2002-11-01", "2002-10-01"); // same year but different month
 
     // build date away from today by one day (if we are at the end of the month we subtract one day, otherwise we add one)
     Date oneDayFromTodayInSameMonth = monthOf(tomorrow()) == monthOf(new Date()) ? tomorrow() : yesterday();

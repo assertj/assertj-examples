@@ -44,6 +44,15 @@ public class AssumptionExamples extends AbstractAssertionsExamples {
   }
 
   @Test
+  public void when_string_comparable_assumption_is_not_met_the_test_should_be_ignored() {
+    // since this assumption is obviously false ...
+    assumeThat(frodo.getName()).isGreaterThan("Gandalf");
+    // ... this assertion should not be performed.
+    assertThat(fellowshipOfTheRing).contains(sauron);
+    fail("should not arrive here");
+  }
+
+  @Test
   public void when_assumption_is_met_the_test_should_be_run() {
     // since this assumption is true ...
     assumeThat(frodo.getRace()).isEqualTo(HOBBIT);

@@ -283,4 +283,52 @@ public class StringAssertionsExamples extends AbstractAssertionsExamples {
                                    .isEqualToIgnoringNewLines("Game of Thrones");
   }
 
+  @Test
+  public void should_support_comparable_assertions() {
+    assertThat("ab").isBetween("aa", "ac");
+
+    assertThat("abc").isLessThan("bcd")
+                     .isLessThan("b")
+                     .isLessThan("abca")
+                     .usingComparator(caseInsensitiveStringComparator)
+                     .isLessThan("BCD");
+
+    assertThat("abc").isLessThanOrEqualTo("bcd")
+                     .isLessThanOrEqualTo("abc")
+                     .isLessThanOrEqualTo("b")
+                     .isLessThanOrEqualTo("abca")
+                     .usingComparator(caseInsensitiveStringComparator)
+                     .isLessThanOrEqualTo("ABC");
+
+    assertThat("xyz").isGreaterThan("abc")
+                     .isGreaterThan("xy")
+                     .isGreaterThan("ABC");
+    assertThat("XYZ").usingComparator(caseInsensitiveStringComparator)
+                     .isGreaterThan("abc");
+
+    assertThat("xyz").isGreaterThanOrEqualTo("abc")
+                     .isGreaterThanOrEqualTo("xyz")
+                     .isGreaterThanOrEqualTo("xy")
+                     .isGreaterThanOrEqualTo("ABC");
+    assertThat("XYZ").usingComparator(caseInsensitiveStringComparator)
+                     .isGreaterThanOrEqualTo("abc");
+
+    assertThat("ab").isBetween("aa", "ac")
+                    .isBetween("ab", "ac")
+                    .isBetween("aa", "ab")
+                    .isBetween("ab", "ab")
+                    .isBetween("a", "c")
+                    .usingComparator(caseInsensitiveStringComparator)
+                    .isBetween("AA", "AC");
+
+    assertThat("ab").isStrictlyBetween("aa", "ac")
+                    .isStrictlyBetween("a", "c")
+                    .usingComparator(caseInsensitiveStringComparator)
+                    .isStrictlyBetween("AA", "AC");
+
+    assertThat("abc").usingComparator(caseInsensitiveStringComparator, "String case insensitive comparator")
+                     .isEqualTo("Abc")
+                     .isEqualTo("ABC");
+  }
+
 }

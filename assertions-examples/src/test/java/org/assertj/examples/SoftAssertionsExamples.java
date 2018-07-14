@@ -49,7 +49,7 @@ public class SoftAssertionsExamples extends AbstractAssertionsExamples {
     softly.assertThat(mansion.professor()).as("Professor").isEqualTo("well kempt");
     try {
       softly.assertAll();
-    } catch (SoftAssertionError e) {
+    } catch (AssertionError e) {
       logAssertionErrorMessage("SoftAssertion errors example", e);
     }
   }
@@ -58,10 +58,15 @@ public class SoftAssertionsExamples extends AbstractAssertionsExamples {
   public void chained_soft_assertions_example() {
     String name = "Michael Jordan - Bulls";
     SoftAssertions softly = new SoftAssertions();
-    softly.assertThat(name).startsWith("Mike").contains("Lakers").endsWith("Chicago");
+    softly.assertThat(name)
+          .isLessThan("Lebron")
+          .startsWith("Mike")
+          .contains("Lakers")
+          .endsWith("Chicago");
+
     try {
       softly.assertAll();
-    } catch (SoftAssertionError e) {
+    } catch (AssertionError e) {
       logAssertionErrorMessage("SoftAssertion errors example", e);
     }
   }
