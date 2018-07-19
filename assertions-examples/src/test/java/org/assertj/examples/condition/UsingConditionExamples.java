@@ -43,8 +43,7 @@ public class UsingConditionExamples extends AbstractAssertionsExamples {
     assertThat(noah).isNot(potentialMvp);
     List<BasketBallPlayer> bullsPlayers = newArrayList(noah, rose);
     assertThat(bullsPlayers).haveAtLeastOne(potentialMvp);
-    
-    
+
     Condition<? super List<? extends BasketBallPlayer>> listCond = new Condition<>(list -> true, "test");
 
     assertThat(bullsPlayers).has(listCond);
@@ -64,13 +63,18 @@ public class UsingConditionExamples extends AbstractAssertionsExamples {
   }
 
   @Test
+  public void satisfies_condition_example() {
+    assertThat(noah).satisfies(doubleDoubleStats);
+  }
+
+  @Test
   public void anyOf_condition_example() {
     assertThat("Vader").is(anyOf(JEDI, sith));
   }
 
   @Test
   public void condition_built_with_predicate_example() {
-    Condition<String> fairyTale = new Condition<String>(s -> s.startsWith("Once upon a time"), "a %s tale", "fairy");
+    Condition<String> fairyTale = new Condition<>(s -> s.startsWith("Once upon a time"), "a %s tale", "fairy");
     String littleRedCap = "Once upon a time there was a dear little girl ...";
     assertThat(littleRedCap).is(fairyTale);
   }
