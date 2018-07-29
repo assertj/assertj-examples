@@ -32,7 +32,7 @@ import org.junit.Test;
 
 /**
  * Iterable (including Collection) assertions examples.<br>
- * 
+ *
  * @author Joel Costigliola
  */
 public class FilterExamples extends AbstractAssertionsExamples {
@@ -140,6 +140,9 @@ public class FilterExamples extends AbstractAssertionsExamples {
                                    .containsOnly(aragorn, frodo, legolas, boromir)
                                    .extracting(character -> character.getRace().getName())
                                    .contains("Hobbit", "Elf", "Man");
+
+    assertThat(fellowshipOfTheRing).filteredOnAssertions(character -> assertThat(character.getName()).contains("o"))
+                                   .containsOnly(aragorn, frodo, legolas, boromir);
 
     // having(condition) example
     Condition<BasketBallPlayer> potentialMvp = new Condition<BasketBallPlayer>() {
