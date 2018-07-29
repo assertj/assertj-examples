@@ -36,27 +36,29 @@ public class ExceptionAssertionsExamples extends AbstractAssertionsExamples {
 
   @Test
   public void exceptions_assertions_examples() {
-    assertThat(fellowshipOfTheRing).hasSize(9);
+    Exception cause = new Exception("chemical explosion");
     try {
-      fellowshipOfTheRing.get(9); // argggl !
+      throw new RuntimeException("Boom!", cause);
     } catch (Exception e) {
       // you can check exception type
-      assertThat(e).isInstanceOf(IndexOutOfBoundsException.class);
+      assertThat(e).isInstanceOf(RuntimeException.class);
 
-      // you can check if exception nas no cause
-      assertThat(e).hasNoCause();
+      // you can check exception's cause
+      assertThat(e).hasCause(cause)
+                   .hasCauseInstanceOf(Exception.class);
 
-      // you can check exception message
-      assertThat(e).hasMessage("Index: 9, Size: 9");
+      // you can check exception message (with String#format syntax support)
+      assertThat(e).hasMessage("Boom!")
+                   .hasMessage("%s!", "Boom");
 
       // sometimes message are not entirely predictible, you can then check for start, end or containing string.
-      assertThat(e).hasMessageStartingWith("Index: 9").hasMessageContaining("9").hasMessageEndingWith("Size: 9");
+      assertThat(e).hasMessageStartingWith("Boo")
+                   .hasMessageContaining("oom")
+                   .hasMessageEndingWith("!");
       // this equivalent to (unless for error message which is more explicit in assertThat(e).hasMessageXXX)
-      assertThat(e.getMessage()).startsWith("Index: 9").contains("9").endsWith("Size: 9");
-
-      // String#format syntax support
-      assertThat(e).hasMessage("Index: %s, Size: %s", 9, 9);
-
+      assertThat(e.getMessage()).startsWith("Boo")
+                                .contains("oom")
+                                .endsWith("!");
     }
   }
 
@@ -228,8 +230,8 @@ public class ExceptionAssertionsExamples extends AbstractAssertionsExamples {
     assertThat(runtime).hasCauseInstanceOf(Exception.class)
                        .hasStackTraceContaining("no way")
                        .hasStackTraceContaining("you shall not pass");
-    
-    
+
+
     // assertion will pass
     assertThatExceptionOfType(RuntimeException.class)
                .as("check passage")
@@ -243,14 +245,14 @@ public class ExceptionAssertionsExamples extends AbstractAssertionsExamples {
     assertThatIllegalArgumentException()
                .isThrownBy(() -> {throw new IllegalArgumentException("that's illegal !");})
                .withMessage("that's illegal !");
-    
+
     assertThatIOException().isThrownBy(() -> { throw new IOException("boom!"); })
                            .withMessage("boom!")
                            .withMessageContaining("oom")
                            .withMessage("%s!", "boom")
                            .withStackTraceContaining("IOException")
                            .withNoCause();
-    // @format:on    
+    // @format:on
   }
 
   @Test
@@ -271,7 +273,7 @@ public class ExceptionAssertionsExamples extends AbstractAssertionsExamples {
       assertThat(catchThrowable(() -> { throw new Exception("boom!"); }))
          .as("boom expected")
          .isInstanceOf(Exception.class)
-         // make the assertion fail 
+         // make the assertion fail
          .hasMessageContaining("bam");
     });
     // @format:on
@@ -284,7 +286,7 @@ public class ExceptionAssertionsExamples extends AbstractAssertionsExamples {
       assertThatCode(() -> { throw new Exception("boom!");})
          .as("boom expected")
          .isInstanceOf(Exception.class)
-         // make the assertion fail 
+         // make the assertion fail
          .hasMessageContaining("bam");
     });
     // @format:on
