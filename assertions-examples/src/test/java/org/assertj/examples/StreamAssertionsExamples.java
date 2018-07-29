@@ -14,6 +14,7 @@ package org.assertj.examples;
 
 import static java.util.Arrays.asList;
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.catchThrowable;
 import static org.assertj.core.api.Assertions.extractProperty;
 import static org.assertj.core.api.Assertions.failBecauseExceptionWasNotThrown;
 import static org.assertj.core.api.Assertions.setAllowExtractingPrivateFields;
@@ -32,7 +33,6 @@ import static org.assertj.examples.extractor.BasketballExtractors.teammates;
 import static org.assertj.examples.extractor.TolkienCharactersExtractors.ageAndRace;
 import static org.assertj.examples.extractor.TolkienCharactersExtractors.race;
 
-import java.util.Iterator;
 import java.util.List;
 import java.util.SortedSet;
 import java.util.TreeSet;
@@ -119,6 +119,22 @@ public class StreamAssertionsExamples extends AbstractAssertionsExamples {
     assertThat(DoubleStream.of(1, 2, 3)).isNotNull()
                                         .contains(1.0, 2.0, 3.0)
                                         .allMatch(Double::isFinite);
+  }
+
+  @Test
+  public void stream_assertions_limitations() {
+    // this assertion does not pass as the actual Stream is converted to a List to compare it to the expected value.
+    assertThat(catchThrowable(() -> assertThat(Stream.of(1, 2, 3)).isEqualTo(Stream.of(1, 2, 3)))).as("isEqualTo").isNotNull();
+    // these succeeds as isEqualTo and isSameAs checks if the instances to compare are the same and there is no need to convert
+    // the Stream to a List for that
+    // the actual Stream is only converted to a List when the assertions requires to inspect its content!
+    Stream<Integer> stream = Stream.of(1, 2, 3);
+    assertThat(stream).isEqualTo(stream)
+                      .isSameAs(stream);
+
+    LongStream stream2 = LongStream.of(1, 2, 3);
+    assertThat(stream2).isEqualTo(stream2)
+                       .isSameAs(stream2);
   }
 
   @Test
@@ -274,19 +290,6 @@ public class StreamAssertionsExamples extends AbstractAssertionsExamples {
     List<Ring> elvesRings = newArrayList(vilya, nenya, narya);
     Stream<Object> powerfulRings = Stream.of(oneRing, vilya, nenya, narya);
     assertThat(powerfulRings).containsAll(elvesRings);
-  }
-
-  @Test
-  public void iterator_assertion_example() {
-    // Stream assertions also works if you give an Iterator as input.
-    Iterator<Ring> elvesRingsIterator = Stream.of(vilya, nenya, narya).iterator();
-    // elvesRingsIterator is only consumed when needed which is not the case with null/notNull assertion
-    assertThat(elvesRingsIterator).isNotNull();
-    assertThat(elvesRingsIterator.hasNext()).as("iterator is not consumed").isTrue();
-    // elvesRingsIterator is consumed when needed but only once, you can then chain assertion
-    assertThat(elvesRingsIterator).isSubsetOf(ringsOfPower).contains(nenya, narya);
-    // elvesRingsIterator is consumed ...
-    assertThat(elvesRingsIterator.hasNext()).as("iterator is consumed").isFalse();
   }
 
   @Test
