@@ -64,7 +64,13 @@ public class UsingConditionExamples extends AbstractAssertionsExamples {
 
   @Test
   public void satisfies_condition_example() {
-    assertThat(noah).satisfies(doubleDoubleStats);
+    // Given
+    Condition<String> fairyTale = new Condition<>(s -> s.startsWith("Once upon a time"), "fairy tale start");
+    // When
+    String littleRedCap = "Once upon a time there was a dear little girl ...";
+    // Then
+    assertThat(littleRedCap).satisfies(fairyTale);
+
   }
 
   @Test

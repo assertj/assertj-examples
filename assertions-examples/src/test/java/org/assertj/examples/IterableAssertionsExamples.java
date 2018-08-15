@@ -19,8 +19,10 @@ import static org.assertj.core.api.Assertions.failBecauseExceptionWasNotThrown;
 import static org.assertj.core.api.Assertions.in;
 import static org.assertj.core.api.Assertions.not;
 import static org.assertj.core.api.Assertions.notIn;
+import static org.assertj.core.api.Assertions.offset;
 import static org.assertj.core.api.Assertions.setAllowExtractingPrivateFields;
 import static org.assertj.core.api.Assertions.tuple;
+import static org.assertj.core.util.Lists.list;
 import static org.assertj.core.util.Lists.newArrayList;
 import static org.assertj.core.util.Sets.newHashSet;
 import static org.assertj.core.util.Sets.newLinkedHashSet;
@@ -738,7 +740,7 @@ public class IterableAssertionsExamples extends AbstractAssertionsExamples {
   }
 
   @Test
-  public void anyMatch_examples() {
+  public void noneMatch_example() {
     // GIVEN
     Iterable<String> abcc = newArrayList("a", "b", "cc");
     // THEN
@@ -746,11 +748,25 @@ public class IterableAssertionsExamples extends AbstractAssertionsExamples {
   }
 
   @Test
-  public void noneMatch_examples() {
+  public void anyMatch_example() {
     // GIVEN
     Iterable<String> abcc = newArrayList("a", "b", "cc");
     // THEN
     assertThat(abcc).anyMatch(s -> s.length() == 2);
+  }
+
+  @Test
+  public void filteredOnAssertions_example() {
+    // GIVEN
+    TolkienCharacter pippin = new TolkienCharacter("Pippin", 28, HOBBIT);
+    TolkienCharacter frodo = new TolkienCharacter("Frodo", 33, HOBBIT);
+    TolkienCharacter merry = new TolkienCharacter("Merry", 36, HOBBIT);
+    TolkienCharacter sam = new TolkienCharacter("Sam", 38, HOBBIT);
+
+    List<TolkienCharacter> hobbits = list(frodo, sam, merry, pippin);
+    // THEN
+    assertThat(hobbits).filteredOnAssertions(hobbit -> assertThat(hobbit.age).isLessThan(34))
+                       .containsOnly(frodo, pippin);
   }
 
   @Test
