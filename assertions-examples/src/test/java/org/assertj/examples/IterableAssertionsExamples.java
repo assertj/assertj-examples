@@ -305,7 +305,7 @@ public class IterableAssertionsExamples extends AbstractAssertionsExamples {
     assertThat(elvesRingsIterator).isNotNull();
     assertThat(elvesRingsIterator.hasNext()).as("iterator is not consumed").isTrue();
     // elvesRingsIterator is consumed when needed but only once, you can then chain assertion
-    assertThat(elvesRingsIterator).isSubsetOf(ringsOfPower).contains(nenya, narya);
+    assertThat(elvesRingsIterator).toIterable().isSubsetOf(ringsOfPower).contains(nenya, narya);
     // elvesRingsIterator is consumed ...
     assertThat(elvesRingsIterator.hasNext()).as("iterator is consumed").isFalse();
   }

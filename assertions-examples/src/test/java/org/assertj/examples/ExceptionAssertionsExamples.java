@@ -47,15 +47,15 @@ public class ExceptionAssertionsExamples extends AbstractAssertionsExamples {
       assertThat(e).hasNoCause();
 
       // you can check exception message
-      assertThat(e).hasMessage("Index: 9, Size: 9");
+      assertThat(e).hasMessage("Index 9 out-of-bounds for length 9");
 
       // sometimes message are not entirely predictible, you can then check for start, end or containing string.
-      assertThat(e).hasMessageStartingWith("Index: 9").hasMessageContaining("9").hasMessageEndingWith("Size: 9");
+      assertThat(e).hasMessageStartingWith("Index 9").hasMessageContaining("9").hasMessageEndingWith("length 9");
       // this equivalent to (unless for error message which is more explicit in assertThat(e).hasMessageXXX)
-      assertThat(e.getMessage()).startsWith("Index: 9").contains("9").endsWith("Size: 9");
+      assertThat(e.getMessage()).startsWith("Index 9").contains("9").endsWith("length 9");
 
       // String#format syntax support
-      assertThat(e).hasMessage("Index: %s, Size: %s", 9, 9);
+      assertThat(e).hasMessage("Index %s out-of-bounds for length %s", 9, 9);
 
     }
   }
