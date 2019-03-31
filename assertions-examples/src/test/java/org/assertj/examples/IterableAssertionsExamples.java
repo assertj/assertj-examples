@@ -19,7 +19,6 @@ import static org.assertj.core.api.Assertions.failBecauseExceptionWasNotThrown;
 import static org.assertj.core.api.Assertions.in;
 import static org.assertj.core.api.Assertions.not;
 import static org.assertj.core.api.Assertions.notIn;
-import static org.assertj.core.api.Assertions.offset;
 import static org.assertj.core.api.Assertions.setAllowExtractingPrivateFields;
 import static org.assertj.core.api.Assertions.tuple;
 import static org.assertj.core.util.Lists.list;
@@ -307,12 +306,13 @@ public class IterableAssertionsExamples extends AbstractAssertionsExamples {
     // Iterable assertions also works if you give an Iterator as input.
     Iterator<Ring> elvesRingsIterator = newArrayList(vilya, nenya, narya).iterator();
     // elvesRingsIterator is only consumed when needed which is not the case with null/notNull assertion
-    assertThat(elvesRingsIterator).isNotNull();
-    assertThat(elvesRingsIterator.hasNext()).as("iterator is not consumed").isTrue();
-    // elvesRingsIterator is consumed when needed but only once, you can then chain assertion
-    assertThat(elvesRingsIterator).isSubsetOf(ringsOfPower).contains(nenya, narya);
+    assertThat(elvesRingsIterator).isNotNull()
+                                  .hasNext();
     // elvesRingsIterator is consumed ...
-    assertThat(elvesRingsIterator.hasNext()).as("iterator is consumed").isFalse();
+    elvesRingsIterator.next();
+    elvesRingsIterator.next();
+    elvesRingsIterator.next();
+    assertThat(elvesRingsIterator).isExhausted();
   }
 
   @Test

@@ -21,29 +21,30 @@ import org.junit.Test;
 public class Assertj_INVALID_usage extends AbstractAssertionsExamples {
 
   @Test
-  public void should_report_a_findbugs_violation_because_no_assertions_is_performed_after_assertThat() {
-    assertThat(false);
+  public void should_report_a_spotbugs_violation_because_no_assertion_is_performed_after_assertThat() {
+    assertThat("abc".equals("abc"));
   }
 
+
   @Test
-  public void should_report_a_findbugs_violation_because_no_assertions_is_performed_after_extracting() {
+  public void should_report_a_spotbugs_violation_because_no_assertion_is_performed_after_extracting() {
     assertThat(fellowshipOfTheRing).extracting("name");
   }
 
   @Test
-  public void should_report_a_findbugs_violation_because_no_assertions_is_performed_after_asString() {
+  public void should_report_a_spotbugs_violation_because_no_assertion_is_performed_after_asString() {
     Object terryPratchettQuote = "It is often said that before you die your life passes before your eyes. It is in fact true. It's called living.";
     assertThat(terryPratchettQuote).asString();
   }
 
   @Test
-  public void should_report_a_findbugs_violation_because_no_assertions_is_performed_after_asList() {
+  public void should_report_a_spotbugs_violation_because_no_assertion_is_performed_after_asList() {
     Object abc = Arrays.asList("a", "b", "c");
     assertThat(abc).asList();
   }
 
   @Test
-  public void should_report_a_findbugs_violation_because_no_assertions_is_performed_after_size() {
+  public void should_report_a_spotbugs_violation_because_no_assertion_is_performed_after_size() {
     Object abc = Arrays.asList("a", "b", "c");
     assertThat(abc).asList().size();
   }
