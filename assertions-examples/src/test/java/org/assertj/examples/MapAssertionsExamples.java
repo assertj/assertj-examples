@@ -241,7 +241,7 @@ public class MapAssertionsExamples extends AbstractAssertionsExamples {
     data.put("three", "3");
     // THEN
     try (final AutoCloseableSoftAssertions softly = new AutoCloseableSoftAssertions()) {
-      softly.assertThat(data).extracting("one").containsExactly("1");
+      softly.assertThat(data).extracting("one").isEqualTo("1");
     }
   }
 

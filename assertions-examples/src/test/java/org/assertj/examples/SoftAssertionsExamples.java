@@ -211,7 +211,7 @@ public class SoftAssertionsExamples extends AbstractAssertionsExamples {
     try (final AutoCloseableSoftAssertions softly = new AutoCloseableSoftAssertions()) {
       softly.assertThat(data)
             .extracting("one")
-            .containsExactly("1");
+            .isEqualTo("1");
     }
   }
 
