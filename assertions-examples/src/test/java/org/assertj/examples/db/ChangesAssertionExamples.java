@@ -23,7 +23,7 @@ import org.assertj.db.type.Request;
 import org.assertj.db.type.Table;
 import org.assertj.db.type.TimeValue;
 import org.assertj.db.type.ValueType;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 import static org.assertj.db.api.Assertions.assertThat;
 

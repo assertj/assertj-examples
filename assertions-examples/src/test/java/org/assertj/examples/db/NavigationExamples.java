@@ -20,7 +20,7 @@ import org.assertj.db.type.Changes;
 import org.assertj.db.type.DateValue;
 import org.assertj.db.type.Request;
 import org.assertj.db.type.Table;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 /**
  * Examples of navigation for a table, a request and changes

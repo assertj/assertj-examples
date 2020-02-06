@@ -23,7 +23,7 @@ import java.util.List;
 import org.assertj.examples.comparator.AtPrecisionComparator;
 import org.assertj.examples.data.Employee;
 import org.assertj.examples.data.TolkienCharacter;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 /**
  * Iterable (including Collection) assertions examples.<br>

@@ -23,7 +23,7 @@ import java.util.function.Predicate;
 
 import org.apache.commons.lang3.tuple.Pair;
 import org.assertj.examples.data.TolkienCharacter;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 public class PredicateAssertionsExamples extends AbstractAssertionsExamples {
 

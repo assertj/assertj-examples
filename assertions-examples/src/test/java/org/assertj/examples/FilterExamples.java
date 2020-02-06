@@ -27,8 +27,8 @@ import java.util.List;
 import org.assertj.core.api.Assertions;
 import org.assertj.core.api.Condition;
 import org.assertj.examples.data.BasketBallPlayer;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 /**
  * Iterable (including Collection) assertions examples.<br>
@@ -42,7 +42,7 @@ public class FilterExamples extends AbstractAssertionsExamples {
   protected Employee noname;
   protected List<Employee> employees;
 
-  @Before
+  @BeforeEach
   public void setUp() {
     yoda = new Employee(1L, new Name("Yoda"), 800);
     obiwan = new Employee(2L, new Name("Obi"), 800);

@@ -20,7 +20,7 @@ import org.assertj.examples.data.Person;
 import org.assertj.examples.data.Powerful;
 import org.assertj.examples.data.Ring;
 import org.assertj.examples.data.TolkienCharacter;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 /**
  * Class assertions specific examples
@@ -49,6 +49,8 @@ public class ClassAssertionsExamples extends AbstractAssertionsExamples {
 
     assertThat(TolkienCharacter.class).isNotInterface();
     assertThat(Person.class).isAssignableFrom(Employee.class);
+    assertThat(Employee.class).hasSuperclass(Person.class);
+    assertThat(Cloneable.class).hasNoSuperclass();
   }
 
   @Test
@@ -56,6 +58,7 @@ public class ClassAssertionsExamples extends AbstractAssertionsExamples {
     assertThat(TolkienCharacter.class).isPublic();
     assertThat(String.class).isPublic();
     assertThat(MyClass.class).isProtected();
+    assertThat(MySuperClass.class).isPackagePrivate();
 
     try {
       assertThat(TolkienCharacter.class).isProtected();

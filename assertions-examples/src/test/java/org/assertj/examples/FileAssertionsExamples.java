@@ -21,16 +21,18 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.OutputStreamWriter;
 import java.nio.charset.Charset;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.security.MessageDigest;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 /**
  * File and stream usage examples.
  *
  * @author Joel Costigliola
  */
-public class FileAndStreamAssertionsExamples extends AbstractAssertionsExamples {
+public class FileAssertionsExamples extends AbstractAssertionsExamples {
 
   @Test
   public void file_assertions_examples() throws Exception {
@@ -42,10 +44,16 @@ public class FileAndStreamAssertionsExamples extends AbstractAssertionsExamples 
 
     // compare content with another file
     File xFileClone = writeFile("xFileClone", "The Truth Is Out There");
-    assertThat(xFile).hasSameContentAs(xFileClone);
+    assertThat(xFile).hasSameTextualContentAs(xFileClone);
+    assertThat(xFile).hasSameBinaryContentAs(xFileClone);
 
     // compare content with a string
-    assertThat(xFile).hasContent("The Truth Is Out There");
+    assertThat(xFile).isNotEmpty()
+                     .hasSize(22)
+                     .hasContent("The Truth Is Out There");
+    File emptyFile = writeFile("emptyFile.txt", "");
+    assertThat(emptyFile).isEmpty()
+                         .hasSize(0);
 
     // compare content with a string, specifying a character set
     Charset turkishCharset = Charset.forName("windows-1254");
@@ -102,7 +110,7 @@ public class FileAndStreamAssertionsExamples extends AbstractAssertionsExamples 
 
   @Test
   public void stream_assertions_examples() throws Exception {
-    assertThat(streamFrom("string")).hasSameContentAs(streamFrom("string"));
+    assertThat(byteArrayInputStreamFrom("string")).hasSameContentAs(byteArrayInputStreamFrom("string"));
   }
 
   @Test
@@ -118,7 +126,7 @@ public class FileAndStreamAssertionsExamples extends AbstractAssertionsExamples 
                                           "dddddd\n" +
                                           "eeeeee\n");
     try {
-      assertThat(actual).hasSameContentAs(expected);
+      assertThat(actual).hasSameTextualContentAs(expected);
     } catch (AssertionError e) {
       logAssertionErrorMessage("file diff", e);
     }
@@ -143,9 +151,24 @@ public class FileAndStreamAssertionsExamples extends AbstractAssertionsExamples 
 
   }
 
+  @Test
+  public void directory_assertions() {
+    File directory = new File("src/test/resources/templates");
+    assertThat(directory).isNotEmptyDirectory()
+                         .isDirectoryContaining("regex:.*txt")
+                         .isDirectoryContaining("glob:**.txt")
+                         .isDirectoryContaining(file -> file.getName().contains("template"))
+                         .isDirectoryNotContaining("glob:**.java")
+                         .isDirectoryNotContaining("regex:.*java")
+                         .isDirectoryNotContaining(file -> file.getName().endsWith("java"));
+
+    Path emptyDirectory = Paths.get("src/test/resources/empty");
+    assertThat(emptyDirectory).isEmptyDirectory();
+  }
+
   // helper methods
 
-  private static ByteArrayInputStream streamFrom(String string) {
+  private static ByteArrayInputStream byteArrayInputStreamFrom(String string) {
     return new ByteArrayInputStream(string.getBytes());
   }
 

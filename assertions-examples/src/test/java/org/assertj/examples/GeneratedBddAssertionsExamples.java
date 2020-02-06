@@ -14,7 +14,7 @@ package org.assertj.examples;
 
 import static org.assertj.BddAssertions.then;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 import org.assertj.examples.data.Name;
 import org.assertj.examples.exception.NameException;

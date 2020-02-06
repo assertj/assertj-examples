@@ -48,8 +48,8 @@ import org.assertj.examples.data.Name;
 import org.assertj.examples.data.Ring;
 import org.assertj.examples.data.TolkienCharacter;
 import org.assertj.examples.data.movie.Movie;
-import org.junit.Before;
-import org.junit.BeforeClass;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.BeforeEach;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -65,7 +65,7 @@ public abstract class AbstractAssertionsExamples {
     Assertions.setRemoveAssertJRelatedElementsFromStackTrace(false);
   }
 
-  static final String ERROR_MESSAGE_EXAMPLE_FOR_ASSERTION = "{} assertion : {}\n";
+  static final String ERROR_MESSAGE_EXAMPLE_FOR_ASSERTION = "{} assertion :\n{}\n";
   protected static final Logger logger = LoggerFactory.getLogger("[ERROR MESSAGE EXAMPLE]");
   protected static final Logger log = LoggerFactory.getLogger("\n");
 
@@ -127,7 +127,7 @@ public abstract class AbstractAssertionsExamples {
   protected static PotentialMvpCondition potentialMvp;
   protected static Condition<BasketBallPlayer> doubleDoubleStats;
 
-  @BeforeClass
+  @BeforeAll
   public static void setUpOnce() {
     rose = new BasketBallPlayer(new Name("Derrick", "Rose"), "Cavs");
     rose.setAssistsPerGame(8);
@@ -180,7 +180,7 @@ public abstract class AbstractAssertionsExamples {
     Assertions.setRemoveAssertJRelatedElementsFromStackTrace(false);
   }
 
-  @Before
+  @BeforeEach
   public void setup() {
     // let's do some team building :)
     fellowshipOfTheRing.add(frodo);

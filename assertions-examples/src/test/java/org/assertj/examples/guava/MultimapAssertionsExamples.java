@@ -17,7 +17,7 @@ import static org.assertj.guava.api.Assertions.assertThat;
 import static org.assertj.guava.api.Assertions.entry;
 
 import org.assertj.examples.AbstractAssertionsExamples;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 import com.google.common.collect.ArrayListMultimap;
 import com.google.common.collect.Multimap;

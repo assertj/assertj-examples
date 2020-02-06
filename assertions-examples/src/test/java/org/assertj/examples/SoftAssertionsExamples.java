@@ -26,18 +26,19 @@ import java.util.Optional;
 import org.assertj.core.api.AutoCloseableBDDSoftAssertions;
 import org.assertj.core.api.AutoCloseableSoftAssertions;
 import org.assertj.core.api.BDDSoftAssertions;
-import org.assertj.core.api.SoftAssertionError;
 import org.assertj.core.api.SoftAssertions;
 import org.assertj.core.util.Arrays;
+import org.assertj.examples.custom.MyProjectAssertions;
 import org.assertj.examples.data.Mansion;
 import org.assertj.examples.data.TolkienCharacter;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 public class SoftAssertionsExamples extends AbstractAssertionsExamples {
 
+  private Mansion mansion = new Mansion();
+
   @Test
   public void host_dinner_party_where_nobody_dies() {
-    Mansion mansion = new Mansion();
     mansion.hostPotentiallyMurderousDinnerParty();
     SoftAssertions softly = new SoftAssertions();
     softly.assertThat(mansion.guests()).as("Living Guests").isEqualTo(7);
@@ -51,6 +52,32 @@ public class SoftAssertionsExamples extends AbstractAssertionsExamples {
       softly.assertAll();
     } catch (AssertionError e) {
       logAssertionErrorMessage("SoftAssertion errors example", e);
+    }
+  }
+
+  @Test
+  public void lotr_soft_assertions_example() {
+    SoftAssertions softly = new SoftAssertions();
+    softly.assertThat(frodo.getRace().getName()).as("check Frodo's race").isEqualTo("Orc");
+    softly.assertThat(aragorn.age).as("check Aragorn's age").isGreaterThan(500);
+    softly.assertThat(gandalf).as("gandalf vs sauron").isEqualTo(sauron);
+    try {
+      softly.assertAll();
+    } catch (AssertionError e) {
+      logAssertionErrorMessage("SoftAssertion errors example", e);
+    }
+  }
+
+  @Test
+  public void lotr_soft_assertions_example_with_assertSoftly() {
+    try {
+      SoftAssertions.assertSoftly(softly -> {
+        softly.assertThat(frodo.getRace().getName()).as("check Frodo's race").isEqualTo("Orc");
+        softly.assertThat(aragorn.age).as("check Aragorn's age").isGreaterThan(500);
+        softly.assertThat(gandalf).as("gandalf vs sauron").isEqualTo(sauron);
+      });
+    } catch (AssertionError e) {
+      // expected
     }
   }
 
@@ -83,11 +110,11 @@ public class SoftAssertionsExamples extends AbstractAssertionsExamples {
       softly.assertThat(mansion.candlestick()).as("Candlestick").isEqualTo("pristine");
       softly.assertThat(mansion.colonel()).as("Colonel").isEqualTo("well kempt");
       softly.assertThat(mansion.professor()).as("Professor").isEqualTo("well kempt");
-    } catch (SoftAssertionError e) {
+    } catch (AssertionError e) {
       // expected
       return;
     }
-    fail("SoftAssertionError expected.");
+    fail("AssertionError expected.");
   }
 
   // same test but for BDD style soft assertions
@@ -106,7 +133,7 @@ public class SoftAssertionsExamples extends AbstractAssertionsExamples {
     softly.then(mansion.professor()).as("Professor").isEqualTo("well kempt");
     try {
       softly.assertAll();
-    } catch (SoftAssertionError e) {
+    } catch (AssertionError e) {
       logAssertionErrorMessage("BDD SoftAssertion errors example", e);
     }
   }
@@ -118,7 +145,7 @@ public class SoftAssertionsExamples extends AbstractAssertionsExamples {
     softly.then(name).startsWith("Mike").contains("Lakers").endsWith("Chicago");
     try {
       softly.assertAll();
-    } catch (SoftAssertionError e) {
+    } catch (AssertionError e) {
       logAssertionErrorMessage("BDD SoftAssertion errors example", e);
     }
   }
@@ -135,7 +162,7 @@ public class SoftAssertionsExamples extends AbstractAssertionsExamples {
       softly.then(mansion.candlestick()).as("Candlestick").isEqualTo("pristine");
       softly.then(mansion.colonel()).as("Colonel").isEqualTo("well kempt");
       softly.then(mansion.professor()).as("Professor").isEqualTo("well kempt");
-    } catch (SoftAssertionError e) {
+    } catch (AssertionError e) {
       // expected
       return;
     }
@@ -149,7 +176,7 @@ public class SoftAssertionsExamples extends AbstractAssertionsExamples {
     softly.then(fellowshipOfTheRing).extracting("race.name").contains("Man", "Orc");
     try {
       softly.assertAll();
-    } catch (SoftAssertionError e) {
+    } catch (AssertionError e) {
       logAssertionErrorMessage("BDD SoftAssertion errors example", e);
     }
   }
@@ -161,7 +188,7 @@ public class SoftAssertionsExamples extends AbstractAssertionsExamples {
     softly.then(fellowshipOfTheRing).filteredOn("name", "Frodo").isEmpty();
     try {
       softly.assertAll();
-    } catch (SoftAssertionError e) {
+    } catch (AssertionError e) {
       logAssertionErrorMessage("BDD SoftAssertion errors example", e);
       return;
     }
@@ -175,7 +202,7 @@ public class SoftAssertionsExamples extends AbstractAssertionsExamples {
     softly.then(players).contains("Kobe Bryant").doesNotContain("Tim Duncan");
     try {
       softly.assertAll();
-    } catch (SoftAssertionError e) {
+    } catch (AssertionError e) {
       logAssertionErrorMessage("BDD SoftAssertion errors example", e);
     }
   }
@@ -274,6 +301,52 @@ public class SoftAssertionsExamples extends AbstractAssertionsExamples {
     assertThat(errors.get(7)).hasMessageContaining("777");
     assertThat(errors.get(8)).hasMessageContaining("oh no");
     assertThat(errors.get(9)).hasMessageContaining("Saruman");
+  }
+
+  @Test
+  void testName() throws Exception {
+    // GIVEN
+    SoftAssertions softly = new SoftAssertions();
+    // WHEN
+    softly.check(() -> MyProjectAssertions.assertThat(frodo).hasName("Frodon"));
+    softly.check(() -> MyProjectAssertions.assertThat(frodo).hasName("Frodo"));
+    // THEN
+    assertThat(softly.errorsCollected()).hasSize(1);
+  }
+
+  private SoftAssertions check_kitchen() {
+    SoftAssertions softly = new SoftAssertions();
+    softly.assertThat(mansion.kitchen()).as("Kitchen").isEqualTo("clean");
+    return softly;
+  }
+
+  private SoftAssertions check_library() {
+    SoftAssertions softly = new SoftAssertions();
+    softly.assertThat(mansion.library()).as("Library").isEqualTo("clean");
+    return softly;
+  }
+
+  @Test
+  void combining_different_soft_assertions_instances_with_assertAlso_example() {
+    SoftAssertions softly = new SoftAssertions();
+    mansion.hostPotentiallyMurderousDinnerParty();
+    softly.assertThat(mansion.guests()).as("Living Guests").isEqualTo(7);
+    softly.assertThat(mansion.revolverAmmo()).as("Revolver Ammo").isEqualTo(6);
+    softly.assertThat(mansion.candlestick()).as("Candlestick").isEqualTo("pristine");
+    softly.assertThat(mansion.colonel()).as("Colonel").isEqualTo("well kempt");
+    softly.assertThat(mansion.professor()).as("Professor").isEqualTo("well kempt");
+
+    SoftAssertions kitchen = check_kitchen();
+    softly.assertAlso(kitchen);
+
+    SoftAssertions library = check_library();
+    softly.assertAlso(library);
+
+    try {
+      softly.assertAll();
+    } catch (AssertionError e) {
+      logAssertionErrorMessage("SoftAssertion errors example", e);
+    }
   }
 
   class Example implements Comparable<Example> {

@@ -14,11 +14,11 @@ package org.assertj.examples;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 /**
  * char assertions examples.<br>
- * 
+ *
  * @author Joel Costigliola
  */
 public class CharAssertionsExamples extends AbstractAssertionsExamples {
@@ -41,7 +41,7 @@ public class CharAssertionsExamples extends AbstractAssertionsExamples {
   @Test
   public void char_assertions_with_custom_comparison_examples() {
     assertThat('a').usingComparator(caseInsensitiveComparator).isEqualTo('A');
-    assertThat(new Character('a')).usingComparator(caseInsensitiveComparator).isEqualTo(new Character('A'));
+    assertThat(Character.valueOf('a')).usingComparator(caseInsensitiveComparator).isEqualTo(Character.valueOf('A'));
   }
 
 }

@@ -12,7 +12,7 @@
  */
 package org.assertj.examples.neo4j;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import org.neo4j.graphdb.Label;
 import org.neo4j.graphdb.Node;
 import org.neo4j.graphdb.Transaction;

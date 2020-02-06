@@ -15,19 +15,17 @@ package org.assertj.examples;
 import static java.util.Arrays.asList;
 import static org.assertj.core.api.BDDAssertions.then;
 import static org.mockito.BDDMockito.given;
+import static org.mockito.Mockito.mock;
 
 import java.util.ArrayList;
 import java.util.List;
 
+import org.assertj.core.api.BDDSoftAssertions;
 import org.assertj.examples.data.BasketBallPlayer;
 import org.assertj.examples.data.Mansion;
 import org.assertj.examples.data.service.GameService;
 import org.assertj.examples.data.service.TeamManager;
-import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.mockito.InjectMocks;
-import org.mockito.Mock;
-import org.mockito.junit.MockitoJUnitRunner;
+import org.junit.jupiter.api.Test;
 
 /**
  * BDD Style Assertions examples
@@ -36,14 +34,11 @@ import org.mockito.junit.MockitoJUnitRunner;
  *
  * @author Mariusz Smykula
  */
-@RunWith(MockitoJUnitRunner.class)
 public class BDDAssertionsExamples extends AbstractAssertionsExamples {
 
-  @Mock
-  private TeamManager teamManager;
+  private TeamManager teamManager = mock(TeamManager.class);
 
-  @InjectMocks
-  private GameService sut; // system under test
+  private GameService sut = new GameService(teamManager); // system under test
 
   @Test
   public void given_when_then_with_mockito() {
@@ -88,6 +83,7 @@ public class BDDAssertionsExamples extends AbstractAssertionsExamples {
 
   @Test
   public void bdd_soft_assertions_examples() {
+    BDDSoftAssertions softly = new BDDSoftAssertions();
     // given
     List<BasketBallPlayer> bulls = new ArrayList<>();
 
@@ -95,7 +91,10 @@ public class BDDAssertionsExamples extends AbstractAssertionsExamples {
     bulls.add(rose);
     bulls.add(noah);
 
-    then(bulls).contains(rose, noah).doesNotContain(james);
+    // then
+    softly.then(bulls).contains(rose, noah).doesNotContain(james);
+
+    softly.assertAll();
   }
 
 }

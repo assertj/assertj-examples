@@ -32,8 +32,8 @@ import java.util.HashSet;
 import java.util.Set;
 
 import org.apache.commons.lang3.SystemUtils;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 /**
  * Path assertions usage examples.
@@ -49,7 +49,7 @@ public class PathAssertionsExamples extends AbstractAssertionsExamples {
   private Path rwxFile;
 
   @Override
-  @Before
+  @BeforeEach
   public void setup() {
     xFile = Paths.get("target/xfile.txt");
     xFileFrench = Paths.get("target/xfile-french.txt");
@@ -83,11 +83,12 @@ public class PathAssertionsExamples extends AbstractAssertionsExamples {
     // compare paths content (uses the default charset)
 
     write(xFileClone, "The Truth Is Out There".getBytes());
-    assertThat(xFile).hasSameContentAs(xFileClone);
+    assertThat(xFile).hasSameTextualContentAs(xFileClone);
+    assertThat(xFile).hasSameBinaryContentAs(xFileClone);
 
     write(xFileFrench, "La Vérité Est Ailleurs".getBytes());
     try {
-      assertThat(xFile).hasSameContentAs(xFileFrench);
+      assertThat(xFile).hasSameTextualContentAs(xFileFrench);
     } catch (AssertionError e) {
       logAssertionErrorMessage("path hasSameContentAs", e);
     }
@@ -274,7 +275,22 @@ public class PathAssertionsExamples extends AbstractAssertionsExamples {
                       .hasDigest(MessageDigest.getInstance("MD5"), "dcb3015cd28447644c810af352832c19")
                       .hasDigest("MD5", md5Bytes)
                       .hasDigest(MessageDigest.getInstance("MD5"), md5Bytes);
+  }
 
+  @Test
+  public void directory_assertions() {
+    Path directory = Paths.get("src/test/resources/templates");
+    assertThat(directory).isNotEmptyDirectory()
+                         .isDirectoryContaining("regex:.*txt")
+                         .isDirectoryContaining("glob:**my*")
+                         .isDirectoryContaining("glob:**.txt")
+                         .isDirectoryContaining(path -> path.getFileName().toString().contains("template"))
+                         .isDirectoryNotContaining("glob:**.java")
+                         .isDirectoryNotContaining("regex:.*java")
+                         .isDirectoryNotContaining(path -> path.getFileName().toString().endsWith("java"));
+
+    Path emptyDirectory = Paths.get("src/test/resources/empty");
+    assertThat(emptyDirectory).isEmptyDirectory();
   }
 
 }

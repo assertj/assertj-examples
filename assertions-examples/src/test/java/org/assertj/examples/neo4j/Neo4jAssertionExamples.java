@@ -22,8 +22,8 @@ import java.util.function.Predicate;
 import java.util.stream.Collectors;
 
 import org.assertj.examples.data.neo4j.DragonBallGraphRepository;
-import org.junit.AfterClass;
-import org.junit.BeforeClass;
+import org.junit.jupiter.api.AfterAll;
+import org.junit.jupiter.api.BeforeAll;
 import org.neo4j.graphdb.GraphDatabaseService;
 import org.neo4j.graphdb.Transaction;
 import org.neo4j.test.TestGraphDatabaseFactory;
@@ -33,14 +33,14 @@ public class Neo4jAssertionExamples {
   private static GraphDatabaseService graphDatabase;
   private static DragonBallGraphRepository dragonBallGraphRepository;
 
-  @BeforeClass
+  @BeforeAll
   public static void prepare_graph() {
     graphDatabase = new TestGraphDatabaseFactory().newImpermanentDatabase();
     importGraph(graphDatabase);
     dragonBallGraphRepository = new DragonBallGraphRepository(graphDatabase);
   }
 
-  @AfterClass
+  @AfterAll
   public static void cleanUp() {
     graphDatabase.shutdown();
   }

@@ -13,8 +13,10 @@
 package org.assertj.examples;
 
 import static java.util.Arrays.asList;
+import static org.assertj.core.api.Assertions.as;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.entry;
+import static org.assertj.core.api.InstanceOfAssertFactories.STRING;
 import static org.assertj.examples.data.Race.ELF;
 import static org.assertj.examples.data.Race.MAIA;
 import static org.assertj.examples.data.Race.MAN;
@@ -36,7 +38,7 @@ import org.assertj.core.api.Condition;
 import org.assertj.examples.data.BasketBallPlayer;
 import org.assertj.examples.data.Ring;
 import org.assertj.examples.data.TolkienCharacter;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 import com.google.common.collect.ImmutableMap;
 
@@ -70,6 +72,13 @@ public class MapAssertionsExamples extends AbstractAssertionsExamples {
     // opposite of contains/containsEntry
     assertThat(ringBearers).doesNotContain(entry(oneRing, sauron), entry(nenya, aragorn));
     assertThat(ringBearers).doesNotContainEntry(oneRing, aragorn);
+
+    Map<Ring, TolkienCharacter> ringBearersInDifferentOrder = new LinkedHashMap<>();
+    ringBearersInDifferentOrder.put(Ring.oneRing, frodo);
+    ringBearersInDifferentOrder.put(Ring.narya, gandalf);
+    ringBearersInDifferentOrder.put(Ring.nenya, galadriel);
+    ringBearersInDifferentOrder.put(Ring.vilya, elrond);
+    assertThat(ringBearers).containsExactlyInAnyOrderEntriesOf(ringBearersInDifferentOrder);
 
     // Assertion on key
     assertThat(ringBearers).containsKey(nenya);
@@ -147,8 +156,17 @@ public class MapAssertionsExamples extends AbstractAssertionsExamples {
     basketballPlayer.put("name", "kawhi");
     basketballPlayer.put("age", 25);
 
+    // extracting parameters are used as keys to the map under test
+    // single value:
+    assertThat(basketballPlayer).extracting("name")
+                                .isEqualTo("kawhi");
+    // multiple values
     assertThat(basketballPlayer).extracting("name", "age")
                                 .contains("kawhi", 25);
+
+    assertThat(basketballPlayer).extractingByKey("name", as(STRING))
+                                .startsWith("kaw");
+
   }
 
   @Test

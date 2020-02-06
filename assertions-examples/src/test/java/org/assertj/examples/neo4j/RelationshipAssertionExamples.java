@@ -13,7 +13,7 @@
 package org.assertj.examples.neo4j;
 
 import org.assertj.examples.data.neo4j.DragonBallGraphRepository;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import org.neo4j.graphdb.Node;
 import org.neo4j.graphdb.Relationship;
 import org.neo4j.graphdb.RelationshipType;

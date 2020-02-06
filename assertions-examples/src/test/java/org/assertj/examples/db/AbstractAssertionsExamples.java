@@ -16,12 +16,12 @@ import java.sql.Connection;
 import java.sql.SQLException;
 
 import org.h2.jdbcx.JdbcConnectionPool;
-import org.junit.Before;
+import org.junit.jupiter.api.BeforeEach;
 
 /**
- * 
+ *
  * Init data for assertions examples.
- * 
+ *
  * @author Régis Pouiller
  */
 public class AbstractAssertionsExamples {
@@ -54,7 +54,7 @@ public class AbstractAssertionsExamples {
     "insert into albums values (15, PARSEDATETIME('09/09/2014', 'dd/MM/yyyy'), 'Songs of Innocence', 11, PARSEDATETIME('48:11', 'mm:ss'), null);",
   };
 
-  @Before
+  @BeforeEach
   public void setUp() throws SQLException {
     if (dataSource == null) {
       dataSource = JdbcConnectionPool.create("jdbc:h2:mem:test;DB_CLOSE_DELAY=-1", "user", "password");

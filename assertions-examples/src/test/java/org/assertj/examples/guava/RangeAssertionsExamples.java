@@ -15,7 +15,7 @@ package org.assertj.examples.guava;
 import static org.assertj.guava.api.Assertions.assertThat;
 
 import org.assertj.examples.AbstractAssertionsExamples;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 import com.google.common.collect.Range;
 

@@ -21,7 +21,7 @@ import java.io.FileNotFoundException;
 import java.io.InputStream;
 import java.security.MessageDigest;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 public class InputStreamAssertionsExamples extends AbstractAssertionsExamples {
 

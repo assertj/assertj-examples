@@ -13,10 +13,9 @@
 package org.assertj.examples;
 
 import org.assertj.SoftAssertions;
-import org.assertj.core.api.SoftAssertionError;
 import org.assertj.examples.data.Name;
 import org.assertj.examples.exception.NameException;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 public class GeneratedSoftAssertionsExamples extends AbstractAssertionsExamples {
 
@@ -39,7 +38,7 @@ public class GeneratedSoftAssertionsExamples extends AbstractAssertionsExamples 
             .hasName(new Name("Michael", "Jordan"))
             .hasTeam("Lakers");
       softly.assertAll();
-    } catch (SoftAssertionError e) {
+    } catch (AssertionError e) {
       logAssertionErrorMessage("GeneratedSoftAssertions errors example", e);
     }
   }

@@ -45,7 +45,7 @@ import org.assertj.examples.data.Race;
 import org.assertj.examples.data.Ring;
 import org.assertj.examples.data.TolkienCharacter;
 import org.assertj.examples.data.movie.Movie;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 /**
  * Array assertions examples.

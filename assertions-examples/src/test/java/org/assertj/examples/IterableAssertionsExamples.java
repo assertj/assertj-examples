@@ -13,6 +13,7 @@
 package org.assertj.examples;
 
 import static java.util.Arrays.asList;
+import static org.assertj.core.api.Assertions.as;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.extractProperty;
 import static org.assertj.core.api.Assertions.failBecauseExceptionWasNotThrown;
@@ -21,6 +22,7 @@ import static org.assertj.core.api.Assertions.not;
 import static org.assertj.core.api.Assertions.notIn;
 import static org.assertj.core.api.Assertions.setAllowExtractingPrivateFields;
 import static org.assertj.core.api.Assertions.tuple;
+import static org.assertj.core.api.InstanceOfAssertFactories.STRING;
 import static org.assertj.core.util.Lists.list;
 import static org.assertj.core.util.Lists.newArrayList;
 import static org.assertj.core.util.Sets.newHashSet;
@@ -52,6 +54,7 @@ import java.util.TreeSet;
 
 import org.apache.commons.lang3.tuple.Pair;
 import org.assertj.core.api.Condition;
+import org.assertj.core.api.InstanceOfAssertFactories;
 import org.assertj.core.api.StringAssert;
 import org.assertj.core.api.iterable.ThrowingExtractor;
 import org.assertj.core.util.introspection.IntrospectionError;
@@ -60,7 +63,7 @@ import org.assertj.examples.data.Employee;
 import org.assertj.examples.data.Race;
 import org.assertj.examples.data.Ring;
 import org.assertj.examples.data.TolkienCharacter;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 /**
  * Iterable (including Collection) assertions examples.<br>
@@ -93,16 +96,16 @@ public class IterableAssertionsExamples extends AbstractAssertionsExamples {
     // with containsOnly, all the elements must be present (but the order is not important)
     assertThat(elvesRings).containsOnly(nenya, vilya, narya)
                           .containsOnly(vilya, nenya, narya)
-                          .containsOnlyElementsOf(newArrayList(nenya, narya, vilya, nenya))
+                          .isSubsetOf(newArrayList(nenya, narya, vilya, nenya))
                           .hasSameElementsAs(newArrayList(nenya, narya, vilya, nenya));
     assertThat(elvesRings).doesNotContainNull().doesNotHaveDuplicates();
 
     Iterable<Ring> duplicatedElvesRings = newArrayList(vilya, nenya, narya, vilya, nenya, narya);
     assertThat(elvesRings).hasSameElementsAs(duplicatedElvesRings)
-                          .containsOnlyElementsOf(duplicatedElvesRings);
+                          .isSubsetOf(duplicatedElvesRings);
 
     try {
-      assertThat(elvesRings).containsOnlyElementsOf(newArrayList(vilya, nenya, vilya, oneRing));
+      assertThat(elvesRings).isSubsetOf(newArrayList(vilya, nenya, vilya, oneRing));
       assertThat(elvesRings).containsOnly(nenya, vilya, oneRing);
     } catch (AssertionError e) {
       logAssertionErrorMessage("containsOnly", e);
@@ -278,6 +281,25 @@ public class IterableAssertionsExamples extends AbstractAssertionsExamples {
   }
 
   @Test
+  public void narrow_assertions_type_with_asInstanceOf_example() {
+
+    Object hobbits = list(frodo, pippin, merry, sam);
+
+    // As we specify the TolkienCharacter class, the following chained assertion expect to be given TolkienCharacters.
+    // This means that method like extracting or filteredOn are given a TolkienCharacter
+    assertThat(hobbits).asInstanceOf(InstanceOfAssertFactories.list(TolkienCharacter.class))
+                       .contains(frodo, sam)
+                       .extracting(TolkienCharacter::getName)
+                       .contains("Frodo", "Sam");
+
+    // Use LIST if the elements type is not important but note that the chained assertions
+    // will be given Object not TolkienCharacter
+    assertThat(hobbits).asInstanceOf(InstanceOfAssertFactories.LIST)
+                       // .extracting(TolkienCharacter::getName) does not work as extracting is given an Object
+                       .contains(frodo);
+  }
+
+  @Test
   public void iterable_is_subset_of_assertion_example() {
     Collection<Ring> elvesRings = newArrayList(vilya, nenya, narya);
     assertThat(elvesRings).isSubsetOf(ringsOfPower);
@@ -308,10 +330,11 @@ public class IterableAssertionsExamples extends AbstractAssertionsExamples {
     // elvesRingsIterator is only consumed when needed which is not the case with null/notNull assertion
     assertThat(elvesRingsIterator).isNotNull()
                                   .hasNext();
-    // elvesRingsIterator is consumed ...
-    elvesRingsIterator.next();
-    elvesRingsIterator.next();
-    elvesRingsIterator.next();
+    // elvesRingsIterator is consumed, to chain assertion we must convert it an Iterable first
+    assertThat(elvesRingsIterator).toIterable()
+                                  .isSubsetOf(ringsOfPower)
+                                  .contains(nenya, narya);
+    // elvesRingsIterator is consumed since it was converted to an Iterable
     assertThat(elvesRingsIterator).isExhausted();
   }
 
@@ -481,6 +504,15 @@ public class IterableAssertionsExamples extends AbstractAssertionsExamples {
     // extract 'age' field values
     assertThat(fellowshipOfTheRing).extracting(age()).contains(33, 38, 36);
 
+    Object hobbits = list(frodo, pippin, merry, sam);
+
+    assertThat(hobbits).asInstanceOf(InstanceOfAssertFactories.list(TolkienCharacter.class))
+                       .contains(frodo, sam)
+                       .extracting(TolkienCharacter::getName)
+                       .contains("Frodo", "Sam");
+    assertThat(hobbits).asInstanceOf(InstanceOfAssertFactories.LIST)
+                       .contains(frodo);
+
     // extracting works also with user's types (here Race)
     assertThat(fellowshipOfTheRing).extracting(race())
                                    .contains(HOBBIT, ELF)
@@ -635,6 +667,16 @@ public class IterableAssertionsExamples extends AbstractAssertionsExamples {
     assertThat(hobbits).last().isEqualTo(pippin);
 
     Iterable<String> hobbitsName = newArrayList("frodo", "sam", "pippin");
+
+    assertThat(hobbitsName).first(as(STRING))
+                           .startsWith("fro")
+                           .endsWith("do");
+    assertThat(hobbitsName).element(1, as(STRING))
+                           .startsWith("sa")
+                           .endsWith("am");
+    assertThat(hobbitsName).last(as(STRING))
+                           .startsWith("pip")
+                           .endsWith("pin");
 
     // assertion succeeds
     assertThat(hobbitsName, StringAssert.class).first()

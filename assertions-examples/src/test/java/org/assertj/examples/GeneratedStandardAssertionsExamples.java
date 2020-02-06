@@ -24,7 +24,7 @@ import org.assertj.examples.data.Team;
 import org.assertj.examples.data.bug26.WithGenericListType;
 import org.assertj.examples.data.movie.Movie;
 import org.assertj.examples.exception.NameException;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 public class GeneratedStandardAssertionsExamples extends AbstractAssertionsExamples {
 

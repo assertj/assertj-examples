@@ -30,7 +30,7 @@ import java.util.List;
 
 import org.assertj.examples.data.Ring;
 import org.assertj.examples.data.TolkienCharacter;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 /**
  * Assertions examples specific to {@link List}.

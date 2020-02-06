@@ -15,7 +15,7 @@ package org.assertj.examples.custom;
 import org.assertj.examples.AbstractAssertionsExamples;
 import org.junit.Ignore;
 import org.junit.Rule;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 public class JUnitSoftAssertionsWithCustomAssertExamples extends AbstractAssertionsExamples {
 

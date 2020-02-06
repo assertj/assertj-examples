@@ -24,7 +24,7 @@ import java.util.Date;
 
 import org.assertj.examples.comparator.AbsValueComparator;
 import org.assertj.examples.data.TolkienCharacter;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 /**
  * Examples of assertions using a specific comparator.
@@ -158,7 +158,7 @@ public class AssertionsWithCustomComparatorExamples extends AbstractAssertionsEx
   @Test
   public void char_assertions_with_custom_comparison_examples() {
     assertThat('a').usingComparator(caseInsensitiveComparator).isEqualTo('A');
-    assertThat(new Character('a')).usingComparator(caseInsensitiveComparator).isEqualTo(new Character('A'));
+    assertThat(Character.valueOf('a')).usingComparator(caseInsensitiveComparator).isEqualTo(Character.valueOf('A'));
   }
 
   @Test

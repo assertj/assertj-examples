@@ -22,7 +22,7 @@ import java.io.File;
 import java.util.Comparator;
 import java.util.regex.Pattern;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 /**
  * String assertions specific examples

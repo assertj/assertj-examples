@@ -13,11 +13,13 @@
 package org.assertj.examples.condition;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.HamcrestCondition.matching;
 import static org.assertj.core.condition.AllOf.allOf;
 import static org.assertj.core.condition.AnyOf.anyOf;
 import static org.assertj.core.condition.Not.not;
 import static org.assertj.core.util.Lists.newArrayList;
 import static org.assertj.core.util.Sets.newLinkedHashSet;
+import static org.hamcrest.core.StringContains.containsString;
 
 import java.util.LinkedHashSet;
 import java.util.List;
@@ -26,7 +28,7 @@ import java.util.Set;
 import org.assertj.core.api.Condition;
 import org.assertj.examples.AbstractAssertionsExamples;
 import org.assertj.examples.data.BasketBallPlayer;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 public class UsingConditionExamples extends AbstractAssertionsExamples {
 
@@ -76,6 +78,23 @@ public class UsingConditionExamples extends AbstractAssertionsExamples {
   @Test
   public void anyOf_condition_example() {
     assertThat("Vader").is(anyOf(JEDI, sith));
+  }
+
+  @Test
+  public void anyOf_and_allOf_conditions_error_message_example() {
+    try {
+      assertThat("Gandalf").has(anyOf(contains("i"),
+                                      allOf(contains("o"),
+                                            anyOf(contains("a"),
+                                                  contains("b"),
+                                                  contains("c")))));
+    } catch (AssertionError e) {
+      logAssertionErrorMessage("anyOf_and_allOf_conditions_error_message_example", e);
+    }
+  }
+
+  private static Condition<String> contains(String s) {
+    return new Condition<>(value -> value.contains(s), "contains " + s);
   }
 
   @Test
@@ -147,6 +166,11 @@ public class UsingConditionExamples extends AbstractAssertionsExamples {
     assertThat("Solo").is(allOf(not(JEDI), not(sith)));
     assertThat("Solo").isNot(anyOf(JEDI, sith));
     assertThat("Solo").doesNotHave(anyOf(jediPower, sithPower));
+  }
+
+  @Test
+  public void matching_hamcrest_condition_example() {
+    assertThat("abc").is(matching(containsString("a")));
   }
 
   private final Condition<String> jediPower = JEDI;

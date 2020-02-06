@@ -15,14 +15,16 @@ package org.assertj.examples;
 import static java.util.concurrent.CompletableFuture.completedFuture;
 import static org.assertj.core.api.Assertions.assertThat;
 
+import java.time.Duration;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.CompletionStage;
+import java.util.concurrent.TimeUnit;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 /**
  * {@link CompletableFuture} assertions example.
- * 
+ *
  * @author Joel Costigliola
  */
 public class CompletableFutureAssertionsExamples extends AbstractAssertionsExamples {
@@ -54,6 +56,14 @@ public class CompletableFutureAssertionsExamples extends AbstractAssertionsExamp
                                .isDone()
                                .isCompletedExceptionally()
                                .hasNotFailed();
+
+    CompletableFuture<String> future = CompletableFuture.completedFuture("ook!");
+    // assertion expressed with TimeUnit
+    assertThat(future).succeedsWithin(100, TimeUnit.MILLISECONDS)
+                      .isEqualTo("ook!");
+    // same assertion with Duration
+    assertThat(future).succeedsWithin(Duration.ofMillis(100))
+                      .isEqualTo("ook!");
 
     // log some error messages to have a look at them
     try {

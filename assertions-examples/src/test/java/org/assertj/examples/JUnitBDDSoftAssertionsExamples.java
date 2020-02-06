@@ -16,7 +16,7 @@ import org.assertj.core.api.JUnitBDDSoftAssertions;
 import org.assertj.examples.data.Mansion;
 import org.junit.Ignore;
 import org.junit.Rule;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 public class JUnitBDDSoftAssertionsExamples extends AbstractAssertionsExamples {
 

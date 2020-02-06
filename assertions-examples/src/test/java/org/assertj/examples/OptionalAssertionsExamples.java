@@ -12,7 +12,9 @@
  */
 package org.assertj.examples;
 
+import static org.assertj.core.api.Assertions.as;
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.InstanceOfAssertFactories.STRING;
 import static org.assertj.examples.condition.UsingConditionExamples.JEDI;
 import static org.assertj.examples.data.Race.ELF;
 import static org.assertj.examples.data.Race.HOBBIT;
@@ -25,7 +27,7 @@ import java.util.function.Function;
 import org.assertj.core.api.Condition;
 import org.assertj.examples.data.Race;
 import org.assertj.examples.data.TolkienCharacter;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 /**
  * {@link Optional} assertions example.
@@ -157,6 +159,12 @@ public class OptionalAssertionsExamples extends AbstractAssertionsExamples {
 
     // Use get() to navigate to perform assertions on frodo.
     assertThat(Optional.of(frodo)).get().isNotNull();
+
+    Optional<String> optional = Optional.of("Frodo");
+
+    // The following assertion will succeed:
+    assertThat(optional).get(as(STRING))
+                        .startsWith("Fro");
   }
 
 }

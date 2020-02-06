@@ -25,7 +25,7 @@ import static org.assertj.core.api.Assertions.catchThrowableOfType;
 import java.io.IOException;
 
 import org.assertj.core.api.Assertions;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 /**
  * Exception assertions examples.
@@ -45,20 +45,32 @@ public class ExceptionAssertionsExamples extends AbstractAssertionsExamples {
 
       // you can check exception's cause
       assertThat(e).hasCause(cause)
+                   .hasCauseReference(cause)
                    .hasCauseInstanceOf(Exception.class);
 
       // you can check exception message (with String#format syntax support)
       assertThat(e).hasMessage("Boom!")
-                   .hasMessage("%s!", "Boom");
+                   .hasMessage("%s!", "Boom")
+                   .hasRootCauseMessage("chemical explosion")
+                   .hasRootCauseMessage("chemical %s", "explosion");
 
       // sometimes message are not entirely predictible, you can then check for start, end or containing string.
       assertThat(e).hasMessageStartingWith("Boo")
                    .hasMessageContaining("oom")
+                   .hasMessageContainingAll("Boo", "oom")
+                   .hasMessageNotContainingAny("bar", "foo")
                    .hasMessageEndingWith("!");
       // this equivalent to (unless for error message which is more explicit in assertThat(e).hasMessageXXX)
       assertThat(e.getMessage()).startsWith("Boo")
                                 .contains("oom")
                                 .endsWith("!");
+
+      Throwable throwableWithMessage = new IllegalArgumentException("wrong amount 123");
+
+      assertThat(throwableWithMessage).hasMessageStartingWith("%s a", "wrong")
+                                      .hasMessageContaining("wrong %s", "amount")
+                                      .hasMessageEndingWith("%s 123", "amount")
+                                      .hasStackTraceContaining("%s amount", "wrong");
     }
   }
 
@@ -257,13 +269,14 @@ public class ExceptionAssertionsExamples extends AbstractAssertionsExamples {
 
   @Test
   public void bdd_style_exception_testing() {
-    // @format:off
+    // given
+    String[] names = { "Pier ", "Pol", "Jak" };
     // when
-    Throwable thrown = catchThrowable(() -> { throw new Exception("boom!"); });
+    Throwable thrown = catchThrowable(() -> System.out.println(names[10]));
 
     // then
-    assertThat(thrown).isInstanceOf(Exception.class);
-    // @format:on
+    assertThat(thrown).isInstanceOf(ArrayIndexOutOfBoundsException.class)
+                      .hasMessage("10");
   }
 
   @Test

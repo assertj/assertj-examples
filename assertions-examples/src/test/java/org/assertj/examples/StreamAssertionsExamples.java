@@ -33,6 +33,7 @@ import static org.assertj.examples.extractor.BasketballExtractors.teammates;
 import static org.assertj.examples.extractor.TolkienCharactersExtractors.ageAndRace;
 import static org.assertj.examples.extractor.TolkienCharactersExtractors.race;
 
+import java.util.Iterator;
 import java.util.List;
 import java.util.SortedSet;
 import java.util.TreeSet;
@@ -45,7 +46,7 @@ import org.assertj.core.util.introspection.IntrospectionError;
 import org.assertj.examples.data.Employee;
 import org.assertj.examples.data.Ring;
 import org.assertj.examples.data.TolkienCharacter;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 public class StreamAssertionsExamples extends AbstractAssertionsExamples {
 
@@ -60,16 +61,16 @@ public class StreamAssertionsExamples extends AbstractAssertionsExamples {
     // with containsOnly, all the elements must be present (but the order is not important)
     assertThat(Stream.of(vilya, nenya, narya)).containsOnly(nenya, vilya, narya)
                                               .containsOnly(vilya, nenya, narya)
-                                              .containsOnlyElementsOf(newArrayList(nenya, narya, vilya, nenya))
+                                              .isSubsetOf(newArrayList(nenya, narya, vilya, nenya))
                                               .hasSameElementsAs(newArrayList(nenya, narya, vilya, nenya));
     assertThat(Stream.of(vilya, nenya, narya)).doesNotContainNull().doesNotHaveDuplicates();
 
     List<Ring> duplicatedElvesRings = newArrayList(vilya, nenya, narya, vilya, nenya, narya);
     assertThat(Stream.of(vilya, nenya, narya)).hasSameElementsAs(duplicatedElvesRings)
-                                              .containsOnlyElementsOf(duplicatedElvesRings);
+                                              .isSubsetOf(duplicatedElvesRings);
 
     try {
-      assertThat(Stream.of(vilya, nenya, narya)).containsOnlyElementsOf(newArrayList(vilya, nenya, vilya, oneRing));
+      assertThat(Stream.of(vilya, nenya, narya)).isSubsetOf(newArrayList(vilya, nenya, vilya, oneRing));
       assertThat(Stream.of(vilya, nenya, narya)).containsOnly(nenya, vilya, oneRing);
     } catch (AssertionError e) {
       logAssertionErrorMessage("containsOnly", e);
@@ -290,6 +291,19 @@ public class StreamAssertionsExamples extends AbstractAssertionsExamples {
     List<Ring> elvesRings = newArrayList(vilya, nenya, narya);
     Stream<Object> powerfulRings = Stream.of(oneRing, vilya, nenya, narya);
     assertThat(powerfulRings).containsAll(elvesRings);
+  }
+
+  @Test
+  public void iterator_assertion_example() {
+    // Stream assertions also works if you give an Iterator as input.
+    Iterator<Ring> elvesRingsIterator = Stream.of(vilya, nenya, narya).iterator();
+    // elvesRingsIterator is only consumed when needed which is not the case with null/notNull assertion
+    assertThat(elvesRingsIterator).isNotNull();
+    assertThat(elvesRingsIterator.hasNext()).as("iterator is not consumed").isTrue();
+    // elvesRingsIterator is consumed when needed but only once, you can then chain assertion
+    assertThat(elvesRingsIterator).toIterable().isSubsetOf(ringsOfPower).contains(nenya, narya);
+    // elvesRingsIterator is consumed ...
+    assertThat(elvesRingsIterator.hasNext()).as("iterator is consumed").isFalse();
   }
 
   @Test

@@ -12,25 +12,26 @@
  */
 package org.assertj.examples.extractor;
 
-import org.assertj.core.api.iterable.Extractor;
+import java.util.function.Function;
+
 import org.assertj.core.groups.Tuple;
 import org.assertj.examples.data.Race;
 import org.assertj.examples.data.TolkienCharacter;
 
 public class TolkienCharactersExtractors {
-	TolkienCharactersExtractors() {
-		
-	}
-	
-	public static Extractor<TolkienCharacter, Race> race() {
-		return new TolkienCharacterRaceExtractor();
-	}
-	
-	public static Extractor<TolkienCharacter, Integer> age() {
-		return new TolkienCharacterAgeExtractor();
-	}
-	
-	public static Extractor<TolkienCharacter, Tuple> ageAndRace() {
-		return new TolkienCharacterAgeAndRaceExtractor();
-	}
+  TolkienCharactersExtractors() {
+
+  }
+
+  public static Function<TolkienCharacter, Race> race() {
+    return TolkienCharacter::getRace;
+  }
+
+  public static Function<TolkienCharacter, Integer> age() {
+    return tolkienCharacter -> tolkienCharacter.age;
+  }
+
+  public static Function<TolkienCharacter, Tuple> ageAndRace() {
+    return tolkienCharacter -> new Tuple(tolkienCharacter.age, tolkienCharacter.getRace());
+  }
 }

@@ -14,6 +14,9 @@ package org.assertj.examples;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.atIndex;
+import static org.assertj.core.api.Assertions.catchThrowable;
+import static org.assertj.core.api.InstanceOfAssertFactories.STRING;
+import static org.assertj.core.util.Lists.list;
 import static org.assertj.core.util.Lists.newArrayList;
 import static org.assertj.examples.data.Race.ELF;
 import static org.assertj.examples.data.Race.HOBBIT;
@@ -29,6 +32,7 @@ import java.util.List;
 import java.util.Map;
 
 import org.assertj.core.api.Assertions;
+import org.assertj.core.api.InstanceOfAssertFactories;
 import org.assertj.core.util.BigDecimalComparator;
 import org.assertj.core.util.introspection.FieldSupport;
 import org.assertj.core.util.introspection.IntrospectionError;
@@ -37,8 +41,8 @@ import org.assertj.examples.data.Person;
 import org.assertj.examples.data.Ring;
 import org.assertj.examples.data.TolkienCharacter;
 import org.assertj.examples.data.movie.Movie;
-import org.junit.Ignore;
-import org.junit.Test;
+import org.junit.jupiter.api.Disabled;
+import org.junit.jupiter.api.Test;
 
 import com.google.common.collect.ImmutableMap;
 
@@ -64,14 +68,19 @@ public class BasicAssertionsExamples extends AbstractAssertionsExamples {
 
   @Test
   public void meaningful_error_with_test_description_example() {
-    try {
-      // set a bad age to Mr Frodo, just to see how nice is the assertion error message
-      frodo.setAge(50);
-      // you can specify a test description with as() method or describedAs(), it supports String format args
-      assertThat(frodo.age).as("check %s's age", frodo.getName()).isEqualTo(33);
-    } catch (AssertionError e) {
-      assertThat(e).hasMessage("[check Frodo's age] expected:<[33]> but was:<[50]>");
-    }
+
+    // set a bad age to Mr Frodo, just to see how nice is the assertion error message
+    frodo.setAge(50);
+    // you can specify a test description with as() method or describedAs(), it supports String format args
+    Throwable error = catchThrowable(() -> assertThat(frodo.age).as("check %s's age", frodo.getName()).isEqualTo(33));
+    assertThat(error).isInstanceOf(AssertionError.class)
+                     .hasMessage("[check Frodo's age] \n" +
+                                 "Expecting:\n" +
+                                 " <50>\n" +
+                                 "to be equal to:\n" +
+                                 " <33>\n" +
+                                 "but was not.");
+
     // but you still can override the error message if you have a better one :
     final String frodon = "Frodon";
     try {
@@ -370,6 +379,28 @@ public class BasicAssertionsExamples extends AbstractAssertionsExamples {
   }
 
   @Test
+  public void asInstanceOf_allows_narrowed_type_assertions() {
+    // Given a String declared as an Object
+    Object value = "Once upon a time in the west";
+    // we would like to call String assertions but this is not possible as the
+    // value is declared as an Object thus only object assertions are accessible
+    // this does not compile !
+    // assertThat(value).startsWith("ab");
+
+    // Thanks to asInstanceOf it is now possible to switch to specific typed assertion, we simply need to specify the correct
+    // InstanceOfAssertFactory, Thankfully InstanceOfAssertFactories provides all of them for specific AssertJ assertions.
+    assertThat(value).asInstanceOf(STRING).startsWith("Once");
+    // same here where, we can even specify the generic type for parameterized type like List or Future.
+    Object valueList = list(vilya, nenya, narya);
+    // as we specify to have assertions for a List<Ring>, contains expect to be given Rings
+    assertThat(valueList).asInstanceOf(InstanceOfAssertFactories.list(Ring.class)).contains(nenya);
+    // here we don't specify the List type so a List<Object> is used
+    assertThat(valueList).as("check the elven rings")
+                         .asInstanceOf(InstanceOfAssertFactories.LIST)
+                         .contains(vilya);
+  }
+
+  @Test
   public void usingFieldByFieldElementComparatorTest() throws Exception {
     List<Animal> animals = new ArrayList<>();
     Bird bird = new Bird("White");
@@ -382,13 +413,11 @@ public class BasicAssertionsExamples extends AbstractAssertionsExamples {
   }
 
   @Test
-  @Ignore
+  @Disabled
   public void use_BigDecimal_comparator_with_extracting() {
     // GIVEN
     Person joe = new Person("Joe", 25);
     joe.setHeight(new BigDecimal("1.80"));
-
-    System.out.println("ddd " + new BigDecimalComparator().compare(new BigDecimal("1.8"), new BigDecimal("1.80")));;
 
     // THEN
     assertThat(joe).matches(p -> p.getName().equals("Joe") && p.getHeight().compareTo(new BigDecimal("1.8")) == 0);

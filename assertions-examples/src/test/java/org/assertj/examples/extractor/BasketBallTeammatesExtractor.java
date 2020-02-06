@@ -13,14 +13,14 @@
 package org.assertj.examples.extractor;
 
 import java.util.List;
+import java.util.function.Function;
 
-import org.assertj.core.api.iterable.Extractor;
 import org.assertj.examples.data.BasketBallPlayer;
 
-class BasketBallTeammatesExtractor implements Extractor<BasketBallPlayer, List<BasketBallPlayer>> {
+class BasketBallTeammatesExtractor implements Function<BasketBallPlayer, List<BasketBallPlayer>> {
 
 	@Override
-	public List<BasketBallPlayer> extract(BasketBallPlayer input) {
+  public List<BasketBallPlayer> apply(BasketBallPlayer input) {
 		return input.getTeamMates();
 	}
 

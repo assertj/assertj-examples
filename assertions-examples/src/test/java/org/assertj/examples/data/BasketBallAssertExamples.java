@@ -14,7 +14,7 @@ package org.assertj.examples.data;
 
 import org.assertj.examples.AbstractAssertionsExamples;
 import org.assertj.examples.exception.NameException;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 /**
  * 

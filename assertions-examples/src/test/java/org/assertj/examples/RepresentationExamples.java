@@ -18,7 +18,7 @@ import static org.assertj.core.presentation.StandardRepresentation.STANDARD_REPR
 import org.assertj.core.api.Assertions;
 import org.assertj.core.presentation.StandardRepresentation;
 import org.junit.After;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 public class RepresentationExamples extends AbstractAssertionsExamples {
 

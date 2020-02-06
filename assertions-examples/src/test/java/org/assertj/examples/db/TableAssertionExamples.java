@@ -13,7 +13,7 @@
 package org.assertj.examples.db;
 
 import org.assertj.db.type.*;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 import static org.assertj.db.api.Assertions.assertThat;
 

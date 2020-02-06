@@ -25,7 +25,7 @@ import static org.junit.Assert.assertTrue;
 import java.util.List;
 
 import org.assertj.examples.data.Person;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 /**
  * This class is just used to check the effect of the script that migrates JUnit assertions to AssertJ assertions.

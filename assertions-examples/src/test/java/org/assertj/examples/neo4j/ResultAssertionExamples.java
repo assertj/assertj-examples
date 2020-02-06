@@ -15,15 +15,15 @@ package org.assertj.examples.neo4j;
 import static org.assertj.neo4j.api.Assertions.assertThat;
 
 import org.assertj.core.util.Maps;
-import org.junit.Ignore;
-import org.junit.Test;
+import org.junit.jupiter.api.Disabled;
+import org.junit.jupiter.api.Test;
 import org.neo4j.graphdb.Result;
 import org.neo4j.graphdb.Transaction;
 
 public class ResultAssertionExamples extends Neo4jAssertionExamples {
 
   @Test
-  @Ignore // https://github.com/joel-costigliola/assertj-neo4j/issues/17
+  @Disabled // https://github.com/joel-costigliola/assertj-neo4j/issues/17
   public void result_assertion_examples() throws Exception {
     try (Transaction ignored = graphDatabase().beginTx()) {
       Result result = graphDatabase().execute(

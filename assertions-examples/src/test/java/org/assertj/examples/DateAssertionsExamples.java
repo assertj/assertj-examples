@@ -13,6 +13,7 @@
 package org.assertj.examples;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.byLessThan;
 import static org.assertj.core.util.DateUtil.monthOf;
 import static org.assertj.core.util.DateUtil.parse;
 import static org.assertj.core.util.DateUtil.parseDatetime;
@@ -22,11 +23,17 @@ import static org.assertj.core.util.DateUtil.yesterday;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.time.Clock;
+import java.time.LocalDateTime;
+import java.time.OffsetDateTime;
+import java.time.ZoneOffset;
+import java.time.temporal.ChronoUnit;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.TimeZone;
 
 import org.assertj.core.api.Assertions;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 /**
  * Date assertions examples.<br>
@@ -213,7 +220,7 @@ public class DateAssertionsExamples extends AbstractAssertionsExamples {
     Date date1 = parseDatetimeWithMs("2003-04-26T13:20:35.017");
     assertThat(date1).hasMillisecond(17);
     assertThat(date1).hasSecond(35);
-    assertThat(date1).hasMinute(20);    
+    assertThat(date1).hasMinute(20);
     assertThat(date1).hasHourOfDay(13);
     assertThat(date1).hasDayOfWeek(Calendar.SATURDAY);
     assertThat(date1).hasMonth(4);
@@ -221,7 +228,7 @@ public class DateAssertionsExamples extends AbstractAssertionsExamples {
   }
 
   @Test
-  public void date_assertions_with_date_represented_as_string() {
+  public void date_assertions_with_date_represented_as_string() throws Exception {
     // You can use date String representation with various format (we take care of parsing String as Date):
     // - yyyy-MM-dd
     // - yyyy-MM-dd'T'HH:mm:ss,
@@ -261,6 +268,14 @@ public class DateAssertionsExamples extends AbstractAssertionsExamples {
     Assertions.useDefaultDateFormatsOnly();
     assertThat(theTwoTowers.getReleaseDate()).isEqualTo("2002-12-18T00.00.00.000");
     // choose whatever approach suits you best !
+
+    // support for combined millisecond and timezone parsing
+    SimpleDateFormat isoFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS");
+    isoFormat.setTimeZone(TimeZone.getTimeZone("UTC"));
+    // WHEN
+    Date date = isoFormat.parse("2003-04-26T00:00:00.123");
+    // THEN
+    assertThat(date).isEqualTo("2003-04-26T00:00:00.123+00:00");
   }
 
   @Test
@@ -299,6 +314,25 @@ public class DateAssertionsExamples extends AbstractAssertionsExamples {
     // assertThat(dateTime).hasSameTimeAs("2001-02-03 04:05:06"); // leniency does not help here
 
     Assertions.setLenientDateParsing(false);
+  }
+
+  @Test
+  public void isCloseToUtcNow_example() {
+    LocalDateTime actual = LocalDateTime.now(Clock.systemUTC());
+    // assertion will pass if executed less than one second after actual was built
+    assertThat(actual).isCloseToUtcNow(byLessThan(1, ChronoUnit.SECONDS));
+
+    OffsetDateTime actualOffsetDateTime = OffsetDateTime.now(Clock.systemUTC());
+    // assertion will pass if executed less than one second after actual was built
+    assertThat(actualOffsetDateTime).isCloseToUtcNow(byLessThan(1, ChronoUnit.SECONDS));
+  }
+
+  @Test
+  public void isAtSameInstantAs_example() {
+    OffsetDateTime offsetDateTime1 = OffsetDateTime.of(2000, 12, 12, 3, 0, 0, 0, ZoneOffset.ofHours(3));
+    OffsetDateTime offsetDateTime2 = OffsetDateTime.of(2000, 12, 12, 0, 0, 0, 0, ZoneOffset.ofHours(0));
+    // assertion succeeds
+    assertThat(offsetDateTime1).isAtSameInstantAs(offsetDateTime2);
   }
 
 }

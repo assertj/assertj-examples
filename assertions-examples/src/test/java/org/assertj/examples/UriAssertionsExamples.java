@@ -19,7 +19,7 @@ import java.net.URI;
 import java.net.URISyntaxException;
 import java.net.URL;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 public class UriAssertionsExamples extends AbstractAssertionsExamples {
 

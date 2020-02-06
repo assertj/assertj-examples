@@ -26,11 +26,11 @@ import java.util.Comparator;
 
 import org.assertj.core.data.Offset;
 import org.assertj.examples.comparator.AbsValueComparator;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 /**
  * Number assertions examples.<br>
- * 
+ *
  * @author Joel Costigliola
  */
 public class NumberAssertionsExamples extends AbstractAssertionsExamples {
@@ -90,7 +90,12 @@ public class NumberAssertionsExamples extends AbstractAssertionsExamples {
     } catch (AssertionError e) {
       // this message is formatted by JUnit to show what is different (looks nice in IDE but not so in the error
       // message)
-      assertThat(e).hasMessage("expected:<42.0[]> but was:<42.0[f]>");
+      assertThat(e).hasMessage("\n" +
+                               "Expecting:\n" +
+                               " <42.0f>\n" +
+                               "to be equal to:\n" +
+                               " <42.0>\n" +
+                               "but was not.");
       return;
     }
   }
@@ -333,7 +338,9 @@ public class NumberAssertionsExamples extends AbstractAssertionsExamples {
 
   @Test
   public void should_handle_NaN_and_infinity_correctly_fixing_issue_984() {
-    assertThat(Double.NaN).isEqualTo(Double.NaN);
+    assertThat(Double.NaN == Double.NaN).isFalse();
+    // https://github.com/joel-costigliola/assertj-core/issues/1775
+    // assertThat(Double.NaN).isNotEqualTo(Double.NaN);
     assertThat(Double.POSITIVE_INFINITY).isEqualTo(Double.POSITIVE_INFINITY);
     assertThat(Double.NEGATIVE_INFINITY).isEqualTo(Double.NEGATIVE_INFINITY);
     try {

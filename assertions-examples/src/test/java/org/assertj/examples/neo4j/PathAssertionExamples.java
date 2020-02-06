@@ -15,7 +15,7 @@ package org.assertj.examples.neo4j;
 import static org.assertj.neo4j.api.Assertions.assertThat;
 
 import org.assertj.examples.data.neo4j.DragonBallGraphRepository;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import org.neo4j.graphdb.Node;
 import org.neo4j.graphdb.Path;
 import org.neo4j.graphdb.Relationship;

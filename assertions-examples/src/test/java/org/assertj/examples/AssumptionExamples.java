@@ -16,12 +16,13 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.fail;
 import static org.assertj.core.api.Assumptions.assumeThat;
 import static org.assertj.core.api.Assumptions.assumeThatCode;
+import static org.assertj.core.api.BDDAssumptions.given;
 import static org.assertj.examples.data.Race.HOBBIT;
 import static org.assertj.examples.data.Race.ORC;
 
 import org.assertj.examples.data.TolkienCharacter;
 import org.junit.AfterClass;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 public class AssumptionExamples extends AbstractAssertionsExamples {
 
@@ -38,6 +39,16 @@ public class AssumptionExamples extends AbstractAssertionsExamples {
   public void when_assumption_is_not_met_the_test_should_be_ignored() {
     // since this assumption is obviously false ...
     assumeThat(frodo.getRace()).isEqualTo(ORC);
+    // ... this assertion should not be performed.
+    assertThat(fellowshipOfTheRing).contains(sauron);
+    fail("should not arrive here");
+  }
+
+  @Test
+  public void given_assumption_is_not_met_the_test_should_be_ignored() {
+    // BDD style assumptions
+    // since this assumption is obviously false ...
+    given(frodo.getRace()).isEqualTo(ORC);
     // ... this assertion should not be performed.
     assertThat(fellowshipOfTheRing).contains(sauron);
     fail("should not arrive here");
