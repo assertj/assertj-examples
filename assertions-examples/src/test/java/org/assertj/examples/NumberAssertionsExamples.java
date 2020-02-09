@@ -264,7 +264,7 @@ public class NumberAssertionsExamples extends AbstractAssertionsExamples {
   }
 
   @Test
-  public void testName() {
+  public void isNotCloseTo_examples() {
     final BigInteger eight = new BigInteger("8");
     final BigInteger ten = BigInteger.TEN;
 
@@ -349,6 +349,22 @@ public class NumberAssertionsExamples extends AbstractAssertionsExamples {
       return;
     }
     fail("assertThat(Double.NaN).isCloseTo(0.007, withPercentage(0.1)) should have failed");
+  }
+
+  @Test
+  public void should_behave_according_to_whether_expected_value_is_primitive_or_not() {
+    // JDK behavior
+    assertThat(Double.NaN != Double.NaN).isTrue();
+    assertThat(Double.valueOf(Double.NaN).equals(Double.NaN)).isTrue();
+    assertThat(-0.0 == 0.0).isTrue();
+    assertThat(Double.valueOf(0.0).equals(-0.0)).isFalse();
+    // AssertJ behavior
+    assertThat(0.0).isEqualTo(-0.0);
+    assertThat(-0.0).isEqualTo(0.0);
+    assertThat(0.0).isNotEqualTo(Double.valueOf(-0.0));
+    assertThat(Double.NaN).isNotEqualTo(Double.NaN);
+    assertThat(Double.NaN).isEqualTo(Double.valueOf(Double.NaN));
+    assertThat(-0.0).isZero();
   }
 
 }
