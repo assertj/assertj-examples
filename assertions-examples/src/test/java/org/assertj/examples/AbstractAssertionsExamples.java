@@ -12,6 +12,7 @@
  */
 package org.assertj.examples;
 
+import static org.assertj.core.api.Assertions.catchThrowableOfType;
 import static org.assertj.core.util.DateUtil.parse;
 import static org.assertj.core.util.Lists.newArrayList;
 import static org.assertj.examples.data.Race.DWARF;
@@ -36,6 +37,7 @@ import java.util.Map;
 
 import org.assertj.core.api.Assertions;
 import org.assertj.core.api.Condition;
+import org.assertj.core.api.ThrowableAssert.ThrowingCallable;
 import org.assertj.examples.comparator.AbsValueComparator;
 import org.assertj.examples.comparator.AgeComparator;
 import org.assertj.examples.comparator.CaseInsensitiveCharacterComparator;
@@ -74,6 +76,14 @@ public abstract class AbstractAssertionsExamples {
    */
   protected static void logAssertionErrorMessage(String assertionContext, AssertionError e) {
     logger.info(ERROR_MESSAGE_EXAMPLE_FOR_ASSERTION, assertionContext, e.getMessage());
+  }
+
+  /**
+   * log error message if one wants to see it "live".
+   */
+  protected static void logAssertionErrorMessage(ThrowingCallable assertions, String assertionContext) {
+    AssertionError assertionError = catchThrowableOfType(assertions, AssertionError.class);
+    logger.info(ERROR_MESSAGE_EXAMPLE_FOR_ASSERTION, assertionContext, assertionError.getMessage());
   }
 
   // Some of the Lord of the Rings characters :

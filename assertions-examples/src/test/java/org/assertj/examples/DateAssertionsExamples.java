@@ -335,4 +335,14 @@ public class DateAssertionsExamples extends AbstractAssertionsExamples {
     assertThat(offsetDateTime1).isAtSameInstantAs(offsetDateTime2);
   }
 
+  @Test
+  public void disambiguate_different_date_time_representation() {
+    Date now = new Date();
+    Object localDateTime = LocalDateTime.ofInstant(now.toInstant(), ZoneId.systemDefault());
+
+    logAssertionErrorMessage(() -> assertThat(List.of(localDateTime)).containsExactly(now),
+                             "disambiguate date time representation", e);
+  }
+
+
 }
