@@ -276,7 +276,7 @@ public class ExceptionAssertionsExamples extends AbstractAssertionsExamples {
 
     // then
     assertThat(thrown).isInstanceOf(ArrayIndexOutOfBoundsException.class)
-                      .hasMessage("10");
+                      .hasMessageContaining("10");
   }
 
   @Test

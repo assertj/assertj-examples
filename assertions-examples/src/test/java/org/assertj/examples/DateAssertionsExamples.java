@@ -26,10 +26,12 @@ import java.text.SimpleDateFormat;
 import java.time.Clock;
 import java.time.LocalDateTime;
 import java.time.OffsetDateTime;
+import java.time.ZoneId;
 import java.time.ZoneOffset;
 import java.time.temporal.ChronoUnit;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.List;
 import java.util.TimeZone;
 
 import org.assertj.core.api.Assertions;
@@ -341,7 +343,7 @@ public class DateAssertionsExamples extends AbstractAssertionsExamples {
     Object localDateTime = LocalDateTime.ofInstant(now.toInstant(), ZoneId.systemDefault());
 
     logAssertionErrorMessage(() -> assertThat(List.of(localDateTime)).containsExactly(now),
-                             "disambiguate date time representation", e);
+                             "disambiguate date time representation");
   }
 
 
