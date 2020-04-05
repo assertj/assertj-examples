@@ -30,8 +30,8 @@ import java.time.ZoneId;
 import java.time.ZoneOffset;
 import java.time.temporal.ChronoUnit;
 import java.util.Calendar;
+import java.util.Collections;
 import java.util.Date;
-import java.util.List;
 import java.util.TimeZone;
 
 import org.assertj.core.api.Assertions;
@@ -342,9 +342,8 @@ public class DateAssertionsExamples extends AbstractAssertionsExamples {
     Date now = new Date();
     Object localDateTime = LocalDateTime.ofInstant(now.toInstant(), ZoneId.systemDefault());
 
-    logAssertionErrorMessage(() -> assertThat(List.of(localDateTime)).containsExactly(now),
+    logAssertionErrorMessage(() -> assertThat(Collections.singleton(localDateTime)).containsExactly(now),
                              "disambiguate date time representation");
   }
-
 
 }
