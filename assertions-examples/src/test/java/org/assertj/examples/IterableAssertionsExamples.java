@@ -583,6 +583,10 @@ public class IterableAssertionsExamples extends AbstractAssertionsExamples {
 
     assertThat(newHashSet(fellowshipOfTheRing)).filteredOn(p -> p.getRace() == HOBBIT)
                                                .containsOnly(sam, frodo, pippin, merry);
+    
+    assertThat(fellowshipOfTheRing).filteredOn(TolkienCharacter::getRace, HOBBIT)
+                                   .containsOnly(sam, frodo, pippin, merry);
+
 
     // nested property are supported
     assertThat(fellowshipOfTheRing).filteredOn("race.name", "Man")
