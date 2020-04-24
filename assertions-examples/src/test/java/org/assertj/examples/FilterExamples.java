@@ -27,6 +27,7 @@ import java.util.List;
 import org.assertj.core.api.Assertions;
 import org.assertj.core.api.Condition;
 import org.assertj.examples.data.BasketBallPlayer;
+import org.assertj.examples.data.TolkienCharacter;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -53,7 +54,7 @@ public class FilterExamples extends AbstractAssertionsExamples {
 
   @Test
   public void filter_with_examples() {
-    // with(property).equalsTo(someValue) works by instrospection on specified property
+    // with(property).equalsTo(someValue) works by introspection on specified property
     assertThat(filter(fellowshipOfTheRing).with("race").equalsTo(HOBBIT).get()).containsOnly(sam, frodo, pippin, merry);
     // same thing - shorter way
     assertThat(filter(fellowshipOfTheRing).with("race", HOBBIT).get()).containsOnly(sam, frodo, pippin, merry);
@@ -87,6 +88,13 @@ public class FilterExamples extends AbstractAssertionsExamples {
                                    .containsOnly(aragorn);
   }
 
+  @Test
+  public void filter_on_function_example() {
+	    assertThat(fellowshipOfTheRing).filteredOn(TolkienCharacter::getRace, HOBBIT)
+        .containsOnly(sam, frodo, pippin, merry);	  
+  }
+
+  
   @Test
   public void filter_on_condition_examples() {
     // having(condition) example
