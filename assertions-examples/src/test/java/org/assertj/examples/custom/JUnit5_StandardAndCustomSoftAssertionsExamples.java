@@ -12,18 +12,17 @@
  */
 package org.assertj.examples.custom;
 
+import org.assertj.core.api.junit.jupiter.SoftAssertionsExtension;
 import org.assertj.examples.AbstractAssertionsExamples;
-import org.junit.Ignore;
-import org.junit.Rule;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 
-public class JUnitSoftAssertionsWithCustomAssertExamples extends AbstractAssertionsExamples {
-
-  @Rule
-  public final MyProjectJUnitSoftAssertions softly = new MyProjectJUnitSoftAssertions();
+@ExtendWith(SoftAssertionsExtension.class)
+public class JUnit5_StandardAndCustomSoftAssertionsExamples extends AbstractAssertionsExamples {
 
   @Test
-  public void successful_junit_soft_custom_assertion_example() {
+  public void successful_junit_soft_custom_assertion_example(UberSoftAssertions softly) {
     // For example, the assertions below are accessed from MyProjectAssertions :
     // - hasName comes from .MyProjectAssertions.assertThat(TolkienCharacter actual)
     softly.assertThat(frodo).hasName("Frodo").hasAge(33).isNotEqualTo(merry);
@@ -31,14 +30,14 @@ public class JUnitSoftAssertionsWithCustomAssertExamples extends AbstractAsserti
     softly.assertThat(frodo.age).isEqualTo(33);
   }
 
-  // comment the @Ignore to see the test failing with all the assertion error and not only the first one.
+  // comment the @Disabled to see the test failing with all the assertion error and not only the first one.
   @Test
-  @Ignore
-  public void failing_junit_soft_custom_assertions_example() {
+  @Disabled
+  public void failing_junit_soft_custom_assertions_example(UberSoftAssertions softly) {
     // basic object to test
     String name = "Michael Jordan - Bulls";
     // custom object to test
-    Employee kent = new Employee("Kent Beck"); 
+    Employee kent = new Employee("Kent Beck");
     kent.jobTitle = "TDD evangelist";
 
     // use our own soft assertions based on JUnit rule
