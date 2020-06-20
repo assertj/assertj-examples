@@ -164,6 +164,13 @@ public class FileAssertionsExamples extends AbstractAssertionsExamples {
 
     Path emptyDirectory = Paths.get("src/test/resources/empty");
     assertThat(emptyDirectory).isEmptyDirectory();
+
+    // recursive examples
+    File resourcesDirectory = new File("src/test/resources");
+    assertThat(resourcesDirectory).isDirectoryRecursivelyContaining(file -> file.getName().contains("template"))
+                                  .isDirectoryRecursivelyContaining(file -> file.getName().contains("services"))
+                                  .isDirectoryRecursivelyContaining("regex:.*txt")
+                                  .isDirectoryRecursivelyContaining("glob:**.txt");
   }
 
   // helper methods

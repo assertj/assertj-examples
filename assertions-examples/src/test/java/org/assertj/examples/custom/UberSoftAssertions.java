@@ -13,19 +13,13 @@
 package org.assertj.examples.custom;
 
 import org.assertj.core.api.SoftAssertions;
-import org.assertj.examples.data.TolkienCharacter;
-
 
 /**
- * A single entry point for all soft assertions, AssertJ standard assertions and MyProject custom assertions.
+ * A single entry point for all soft assertions: AssertJ standard assertions, TolkienSoftAssertions and the one defined in this class.
  */
 // extending make all standard AssertJ assertions available
-public class MyProjectSoftAssertions extends SoftAssertions {
-
-  // add the custom assertions
-  public TolkienCharacterAssert assertThat(TolkienCharacter actual) {
-    return proxy(TolkienCharacterAssert.class, TolkienCharacter.class, actual);
-  }
+// implementing TolkienSoftAssertionsProvider make TolkienCharacter soft assertions available
+public class UberSoftAssertions extends SoftAssertions implements TolkienSoftAssertionsProvider {
 
   public HumanAssert assertThat(Human actual) {
     return proxy(HumanAssert.class, Human.class, actual);
@@ -38,5 +32,5 @@ public class MyProjectSoftAssertions extends SoftAssertions {
   public EmployeeOfTheMonthAssert assertThat(EmployeeOfTheMonth actual) {
     return proxy(EmployeeOfTheMonthAssert.class, EmployeeOfTheMonth.class, actual);
   }
-  
+
 }
