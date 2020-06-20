@@ -15,6 +15,7 @@ package org.assertj.examples.custom;
 import static com.google.common.collect.Lists.newArrayList;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.examples.custom.MyProjectAssertions.assertThat;
+import static org.assertj.examples.data.Race.HOBBIT;
 
 import java.math.BigDecimal;
 import java.util.List;
@@ -108,22 +109,21 @@ public class CustomAssertExamples extends AbstractAssertionsExamples {
   }
 
   @Test
-  public void soft_custom_assertions_example() {
-    // basic object to test
-    String name = "Michael Jordan - Bulls";
+  public void multiple_soft_custom_assertions_combined_with_standard_ones_example() {
     // custom object to test
     Employee kent = new Employee("Kent Beck");
     kent.jobTitle = "TDD evangelist";
 
-    // use our own soft assertions inheriting from SoftAssertions
-    MyProjectSoftAssertions softly = new MyProjectSoftAssertions();
-    softly.assertThat(name).startsWith("Mike").contains("Lakers").endsWith("Chicago");
+    // use our own uber soft assertions combining SoftAssertions from different sources
+    UberSoftAssertions softly = new UberSoftAssertions();
+    // custom Employee assertions
     softly.assertThat(kent).hasName("Wes Anderson").hasJobTitle("Director");
-    try {
-      softly.assertAll();
-    } catch (AssertionError e) {
-      logAssertionErrorMessage("SoftAssertion errors example", e);
-    }
+    // custom TolkienCharacter assertions
+    softly.assertThat(frodo).hasRace(HOBBIT);
+    // standard assertions
+    softly.assertThat("Michael Jordan - Bulls").startsWith("Mike").contains("Lakers").endsWith("Chicago");
+
+    logAssertionErrorMessage(() -> softly.assertAll(), "Two custom SoftAssertions combined with the standard one example");
   }
 
   @Test

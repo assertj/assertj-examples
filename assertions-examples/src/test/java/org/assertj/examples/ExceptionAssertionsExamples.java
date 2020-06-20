@@ -71,6 +71,13 @@ public class ExceptionAssertionsExamples extends AbstractAssertionsExamples {
                                       .hasMessageContaining("wrong %s", "amount")
                                       .hasMessageEndingWith("%s 123", "amount")
                                       .hasStackTraceContaining("%s amount", "wrong");
+
+      assertThatExceptionOfType(RuntimeException.class).isThrownBy(() -> {
+        throw new RuntimeException(new IllegalArgumentException("cause message"));
+      })
+                                                       .havingCause()
+                                                       .withMessage("cause message");
+
     }
   }
 
