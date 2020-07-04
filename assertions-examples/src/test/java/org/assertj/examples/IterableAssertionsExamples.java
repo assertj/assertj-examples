@@ -710,7 +710,7 @@ public class IterableAssertionsExamples extends AbstractAssertionsExamples {
 
   @Test
   public void singleElement_example() {
-	Iterable<String> babySimpsons = newArrayList("Maggie");
+	Iterable<String> babySimpsons = list("Maggie");
 	
 	assertThat(babySimpsons, StringAssert.class).singleElement()
 	                                            .startsWith("Mag");
