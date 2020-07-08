@@ -707,6 +707,18 @@ public class IterableAssertionsExamples extends AbstractAssertionsExamples {
                           .doesNotContain(oneRing);
   }
 
+
+  @Test
+  public void singleElement_example() {
+	Iterable<String> babySimpsons = list("Maggie");
+	
+	assertThat(babySimpsons, StringAssert.class).singleElement()
+	                                            .startsWith("Mag");
+	
+	assertThat(babySimpsons).singleElement(as(STRING))
+	                        .endsWith("gie");
+  }
+
   @Test
   public void zipStatisfy_example() {
     Iterable<Ring> elvesRings = newArrayList(vilya, nenya, narya);
