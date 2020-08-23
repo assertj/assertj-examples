@@ -17,10 +17,13 @@ import static org.assertj.core.api.Assertions.assertThatCode;
 import static org.assertj.core.api.Assertions.assertThatExceptionOfType;
 import static org.assertj.core.api.Assertions.assertThatIOException;
 import static org.assertj.core.api.Assertions.assertThatIllegalArgumentException;
+import static org.assertj.core.api.Assertions.assertThatNoException;
 import static org.assertj.core.api.Assertions.assertThatNullPointerException;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.assertj.core.api.Assertions.catchThrowable;
 import static org.assertj.core.api.Assertions.catchThrowableOfType;
+import static org.assertj.core.api.BDDAssertions.thenCode;
+import static org.assertj.core.api.BDDAssertions.thenNoException;
 
 import java.io.IOException;
 
@@ -317,7 +320,13 @@ public class ExceptionAssertionsExamples extends AbstractAssertionsExamples {
 
   @Test
   public void check_code_does_not_throw_exceptions() {
+    assertThatNoException().isThrownBy(() -> System.out.println("OK"));
+    // or
+    thenNoException().isThrownBy(() -> System.out.println("OK"));
+    // or
     assertThatCode(() -> {}).doesNotThrowAnyException();
+    // or
+    thenCode(() -> {}).doesNotThrowAnyException();
   }
 
   @Test

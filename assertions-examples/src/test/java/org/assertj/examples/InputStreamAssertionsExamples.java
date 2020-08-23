@@ -35,6 +35,14 @@ public class InputStreamAssertionsExamples extends AbstractAssertionsExamples {
   }
 
   @Test
+  public void input_stream_empty_or_not_assertions() {
+    String text = "Real stupidity beats artificial intelligence every time";
+    InputStream inputStream = new ByteArrayInputStream(text.getBytes());
+    assertThat(inputStream).isNotEmpty();
+    assertThat(new ByteArrayInputStream("".getBytes())).isEmpty();
+  }
+
+  @Test
   public void should_check_digests() throws Exception {
     // GIVEN
     byte[] md5Bytes = new byte[] { -36, -77, 1, 92, -46, -124, 71, 100, 76, -127, 10, -13, 82, -125, 44, 25 };

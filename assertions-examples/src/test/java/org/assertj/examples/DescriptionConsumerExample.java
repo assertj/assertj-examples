@@ -48,6 +48,8 @@ public class DescriptionConsumerExample extends AbstractAssertionsExamples {
     assertThat(descriptionReport).isEqualTo(format("Assertions:%n" +
                                                    "-- check name%n" +
                                                    "-- check race%n"));
+    // unset the consumer
+    Assertions.setDescriptionConsumer(null);
   }
 
 }

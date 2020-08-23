@@ -18,7 +18,7 @@ import org.junit.jupiter.api.Test;
 
 /**
  * Comparable assertions specific examples
- * 
+ *
  * @author Joel Costigliola
  */
 public class ComparableAssertionsExamples extends AbstractAssertionsExamples {
@@ -40,7 +40,7 @@ public class ComparableAssertionsExamples extends AbstractAssertionsExamples {
       logAssertionErrorMessage("isGreaterThan for generic", e);
     }
     // just to show that we can use ObjectAssert assertion:
-    assertThat(goodRating).isEqualToComparingFieldByField(new Rating(8));
+    assertThat(goodRating).isNotEqualTo(new Rating(8));
   }
 
   private static class Rating implements Comparable<Rating> {
@@ -55,7 +55,7 @@ public class ComparableAssertionsExamples extends AbstractAssertionsExamples {
     public int compareTo(Rating o) {
       return note - o.note;
     }
-    
+
     @Override
     public String toString() {
       return String.valueOf(note);

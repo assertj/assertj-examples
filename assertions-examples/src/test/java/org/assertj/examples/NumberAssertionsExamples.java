@@ -40,12 +40,16 @@ public class NumberAssertionsExamples extends AbstractAssertionsExamples {
 
     // equals / no equals assertions
     assertThat(sam.age).isEqualTo(38)
-                       .isCloseTo(40, within(10));
-    assertThat(frodo.age).isEqualTo(33).isNotEqualTo(sam.age);
-
+                       .isCloseTo(40, within(10))
+                       .isEven();
+    assertThat(frodo.age).isEqualTo(33)
+                         .isNotEqualTo(sam.age)
+                         .isOdd();
     // <= < > >= assertions
-    assertThat(sam.age).isGreaterThan(frodo.age).isGreaterThanOrEqualTo(38);
-    assertThat(frodo.age).isLessThan(sam.age).isLessThanOrEqualTo(33);
+    assertThat(sam.age).isGreaterThan(frodo.age)
+                       .isGreaterThanOrEqualTo(38);
+    assertThat(frodo.age).isLessThan(sam.age)
+                         .isLessThanOrEqualTo(33);
     assertThat(sam.age).isBetween(frodo.age, gimli.age);
 
     // shortcuts for assertions : > 0, < 0 and == 0
@@ -63,12 +67,14 @@ public class NumberAssertionsExamples extends AbstractAssertionsExamples {
   public void number_assertions_with_custom_comparison_examples() {
 
     // with absolute values comparator : |-8| == |8|
-    assertThat(-8).usingComparator(absValueComparator).isEqualTo(8);
-    assertThat(-8.0).usingComparator(new AbsValueComparator<Double>()).isEqualTo(8.0);
-    assertThat((byte) -8).usingComparator(new AbsValueComparator<Byte>()).isEqualTo((byte) 8);
+    assertThat(-8).usingComparator(absValueComparator)
+                  .isEqualTo(8);
+    assertThat(-8.0).usingComparator(new AbsValueComparator<Double>())
+                    .isEqualTo(8.0);
+    assertThat((byte) -8).usingComparator(new AbsValueComparator<Byte>())
+                         .isEqualTo((byte) 8);
     assertThat(new BigDecimal("-8")).usingComparator(new AbsValueComparator<BigDecimal>())
                                     .isEqualTo(new BigDecimal("8"));
-
     // works with arrays !
     assertThat(new int[] { -1, 2, 3 }).usingElementComparator(absValueComparator).contains(1, 2, -3);
   }

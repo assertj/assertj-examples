@@ -18,7 +18,6 @@ import static org.assertj.core.api.Assertions.catchThrowable;
 import static org.assertj.core.api.InstanceOfAssertFactories.STRING;
 import static org.assertj.core.util.Lists.list;
 import static org.assertj.core.util.Lists.newArrayList;
-import static org.assertj.examples.data.Race.ELF;
 import static org.assertj.examples.data.Race.HOBBIT;
 import static org.assertj.examples.data.Ring.narya;
 import static org.assertj.examples.data.Ring.nenya;
@@ -27,7 +26,6 @@ import static org.assertj.examples.data.Ring.vilya;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
-import java.util.Comparator;
 import java.util.List;
 import java.util.Map;
 
@@ -35,8 +33,6 @@ import org.assertj.core.api.Assertions;
 import org.assertj.core.api.InstanceOfAssertFactories;
 import org.assertj.core.util.BigDecimalComparator;
 import org.assertj.core.util.introspection.FieldSupport;
-import org.assertj.core.util.introspection.IntrospectionError;
-import org.assertj.examples.comparator.AtPrecisionComparator;
 import org.assertj.examples.data.Person;
 import org.assertj.examples.data.Ring;
 import org.assertj.examples.data.TolkienCharacter;
@@ -81,17 +77,28 @@ public class BasicAssertionsExamples extends AbstractAssertionsExamples {
                                  " <33>\n" +
                                  "but was not.");
 
-    // but you still can override the error message if you have a better one :
+    // but you still can override the error message if you have a better one:
     final String frodon = "Frodon";
     try {
       assertThat(frodo.getName()).as("check Frodo's name")
-                                 .overridingErrorMessage("Hey my name is Frodo not %s", frodon).isEqualTo(frodon);
+                                 .overridingErrorMessage("Hey my name is Frodo not %s", frodon)
+                                 .isEqualTo(frodon);
     } catch (AssertionError e) {
       assertThat(e).hasMessage("[check Frodo's name] Hey my name is Frodo not Frodon");
     }
-    // if you still can override the error message if you have a better one :
+    // withFailMessage is another way to override the error message:
     try {
-      assertThat(frodo.getName()).overridingErrorMessage("Hey my name is Frodo not (%)").isEqualTo(frodon);
+      assertThat(frodo.getName()).withFailMessage("Hey my name is Frodo not (%)")
+                                 .isEqualTo(frodon);
+    } catch (AssertionError e) {
+      assertThat(e).hasMessage("Hey my name is Frodo not (%)");
+    }
+
+    // in case the error message is expansive to build, use the withFailMessage/overridingErrorMessage overloaded methods
+    // taking a supplier which is only resolved if an AssertionError is raised.
+    try {
+      assertThat(frodo.getName()).withFailMessage(() -> "Hey my name is Frodo not (%)")
+                                 .isEqualTo(frodon);
     } catch (AssertionError e) {
       assertThat(e).hasMessage("Hey my name is Frodo not (%)");
     }
@@ -181,85 +188,6 @@ public class BasicAssertionsExamples extends AbstractAssertionsExamples {
   }
 
   @Test
-  public void basic_assertions_with_field_by_field_comparison_examples() {
-
-    TolkienCharacter mysteriousHobbit = new TolkienCharacter(null, 33, HOBBIT);
-
-    // ------------------------------------------------------------------------------------
-    // Lenient equality with field by field comparison
-    // ------------------------------------------------------------------------------------
-
-    // Frodo is still Frodo ...
-    assertThat(frodo).isEqualToComparingFieldByField(frodo);
-
-    TolkienCharacter frodoClone = new TolkienCharacter("Frodo", 33, HOBBIT);
-
-    // Frodo and his clone are equals by comparing fields (if we ignore private fields without getter)
-    Assertions.setAllowComparingPrivateFields(false);
-    assertThat(frodo).isEqualToComparingFieldByField(frodoClone);
-
-    // ------------------------------------------------------------------------------------
-    // Lenient equality when ignoring null fields of other object
-    // ------------------------------------------------------------------------------------
-
-    // Frodo is still Frodo ...
-    assertThat(frodo).isEqualToIgnoringNullFields(frodo);
-
-    // Null fields in expected object are ignored, the mysteriousHobbit has null name
-    assertThat(frodo).isEqualToIgnoringNullFields(mysteriousHobbit);
-    // ... But the lenient equality is not reversible !
-    try {
-      assertThat(mysteriousHobbit).isEqualToIgnoringNullFields(frodo);
-    } catch (AssertionError e) {
-      logAssertionErrorMessage("isEqualToIgnoringNullFields", e);
-    }
-
-    // ------------------------------------------------------------------------------------
-    // Lenient equality with field by field comparison expect specified fields
-    // ------------------------------------------------------------------------------------
-
-    // Except name and age, frodo and sam both are hobbits, so they are lenient equals ignoring name and age
-    assertThat(frodo).isEqualToIgnoringGivenFields(sam, "name", "age");
-
-    // But not when just age is ignored
-    try {
-      assertThat(frodo).isEqualToIgnoringGivenFields(sam, "age");
-    } catch (AssertionError e) {
-      logAssertionErrorMessage("isEqualToIgnoringGivenFields", e);
-    }
-
-    // Null fields are not ignored, so when expected has null field, actual must have too
-    assertThat(mysteriousHobbit).isEqualToIgnoringGivenFields(mysteriousHobbit, "age");
-
-    // ------------------------------------------------------------------------------------
-    // Lenient equality with field by field comparison on given fields only
-    // ------------------------------------------------------------------------------------
-
-    // frodo and sam both are hobbits, so they are lenient equals on race
-    assertThat(frodo).isEqualToComparingOnlyGivenFields(sam, "race");
-    // nested fields are supported
-    assertThat(frodo).isEqualToComparingOnlyGivenFields(sam, "race.name");
-
-    // but not when accepting name and race
-    try {
-      assertThat(frodo).isEqualToComparingOnlyGivenFields(sam, "name", "race", "age");
-    } catch (AssertionError e) {
-      logAssertionErrorMessage("isEqualToComparingOnlyGivenFields", e);
-    }
-
-    // Null fields are not ignored, so when expected has null field, actual must have too
-    assertThat(mysteriousHobbit).isEqualToComparingOnlyGivenFields(mysteriousHobbit, "name");
-
-    // Specified fields must exist
-    try {
-      assertThat(frodo).isEqualToComparingOnlyGivenFields(sam, "hairColor");
-    } catch (IntrospectionError e) {
-      logger.info("isEqualToComparingOnlyGivenFields InstrospectionError message : {}", e.getMessage());
-    }
-    Assertions.setAllowComparingPrivateFields(true);
-  }
-
-  @Test
   public void extracting_object_values() {
     assertThat(frodo).extracting(TolkienCharacter::getName,
                                  character -> character.age,
@@ -334,40 +262,6 @@ public class BasicAssertionsExamples extends AbstractAssertionsExamples {
     map1.put("Key1", "Value1");
     map1.put("Key2", "Value2");
     Assertions.assertThat(map1).containsOnlyKeys("Key1", "Key2");
-  }
-
-  @Test
-  public void field_by_field_comparison_with_specific_comparator_by_type_or_field_examples() {
-
-    TolkienCharacter olderFrodo = new TolkienCharacter("Frodo", 35, HOBBIT);
-
-    Assertions.setAllowComparingPrivateFields(false); // ignore notAccessibleField in comparison
-
-    // specify a comparator for a single field : age
-    assertThat(frodo).usingComparatorForFields(new AtPrecisionComparator<>(2), "age")
-                     .isEqualToComparingFieldByField(olderFrodo)
-                     .isEqualToComparingOnlyGivenFields(olderFrodo, "age");
-
-    // specify a comparator for a field type : Integer
-    assertThat(frodo).usingComparatorForType(new AtPrecisionComparator<>(2), Integer.class)
-                     .isEqualToComparingFieldByField(olderFrodo)
-                     .isEqualToComparingOnlyGivenFields(olderFrodo, "age");
-
-    // field comparators take precendence over field type comparators
-    assertThat(frodo).usingComparatorForFields(new AtPrecisionComparator<>(2), "age")
-                     .usingComparatorForType(new AtPrecisionComparator<>(1), Integer.class)
-                     .isEqualToComparingFieldByField(olderFrodo);
-
-    TolkienCharacter elfFrodo = new TolkienCharacter("Frodo", 33, ELF);
-    assertThat(frodo).usingComparatorForFields(new Comparator<String>() {
-
-      @Override
-      public int compare(String o1, String o2) {
-        return 0;
-      }
-    }, "race.name").isEqualToComparingOnlyGivenFields(elfFrodo);
-
-    Assertions.setAllowComparingPrivateFields(true);
   }
 
   @Test

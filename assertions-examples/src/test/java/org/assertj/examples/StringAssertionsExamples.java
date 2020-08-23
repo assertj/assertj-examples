@@ -37,6 +37,7 @@ public class StringAssertionsExamples extends AbstractAssertionsExamples {
                        .endsWith("do")
                        .hasSize(5).contains("rod")
                        .doesNotContain("fro")
+                       .doesNotContainIgnoringCase("froo")
                        .containsOnlyOnce("do")
                        .isSubstringOf("Frodon")
                        .doesNotContainAnyWhitespaces();

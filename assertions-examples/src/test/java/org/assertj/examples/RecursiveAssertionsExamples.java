@@ -29,8 +29,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
-import org.assertj.core.api.Assertions;
-import org.assertj.core.util.introspection.IntrospectionError;
+import org.assertj.core.api.recursive.comparison.RecursiveComparisonConfiguration;
 import org.assertj.examples.data.Ring;
 import org.assertj.examples.data.TolkienCharacter;
 import org.junit.jupiter.api.Test;
@@ -61,6 +60,16 @@ public class RecursiveAssertionsExamples extends AbstractAssertionsExamples {
     List<TolkienCharacter> hobbitsClone = list(frodoClone, samClone, pippinClone, merryClone);
     assertThat(hobbits).usingRecursiveComparison()
                        .isEqualTo(hobbitsClone);
+    // to execute any iterable assertions, use usingRecursiveFieldByFieldElementComparator(RecursiveComparisonConfiguration)
+    // the drawback is that error messages won't show a detailed field differences.
+    RecursiveComparisonConfiguration configuration = RecursiveComparisonConfiguration.builder()
+                                                                                     .withIgnoredFields("age")
+                                                                                     .build();
+    TolkienCharacter olderFrodo = new TolkienCharacter("Frodo", 55, HOBBIT);
+    assertThat(hobbits).usingRecursiveFieldByFieldElementComparator(configuration)
+                       .contains(olderFrodo, samClone, pippinClone, merryClone)
+                       .doesNotContain(gandalf);
+
     // ... and arrays
     TolkienCharacter[] hobbitsArray = array(frodo, sam, pippin, merry);
     TolkienCharacter[] hobbitsArrayClone = array(frodoClone, samClone, pippinClone, merryClone);
@@ -77,6 +86,22 @@ public class RecursiveAssertionsExamples extends AbstractAssertionsExamples {
     // ... and optionals
     assertThat(Optional.of(frodo)).usingRecursiveComparison()
                                   .isEqualTo(Optional.of(frodoClone));
+    // isNotEqualTo is available too
+    assertThat(frodo).usingRecursiveComparison()
+                     .isNotEqualTo(sam);
+  }
+
+  @Test
+  public void recursive_field_by_field_comparison_assertions_with_specific_type_or_fields_equals() {
+    // GIVEN
+    TolkienCharacter olderFrodo = new TolkienCharacter("Frodo", frodo.age + 5, HOBBIT);
+    // THEN
+    assertThat(frodo).usingRecursiveComparison()
+                     .withEqualsForType((int1, int2) -> Math.abs(int1 - int2) <= 10, Integer.class)
+                     .isEqualTo(olderFrodo);
+    assertThat(frodo).usingRecursiveComparison()
+                     .withEqualsForFields((Integer int1, Integer int2) -> Math.abs(int1 - int2) <= 10, "age")
+                     .isEqualTo(olderFrodo);
   }
 
   @Test
@@ -135,85 +160,6 @@ public class RecursiveAssertionsExamples extends AbstractAssertionsExamples {
       return name;
     }
 
-  }
-
-  @Test
-  public void basic_assertions_with_field_by_field_comparison_examples() {
-
-    TolkienCharacter mysteriousHobbit = new TolkienCharacter(null, 33, HOBBIT);
-
-    // ------------------------------------------------------------------------------------
-    // Lenient equality with field by field comparison
-    // ------------------------------------------------------------------------------------
-
-    // Frodo is still Frodo ...
-    assertThat(frodo).isEqualToComparingFieldByField(frodo);
-
-    TolkienCharacter frodoClone = new TolkienCharacter("Frodo", 33, HOBBIT);
-
-    // Frodo and his clone are equals by comparing fields (if we ignore private fields without getter)
-    Assertions.setAllowComparingPrivateFields(false);
-    assertThat(frodo).isEqualToComparingFieldByField(frodoClone);
-
-    // ------------------------------------------------------------------------------------
-    // Lenient equality when ignoring null fields of other object
-    // ------------------------------------------------------------------------------------
-
-    // Frodo is still Frodo ...
-    assertThat(frodo).isEqualToIgnoringNullFields(frodo);
-
-    // Null fields in expected object are ignored, the mysteriousHobbit has null name
-    assertThat(frodo).isEqualToIgnoringNullFields(mysteriousHobbit);
-    // ... But the lenient equality is not reversible !
-    try {
-      assertThat(mysteriousHobbit).isEqualToIgnoringNullFields(frodo);
-    } catch (AssertionError e) {
-      logAssertionErrorMessage("isEqualToIgnoringNullFields", e);
-    }
-
-    // ------------------------------------------------------------------------------------
-    // Lenient equality with field by field comparison expect specified fields
-    // ------------------------------------------------------------------------------------
-
-    // Except name and age, frodo and sam both are hobbits, so they are lenient equals ignoring name and age
-    assertThat(frodo).isEqualToIgnoringGivenFields(sam, "name", "age");
-
-    // But not when just age is ignored
-    try {
-      assertThat(frodo).isEqualToIgnoringGivenFields(sam, "age");
-    } catch (AssertionError e) {
-      logAssertionErrorMessage("isEqualToIgnoringGivenFields", e);
-    }
-
-    // Null fields are not ignored, so when expected has null field, actual must have too
-    assertThat(mysteriousHobbit).isEqualToIgnoringGivenFields(mysteriousHobbit, "age");
-
-    // ------------------------------------------------------------------------------------
-    // Lenient equality with field by field comparison on given fields only
-    // ------------------------------------------------------------------------------------
-
-    // frodo and sam both are hobbits, so they are lenient equals on race
-    assertThat(frodo).isEqualToComparingOnlyGivenFields(sam, "race");
-    // nested fields are supported
-    assertThat(frodo).isEqualToComparingOnlyGivenFields(sam, "race.name");
-
-    // but not when accepting name and race
-    try {
-      assertThat(frodo).isEqualToComparingOnlyGivenFields(sam, "name", "race", "age");
-    } catch (AssertionError e) {
-      logAssertionErrorMessage("isEqualToComparingOnlyGivenFields", e);
-    }
-
-    // Null fields are not ignored, so when expected has null field, actual must have too
-    assertThat(mysteriousHobbit).isEqualToComparingOnlyGivenFields(mysteriousHobbit, "name");
-
-    // Specified fields must exist
-    try {
-      assertThat(frodo).isEqualToComparingOnlyGivenFields(sam, "hairColor");
-    } catch (IntrospectionError e) {
-      logger.info("isEqualToComparingOnlyGivenFields InstrospectionError message : {}", e.getMessage());
-    }
-    Assertions.setAllowComparingPrivateFields(true);
   }
 
   @Test

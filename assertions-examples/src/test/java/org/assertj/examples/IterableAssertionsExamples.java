@@ -153,6 +153,19 @@ public class IterableAssertionsExamples extends AbstractAssertionsExamples {
   }
 
   @Test
+  public void single_element_iterable_assertions_examples() {
+    List<String> babySimpsons = list("Maggie");
+
+    // assertion succeeds, only Object assertions are available after singleElement()
+    assertThat(babySimpsons).singleElement()
+                            .isEqualTo("Maggie");
+
+    // String assertion succeeds, String assertions as we have passed InstanceOfAssertFactories.STRING
+    assertThat(babySimpsons).singleElement(as(STRING))
+                            .startsWith("Mag");
+  }
+
+  @Test
   public void iterable_basic_contains_exactly_assertions_examples() {
     Iterable<Ring> elvesRings = newArrayList(vilya, nenya, narya);
     assertThat(elvesRings).containsExactly(vilya, nenya, narya)
@@ -580,13 +593,12 @@ public class IterableAssertionsExamples extends AbstractAssertionsExamples {
 
     assertThat(fellowshipOfTheRing).filteredOn("race", HOBBIT)
                                    .containsOnly(sam, frodo, pippin, merry);
-
-    assertThat(newHashSet(fellowshipOfTheRing)).filteredOn(p -> p.getRace() == HOBBIT)
-                                               .containsOnly(sam, frodo, pippin, merry);
-    
+    // same assertion but type safe
     assertThat(fellowshipOfTheRing).filteredOn(TolkienCharacter::getRace, HOBBIT)
                                    .containsOnly(sam, frodo, pippin, merry);
 
+    assertThat(newHashSet(fellowshipOfTheRing)).filteredOn(p -> p.getRace() == HOBBIT)
+                                               .containsOnly(sam, frodo, pippin, merry);
 
     // nested property are supported
     assertThat(fellowshipOfTheRing).filteredOn("race.name", "Man")
@@ -711,16 +723,15 @@ public class IterableAssertionsExamples extends AbstractAssertionsExamples {
                           .doesNotContain(oneRing);
   }
 
-
   @Test
   public void singleElement_example() {
-	Iterable<String> babySimpsons = list("Maggie");
-	
-	assertThat(babySimpsons, StringAssert.class).singleElement()
-	                                            .startsWith("Mag");
-	
-	assertThat(babySimpsons).singleElement(as(STRING))
-	                        .endsWith("gie");
+    Iterable<String> babySimpsons = list("Maggie");
+
+    assertThat(babySimpsons, StringAssert.class).singleElement()
+                                                .startsWith("Mag");
+
+    assertThat(babySimpsons).singleElement(as(STRING))
+                            .endsWith("gie");
   }
 
   @Test

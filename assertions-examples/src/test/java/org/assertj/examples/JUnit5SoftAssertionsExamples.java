@@ -20,7 +20,7 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 
 @ExtendWith(SoftAssertionsExtension.class)
-public class JUnitSoftAssertionsExamples extends AbstractAssertionsExamples {
+public class JUnit5SoftAssertionsExamples extends AbstractAssertionsExamples {
 
   @Test
   public void successful_soft_assertions_example(SoftAssertions softly) {
@@ -41,7 +41,7 @@ public class JUnitSoftAssertionsExamples extends AbstractAssertionsExamples {
     // no need to call softly.assertAll(); (as with SoftAssertions) error gathering is handled by the JUnit rule
   }
 
-  // comment the @Ignore to see the test failing with all the assertion error and not only the first one.
+  // comment the @Disabled to see the test failing with all the assertion error and not only the first one.
   @Test
   @Disabled
   public void failing_junit_soft_assertions_example(SoftAssertions softly) {

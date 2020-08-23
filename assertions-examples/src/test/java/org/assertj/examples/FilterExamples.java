@@ -90,11 +90,10 @@ public class FilterExamples extends AbstractAssertionsExamples {
 
   @Test
   public void filter_on_function_example() {
-	    assertThat(fellowshipOfTheRing).filteredOn(TolkienCharacter::getRace, HOBBIT)
-        .containsOnly(sam, frodo, pippin, merry);	  
+    assertThat(fellowshipOfTheRing).filteredOn(TolkienCharacter::getRace, HOBBIT)
+                                   .containsOnly(sam, frodo, pippin, merry);
   }
 
-  
   @Test
   public void filter_on_condition_examples() {
     // having(condition) example

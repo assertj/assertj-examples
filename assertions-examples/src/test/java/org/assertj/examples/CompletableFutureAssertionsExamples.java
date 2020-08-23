@@ -13,7 +13,9 @@
 package org.assertj.examples;
 
 import static java.util.concurrent.CompletableFuture.completedFuture;
+import static org.assertj.core.api.Assertions.as;
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.InstanceOfAssertFactories.STRING;
 
 import java.time.Duration;
 import java.util.concurrent.CompletableFuture;
@@ -32,7 +34,7 @@ public class CompletableFutureAssertionsExamples extends AbstractAssertionsExamp
   @Test
   public void completableFuture_assertions_examples() {
 
-    CompletableFuture<String> completedFuture = CompletableFuture.completedFuture("something");
+    CompletableFuture<String> completedFuture = completedFuture("something");
     assertThat(completedFuture).isCompleted()
                                .isCompletedWithValue("something")
                                .isCompletedWithValueMatching(result -> result.startsWith("some"))
@@ -57,13 +59,18 @@ public class CompletableFutureAssertionsExamples extends AbstractAssertionsExamp
                                .isCompletedExceptionally()
                                .hasNotFailed();
 
-    CompletableFuture<String> future = CompletableFuture.completedFuture("ook!");
+    CompletableFuture<String> future = completedFuture("ook!");
     // assertion expressed with TimeUnit
     assertThat(future).succeedsWithin(100, TimeUnit.MILLISECONDS)
                       .isEqualTo("ook!");
-    // same assertion with Duration
+    // strongly typed assertion
+    assertThat(future).succeedsWithin(100, TimeUnit.MILLISECONDS, as(STRING))
+                      .startsWith("oo");
+    // same assertions with Duration
     assertThat(future).succeedsWithin(Duration.ofMillis(100))
                       .isEqualTo("ook!");
+    assertThat(future).succeedsWithin(Duration.ofMillis(100), as(STRING))
+                      .startsWith("oo");
 
     // log some error messages to have a look at them
     try {

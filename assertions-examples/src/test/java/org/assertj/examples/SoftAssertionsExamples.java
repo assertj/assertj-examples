@@ -12,7 +12,9 @@
  */
 package org.assertj.examples;
 
+import static java.lang.String.format;
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.catchThrowable;
 import static org.assertj.core.api.Assertions.fail;
 import static org.assertj.core.api.Assertions.tuple;
 import static org.assertj.examples.data.Race.HOBBIT;
@@ -66,6 +68,33 @@ public class SoftAssertionsExamples extends AbstractAssertionsExamples {
     } catch (AssertionError e) {
       logAssertionErrorMessage("SoftAssertion errors example", e);
     }
+  }
+
+  @Test
+  public void build_soft_assertions_errors_report_example() {
+    StringBuilder reportBuilder = new StringBuilder(format("Assertions report:%n"));
+    SoftAssertions softly = new SoftAssertions();
+    //
+    softly.setAfterAssertionErrorCollected(error -> reportBuilder.append(format("------------------%n%s%n", error.getMessage())));
+    softly.assertThat(frodo.getRace().getName()).as("check Frodo's race").isEqualTo("Orc");
+    softly.assertThat(aragorn.age).as("check Aragorn's age").isGreaterThan(500);
+    // let the assertions fail
+    catchThrowable(() -> softly.assertAll());
+    // check the built report
+    assertThat(reportBuilder.toString()).isEqualTo(format("Assertions report:%n" +
+                                                          "------------------%n" +
+                                                          "[check Frodo's race] %n" +
+                                                          "Expecting:%n" +
+                                                          " <\"Hobbit\">%n" +
+                                                          "to be equal to:%n" +
+                                                          " <\"Orc\">%n" +
+                                                          "but was not.%n" +
+                                                          "------------------%n" +
+                                                          "[check Aragorn's age] %n" +
+                                                          "Expecting:%n" +
+                                                          " <87>%n" +
+                                                          "to be greater than:%n" +
+                                                          " <500> %n"));
   }
 
   @Test
@@ -304,7 +333,7 @@ public class SoftAssertionsExamples extends AbstractAssertionsExamples {
   }
 
   @Test
-  void testName() throws Exception {
+  void softly_check_name() throws Exception {
     // GIVEN
     SoftAssertions softly = new SoftAssertions();
     // WHEN
