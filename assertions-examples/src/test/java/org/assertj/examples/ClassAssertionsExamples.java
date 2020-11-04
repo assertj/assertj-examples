@@ -32,8 +32,8 @@ public class ClassAssertionsExamples extends AbstractAssertionsExamples {
   @Test
   public void class_assertions_examples() {
     assertThat(Magical.class).isAnnotation();
-    assertThat(Ring.class).isNotAnnotation();
-    assertThat(Ring.class).hasAnnotation(Magical.class);
+    assertThat(Ring.class).isNotAnnotation()
+                          .hasAnnotation(Magical.class);
 
     try {
       assertThat(Ring.class).isAnnotation();
@@ -47,7 +47,9 @@ public class ClassAssertionsExamples extends AbstractAssertionsExamples {
       logAssertionErrorMessage("hasAnnotation", e);
     }
 
-    assertThat(TolkienCharacter.class).isNotInterface();
+    assertThat(TolkienCharacter.class).isNotInterface()
+                                      .hasPackage("org.assertj.examples.data")
+                                      .hasPackage(Package.getPackage("org.assertj.examples.data"));
     assertThat(Person.class).isAssignableFrom(Employee.class);
     assertThat(Employee.class).hasSuperclass(Person.class);
     assertThat(Cloneable.class).hasNoSuperclass();

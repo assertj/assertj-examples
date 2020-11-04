@@ -20,6 +20,7 @@ import static org.assertj.core.api.InstanceOfAssertFactories.STRING;
 import java.time.Duration;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.CompletionStage;
+import java.util.concurrent.ExecutionException;
 import java.util.concurrent.TimeUnit;
 
 import org.junit.jupiter.api.Test;
@@ -46,18 +47,18 @@ public class CompletableFutureAssertionsExamples extends AbstractAssertionsExamp
     assertThat(futureExplosion).isCompletedExceptionally()
                                .isDone();
 
-    // failed = CompletedExceptionally() + isNotCancelled()
-    assertThat(futureExplosion).hasFailed()
-                               .hasFailedWithThrowableThat()
-                               .isInstanceOf(RuntimeException.class)
-                               .hasMessage("boom !");
+    assertThat(futureExplosion).isCompletedExceptionally()
+                               .isNotCancelled()
+                               .failsWithin(10, TimeUnit.MILLISECONDS)
+                               .withThrowableOfType(ExecutionException.class)
+                               .withCauseInstanceOf(RuntimeException.class)
+                               .withMessageContaining("boom !");
 
     CompletableFuture<?> cancelledFuture = new CompletableFuture<>();
     cancelledFuture.cancel(true);
     assertThat(cancelledFuture).isCancelled()
                                .isDone()
-                               .isCompletedExceptionally()
-                               .hasNotFailed();
+                               .isCompletedExceptionally();
 
     CompletableFuture<String> future = completedFuture("ook!");
     // assertion expressed with TimeUnit
@@ -79,7 +80,8 @@ public class CompletableFutureAssertionsExamples extends AbstractAssertionsExamp
       logAssertionErrorMessage("CompletableFutureAssert.isCompletedWithValueMatching", e);
     }
     try {
-      assertThat(completedFuture).hasFailed();
+      assertThat(completedFuture).isCompletedExceptionally()
+                                 .isNotCancelled();
     } catch (AssertionError e) {
       logAssertionErrorMessage("CompletableFutureAssert.hasFailed", e);
     }
@@ -89,7 +91,8 @@ public class CompletableFutureAssertionsExamples extends AbstractAssertionsExamp
   public void completionStage_assertions_examples() {
     CompletionStage<String> actual = completedFuture("done");
     assertThat(actual).isDone()
-                      .hasNotFailed();
+                      .isNotCancelled()
+                      .isNotCompletedExceptionally();
   }
 
 }

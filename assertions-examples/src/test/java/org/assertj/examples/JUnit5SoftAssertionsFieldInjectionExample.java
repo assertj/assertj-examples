@@ -13,15 +13,17 @@
 package org.assertj.examples;
 
 import org.assertj.core.api.SoftAssertions;
-import org.assertj.core.api.junit.jupiter.SoftlyExtension;
+import org.assertj.core.api.junit.jupiter.InjectSoftAssertions;
+import org.assertj.core.api.junit.jupiter.SoftAssertionsExtension;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 
-@ExtendWith(SoftlyExtension.class)
-public class JUnit5SoftlyExtensionAssertionsExamples {
+@ExtendWith(SoftAssertionsExtension.class)
+public class JUnit5SoftAssertionsFieldInjectionExample {
 
   // initialized by the SoftlyExtension extension
+  @InjectSoftAssertions
   private SoftAssertions soft;
 
   @Test

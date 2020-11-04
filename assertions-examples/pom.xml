@@ -21,7 +21,7 @@
   <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <neo4j.version>3.0.0</neo4j.version>
-    <assertj-core.version>3.17.0</assertj-core.version>
+    <assertj-core.version>3.18.0</assertj-core.version>
   </properties>
 
   <dependencyManagement>
@@ -106,6 +106,17 @@
       <artifactId>logback-classic</artifactId>
       <version>1.2.2</version>
     </dependency>
+    <dependency>
+      <groupId>org.jboss</groupId>
+      <artifactId>jandex</artifactId>
+      <version>2.2.1.Final</version>
+    </dependency>
+    <dependency>
+      <groupId>io.quarkus</groupId>
+      <artifactId>quarkus-core-deployment</artifactId>
+      <version>1.9.0.Final</version>
+    </dependency>
+
     <!-- needed for generated assertions -->
     <dependency>
       <groupId>junit</groupId>

@@ -13,6 +13,7 @@
 package org.assertj.examples;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.withMarginOf;
 
 import java.time.Duration;
 
@@ -34,6 +35,8 @@ public class DurationAssertionsExamples {
     assertThat(Duration.ofHours(5)).isPositive();
     assertThat(Duration.ofMinutes(-15)).isNegative();
     assertThat(Duration.ZERO).isZero();
+
+    assertThat(Duration.ofMinutes(15)).isCloseTo(Duration.ofMinutes(10), withMarginOf(Duration.ofMinutes(5)));
   }
 
 }

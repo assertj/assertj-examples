@@ -315,7 +315,6 @@ public class ExceptionAssertionsExamples extends AbstractAssertionsExamples {
     // @format:on
     assertThat(assertionError).isInstanceOf(AssertionError.class)
                               .hasMessageContaining("[boom expected]");
-
   }
 
   @Test

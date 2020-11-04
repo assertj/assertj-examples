@@ -60,7 +60,9 @@ public class AtomicAssertionsExamples extends AbstractAssertionsExamples {
 
     AtomicReference<String> atomicReference = new AtomicReference<>("foo");
     assertThat(atomicReference).hasValue("foo")
-                               .doesNotHaveValue("bar");
+                               .doesNotHaveValue("bar")
+                               .hasValueMatching(value -> !value.isEmpty(), "not blank")
+                               .hasValueSatisfying(value -> assertThat(value).isNotEmpty());
 
     AtomicReferenceArray<String> abc = new AtomicReferenceArray<>(new String[] { "a", "b", "c" });
     assertThat(abc).contains("b", "a")
