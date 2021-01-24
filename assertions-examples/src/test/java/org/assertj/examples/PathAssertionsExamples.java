@@ -61,11 +61,15 @@ public class PathAssertionsExamples extends AbstractAssertionsExamples {
   @Test
   public void path_content_assertions_examples() throws Exception {
 
+    write(xFile, "".getBytes());
+    assertThat(xFile).isEmptyFile();
+
     // check paths content
 
     write(xFile, "The Truth Is Out There".getBytes());
     // The default charset is used
-    assertThat(xFile).hasContent("The Truth Is Out There");
+    assertThat(xFile).isNotEmptyFile()
+                     .hasContent("The Truth Is Out There");
 
     try {
       assertThat(xFile).hasContent("La Vérité Est Ailleurs");

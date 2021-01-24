@@ -153,6 +153,7 @@ public class StringAssertionsExamples extends AbstractAssertionsExamples {
     assertThat(stringBuffer).usingComparator(caseInsensitiveComparator).contains("fro").doesNotContain("don");
   }
 
+  @SuppressWarnings("deprecation")
   @Test
   public void xml_assertions_examples() {
 
@@ -272,6 +273,14 @@ public class StringAssertionsExamples extends AbstractAssertionsExamples {
                                 "Disc World");
     String smartFormat = STANDARD_REPRESENTATION.toStringOf(newArrayList(greatBooks));
     log.info(smartFormat);
+  }
+
+  @Test
+  public void normalizing_unicode_equals_assertion() {
+    // Ä = \u00C4 - Ä = \u0041\u0308
+    assertThat("Ä").isEqualToNormalizingUnicode("Ä");
+    // fails!
+    assertThat("Ä").isEqualTo("Ä");
   }
 
   @Test

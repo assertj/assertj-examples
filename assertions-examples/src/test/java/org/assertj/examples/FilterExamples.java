@@ -95,14 +95,17 @@ public class FilterExamples extends AbstractAssertionsExamples {
   }
 
   @Test
+  public void filter_on_assertions_example() {
+    assertThat(fellowshipOfTheRing).filteredOn(TolkienCharacter::getRace, HOBBIT)
+                                   .containsOnly(sam, frodo, pippin, merry);
+  }
+
+  @Test
   public void filter_on_condition_examples() {
     // having(condition) example
-    Condition<BasketBallPlayer> mvpStats = new Condition<BasketBallPlayer>() {
-      @Override
-      public boolean matches(BasketBallPlayer player) {
-        return player.getPointsPerGame() > 20 && (player.getAssistsPerGame() >= 8 || player.getReboundsPerGame() >= 8);
-      }
-    };
+    Condition<BasketBallPlayer> mvpStats = new Condition<>(player -> {
+      return player.getPointsPerGame() > 20 && (player.getAssistsPerGame() >= 8 || player.getReboundsPerGame() >= 8);
+    }, "mvp");
     assertThat(filter(basketBallPlayers).having(mvpStats).get()).containsOnly(rose, james, wade);
     assertThat(basketBallPlayers).filteredOn(mvpStats).containsOnly(rose, james, wade);
 

@@ -84,17 +84,14 @@ public class SoftAssertionsExamples extends AbstractAssertionsExamples {
     assertThat(reportBuilder.toString()).isEqualTo(format("Assertions report:%n" +
                                                           "------------------%n" +
                                                           "[check Frodo's race] %n" +
-                                                          "Expecting:%n" +
-                                                          " <\"Hobbit\">%n" +
-                                                          "to be equal to:%n" +
-                                                          " <\"Orc\">%n" +
-                                                          "but was not.%n" +
+                                                          "expected: \"Orc\"%n" +
+                                                          "but was : \"Hobbit\"%n" +
                                                           "------------------%n" +
                                                           "[check Aragorn's age] %n" +
                                                           "Expecting:%n" +
-                                                          " <87>%n" +
+                                                          "  87%n" +
                                                           "to be greater than:%n" +
-                                                          " <500> %n"));
+                                                          "  500%n%n"));
   }
 
   @Test

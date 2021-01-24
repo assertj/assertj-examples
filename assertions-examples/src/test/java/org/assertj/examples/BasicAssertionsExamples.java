@@ -12,6 +12,7 @@
  */
 package org.assertj.examples;
 
+import static java.lang.String.format;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.atIndex;
 import static org.assertj.core.api.Assertions.catchThrowable;
@@ -65,17 +66,17 @@ public class BasicAssertionsExamples extends AbstractAssertionsExamples {
   @Test
   public void meaningful_error_with_test_description_example() {
 
-    // set a bad age to Mr Frodo, just to see how nice is the assertion error message
+    // set an incorrect age to Mr Frodo, just to see how nice is the assertion error message
     frodo.setAge(50);
     // you can specify a test description with as() method or describedAs(), it supports String format args
     Throwable error = catchThrowable(() -> assertThat(frodo.age).as("check %s's age", frodo.getName()).isEqualTo(33));
     assertThat(error).isInstanceOf(AssertionError.class)
-                     .hasMessage("[check Frodo's age] \n" +
-                                 "Expecting:\n" +
-                                 " <50>\n" +
-                                 "to be equal to:\n" +
-                                 " <33>\n" +
-                                 "but was not.");
+                     .hasMessage(format("[check Frodo's age] %n" +
+                                        "expected: 33%n" +
+                                        "but was : 50"));
+
+    // you can pass a Supplier<String> to avoid building the description if the assertion succeeds
+    assertThat(frodo.age).as(() -> "check Frodo's age").isEqualTo(50);
 
     // but you still can override the error message if you have a better one:
     final String frodon = "Frodon";
@@ -216,6 +217,7 @@ public class BasicAssertionsExamples extends AbstractAssertionsExamples {
     assertThat(frodo).hasFieldOrProperty("notAccessibleField");
     assertThat(frodo).hasFieldOrPropertyWithValue("age", 33);
     assertThat(frodo).hasFieldOrProperty("race.name");
+    assertThat(frodo).hasOnlyFields("age", "race", "name", "notAccessibleField");
     assertThat(frodo).hasFieldOrPropertyWithValue("race.name", "Hobbit");
   }
 
@@ -319,6 +321,12 @@ public class BasicAssertionsExamples extends AbstractAssertionsExamples {
                    .usingComparatorForElementFieldsWithType(new BigDecimalComparator(), BigDecimal.class)
                    .containsExactly("Joe", new BigDecimal("1.8"));
 
+  }
+
+  @Test
+  public void toString_assertions_examples() {
+    assertThat(frodo).hasToString("Frodo 33 years old Hobbit")
+                     .doesNotHaveToString("Sauron the maia");
   }
 
   private class Animal {
