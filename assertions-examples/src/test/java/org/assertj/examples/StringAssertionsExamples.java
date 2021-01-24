@@ -280,7 +280,7 @@ public class StringAssertionsExamples extends AbstractAssertionsExamples {
     // Ä = \u00C4 - Ä = \u0041\u0308
     assertThat("Ä").isEqualToNormalizingUnicode("Ä");
     // fails!
-    assertThat("Ä").isEqualTo("Ä");
+    // assertThat("Ä").isEqualTo("Ä");
   }
 
   @Test
