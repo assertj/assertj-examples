@@ -39,6 +39,8 @@ public class IterableWithSpecificComparatorAssertionsExamples extends AbstractAs
     assertThat(fellowshipOfTheRing).contains(gandalf).doesNotContain(sauron);
     // ... but if we compare only race name Sauron is in fellowshipOfTheRing because he's a Maia like Gandalf.
     assertThat(fellowshipOfTheRing).usingElementComparator(raceNameComparator).contains(sauron);
+    assertThat(fellowshipOfTheRing).usingElementComparator((t1, t2) -> t1.getRace().compareTo(t2.getRace()))
+                                   .contains(sauron);
 
     // note that error message mentions the comparator used to better understand the failure
     // the message indicates that Sauron were found because he is a Maia like Gandalf.

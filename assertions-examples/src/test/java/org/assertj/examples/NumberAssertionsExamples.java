@@ -12,6 +12,7 @@
  */
 package org.assertj.examples;
 
+import static java.lang.String.format;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.byLessThan;
 import static org.assertj.core.api.Assertions.fail;
@@ -61,6 +62,9 @@ public class NumberAssertionsExamples extends AbstractAssertionsExamples {
     assertThat(frodo.age - frodo.age).isNotPositive();
     assertThat(gandalf.age - frodo.age).isNotNegative();
     assertThat(frodo.age - sauron.age).isNotPositive();
+
+    assertThat(1.0f).isFinite();
+    assertThat(1.0).isFinite();
   }
 
   @Test
@@ -85,7 +89,7 @@ public class NumberAssertionsExamples extends AbstractAssertionsExamples {
     // Assertion error message is built with a String description of involved objects.
     // Sometimes, the descriptions are the same, if you were to compare a double and a float with same values, the error
     // message would be confusing, ex :
-    // "expected:<'42.0'> but was:<'42.0'> ... How bad !
+    // "expected: '42.0' but was: '42.0' ... How bad !
     // In that case, AssertJ is smart enough and differentiates the number types in the error message.
 
     // we declare numbers instead of Double and Float to be able to compare them with isEqualTo.
@@ -96,12 +100,9 @@ public class NumberAssertionsExamples extends AbstractAssertionsExamples {
     } catch (AssertionError e) {
       // this message is formatted by JUnit to show what is different (looks nice in IDE but not so in the error
       // message)
-      assertThat(e).hasMessage("\n" +
-                               "Expecting:\n" +
-                               " <42.0f>\n" +
-                               "to be equal to:\n" +
-                               " <42.0>\n" +
-                               "but was not.");
+      assertThat(e).hasMessage(format("%n" +
+                                      "expected: 42.0%n" +
+                                      "but was : 42.0f"));
       return;
     }
   }

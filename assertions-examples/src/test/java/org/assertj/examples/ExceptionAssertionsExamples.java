@@ -40,48 +40,54 @@ public class ExceptionAssertionsExamples extends AbstractAssertionsExamples {
   @Test
   public void exceptions_assertions_examples() {
     Exception cause = new Exception("chemical explosion");
-    try {
-      throw new RuntimeException("Boom!", cause);
-    } catch (Exception e) {
-      // you can check exception type
-      assertThat(e).isInstanceOf(RuntimeException.class);
+    Exception e = new RuntimeException("Boom!", cause);
+    // you can check exception type
+    assertThat(e).isInstanceOf(RuntimeException.class);
 
-      // you can check exception's cause
-      assertThat(e).hasCause(cause)
-                   .hasCauseReference(cause)
-                   .hasCauseInstanceOf(Exception.class);
+    // you can check exception's cause
+    assertThat(e).hasCause(cause)
+                 .hasCauseReference(cause)
+                 .hasCauseInstanceOf(Exception.class);
 
-      // you can check exception message (with String#format syntax support)
-      assertThat(e).hasMessage("Boom!")
-                   .hasMessage("%s!", "Boom")
-                   .hasRootCauseMessage("chemical explosion")
-                   .hasRootCauseMessage("chemical %s", "explosion");
+    // you can check exception message (with String#format syntax support)
+    assertThat(e).hasMessage("Boom!")
+                 .hasMessage("%s!", "Boom")
+                 .hasRootCauseMessage("chemical explosion")
+                 .hasRootCauseMessage("chemical %s", "explosion");
 
-      // sometimes message are not entirely predictible, you can then check for start, end or containing string.
-      assertThat(e).hasMessageStartingWith("Boo")
-                   .hasMessageContaining("oom")
-                   .hasMessageContainingAll("Boo", "oom")
-                   .hasMessageNotContainingAny("bar", "foo")
-                   .hasMessageEndingWith("!");
-      // this equivalent to (unless for error message which is more explicit in assertThat(e).hasMessageXXX)
-      assertThat(e.getMessage()).startsWith("Boo")
-                                .contains("oom")
-                                .endsWith("!");
+    // sometimes message are not entirely predictible, you can then check for start, end or containing string.
+    assertThat(e).hasMessageStartingWith("Boo")
+                 .hasMessageContaining("oom")
+                 .hasMessageContainingAll("Boo", "oom")
+                 .hasMessageNotContainingAny("bar", "foo")
+                 .hasMessageEndingWith("!");
+    // this equivalent to (unless for error message which is more explicit in assertThat(e).hasMessageXXX)
+    assertThat(e.getMessage()).startsWith("Boo")
+                              .contains("oom")
+                              .endsWith("!");
 
-      Throwable throwableWithMessage = new IllegalArgumentException("wrong amount 123");
+    Throwable throwableWithMessage = new IllegalArgumentException("wrong amount 123");
 
-      assertThat(throwableWithMessage).hasMessageStartingWith("%s a", "wrong")
-                                      .hasMessageContaining("wrong %s", "amount")
-                                      .hasMessageEndingWith("%s 123", "amount")
-                                      .hasStackTraceContaining("%s amount", "wrong");
+    assertThat(throwableWithMessage).hasMessage("wrong amount 123")
+                                    .hasMessage("%s amount %d", "wrong", 123)
+                                    .hasMessageStartingWith("wrong")
+                                    .hasMessageStartingWith("%s a", "wrong")
+                                    .hasMessageContaining("wrong amount")
+                                    .hasMessageContaining("wrong %s", "amount")
+                                    .hasMessageContainingAll("wrong", "amount")
+                                    .hasMessageEndingWith("123")
+                                    .hasMessageEndingWith("amount %s", "123")
+                                    .hasMessageMatching("wrong amount .*")
+                                    .hasMessageNotContaining("right")
+                                    .hasMessageNotContainingAny("right", "price")
+                                    .hasStackTraceContaining("%s amount", "wrong");
 
-      assertThatExceptionOfType(RuntimeException.class).isThrownBy(() -> {
-        throw new RuntimeException(new IllegalArgumentException("cause message"));
-      })
-                                                       .havingCause()
-                                                       .withMessage("cause message");
+    assertThatExceptionOfType(RuntimeException.class).isThrownBy(() -> {
+      throw new RuntimeException(new IllegalArgumentException("cause message"));
+    })
+                                                     .havingCause()
+                                                     .withMessage("cause message");
 
-    }
   }
 
   @Test
@@ -196,30 +202,64 @@ public class ExceptionAssertionsExamples extends AbstractAssertionsExamples {
   @Test
   public void exception_cause_assertion_examples() {
 
-    Throwable throwable = new Throwable(new NullPointerException("boom"));
+    NullPointerException cause = new NullPointerException("boom!");
+    Throwable throwable = new Throwable(cause);
 
-    assertThat(throwable).hasCause(new NullPointerException("boom"));
+    assertThat(throwable).hasCause(cause)
+                         // hasCauseInstanceOf will match inheritance.
+                         .hasCauseInstanceOf(NullPointerException.class)
+                         .hasCauseInstanceOf(RuntimeException.class)
+                         // hasCauseExactlyInstanceOf will match only exact same type
+                         .hasCauseExactlyInstanceOf(NullPointerException.class);
 
-    // hasCauseInstanceOf will match inheritance.
-    assertThat(throwable).hasCauseInstanceOf(NullPointerException.class);
-    assertThat(throwable).hasCauseInstanceOf(RuntimeException.class);
+    // navigate before checking
+    assertThat(throwable).getCause()
+                         .hasMessage("boom!")
+                         .hasMessage("%s!", "boom")
+                         .hasMessageStartingWith("bo")
+                         .hasMessageEndingWith("!")
+                         .hasMessageContaining("boo")
+                         .hasMessageContainingAll("bo", "oom", "!")
+                         .hasMessageMatching("b...!")
+                         .hasMessageNotContaining("bam")
+                         .hasMessageNotContainingAny("bam", "bim")
+                         // isInstanceOf will match inheritance.
+                         .isInstanceOf(NullPointerException.class)
+                         .isInstanceOf(RuntimeException.class)
+                         // isExactlyInstanceOf will match only exact same type
+                         .isExactlyInstanceOf(NullPointerException.class);
+  }
 
-    // hasCauseExactlyInstanceOf will match only exact same type
-    assertThat(throwable).hasCauseExactlyInstanceOf(NullPointerException.class);
-    try {
-      assertThat(throwable).hasCauseExactlyInstanceOf(RuntimeException.class);
-    } catch (AssertionError e) {
-      logAssertionErrorMessage("hasCauseExactlyInstanceOf", e);
-    }
+  @Test
+  public void exception_root_cause_assertion_examples() {
+    NullPointerException rootCause = new NullPointerException("null!");
+    Throwable throwable = new Throwable(new IllegalStateException(rootCause));
 
-    Throwable throwable_root = new Throwable(new IllegalStateException(new NullPointerException()));
+    assertThat(throwable).hasRootCause(rootCause)
+                         .hasRootCauseMessage("null!")
+                         .hasRootCauseMessage("%s!", "null")
+                         // hasRootCauseInstanceOf will match inheritance
+                         .hasRootCauseInstanceOf(NullPointerException.class)
+                         .hasRootCauseInstanceOf(RuntimeException.class)
+                         // hasRootCauseExactlyInstanceOf will match only exact same type
+                         .hasRootCauseExactlyInstanceOf(NullPointerException.class);
 
-    // hasRootCauseInstanceOf will match inheritance
-    assertThat(throwable_root).hasRootCauseInstanceOf(NullPointerException.class);
-    assertThat(throwable_root).hasRootCauseInstanceOf(RuntimeException.class);
-
-    // hasRootCauseExactlyInstanceOf will match only exact same type
-    assertThat(throwable_root).hasRootCauseExactlyInstanceOf(NullPointerException.class);
+    // navigate before checking
+    assertThat(throwable).getRootCause()
+                         .hasMessage("null!")
+                         .hasMessage("%s!", "null")
+                         .hasMessageStartingWith("nu")
+                         .hasMessageEndingWith("!")
+                         .hasMessageContaining("ul")
+                         .hasMessageContainingAll("nu", "ull", "l!")
+                         .hasMessageMatching("n...!")
+                         .hasMessageNotContaining("NULL")
+                         .hasMessageNotContainingAny("Null", "NULL")
+                         // isInstanceOf will match inheritance.
+                         .isInstanceOf(NullPointerException.class)
+                         .isInstanceOf(RuntimeException.class)
+                         // isExactlyInstanceOf will match only exact same type
+                         .isExactlyInstanceOf(NullPointerException.class);
   }
 
   @Test

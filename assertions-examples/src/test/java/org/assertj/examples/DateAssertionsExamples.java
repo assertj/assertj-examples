@@ -24,6 +24,7 @@ import static org.assertj.core.util.DateUtil.yesterday;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.time.Clock;
+import java.time.Instant;
 import java.time.LocalDateTime;
 import java.time.OffsetDateTime;
 import java.time.ZoneId;
@@ -344,6 +345,27 @@ public class DateAssertionsExamples extends AbstractAssertionsExamples {
 
     logAssertionErrorMessage(() -> assertThat(Collections.singleton(localDateTime)).containsExactly(now),
                              "disambiguate date time representation");
+  }
+
+  @Test
+  public void assertions_with_instant_parameters() {
+    final Date dateTimeWithMs = parseDatetimeWithMs("2001-02-03T04:05:06.700");
+
+    assertThat(dateTimeWithMs).isEqualTo(dateTimeWithMs.toInstant())
+                              .isBefore(Instant.parse("2002-01-01T00:00:00.00Z"))
+                              .isAfter(Instant.parse("2000-01-01T00:00:00.00Z"))
+                              .isBetween(Instant.parse("2000-01-01T00:00:00.00Z"),
+                                         Instant.parse("2002-01-01T00:00:00.00Z"))
+                              .isCloseTo(dateTimeWithMs.toInstant().minusMillis(10), 20)
+                              .isEqualToIgnoringHours(dateTimeWithMs.toInstant().plus(1, ChronoUnit.HOURS))
+                              .isEqualToIgnoringMinutes(dateTimeWithMs.toInstant().plus(1, ChronoUnit.MINUTES))
+                              .isEqualToIgnoringSeconds(dateTimeWithMs.toInstant().plus(1, ChronoUnit.SECONDS))
+                              .isEqualToIgnoringMillis(dateTimeWithMs.toInstant().plus(1, ChronoUnit.MILLIS))
+                              .isIn(dateTimeWithMs.toInstant(), dateTimeWithMs.toInstant().plusMillis(10))
+                              .isInSameDayAs(dateTimeWithMs.toInstant().plus(1, ChronoUnit.MINUTES))
+                              .isInSameMonthAs(Instant.parse("2001-02-01T00:00:00.00Z"))
+                              .isInSameYearAs(Instant.parse("2001-01-01T00:00:00.00Z"))
+                              .isNotIn(dateTimeWithMs.toInstant().minusMillis(10), dateTimeWithMs.toInstant().plusMillis(10));
   }
 
 }

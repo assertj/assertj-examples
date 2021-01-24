@@ -14,6 +14,7 @@ package org.assertj.examples;
 
 import static org.assertj.core.api.Assertions.as;
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.BDDAssertions.then;
 import static org.assertj.core.api.InstanceOfAssertFactories.STRING;
 import static org.assertj.examples.condition.UsingConditionExamples.JEDI;
 import static org.assertj.examples.data.Race.ELF;
@@ -31,7 +32,7 @@ import org.junit.jupiter.api.Test;
 
 /**
  * {@link Optional} assertions example.
- * 
+ *
  * @author Joel Costigliola
  */
 public class OptionalAssertionsExamples extends AbstractAssertionsExamples {
@@ -57,6 +58,8 @@ public class OptionalAssertionsExamples extends AbstractAssertionsExamples {
     Condition<TolkienCharacter> isAnElf = new Condition<>(character -> character.getRace() == Race.ELF, "an elf");
 
     assertThat(Optional.of(legolas)).hasValueSatisfying(isAnElf);
+    assertThat(Optional.of(legolas)).satisfiesAnyOf(tc -> then(tc).isEmpty(), tc -> then(tc.get().getRace()).isEqualTo(Race.ELF));
+    assertThat(Optional.empty()).satisfiesAnyOf(tc -> then(tc).isEmpty(), tc -> then(true).isFalse());
 
     // log some error messages to have a look at them
     try {
