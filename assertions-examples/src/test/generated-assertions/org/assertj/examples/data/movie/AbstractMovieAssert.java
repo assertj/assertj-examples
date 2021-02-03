@@ -1,6 +1,6 @@
 package org.assertj.examples.data.movie;
 
-import org.assertj.core.util.Objects;
+import java.util.Objects;
 import org.assertj.examples.data.AbstractArtWorkAssert;
 
 /**
@@ -68,7 +68,7 @@ public abstract class AbstractMovieAssert<S extends AbstractMovieAssert<S, A>, A
 
     // null safe check
     java.util.Date actualReleaseDate = actual.getReleaseDate();
-    if (!Objects.areEqual(actualReleaseDate, releaseDate)) {
+    if (!Objects.deepEquals(actualReleaseDate, releaseDate)) {
       failWithMessage(assertjErrorMessage, actual, releaseDate, actualReleaseDate);
     }
 
@@ -91,7 +91,7 @@ public abstract class AbstractMovieAssert<S extends AbstractMovieAssert<S, A>, A
 
     // null safe check
     String actualTitle = actual.getTitle();
-    if (!Objects.areEqual(actualTitle, title)) {
+    if (!Objects.deepEquals(actualTitle, title)) {
       failWithMessage(assertjErrorMessage, actual, title, actualTitle);
     }
 
@@ -150,7 +150,7 @@ public abstract class AbstractMovieAssert<S extends AbstractMovieAssert<S, A>, A
 
     // null safe check
     String actualDuration = org.assertj.core.util.introspection.FieldSupport.EXTRACTION.fieldValue("duration", String.class, actual);
-    if (!Objects.areEqual(actualDuration, duration)) {
+    if (!Objects.deepEquals(actualDuration, duration)) {
       failWithMessage(assertjErrorMessage, actual, duration, actualDuration);
     }
 

@@ -241,6 +241,11 @@
             <artifactId>assertj-core</artifactId>
             <version>${assertj-core.version}</version>
           </dependency>
+          <dependency>
+            <groupId>org.assertj</groupId>
+            <artifactId>assertj-assertions-generator</artifactId>
+            <version>2.2.1</version>
+          </dependency>
         </dependencies>
       </plugin>
       <plugin>
