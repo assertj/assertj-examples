@@ -20,7 +20,7 @@
 
   <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-    <neo4j.version>3.0.0</neo4j.version>
+    <neo4j.version>3.5.0</neo4j.version>
     <assertj-core.version>3.19.0</assertj-core.version>
   </properties>
 
