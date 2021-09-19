@@ -12,14 +12,16 @@
  */
 package org.assertj.examples.neo4j;
 
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.neo4j.api.Assertions.assertThat;
+
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.neo4j.graphdb.Label;
 import org.neo4j.graphdb.Node;
 import org.neo4j.graphdb.Transaction;
 
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.neo4j.api.Assertions.assertThat;
-
+@Disabled
 public class NodeAssertionExamples extends Neo4jAssertionExamples {
 
   @Test

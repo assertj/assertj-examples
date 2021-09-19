@@ -14,12 +14,14 @@ package org.assertj.examples;
 
 import static java.util.Arrays.asList;
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.recursive.comparison.RecursiveComparisonConfiguration.builder;
 import static org.assertj.core.util.Lists.newArrayList;
 import static org.assertj.examples.data.Race.HOBBIT;
 
 import java.util.Comparator;
 import java.util.List;
 
+import org.assertj.core.api.recursive.comparison.RecursiveComparisonConfiguration;
 import org.assertj.examples.comparator.AtPrecisionComparator;
 import org.assertj.examples.data.Employee;
 import org.assertj.examples.data.TolkienCharacter;
@@ -89,79 +91,16 @@ public class IterableWithSpecificComparatorAssertionsExamples extends AbstractAs
 
     Dude[] hobbits = new Dude[] { dude };
 
-    // assertions will pass
-    assertThat(hobbits).usingComparatorForElementFieldsWithNames(closeEnough, "height")
-                       .usingFieldByFieldElementComparator()
+    RecursiveComparisonConfiguration configuration = builder().withComparatorForFields(closeEnough, "height")
+                                                              .build();
+
+    assertThat(hobbits).usingRecursiveFieldByFieldElementComparator(configuration)
                        .contains(tallerDude);
 
-    assertThat(hobbits).usingComparatorForElementFieldsWithNames(closeEnough, "height")
-                       .usingElementComparatorOnFields("height")
+    configuration = builder().withComparatorForType(closeEnough, Double.class)
+                             .build();
+    assertThat(hobbits).usingRecursiveFieldByFieldElementComparator(configuration)
                        .contains(tallerDude);
-
-    assertThat(hobbits).usingComparatorForElementFieldsWithNames(closeEnough, "height")
-                       .usingElementComparatorIgnoringFields("name")
-                       .contains(tallerDude);
-
-    assertThat(hobbits).usingComparatorForElementFieldsWithNames(closeEnough, "height")
-                       .usingRecursiveFieldByFieldElementComparator()
-                       .contains(tallerDude);
-
-    assertThat(asList(dude)).usingComparatorForElementFieldsWithNames(closeEnough, "height")
-                            .usingFieldByFieldElementComparator()
-                            .contains(tallerDude);
-
-    assertThat(asList(dude)).usingComparatorForElementFieldsWithNames(closeEnough, "height")
-                            .usingElementComparatorOnFields("height")
-                            .contains(tallerDude);
-
-    assertThat(asList(dude)).usingComparatorForElementFieldsWithNames(closeEnough, "height")
-                            .usingElementComparatorIgnoringFields("name")
-                            .contains(tallerDude);
-
-    assertThat(asList(dude)).usingComparatorForElementFieldsWithNames(closeEnough, "height")
-                            .usingRecursiveFieldByFieldElementComparator()
-                            .contains(tallerDude);
-
-    assertThat(hobbits).usingComparatorForElementFieldsWithType(closeEnough, Double.class)
-                       .usingFieldByFieldElementComparator()
-                       .contains(tallerDude);
-
-    assertThat(hobbits).usingComparatorForElementFieldsWithType(closeEnough, Double.class)
-                       .usingElementComparatorOnFields("height")
-                       .contains(tallerDude);
-
-    assertThat(hobbits).usingComparatorForElementFieldsWithType(closeEnough, Double.class)
-                       .usingElementComparatorIgnoringFields("name")
-                       .contains(tallerDude);
-
-    assertThat(hobbits).usingComparatorForElementFieldsWithType(closeEnough, Double.class)
-                       .usingRecursiveFieldByFieldElementComparator()
-                       .contains(tallerDude);
-
-    assertThat(asList(dude)).usingComparatorForElementFieldsWithType(closeEnough, Double.class)
-                            .usingFieldByFieldElementComparator()
-                            .contains(tallerDude);
-
-    assertThat(asList(dude)).usingComparatorForElementFieldsWithType(closeEnough, Double.class)
-                            .usingElementComparatorOnFields("height")
-                            .contains(tallerDude);
-
-    assertThat(asList(dude)).usingComparatorForElementFieldsWithType(closeEnough, Double.class)
-                            .usingElementComparatorIgnoringFields("name")
-                            .contains(tallerDude);
-
-    assertThat(asList(dude)).usingComparatorForElementFieldsWithType(closeEnough, Double.class)
-                            .usingRecursiveFieldByFieldElementComparator()
-                            .contains(tallerDude);
-
-    Dude reallyTallDude = new Dude("Frodo", 1.9);
-    try {
-      assertThat(asList(dude)).usingComparatorForElementFieldsWithNames(closeEnough, "height")
-                              .usingFieldByFieldElementComparator()
-                              .contains(reallyTallDude);
-    } catch (AssertionError e) {
-      logAssertionErrorMessage("contains for Iterable usingComparatorForElementFieldsWithNames", e);
-    }
   }
 
   @Test

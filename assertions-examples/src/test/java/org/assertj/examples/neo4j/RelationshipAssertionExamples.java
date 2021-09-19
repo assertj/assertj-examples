@@ -12,19 +12,21 @@
  */
 package org.assertj.examples.neo4j;
 
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.neo4j.api.Assertions.assertThat;
+
+import java.util.Collection;
+import java.util.Iterator;
+
 import org.assertj.examples.data.neo4j.DragonBallGraphRepository;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.neo4j.graphdb.Node;
 import org.neo4j.graphdb.Relationship;
 import org.neo4j.graphdb.RelationshipType;
 import org.neo4j.graphdb.Transaction;
 
-import java.util.Collection;
-import java.util.Iterator;
-
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.neo4j.api.Assertions.assertThat;
-
+@Disabled
 public class RelationshipAssertionExamples extends Neo4jAssertionExamples {
 
   @Test

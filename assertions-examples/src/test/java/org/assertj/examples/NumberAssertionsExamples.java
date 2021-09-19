@@ -102,7 +102,7 @@ public class NumberAssertionsExamples extends AbstractAssertionsExamples {
       // message)
       assertThat(e).hasMessage(format("%n" +
                                       "expected: 42.0%n" +
-                                      "but was : 42.0f"));
+                                      " but was: 42.0f"));
       return;
     }
   }
@@ -333,6 +333,7 @@ public class NumberAssertionsExamples extends AbstractAssertionsExamples {
                               .isNotNegative();
 
     assertThat(BigInteger.ONE).isOne();
+    assertThat(new BigDecimal("8.00")).hasScaleOf(2);
 
     assertThat(new BigInteger("-1")).isNegative()
                                     .isNotPositive();

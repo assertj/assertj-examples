@@ -51,6 +51,12 @@ public class FileAssertionsExamples extends AbstractAssertionsExamples {
     assertThat(xFile).isNotEmpty()
                      .hasSize(22)
                      .hasContent("The Truth Is Out There");
+
+    // alternative with content() to chain any string assertion
+    assertThat(xFile).content()
+                     .startsWith("The Truth Is ")
+                     .endsWith("There");
+
     File emptyFile = writeFile("emptyFile.txt", "");
     assertThat(emptyFile).isEmpty()
                          .hasSize(0);
@@ -59,6 +65,11 @@ public class FileAssertionsExamples extends AbstractAssertionsExamples {
     Charset turkishCharset = Charset.forName("windows-1254");
     File xFileWithTurkishCharset = writeFile("xFileWithTurkishCharset", "La Vérité Est Ailleurs", turkishCharset);
     assertThat(xFileWithTurkishCharset).usingCharset(turkishCharset).hasContent("La Vérité Est Ailleurs");
+
+    // alternative with content(charset) to chain any string assertion
+    assertThat(xFileWithTurkishCharset).content(turkishCharset)
+                                       .startsWith("La Vérité")
+                                       .endsWith("Ailleurs");
 
     // compare content with a binary array
     byte[] binaryContent = "The Truth Is Out There".getBytes();

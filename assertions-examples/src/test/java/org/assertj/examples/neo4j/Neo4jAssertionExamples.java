@@ -24,10 +24,12 @@ import java.util.stream.Collectors;
 import org.assertj.examples.data.neo4j.DragonBallGraphRepository;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.Disabled;
 import org.neo4j.graphdb.GraphDatabaseService;
 import org.neo4j.graphdb.Transaction;
 import org.neo4j.test.TestGraphDatabaseFactory;
 
+@Disabled
 public class Neo4jAssertionExamples {
 
   private static GraphDatabaseService graphDatabase;

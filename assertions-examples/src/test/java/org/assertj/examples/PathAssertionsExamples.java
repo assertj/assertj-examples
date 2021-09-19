@@ -71,6 +71,11 @@ public class PathAssertionsExamples extends AbstractAssertionsExamples {
     assertThat(xFile).isNotEmptyFile()
                      .hasContent("The Truth Is Out There");
 
+    // alternative with content() to chain any string assertion
+    assertThat(xFile).content()
+                     .startsWith("The Truth Is ")
+                     .endsWith("There");
+
     try {
       assertThat(xFile).hasContent("La Vérité Est Ailleurs");
     } catch (AssertionError e) {
@@ -83,6 +88,11 @@ public class PathAssertionsExamples extends AbstractAssertionsExamples {
     write(xFileTurkish, singleton("Gerçek Başka bir yerde mi"), turkishCharset);
     assertThat(xFileTurkish).usingCharset("windows-1254").hasContent("Gerçek Başka bir yerde mi" + lineSeparator());
     assertThat(xFileTurkish).usingCharset(turkishCharset).hasContent("Gerçek Başka bir yerde mi" + lineSeparator());
+
+    // alternative with content(charset) to chain any string assertion
+    assertThat(xFileTurkish).content(turkishCharset)
+                            .startsWith("Gerçek Başka")
+                            .contains("yerde");
 
     // compare paths content (uses the default charset)
 
@@ -152,7 +162,8 @@ public class PathAssertionsExamples extends AbstractAssertionsExamples {
     // The following assertions succeed:
     assertThat(rwxFile).isReadable()
                        .isWritable()
-                       .isExecutable();
+                       .isExecutable()
+                       .hasNoExtension();
 
     assertThat(symlinkToRwxFile).isReadable()
                                 .isWritable()
@@ -186,9 +197,11 @@ public class PathAssertionsExamples extends AbstractAssertionsExamples {
 
     // assertions examples
 
-    assertThat(existingFile).exists();
+    assertThat(existingFile).exists()
+                            .existsNoFollowLinks()
+                            .hasSize(3)
+                            .hasExtension("txt");
     assertThat(symlinkToExistingFile).exists();
-    assertThat(existingFile).existsNoFollowLinks();
     assertThat(symlinkToNonExistentPath).existsNoFollowLinks();
 
     assertThat(nonExistentPath).doesNotExist();

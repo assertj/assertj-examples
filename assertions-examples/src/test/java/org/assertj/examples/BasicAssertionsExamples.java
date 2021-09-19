@@ -20,6 +20,7 @@ import static org.assertj.core.api.InstanceOfAssertFactories.STRING;
 import static org.assertj.core.util.Lists.list;
 import static org.assertj.core.util.Lists.newArrayList;
 import static org.assertj.examples.data.Race.HOBBIT;
+import static org.assertj.examples.data.Race.ELF;
 import static org.assertj.examples.data.Ring.narya;
 import static org.assertj.examples.data.Ring.nenya;
 import static org.assertj.examples.data.Ring.oneRing;
@@ -29,8 +30,10 @@ import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.function.Consumer;
 
 import org.assertj.core.api.Assertions;
+import org.assertj.core.api.Condition;
 import org.assertj.core.api.InstanceOfAssertFactories;
 import org.assertj.core.util.BigDecimalComparator;
 import org.assertj.core.util.introspection.FieldSupport;
@@ -73,7 +76,7 @@ public class BasicAssertionsExamples extends AbstractAssertionsExamples {
     assertThat(error).isInstanceOf(AssertionError.class)
                      .hasMessage(format("[check Frodo's age] %n" +
                                         "expected: 33%n" +
-                                        "but was : 50"));
+                                        " but was: 50"));
 
     // you can pass a Supplier<String> to avoid building the description if the assertion succeeds
     assertThat(frodo.age).as(() -> "check Frodo's age").isEqualTo(50);
@@ -327,6 +330,16 @@ public class BasicAssertionsExamples extends AbstractAssertionsExamples {
   public void toString_assertions_examples() {
     assertThat(frodo).hasToString("Frodo 33 years old Hobbit")
                      .doesNotHaveToString("Sauron the maia");
+  }
+
+  @Test
+  public void satisfies_assertions_examples() {
+    assertThat(frodo).satisfies(tolkienCharacter -> {
+      assertThat(tolkienCharacter.getRace()).isEqualTo(HOBBIT);
+      assertThat(tolkienCharacter.getName()).isEqualTo("Frodo");
+    });
+    assertThat(frodo).satisfiesAnyOf(tolkienCharacter -> assertThat(tolkienCharacter.getRace()).isEqualTo(HOBBIT),
+                                     tolkienCharacter -> assertThat(tolkienCharacter.getRace()).isEqualTo(ELF));
   }
 
   private class Animal {

@@ -13,6 +13,7 @@
 package org.assertj.examples;
 
 import static java.util.Arrays.asList;
+import static java.util.Collections.unmodifiableCollection;
 import static org.assertj.core.api.Assertions.as;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.extractProperty;
@@ -81,6 +82,7 @@ public class IterableAssertionsExamples extends AbstractAssertionsExamples {
                    .containsAnyOf("a", "b", "c")
                    .containsAnyOf("a", "b", "c", "d")
                    .containsAnyOf("e", "f", "g", "b");
+    assertThat(unmodifiableCollection(abc)).isUnmodifiable();
 
     assertThat(asList("a", "a", "b")).containsOnly("a", "a", "b", "b");
 

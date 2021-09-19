@@ -39,8 +39,10 @@ public class StringAssertionsExamples extends AbstractAssertionsExamples {
                        .doesNotContain("fro")
                        .doesNotContainIgnoringCase("froo")
                        .containsOnlyOnce("do")
+                       .containsAnyOf("Gand", "odo")
                        .isSubstringOf("Frodon")
-                       .doesNotContainAnyWhitespaces();
+                       .doesNotContainAnyWhitespaces()
+                       .isMixedCase();
     try {
       assertThat("Frodo").containsOnlyOnce("o");
     } catch (AssertionError e) {
@@ -101,6 +103,12 @@ public class StringAssertionsExamples extends AbstractAssertionsExamples {
     //
     assertThat("Frodo").doesNotStartWith("fro")
                        .doesNotEndWith("don");
+
+    assertThat("Capitalized").isMixedCase();
+    assertThat("camelCase").isMixedCase();
+    assertThat("rAndOMcAse1234").isMixedCase();
+    assertThat("1@3$567").isMixedCase();
+    assertThat("").isMixedCase();
   }
 
   @Test

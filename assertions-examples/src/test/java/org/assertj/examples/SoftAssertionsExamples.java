@@ -85,10 +85,10 @@ public class SoftAssertionsExamples extends AbstractAssertionsExamples {
                                                           "------------------%n" +
                                                           "[check Frodo's race] %n" +
                                                           "expected: \"Orc\"%n" +
-                                                          "but was : \"Hobbit\"%n" +
+                                                          " but was: \"Hobbit\"%n" +
                                                           "------------------%n" +
                                                           "[check Aragorn's age] %n" +
-                                                          "Expecting:%n" +
+                                                          "Expecting actual:%n" +
                                                           "  87%n" +
                                                           "to be greater than:%n" +
                                                           "  500%n%n"));

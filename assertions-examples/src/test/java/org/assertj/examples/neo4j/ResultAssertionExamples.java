@@ -20,6 +20,7 @@ import org.junit.jupiter.api.Test;
 import org.neo4j.graphdb.Result;
 import org.neo4j.graphdb.Transaction;
 
+@Disabled
 public class ResultAssertionExamples extends Neo4jAssertionExamples {
 
   @Test
