@@ -31,6 +31,7 @@ import static org.assertj.db.api.Assertions.assertThat;
  * {@link Changes} assertions example.
  * 
  * @author Régis Pouiller
+ * @author Julien Roy
  */
 public class ChangesAssertionExamples extends AbstractAssertionsExamples {
 
@@ -39,7 +40,7 @@ public class ChangesAssertionExamples extends AbstractAssertionsExamples {
    */
   @Test
   public void basic_changes_assertion_examples() throws SQLException {
-    Changes changes = new Changes(dataSource);
+    Changes changes = assertConnection.changes().build();
     changes.setStartPointNow();
     makeChangesInTheData();
     changes.setEndPointNow();
@@ -58,7 +59,7 @@ public class ChangesAssertionExamples extends AbstractAssertionsExamples {
    */
   @Test
   public void basic_change_assertion_examples() throws SQLException {
-    Changes changes = new Changes(dataSource);
+    Changes changes = assertConnection.changes().build();
     changes.setStartPointNow();
     makeChangesInTheData();
     changes.setEndPointNow();
@@ -92,7 +93,7 @@ public class ChangesAssertionExamples extends AbstractAssertionsExamples {
    */
   @Test
   public void basic_row_assertion_examples() throws SQLException, ParseException {
-    Changes changes = new Changes(dataSource);
+    Changes changes = assertConnection.changes().build();
     changes.setStartPointNow();
     makeChangesInTheData();
     changes.setEndPointNow();
@@ -128,7 +129,7 @@ public class ChangesAssertionExamples extends AbstractAssertionsExamples {
    */
   @Test
   public void basic_column_assertion_examples() throws SQLException {
-    Changes changes = new Changes(dataSource);
+    Changes changes = assertConnection.changes().build();
     changes.setStartPointNow();
     makeChangesInTheData();
     changes.setEndPointNow();
@@ -166,7 +167,7 @@ public class ChangesAssertionExamples extends AbstractAssertionsExamples {
    */
   @Test
   public void basic_value_assertion_examples() throws SQLException, ParseException {
-    Changes changes = new Changes(dataSource);
+    Changes changes = assertConnection.changes().build();
     changes.setStartPointNow();
     makeChangesInTheData();
     changes.setEndPointNow();
@@ -193,8 +194,7 @@ public class ChangesAssertionExamples extends AbstractAssertionsExamples {
    */
   @Test
   public void changes_about_table_assertion_examples() throws SQLException {
-    Table table = new Table(dataSource, "members");
-    Changes changes = new Changes(table);
+    Changes changes = assertConnection.changes().table("members").build();
     changes.setStartPointNow();
     makeChangesInTheData();
     changes.setEndPointNow();
@@ -211,8 +211,7 @@ public class ChangesAssertionExamples extends AbstractAssertionsExamples {
    */
   @Test
   public void changes_about_request_assertion_examples() throws SQLException {
-    Request request = new Request(dataSource, "select title from albums");
-    Changes changes = new Changes(request);
+    Changes changes = assertConnection.changes().request("select title from albums").build();
     changes.setStartPointNow();
     makeChangesInTheData();
     changes.setEndPointNow();
@@ -227,7 +226,7 @@ public class ChangesAssertionExamples extends AbstractAssertionsExamples {
    */
   @Test
   public void changetype_assertion_examples() throws SQLException {
-    Changes changes = new Changes(dataSource);
+    Changes changes = assertConnection.changes().build();
     changes.setStartPointNow();
     makeChangesInTheData();
     changes.setEndPointNow();
@@ -243,7 +242,7 @@ public class ChangesAssertionExamples extends AbstractAssertionsExamples {
    */
   @Test
   public void datatype_isontable_assertion_examples() throws SQLException {
-    Changes changes = new Changes(dataSource);
+    Changes changes = assertConnection.changes().build();
     changes.setStartPointNow();
     makeChangesInTheData();
     changes.setEndPointNow();
@@ -258,9 +257,8 @@ public class ChangesAssertionExamples extends AbstractAssertionsExamples {
    * This example shows a simple case of test on data type for change on a request.
    */
   @Test
-  public void datatype_isonrequest_assertion_examples() throws SQLException {
-    Request request = new Request(dataSource, "select title from albums");
-    Changes changes = new Changes(request);
+  public void datatype_is_on_request_assertion_examples() throws SQLException {
+    Changes changes = assertConnection.changes().request("select title from albums").build();
     changes.setStartPointNow();
     makeChangesInTheData();
     changes.setEndPointNow();
@@ -274,7 +272,7 @@ public class ChangesAssertionExamples extends AbstractAssertionsExamples {
    */
   @Test
   public void column_equality_assertion_examples() throws SQLException {
-    Changes changes = new Changes(dataSource);
+    Changes changes = assertConnection.changes().build();
     changes.setStartPointNow();
     makeChangesInTheData();
     changes.setEndPointNow();
@@ -304,8 +302,8 @@ public class ChangesAssertionExamples extends AbstractAssertionsExamples {
    */
   @Test
   public void changes_number_assertion_examples() throws SQLException {
-    Changes changesDataSource = new Changes(dataSource).setStartPointNow();
-    Changes changesRequest = new Changes(new Request(dataSource, "select title from albums"));
+    Changes changesDataSource = assertConnection.changes().build().setStartPointNow();
+    Changes changesRequest = assertConnection.changes().request("select title from albums").build();
     changesRequest.setStartPointNow();
     makeChangesInTheData();
     changesDataSource.setEndPointNow();
@@ -320,7 +318,7 @@ public class ChangesAssertionExamples extends AbstractAssertionsExamples {
    */
   @Test
   public void columns_number_assertion_examples() throws SQLException {
-    Changes changes = new Changes(dataSource).setStartPointNow();
+    Changes changes = assertConnection.changes().build().setStartPointNow();
     makeChangesInTheData();
     changes.setEndPointNow();
 
@@ -339,7 +337,7 @@ public class ChangesAssertionExamples extends AbstractAssertionsExamples {
    */
   @Test
   public void primary_keys_assertion_examples() throws SQLException {
-    Changes changes = new Changes(dataSource).setStartPointNow();
+    Changes changes = assertConnection.changes().build().setStartPointNow();
     makeChangesInTheData();
     changes.setEndPointNow();
 
@@ -354,7 +352,7 @@ public class ChangesAssertionExamples extends AbstractAssertionsExamples {
    */
   @Test
   public void modified_columns_assertion_examples() throws SQLException {
-    Changes changes = new Changes(dataSource).setStartPointNow();
+    Changes changes = assertConnection.changes().build().setStartPointNow();
     makeChangesInTheData();
     changes.setEndPointNow();
 
@@ -378,7 +376,7 @@ public class ChangesAssertionExamples extends AbstractAssertionsExamples {
    */
   @Test
   public void column_type_assertion_examples() throws SQLException {
-    Changes changes = new Changes(dataSource);
+    Changes changes = assertConnection.changes().build();
     changes.setStartPointNow();
     makeChangesInTheData();
     changes.setEndPointNow();
@@ -408,7 +406,7 @@ public class ChangesAssertionExamples extends AbstractAssertionsExamples {
    */
   @Test
   public void modified_column_assertion_examples() throws SQLException {
-    Changes changes = new Changes(dataSource);
+    Changes changes = assertConnection.changes().build();
     changes.setStartPointNow();
     makeChangesInTheData();
     changes.setEndPointNow();
@@ -442,7 +440,7 @@ public class ChangesAssertionExamples extends AbstractAssertionsExamples {
    */
   @Test
   public void column_name_assertion_examples() throws SQLException {
-    Changes changes = new Changes(dataSource);
+    Changes changes = assertConnection.changes().build();
     changes.setStartPointNow();
     makeChangesInTheData();
     changes.setEndPointNow();
@@ -483,7 +481,7 @@ public class ChangesAssertionExamples extends AbstractAssertionsExamples {
    */
   @Test
   public void row_existence_assertion_examples() throws SQLException {
-    Changes changes = new Changes(dataSource).setStartPointNow();
+    Changes changes = assertConnection.changes().build().setStartPointNow();
     makeChangesInTheData();
     changes.setEndPointNow();
 
@@ -504,7 +502,7 @@ public class ChangesAssertionExamples extends AbstractAssertionsExamples {
    */
   @Test
   public void row_equality_assertion_examples() throws SQLException {
-    Changes changes = new Changes(dataSource).setStartPointNow();
+    Changes changes = assertConnection.changes().build().setStartPointNow();
     makeChangesInTheData();
     changes.setEndPointNow();
 
@@ -523,7 +521,7 @@ public class ChangesAssertionExamples extends AbstractAssertionsExamples {
    */
   @Test
   public void value_equality_assertion_examples() throws SQLException {
-    Changes changes = new Changes(dataSource).setStartPointNow();
+    Changes changes = assertConnection.changes().build().setStartPointNow();
     makeChangesInTheData();
     changes.setEndPointNow();
 
@@ -601,7 +599,7 @@ public class ChangesAssertionExamples extends AbstractAssertionsExamples {
    */
   @Test
   public void value_non_equality_assertion_examples() throws SQLException {
-    Changes changes = new Changes(dataSource).setStartPointNow();
+    Changes changes = assertConnection.changes().build().setStartPointNow();
     makeChangesInTheData();
     changes.setEndPointNow();
 
@@ -679,7 +677,7 @@ public class ChangesAssertionExamples extends AbstractAssertionsExamples {
    */
   @Test
   public void value_type_assertion_examples() throws SQLException {
-    Changes changes = new Changes(dataSource).setStartPointNow();
+    Changes changes = assertConnection.changes().build().setStartPointNow();
     makeChangesInTheData();
     changes.setEndPointNow();
 
@@ -757,7 +755,7 @@ public class ChangesAssertionExamples extends AbstractAssertionsExamples {
    */
   @Test
   public void value_nullity_assertion_examples() throws SQLException {
-    Changes changes = new Changes(dataSource).setStartPointNow();
+    Changes changes = assertConnection.changes().build().setStartPointNow();
     makeChangesInTheData();
     changes.setEndPointNow();
 
@@ -842,7 +840,7 @@ public class ChangesAssertionExamples extends AbstractAssertionsExamples {
    */
   @Test
   public void value_comparison_assertion_examples() throws SQLException {
-    Changes changes = new Changes(dataSource).setStartPointNow();
+    Changes changes = assertConnection.changes().build().setStartPointNow();
     makeChangesInTheData();
     changes.setEndPointNow();
 
@@ -936,7 +934,7 @@ public class ChangesAssertionExamples extends AbstractAssertionsExamples {
    */
   @Test
   public void value_chronology_assertion_examples() throws SQLException {
-    Changes changes = new Changes(dataSource).setStartPointNow();
+    Changes changes = assertConnection.changes().build().setStartPointNow();
     makeChangesInTheData();
     changes.setEndPointNow();
 

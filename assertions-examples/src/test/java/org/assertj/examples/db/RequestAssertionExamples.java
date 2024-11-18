@@ -21,6 +21,7 @@ import static org.assertj.db.api.Assertions.assertThat;
  * {@link Request} assertions example.
  * 
  * @author Régis Pouiller
+ * @author Julien Roy
  */
 public class RequestAssertionExamples extends AbstractAssertionsExamples {
 
@@ -29,7 +30,7 @@ public class RequestAssertionExamples extends AbstractAssertionsExamples {
    */
   @Test
   public void basic_request_assertion_examples() {
-    Request request = new Request(dataSource, "select * from albums");
+    Request request = assertConnection.request("select * from albums").build();
 
     // On the values of a column by using the name of the column
     assertThat(request).column("title")
@@ -64,8 +65,11 @@ public class RequestAssertionExamples extends AbstractAssertionsExamples {
    */
   @Test
   public void basic_column_request_assertion_examples() {
-    Source source = new Source("jdbc:h2:mem:test;DB_CLOSE_DELAY=-1", "user", "password");
-    Request request = new Request(source, "select * from albums");
+    Request request = AssertDbConnectionFactory
+            .of("jdbc:h2:mem:test;DB_CLOSE_DELAY=-1", "user", "password")
+            .create()
+            .request("select * from albums")
+            .build();
 
     assertThat(request).column("title")
         .hasValues("Boy", "October", "War", "Under a Blood Red Sky",
@@ -79,7 +83,7 @@ public class RequestAssertionExamples extends AbstractAssertionsExamples {
    */
   @Test
   public void basic_row_request_assertion_examples() {
-    Request request = new Request(dataSource, "select * from albums");
+    Request request = assertConnection.request("select * from albums").build();
 
     assertThat(request).row(1)
         .hasValues(2, DateValue.of(1981, 10, 12), "October", 11, TimeValue.of(0, 41, 8), null)
@@ -91,7 +95,7 @@ public class RequestAssertionExamples extends AbstractAssertionsExamples {
    */
   @Test
   public void size_request_assertion_examples() {
-    Request request = new Request(dataSource, "select * from albums");
+    Request request = assertConnection.request("select * from albums").build();
 
     // There is assertion to test the column and row size.
     assertThat(request).hasNumberOfColumns(6);
@@ -107,7 +111,10 @@ public class RequestAssertionExamples extends AbstractAssertionsExamples {
    */
   @Test
   public void request_parameters_examples() {
-    Request request = new Request(dataSource, "select release, title from albums where title like ?", "A%");
+    Request request = assertConnection
+            .request("select release, title from albums where title like ?")
+            .parameters("A%")
+            .build();
 
     assertThat(request).hasNumberOfColumns(2).hasNumberOfRows(2);
     assertThat(request)
@@ -120,12 +127,12 @@ public class RequestAssertionExamples extends AbstractAssertionsExamples {
    */
   @Test
   public void text_for_numeric_request_assertion_examples() {
-    Request request = new Request(dataSource, "select * from members");
+    Request request = assertConnection.request("select * from members").build();
 
     assertThat(request).row(1)
         .value("size").isEqualTo("1.77").isNotEqualTo("1.78");
 
-    Request request1 = new Request(dataSource, "select * from albums");
+    Request request1 = assertConnection.request("select * from albums").build();
 
     assertThat(request1).row(14)
         .value("numberofsongs").isEqualTo("11").isNotEqualTo("12");
@@ -136,15 +143,18 @@ public class RequestAssertionExamples extends AbstractAssertionsExamples {
    */
   @Test
   public void numeric_request_assertion_examples() {
-    Source source = new Source("jdbc:h2:mem:test;DB_CLOSE_DELAY=-1", "user", "password");
-    Request request = new Request(source, "select * from members");
+    Request request = AssertDbConnectionFactory
+            .of("jdbc:h2:mem:test;DB_CLOSE_DELAY=-1", "user", "password")
+            .create()
+            .request("select * from members")
+            .build();
 
     assertThat(request).row(1)
         .value("size").isNotZero()
             .isGreaterThan(1.5).isGreaterThanOrEqualTo(1.77)
             .isLessThan(2).isLessThanOrEqualTo(1.77);
 
-    Request request1 = new Request(dataSource, "select * from albums");
+    Request request1 = assertConnection.request("select * from albums").build();
 
     assertThat(request1).row(14)
         .value("numberofsongs").isNotZero()
@@ -157,7 +167,7 @@ public class RequestAssertionExamples extends AbstractAssertionsExamples {
    */
   @Test
   public void boolean_request_assertion_examples() {
-    Request request = new Request(dataSource, "select * from albums");
+    Request request = assertConnection.request("select * from albums").build();
 
     assertThat(request).column("live")
         .value(3).isTrue()
@@ -170,8 +180,11 @@ public class RequestAssertionExamples extends AbstractAssertionsExamples {
    */
   @Test
   public void type_request_assertion_examples() {
-    Source source = new Source("jdbc:h2:mem:test;DB_CLOSE_DELAY=-1", "user", "password");
-    Request request = new Request(source, "select * from albums");
+    Request request = AssertDbConnectionFactory
+            .of("jdbc:h2:mem:test;DB_CLOSE_DELAY=-1", "user", "password")
+            .create()
+            .request("select * from albums")
+            .build();
 
     assertThat(request).row(3)
         .value().isNumber()
@@ -187,7 +200,7 @@ public class RequestAssertionExamples extends AbstractAssertionsExamples {
    */
   @Test
   public void colum_type_request_assertion_examples() {
-    Request request = new Request(dataSource, "select * from albums");
+    Request request = assertConnection.request("select * from albums").build();
 
     assertThat(request)
         .column().isNumber(false)
@@ -204,8 +217,11 @@ public class RequestAssertionExamples extends AbstractAssertionsExamples {
    */
   @Test
   public void date_request_assertion_examples() {
-    Source source = new Source("jdbc:h2:mem:test;DB_CLOSE_DELAY=-1", "user", "password");
-    Request request = new Request(source, "select * from members");
+    Request request = AssertDbConnectionFactory
+            .of("jdbc:h2:mem:test;DB_CLOSE_DELAY=-1", "user", "password")
+            .create()
+            .request("select * from members")
+            .build();
 
     // Compare date to date or date in string format
     assertThat(request).row(1)
@@ -245,7 +261,7 @@ public class RequestAssertionExamples extends AbstractAssertionsExamples {
    */
   @Test
   public void columns_number_assertion_examples() {
-    Request request = new Request(dataSource, "select * from albums");
+    Request request = assertConnection.request("select * from albums").build();
 
     assertThat(request).hasNumberOfColumns(6)
         .row().hasNumberOfColumns(6);
@@ -256,7 +272,7 @@ public class RequestAssertionExamples extends AbstractAssertionsExamples {
    */
   @Test
   public void rows_number_assertion_examples() {
-    Request request = new Request(dataSource, "select * from albums");
+    Request request = assertConnection.request("select * from albums").build();
 
     assertThat(request).hasNumberOfRows(15)
         .column().hasNumberOfRows(15);
@@ -267,7 +283,7 @@ public class RequestAssertionExamples extends AbstractAssertionsExamples {
    */
   @Test
   public void column_name_assertion_examples() {
-    Request request = new Request(dataSource, "select * from albums");
+    Request request = assertConnection.request("select * from albums").build();
 
     assertThat(request)
         .column().hasColumnName("id")
@@ -283,7 +299,7 @@ public class RequestAssertionExamples extends AbstractAssertionsExamples {
    */
   @Test
   public void column_type_assertion_examples() {
-    Request request = new Request(dataSource, "select * from albums");
+    Request request = assertConnection.request("select * from albums").build();
 
     assertThat(request)
         .column().isNumber(false).isOfType(ValueType.NUMBER, false).isOfAnyTypeIn(ValueType.NUMBER)
@@ -299,7 +315,7 @@ public class RequestAssertionExamples extends AbstractAssertionsExamples {
    */
   @Test
   public void column_equality_assertion_examples() {
-    Request request = new Request(dataSource, "select * from albums");
+    Request request = assertConnection.request("select * from albums").build();
 
     assertThat(request)
         .column().hasValues(1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15)
@@ -339,7 +355,7 @@ public class RequestAssertionExamples extends AbstractAssertionsExamples {
    */
   @Test
   public void row_equality_assertion_examples() {
-    Request request = new Request(dataSource, "select * from albums");
+    Request request = assertConnection.request("select * from albums").build();
 
     assertThat(request)
         .row().hasValues(1, DateValue.of(1980, 10, 20), "Boy", 12, TimeValue.of(0, 42, 17), null)
@@ -364,7 +380,7 @@ public class RequestAssertionExamples extends AbstractAssertionsExamples {
    */
   @Test
   public void column_nullity_assertion_examples() {
-    Request request = new Request(dataSource, "select * from members where id >= 3");
+    Request request = assertConnection.request("select * from members where id >= 3").build();
 
     assertThat(request)
         .column("surname").hasOnlyNullValues()
@@ -376,7 +392,7 @@ public class RequestAssertionExamples extends AbstractAssertionsExamples {
    */
   @Test
   public void value_equality_assertion_examples() {
-    Request request = new Request(dataSource, "select * from albums");
+    Request request = assertConnection.request("select * from albums").build();
 
     assertThat(request)
         .column()
@@ -522,7 +538,7 @@ public class RequestAssertionExamples extends AbstractAssertionsExamples {
    */
   @Test
   public void value_nullity_assertion_examples() {
-    Request request = new Request(dataSource, "select * from albums");
+    Request request = assertConnection.request("select * from albums").build();
 
     assertThat(request)
         .column()
@@ -589,7 +605,7 @@ public class RequestAssertionExamples extends AbstractAssertionsExamples {
    */
   @Test
   public void value_type_assertion_examples() {
-    Request request = new Request(dataSource, "select * from albums");
+    Request request = assertConnection.request("select * from albums").build();
 
     assertThat(request)
         .column()
@@ -639,7 +655,7 @@ public class RequestAssertionExamples extends AbstractAssertionsExamples {
    */
   @Test
   public void value_non_equality_assertion_examples() {
-    Request request = new Request(dataSource, "select * from albums");
+    Request request = assertConnection.request("select * from albums").build();
 
     assertThat(request)
         .column()
@@ -799,7 +815,7 @@ public class RequestAssertionExamples extends AbstractAssertionsExamples {
    */
   @Test
   public void value_comparison_assertion_examples() {
-    Request request = new Request(dataSource, "select * from albums");
+    Request request = assertConnection.request("select * from albums").build();
 
     assertThat(request)
         .column()
@@ -1126,7 +1142,7 @@ public class RequestAssertionExamples extends AbstractAssertionsExamples {
    */
   @Test
   public void value_chronology_assertion_examples() {
-    Request request = new Request(dataSource, "select * from albums");
+    Request request = assertConnection.request("select * from albums").build();
 
     assertThat(request)
         .column("release")

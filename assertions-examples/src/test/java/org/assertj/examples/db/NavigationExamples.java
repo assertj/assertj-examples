@@ -26,7 +26,7 @@ import org.junit.jupiter.api.Test;
  * Examples of navigation for a table, a request and changes
  * 
  * @author Régis Pouiller
- *
+ * @author Julien Roy
  */
 public class NavigationExamples extends AbstractAssertionsExamples {
 
@@ -35,7 +35,7 @@ public class NavigationExamples extends AbstractAssertionsExamples {
    */
   @Test
   public void basic_navigation_examples_for_a_table() {
-    Table table = new Table(dataSource, "members");
+    Table table = assertConnection.table("members").build();
 
     assertThat(table)
       .row()                                    // First row
@@ -87,7 +87,7 @@ public class NavigationExamples extends AbstractAssertionsExamples {
    */
   @Test
   public void basic_navigation_examples_for_a_request() {
-    Request request = new Request(dataSource, "select * from members");
+    Request request = assertConnection.request("select * from members").build();
 
     assertThat(request)
       .row()                                    // First row
@@ -139,7 +139,7 @@ public class NavigationExamples extends AbstractAssertionsExamples {
    */
   @Test
   public void basic_navigation_examples_for_changes() throws SQLException {
-    Changes changes = new Changes(dataSource);
+    Changes changes = assertConnection.changes().build();
     changes.setStartPointNow();                // Start point (the moment when the changes start to be taken into account)
     makeChangesInTheData();
     changes.setEndPointNow();                  // End point (the moment when the changes stop to be taken into account)
