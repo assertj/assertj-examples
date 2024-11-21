@@ -21,6 +21,7 @@ import static org.assertj.db.api.Assertions.assertThat;
  * {@link Table} assertions example.
  * 
  * @author Régis Pouiller
+ * @author Julien Roy
  */
 public class TableAssertionExamples extends AbstractAssertionsExamples {
 
@@ -29,7 +30,7 @@ public class TableAssertionExamples extends AbstractAssertionsExamples {
    */
   @Test
   public void basic_table_assertion_examples() {
-    Table table = new Table(dataSource, "members");
+    Table table = assertConnection.table("members").build();
 
     // Check column "name" values
     assertThat(table).column("name")
@@ -53,8 +54,11 @@ public class TableAssertionExamples extends AbstractAssertionsExamples {
    */
   @Test
   public void basic_column_table_assertion_examples() {
-    Source source = new Source("jdbc:h2:mem:test;DB_CLOSE_DELAY=-1", "user", "password");
-    Table table = new Table(source, "members");
+    Table table = AssertDbConnectionFactory
+            .of("jdbc:h2:mem:test;DB_CLOSE_DELAY=-1", "user", "password")
+            .create()
+            .table("members")
+            .build();
 
     assertThat(table).column("name")
         .hasValues("Hewson", "Evans", "Clayton", "Mullen");
@@ -65,13 +69,13 @@ public class TableAssertionExamples extends AbstractAssertionsExamples {
    */
   @Test
   public void basic_row_table_assertion_examples() {
-    Table table = new Table(dataSource, "members");
+    Table table = assertConnection.table("members").build();
 
     assertThat(table).row(1)
         .hasValues(2, "Evans", "David Howell", "The Edge", DateValue.of(1961, 8, 8), 1.77)
         .hasValues("2", "Evans", "David Howell", "The Edge", "1961-08-08", "1.77");
 
-    Table table1 = new Table(dataSource, "albums");
+    Table table1 = assertConnection.table("albums").build();
 
     assertThat(table1).row()
         .hasValues(1, DateValue.of(1980, 10, 20), "Boy", 12, TimeValue.of(0, 42, 17), null)
@@ -83,7 +87,7 @@ public class TableAssertionExamples extends AbstractAssertionsExamples {
    */
   @Test
   public void size_table_assertion_examples() {
-    Table table = new Table(dataSource, "members");
+    Table table = assertConnection.table("members").build();
 
     // There is assertion to test the column and row size.
     assertThat(table).hasNumberOfColumns(6);
@@ -99,7 +103,10 @@ public class TableAssertionExamples extends AbstractAssertionsExamples {
    */
   @Test
   public void table_inclusion_examples() {
-    Table table = new Table(dataSource, "members", new String[] {"id", "name", "firstname"}, null);
+    Table table = assertConnection
+            .table("members")
+            .columnsToCheck(new String[] {"id", "name", "firstname"})
+            .build();
 
     assertThat(table).hasNumberOfColumns(3);
     assertThat(table).row().hasNumberOfColumns(3)
@@ -111,7 +118,9 @@ public class TableAssertionExamples extends AbstractAssertionsExamples {
    */
   @Test
   public void table_exclusion_examples() {
-    Table table = new Table(dataSource, "members", null, new String[] {"id", "name", "firstname"});
+    Table table = assertConnection.table("members")
+            .columnsToExclude(new String[] {"id", "name", "firstname"})
+            .build();
 
     assertThat(table).hasNumberOfColumns(3)
         .row().hasNumberOfColumns(3)
@@ -123,12 +132,12 @@ public class TableAssertionExamples extends AbstractAssertionsExamples {
    */
   @Test
   public void text_for_numeric_table_assertion_examples() {
-    Table table = new Table(dataSource, "members");
+    Table table = assertConnection.table("members").build();
 
     assertThat(table).row(1)
         .value("size").isEqualTo("1.77").isNotEqualTo("1.78");
 
-    Table table1 = new Table(dataSource, "albums");
+    Table table1 = assertConnection.table("albums").build();
 
     assertThat(table1).row(14)
         .value("numberofsongs").isEqualTo("11").isNotEqualTo("12");
@@ -139,15 +148,18 @@ public class TableAssertionExamples extends AbstractAssertionsExamples {
    */
   @Test
   public void numeric_table_assertion_examples() {
-    Source source = new Source("jdbc:h2:mem:test;DB_CLOSE_DELAY=-1", "user", "password");
-    Table table = new Table(source, "members");
+    Table table = AssertDbConnectionFactory
+            .of("jdbc:h2:mem:test;DB_CLOSE_DELAY=-1", "user", "password")
+            .create()
+            .table("members")
+            .build();
 
     assertThat(table).row(1)
         .value("size").isNotZero()
             .isGreaterThan(1.5).isGreaterThanOrEqualTo(1.77)
             .isLessThan(2).isLessThanOrEqualTo(1.77);
 
-    Table table1 = new Table(dataSource, "albums");
+    Table table1 = assertConnection.table("albums").build();
 
     assertThat(table1).row(14)
         .value("numberofsongs").isNotZero()
@@ -160,7 +172,7 @@ public class TableAssertionExamples extends AbstractAssertionsExamples {
    */
   @Test
   public void boolean_table_assertion_examples() {
-    Table table = new Table(dataSource, "albums");
+    Table table = assertConnection.table("albums").build();
 
     assertThat(table).column("live")
         .value(3).isTrue()
@@ -173,8 +185,11 @@ public class TableAssertionExamples extends AbstractAssertionsExamples {
    */
   @Test
   public void type_table_assertion_examples() {
-    Source source = new Source("jdbc:h2:mem:test;DB_CLOSE_DELAY=-1", "user", "password");
-    Table table = new Table(source, "albums");
+    Table table = AssertDbConnectionFactory
+            .of("jdbc:h2:mem:test;DB_CLOSE_DELAY=-1", "user", "password")
+            .create()
+            .table("albums")
+            .build();
 
     assertThat(table).row(3)
         .value().isNumber()
@@ -190,7 +205,7 @@ public class TableAssertionExamples extends AbstractAssertionsExamples {
    */
   @Test
   public void colum_type_table_assertion_examples() {
-    Table table = new Table(dataSource, "albums");
+    Table table = assertConnection.table("albums").build();
 
     assertThat(table)
         .column().isNumber(false)
@@ -207,8 +222,11 @@ public class TableAssertionExamples extends AbstractAssertionsExamples {
    */
   @Test
   public void date_table_assertion_examples() {
-    Source source = new Source("jdbc:h2:mem:test;DB_CLOSE_DELAY=-1", "user", "password");
-    Table table = new Table(source, "members");
+    Table table = AssertDbConnectionFactory
+            .of("jdbc:h2:mem:test;DB_CLOSE_DELAY=-1", "user", "password")
+            .create()
+            .table("members")
+            .build();
 
     // Compare date to date or date in string format
     assertThat(table).row(1)
@@ -248,7 +266,7 @@ public class TableAssertionExamples extends AbstractAssertionsExamples {
    */
   @Test
   public void columns_number_assertion_examples() {
-    Table table = new Table(dataSource, "members");
+    Table table = assertConnection.table("members").build();
 
     assertThat(table).hasNumberOfColumns(6)
         .row().hasNumberOfColumns(6);
@@ -259,7 +277,7 @@ public class TableAssertionExamples extends AbstractAssertionsExamples {
    */
   @Test
   public void rows_number_assertion_examples() {
-    Table table = new Table(dataSource, "members");
+    Table table = assertConnection.table("members").build();
 
     assertThat(table).hasNumberOfRows(4)
         .column().hasNumberOfRows(4);
@@ -270,7 +288,7 @@ public class TableAssertionExamples extends AbstractAssertionsExamples {
    */
   @Test
   public void column_name_assertion_examples() {
-    Table table = new Table(dataSource, "members");
+    Table table = assertConnection.table("members").build();
 
     assertThat(table)
         .column().hasColumnName("id")
@@ -286,7 +304,7 @@ public class TableAssertionExamples extends AbstractAssertionsExamples {
    */
   @Test
   public void column_type_assertion_examples() {
-    Table table = new Table(dataSource, "members");
+    Table table = assertConnection.table("members").build();
 
     assertThat(table)
         .column().isNumber(false).isOfType(ValueType.NUMBER, false).isOfAnyTypeIn(ValueType.NUMBER)
@@ -302,7 +320,7 @@ public class TableAssertionExamples extends AbstractAssertionsExamples {
    */
   @Test
   public void column_equality_assertion_examples() {
-    Table table = new Table(dataSource, "members");
+    Table table = assertConnection.table("members").build();
 
     assertThat(table)
         .column().hasValues(1, 2, 3, 4)
@@ -319,7 +337,7 @@ public class TableAssertionExamples extends AbstractAssertionsExamples {
    */
   @Test
   public void row_equality_assertion_examples() {
-    Table table = new Table(dataSource, "members");
+    Table table = assertConnection.table("members").build();
 
     assertThat(table)
         .row().hasValues(1, "Hewson", "Paul David", "Bono", DateValue.of(1960, 5, 10), 1.75)
@@ -333,7 +351,7 @@ public class TableAssertionExamples extends AbstractAssertionsExamples {
    */
   @Test
   public void column_nullity_assertion_examples() {
-    Table table = new Table(dataSource, "members");
+    Table table = assertConnection.table("members").build();
 
     assertThat(table)
         .column().hasOnlyNotNullValues()
@@ -349,7 +367,7 @@ public class TableAssertionExamples extends AbstractAssertionsExamples {
    */
   @Test
   public void value_equality_assertion_examples() {
-    Table table = new Table(dataSource, "members");
+    Table table = assertConnection.table("members").build();
 
     assertThat(table)
         .column()
@@ -417,7 +435,7 @@ public class TableAssertionExamples extends AbstractAssertionsExamples {
    */
   @Test
   public void value_nullity_assertion_examples() {
-    Table table = new Table(dataSource, "members");
+    Table table = assertConnection.table("members").build();
 
     assertThat(table)
         .column()
@@ -485,7 +503,7 @@ public class TableAssertionExamples extends AbstractAssertionsExamples {
    */
   @Test
   public void value_type_assertion_examples() {
-    Table table = new Table(dataSource, "members");
+    Table table = assertConnection.table("members").build();
 
     assertThat(table)
         .column()
@@ -553,7 +571,7 @@ public class TableAssertionExamples extends AbstractAssertionsExamples {
    */
   @Test
   public void value_non_equality_assertion_examples() {
-    Table table = new Table(dataSource, "members");
+    Table table = assertConnection.table("members").build();
 
     assertThat(table)
         .column()
@@ -621,7 +639,7 @@ public class TableAssertionExamples extends AbstractAssertionsExamples {
    */
   @Test
   public void value_comparison_assertion_examples() {
-    Table table = new Table(dataSource, "members");
+    Table table = assertConnection.table("members").build();
 
     assertThat(table)
         .column()
@@ -717,7 +735,7 @@ public class TableAssertionExamples extends AbstractAssertionsExamples {
    */
   @Test
   public void value_chronology_assertion_examples() {
-    Table table = new Table(dataSource, "members");
+    Table table = assertConnection.table("members").build();
 
     assertThat(table)
         .column("birthdate")

@@ -15,6 +15,8 @@ package org.assertj.examples.db;
 import java.sql.Connection;
 import java.sql.SQLException;
 
+import org.assertj.db.type.AssertDbConnection;
+import org.assertj.db.type.AssertDbConnectionFactory;
 import org.h2.jdbcx.JdbcConnectionPool;
 import org.junit.jupiter.api.BeforeEach;
 
@@ -23,10 +25,12 @@ import org.junit.jupiter.api.BeforeEach;
  * Init data for assertions examples.
  *
  * @author Régis Pouiller
+ * @author Julien Roy
  */
 public class AbstractAssertionsExamples {
 
   protected static JdbcConnectionPool dataSource;
+  protected static AssertDbConnection assertConnection;
 
   private static final String MEMBERS_CREATE_REQUEST = "create table members(id number primary key, name varchar not null, firstname varchar not null, surname varchar, birthdate date, size decimal);";
   private static final String[] MEMBERS_INSERT_REQUESTS = {
@@ -58,6 +62,7 @@ public class AbstractAssertionsExamples {
   public void setUp() throws SQLException {
     if (dataSource == null) {
       dataSource = JdbcConnectionPool.create("jdbc:h2:mem:test;DB_CLOSE_DELAY=-1", "user", "password");
+      assertConnection = AssertDbConnectionFactory.of(dataSource).create();
     }
     else {
       Connection conn = dataSource.getConnection();
