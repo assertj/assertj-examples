@@ -213,9 +213,10 @@ public class BasicAssertionsExamples extends AbstractAssertionsExamples {
 
   @Test
   public void has_field_or_property_examples() {
+    assertThat(frodo).hasFieldOrProperty("age");
+    // private field is found unless Assertions.setAllowExtractingPrivateFields(false);
+    assertThat(frodo).hasFieldOrProperty("notAccessibleField");
     assertThat(frodo)
-            .hasFieldOrProperty("age")
-            .hasFieldOrProperty("notAccessibleField")
             .hasFieldOrPropertyWithValue("age", 33)
             .hasFieldOrProperty("race.name")
             .hasOnlyFields("age", "race", "name", "notAccessibleField")

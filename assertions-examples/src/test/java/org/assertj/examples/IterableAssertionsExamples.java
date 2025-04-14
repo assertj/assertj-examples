@@ -446,23 +446,26 @@ public class IterableAssertionsExamples extends AbstractAssertionsExamples {
     List<TolkienCharacter> hobbits = list(frodo, sam, pippin);
     assertThat(hobbits)
             .allSatisfy(character -> {
-      assertThat(character.getRace()).isEqualTo(HOBBIT);
-      assertThat(character.getName()).isNotEqualTo("Sauron");
-    })
+              assertThat(character.getRace()).isEqualTo(HOBBIT);
+              assertThat(character.getName()).isNotEqualTo("Sauron");
+            })
             .anySatisfy(character -> {
-      assertThat(character.getRace()).isEqualTo(HOBBIT);
-      assertThat(character.age).isLessThan(30);
-    })
+              assertThat(character.getRace()).isEqualTo(HOBBIT);
+              assertThat(character.age).isLessThan(30);
+            })
             .noneSatisfy(character -> assertThat(character.getRace()).isEqualTo(ELF));
 
     // order is important, so frodo must satisfy the first lambda requirements, sam the second and pippin the last
-    assertThat(hobbits).satisfiesExactly(character -> assertThat(character.getName()).isEqualTo("Frodo"),
-                                         character -> assertThat(character.getName()).isEqualTo("Sam"),
-                                         character -> assertThat(character.getName()).startsWith("Pip"))
-                       // order is not but all requirements must be met
-                       .satisfiesExactlyInAnyOrder(character -> assertThat(character.getName()).isEqualTo("Sam"),
-                                                   character -> assertThat(character.getName()).startsWith("Pip"),
-                                                   character -> assertThat(character.getName()).isEqualTo("Frodo"));
+    assertThat(hobbits)
+            .satisfiesExactly(
+                    character -> assertThat(character.getName()).isEqualTo("Frodo"),
+                    character -> assertThat(character.getName()).isEqualTo("Sam"),
+                    character -> assertThat(character.getName()).startsWith("Pip"))
+            // order is not but all requirements must be met
+            .satisfiesExactlyInAnyOrder(
+                    character -> assertThat(character.getName()).isEqualTo("Sam"),
+                    character -> assertThat(character.getName()).startsWith("Pip"),
+                    character -> assertThat(character.getName()).isEqualTo("Frodo"));
   }
 
   @Test

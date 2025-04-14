@@ -63,9 +63,10 @@ public class MapAssertionsExamples extends AbstractAssertionsExamples {
     assertThat(ringBearers).isNotEmpty().hasSize(4);
 
     // note the usage of Assertions.entry(key, value) synthetic sugar for better readability (similar to
-    // MapEntry.entry(key, value)).
     assertThat(ringBearers)
+            // MapEntry.entry(key, value)).
             .contains(entry(oneRing, frodo), entry(nenya, galadriel))
+            // using java util Map.Entry
             .contains(javaMapEntry(oneRing, frodo), javaMapEntry(nenya, galadriel));
     // same assertion but different way of expressing it : no entry call needed but no varargs support.
     assertThat(ringBearers).containsEntry(oneRing, frodo).containsEntry(nenya, galadriel);
@@ -79,8 +80,10 @@ public class MapAssertionsExamples extends AbstractAssertionsExamples {
     ringBearersInDifferentOrder.put(Ring.narya, gandalf);
     ringBearersInDifferentOrder.put(Ring.nenya, galadriel);
     ringBearersInDifferentOrder.put(Ring.vilya, elrond);
+    assertThat(ringBearers).containsExactlyInAnyOrderEntriesOf(ringBearersInDifferentOrder);
+
+    // Assertion on key
     assertThat(ringBearers)
-            .containsExactlyInAnyOrderEntriesOf(ringBearersInDifferentOrder)
             .containsKey(nenya)
             .containsKeys(nenya, narya)
             .containsValues(frodo, galadriel)
