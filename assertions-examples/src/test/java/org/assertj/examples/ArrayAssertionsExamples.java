@@ -65,18 +65,21 @@ public class ArrayAssertionsExamples extends AbstractAssertionsExamples {
 
     Movie[] trilogy = array(theFellowshipOfTheRing, theTwoTowers, theReturnOfTheKing);
     assertThat(elvesRings).isNotEmpty().hasSize(3);
-    assertThat(elvesRings).hasSameSizeAs(trilogy);
-    assertThat(elvesRings).hasSameSizeAs(newArrayList(trilogy));
+    assertThat(elvesRings)
+            .hasSameSizeAs(trilogy)
+            .hasSameSizeAs(newArrayList(trilogy));
     assertThat(elvesRings).contains(nenya).doesNotContain(oneRing);
-    assertThat(elvesRings).containsExactly(vilya, nenya, narya);
-    assertThat(elvesRings).containsExactlyElementsOf(newArrayList(vilya, nenya, narya));
+    assertThat(elvesRings)
+            .containsExactly(vilya, nenya, narya)
+            .containsExactlyElementsOf(newArrayList(vilya, nenya, narya));
 
     // you can check element at a given index (we use Index.atIndex(int) synthetic sugar for better readability).
     assertThat(elvesRings).contains(vilya, atIndex(0)).contains(nenya, atIndex(1)).contains(narya, atIndex(2));
     // with containsOnly, all the elements must be present (but the order is not important)
-    assertThat(elvesRings).containsOnly(nenya, vilya, narya);
-    assertThat(elvesRings).containsOnlyElementsOf(newArrayList(nenya, vilya, narya));
-    assertThat(elvesRings).hasSameElementsAs(newArrayList(nenya, vilya, narya));
+    assertThat(elvesRings)
+            .containsOnly(nenya, vilya, narya)
+            .containsOnlyElementsOf(newArrayList(nenya, vilya, narya))
+            .hasSameElementsAs(newArrayList(nenya, vilya, narya));
     assertThat(elvesRings).doesNotContainNull().doesNotHaveDuplicates();
     assertThat(elvesRings).doesNotContainAnyElementsOf(newArrayList(oneRing, manRing, dwarfRing));
     // special check for null, empty collection or both
@@ -371,8 +374,9 @@ public class ArrayAssertionsExamples extends AbstractAssertionsExamples {
   @Test
   public void array_assertions_testing_elements_type() throws Exception {
     Number[] numbers = { 2, 6L, 8.0 };
-    assertThat(numbers).hasAtLeastOneElementOfType(Long.class);
-    assertThat(numbers).hasOnlyElementsOfType(Number.class);
+    assertThat(numbers)
+            .hasAtLeastOneElementOfType(Long.class)
+            .hasOnlyElementsOfType(Number.class);
   }
 
   @Test

@@ -116,8 +116,9 @@ public class BasicAssertionsExamples extends AbstractAssertionsExamples {
 
   @Test
   public void isIn_isNotIn_assertions_examples() {
-    assertThat(frodo).isIn(fellowshipOfTheRing);
-    assertThat(frodo).isIn(sam, frodo, pippin);
+    assertThat(frodo)
+            .isIn(fellowshipOfTheRing)
+            .isIn(sam, frodo, pippin);
     assertThat((TolkienCharacter) null).isIn(sam, frodo, pippin, null);
     assertThat(sauron).isNotIn(fellowshipOfTheRing);
     assertThat((TolkienCharacter) null).isNotIn(fellowshipOfTheRing);
@@ -212,13 +213,13 @@ public class BasicAssertionsExamples extends AbstractAssertionsExamples {
 
   @Test
   public void has_field_or_property_examples() {
-    assertThat(frodo).hasFieldOrProperty("age");
-    // private field are found unless Assertions.setAllowExtractingPrivateFields(false);
-    assertThat(frodo).hasFieldOrProperty("notAccessibleField");
-    assertThat(frodo).hasFieldOrPropertyWithValue("age", 33);
-    assertThat(frodo).hasFieldOrProperty("race.name");
-    assertThat(frodo).hasOnlyFields("age", "race", "name", "notAccessibleField");
-    assertThat(frodo).hasFieldOrPropertyWithValue("race.name", "Hobbit");
+    assertThat(frodo)
+            .hasFieldOrProperty("age")
+            .hasFieldOrProperty("notAccessibleField")
+            .hasFieldOrPropertyWithValue("age", 33)
+            .hasFieldOrProperty("race.name")
+            .hasOnlyFields("age", "race", "name", "notAccessibleField")
+            .hasFieldOrPropertyWithValue("race.name", "Hobbit");
   }
 
   @Test

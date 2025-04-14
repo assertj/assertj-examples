@@ -104,8 +104,9 @@ public class IterableAssertionsExamples extends AbstractAssertionsExamples {
                           .isSubsetOf(duplicatedElvesRings);
 
     try {
-      assertThat(elvesRings).isSubsetOf(list(vilya, nenya, vilya, oneRing));
-      assertThat(elvesRings).containsOnly(nenya, vilya, oneRing);
+      assertThat(elvesRings)
+              .isSubsetOf(list(vilya, nenya, vilya, oneRing))
+              .containsOnly(nenya, vilya, oneRing);
     } catch (AssertionError e) {
       logAssertionErrorMessage("containsOnly", e);
     }
@@ -324,8 +325,9 @@ public class IterableAssertionsExamples extends AbstractAssertionsExamples {
   @Test
   public void iterable_is_subset_of_assertion_example() {
     Collection<Ring> elvesRings = list(vilya, nenya, narya);
-    assertThat(elvesRings).isSubsetOf(ringsOfPower);
-    assertThat(elvesRings).isSubsetOf(vilya, nenya, narya);
+    assertThat(elvesRings)
+            .isSubsetOf(ringsOfPower)
+            .isSubsetOf(vilya, nenya, narya);
     try {
       assertThat(elvesRings).isSubsetOf(list(nenya, narya));
     } catch (AssertionError e) {
@@ -442,17 +444,16 @@ public class IterableAssertionsExamples extends AbstractAssertionsExamples {
   @Test
   public void iterable_satisfy_assertion_example() {
     List<TolkienCharacter> hobbits = list(frodo, sam, pippin);
-    assertThat(hobbits).allSatisfy(character -> {
+    assertThat(hobbits)
+            .allSatisfy(character -> {
       assertThat(character.getRace()).isEqualTo(HOBBIT);
       assertThat(character.getName()).isNotEqualTo("Sauron");
-    });
-
-    assertThat(hobbits).anySatisfy(character -> {
+    })
+            .anySatisfy(character -> {
       assertThat(character.getRace()).isEqualTo(HOBBIT);
       assertThat(character.age).isLessThan(30);
-    });
-
-    assertThat(hobbits).noneSatisfy(character -> assertThat(character.getRace()).isEqualTo(ELF));
+    })
+            .noneSatisfy(character -> assertThat(character.getRace()).isEqualTo(ELF));
 
     // order is important, so frodo must satisfy the first lambda requirements, sam the second and pippin the last
     assertThat(hobbits).satisfiesExactly(character -> assertThat(character.getName()).isEqualTo("Frodo"),
@@ -599,12 +600,14 @@ public class IterableAssertionsExamples extends AbstractAssertionsExamples {
   public void iterable_assertions_testing_elements_type() throws Exception {
     List<Long> numbers = list(1L, 2L);
 
-    assertThat(numbers).hasOnlyElementsOfType(Number.class);
-    assertThat(numbers).hasOnlyElementsOfType(Long.class);
+    assertThat(numbers)
+            .hasOnlyElementsOfType(Number.class)
+            .hasOnlyElementsOfType(Long.class);
 
     List<? extends Object> mixed = list("string", 1L);
-    assertThat(mixed).hasAtLeastOneElementOfType(String.class);
-    assertThat(mixed).hasOnlyElementsOfTypes(Long.class, String.class);
+    assertThat(mixed)
+            .hasAtLeastOneElementOfType(String.class)
+            .hasOnlyElementsOfTypes(Long.class, String.class);
   }
 
   @Test
@@ -769,9 +772,10 @@ public class IterableAssertionsExamples extends AbstractAssertionsExamples {
   public void should_not_produce_warning_for_varargs_parameter() {
     List<Entry<String, String>> list = new ArrayList<>();
     list.add(Pair.of("A", "B"));
-    assertThat(list).containsAnyOf(Pair.of("A", "B"), Pair.of("C", "D"));
-    assertThat(list).containsExactly(Pair.of("A", "B"));
-    assertThat(list).contains(Pair.of("A", "B"));
+    assertThat(list)
+            .containsAnyOf(Pair.of("A", "B"), Pair.of("C", "D"))
+            .containsExactly(Pair.of("A", "B"))
+            .contains(Pair.of("A", "B"));
   }
 
   @Test
