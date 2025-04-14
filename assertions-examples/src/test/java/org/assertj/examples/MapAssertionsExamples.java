@@ -63,15 +63,17 @@ public class MapAssertionsExamples extends AbstractAssertionsExamples {
     assertThat(ringBearers).isNotEmpty().hasSize(4);
 
     // note the usage of Assertions.entry(key, value) synthetic sugar for better readability (similar to
-    // MapEntry.entry(key, value)).
-    assertThat(ringBearers).contains(entry(oneRing, frodo), entry(nenya, galadriel));
-    // using java util Map.Entry
-    assertThat(ringBearers).contains(javaMapEntry(oneRing, frodo), javaMapEntry(nenya, galadriel));
+    assertThat(ringBearers)
+            // MapEntry.entry(key, value)).
+            .contains(entry(oneRing, frodo), entry(nenya, galadriel))
+            // using java util Map.Entry
+            .contains(javaMapEntry(oneRing, frodo), javaMapEntry(nenya, galadriel));
     // same assertion but different way of expressing it : no entry call needed but no varargs support.
     assertThat(ringBearers).containsEntry(oneRing, frodo).containsEntry(nenya, galadriel);
     // opposite of contains/containsEntry
-    assertThat(ringBearers).doesNotContain(entry(oneRing, sauron), entry(nenya, aragorn));
-    assertThat(ringBearers).doesNotContainEntry(oneRing, aragorn);
+    assertThat(ringBearers)
+            .doesNotContain(entry(oneRing, sauron), entry(nenya, aragorn))
+            .doesNotContainEntry(oneRing, aragorn);
 
     Map<Ring, TolkienCharacter> ringBearersInDifferentOrder = new LinkedHashMap<>();
     ringBearersInDifferentOrder.put(Ring.oneRing, frodo);
@@ -81,12 +83,13 @@ public class MapAssertionsExamples extends AbstractAssertionsExamples {
     assertThat(ringBearers).containsExactlyInAnyOrderEntriesOf(ringBearersInDifferentOrder);
 
     // Assertion on key
-    assertThat(ringBearers).containsKey(nenya);
-    assertThat(ringBearers).containsKeys(nenya, narya);
-    assertThat(ringBearers).containsValues(frodo, galadriel);
-    assertThat(ringBearers).containsOnlyKeys(nenya, narya, vilya, oneRing);
-    assertThat(ringBearers).doesNotContainKey(manRing);
-    assertThat(ringBearers).doesNotContainKeys(manRing, dwarfRing);
+    assertThat(ringBearers)
+            .containsKey(nenya)
+            .containsKeys(nenya, narya)
+            .containsValues(frodo, galadriel)
+            .containsOnlyKeys(nenya, narya, vilya, oneRing)
+            .doesNotContainKey(manRing)
+            .doesNotContainKeys(manRing, dwarfRing);
 
     try {
       assertThat(ringBearers).containsOnlyKeys(nenya, narya, dwarfRing);
@@ -95,13 +98,14 @@ public class MapAssertionsExamples extends AbstractAssertionsExamples {
     }
 
     // Assertion on value
-    assertThat(ringBearers).containsValue(frodo);
-    assertThat(ringBearers).doesNotContainValue(sam);
-
-    assertThat(ringBearers).hasSameSizeAs(ringBearers);
+    assertThat(ringBearers)
+            .containsValue(frodo)
+            .doesNotContainValue(sam)
+            .hasSameSizeAs(ringBearers);
     ringBearers.clear();
-    assertThat(ringBearers).contains();
-    assertThat(ringBearers).containsAllEntriesOf(ringBearers);
+    assertThat(ringBearers)
+            .contains()
+            .containsAllEntriesOf(ringBearers);
   }
 
   @Test
@@ -222,10 +226,11 @@ public class MapAssertionsExamples extends AbstractAssertionsExamples {
     ringBearers.put(frodo, oneRing);
     ringBearers.put(isildur, oneRing);
 
-    assertThat(ringBearers).hasEntrySatisfying(oneRingManBearer);
-    assertThat(ringBearers).hasEntrySatisfying(isMan, oneRingBearer);
-    assertThat(ringBearers).hasKeySatisfying(isMan);
-    assertThat(ringBearers).hasValueSatisfying(oneRingBearer);
+    assertThat(ringBearers)
+            .hasEntrySatisfying(oneRingManBearer)
+            .hasEntrySatisfying(isMan, oneRingBearer)
+            .hasKeySatisfying(isMan)
+            .hasValueSatisfying(oneRingBearer);
   }
 
   @Test
