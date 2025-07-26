@@ -37,11 +37,12 @@ public class Java8DateTimeAssertionsExamples extends AbstractAssertionsExamples 
   public void zonedDateTime_assertions_examples() {
 
     ZonedDateTime firstOfJanuary2000InUTC = ZonedDateTime.parse("2000-01-01T00:00:00Z");
-    assertThat(firstOfJanuary2000InUTC).isEqualTo(ZonedDateTime.parse("2000-01-01T00:00:00Z"));
-    // same assertion but AssertJ takes care of expected String to ZonedDateTime conversion
-    assertThat(firstOfJanuary2000InUTC).isEqualTo("2000-01-01T00:00:00Z");
-    // example showing that ZonedDateTime are compared in actual's time zone
-    assertThat(firstOfJanuary2000InUTC).isEqualTo("2000-01-01T01:00:00+01:00");
+    assertThat(firstOfJanuary2000InUTC)
+            .isEqualTo(ZonedDateTime.parse("2000-01-01T00:00:00Z"))
+            // same assertion but AssertJ takes care of expected String to ZonedDateTime conversion
+            .isEqualTo("2000-01-01T00:00:00Z")
+            // example showing that ZonedDateTime are compared in actual's time zone
+            .isEqualTo("2000-01-01T01:00:00+01:00");
 
     try {
       // 2000-01-01T00:00+01:00 = 1999-12-31T23:00:00Z !
@@ -73,10 +74,11 @@ public class Java8DateTimeAssertionsExamples extends AbstractAssertionsExamples 
     ZonedDateTime zonedDateTime4 = ZonedDateTime.of(2000, 1, 1, 0, 0, 59, 999, ZoneOffset.UTC);
     ZonedDateTime zonedDateTime5 = ZonedDateTime.of(2000, 1, 1, 0, 0, 0, 999, ZoneOffset.UTC);
 
-    assertThat(zonedDateTime1).isEqualToIgnoringHours(zonedDateTime2);
-    assertThat(zonedDateTime1).isEqualToIgnoringMinutes(zonedDateTime3);
-    assertThat(zonedDateTime1).isEqualToIgnoringSeconds(zonedDateTime4);
-    assertThat(zonedDateTime1).isEqualToIgnoringNanos(zonedDateTime5);
+    assertThat(zonedDateTime1)
+            .isEqualToIgnoringHours(zonedDateTime2)
+            .isEqualToIgnoringMinutes(zonedDateTime3)
+            .isEqualToIgnoringSeconds(zonedDateTime4)
+            .isEqualToIgnoringNanos(zonedDateTime5);
 
     // example showing that ZonedDateTime are compared in actual's time zone
     ZonedDateTime zonedDateTimeNotInUTC = ZonedDateTime.of(2000, 1, 1, 0, 0, 0, 0, ZoneId.of("UTC+1"));
@@ -233,8 +235,9 @@ public class Java8DateTimeAssertionsExamples extends AbstractAssertionsExamples 
     LocalTime _07_10 = LocalTime.of(7, 10);
     LocalTime _07_42 = LocalTime.of(7, 42);
 
-    assertThat(_07_10).isCloseTo(_07_42, within(32, ChronoUnit.MINUTES));
-    assertThat(_07_10).isCloseTo(_07_42, within(1, ChronoUnit.HOURS));
+    assertThat(_07_10)
+            .isCloseTo(_07_42, within(32, ChronoUnit.MINUTES))
+            .isCloseTo(_07_42, within(1, ChronoUnit.HOURS));
 
     LocalDate localDate = LocalDate.now();
     assertThat(localDate).isBetween(localDate.minusDays(1), localDate.plusDays(1))
@@ -308,9 +311,10 @@ public class Java8DateTimeAssertionsExamples extends AbstractAssertionsExamples 
   public void offsetDateTime_assertions_examples() {
 
     OffsetDateTime firstOfJanuary2000InUTC = OffsetDateTime.parse("2000-01-01T00:00:00Z");
-    assertThat(firstOfJanuary2000InUTC).isEqualTo(OffsetDateTime.parse("2000-01-01T00:00:00Z"));
-    // same assertion but AssertJ takes care of expected String to OffsetDateTime conversion
-    assertThat(firstOfJanuary2000InUTC).isEqualTo("2000-01-01T00:00:00Z");
+    assertThat(firstOfJanuary2000InUTC)
+            .isEqualTo(OffsetDateTime.parse("2000-01-01T00:00:00Z"))
+            // same assertion but AssertJ takes care of expected String to OffsetDateTime conversion
+            .isEqualTo("2000-01-01T00:00:00Z");
 
     try {
       // 2000-01-01T00:00+01:00 = 1999-12-31T23:00:00Z !
@@ -341,10 +345,11 @@ public class Java8DateTimeAssertionsExamples extends AbstractAssertionsExamples 
     OffsetDateTime offsetDateTime3 = OffsetDateTime.of(2000, 1, 1, 0, 59, 59, 999, ZoneOffset.UTC);
     OffsetDateTime offsetDateTime4 = OffsetDateTime.of(2000, 1, 1, 0, 0, 59, 999, ZoneOffset.UTC);
     OffsetDateTime offsetDateTime5 = OffsetDateTime.of(2000, 1, 1, 0, 0, 0, 999, ZoneOffset.UTC);
-    assertThat(offsetDateTime1).isEqualToIgnoringHours(offsetDateTime2);
-    assertThat(offsetDateTime1).isEqualToIgnoringMinutes(offsetDateTime3);
-    assertThat(offsetDateTime1).isEqualToIgnoringSeconds(offsetDateTime4);
-    assertThat(offsetDateTime1).isEqualToIgnoringNanos(offsetDateTime5);
+    assertThat(offsetDateTime1)
+            .isEqualToIgnoringHours(offsetDateTime2)
+            .isEqualToIgnoringMinutes(offsetDateTime3)
+            .isEqualToIgnoringSeconds(offsetDateTime4)
+            .isEqualToIgnoringNanos(offsetDateTime5);
 
     // example showing that OffsetDateTime are compared in actual's time zone
     OffsetDateTime offsetDateTimeNotInUTC = OffsetDateTime.of(2000, 1, 1, 0, 0, 0, 0, ZoneOffset.MAX);

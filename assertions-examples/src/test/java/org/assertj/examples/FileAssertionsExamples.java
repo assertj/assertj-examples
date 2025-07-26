@@ -44,8 +44,9 @@ public class FileAssertionsExamples extends AbstractAssertionsExamples {
 
     // compare content with another file
     File xFileClone = writeFile("xFileClone", "The Truth Is Out There");
-    assertThat(xFile).hasSameTextualContentAs(xFileClone);
-    assertThat(xFile).hasSameBinaryContentAs(xFileClone);
+    assertThat(xFile)
+            .hasSameTextualContentAs(xFileClone)
+            .hasSameBinaryContentAs(xFileClone);
 
     // compare content with a string
     assertThat(xFile).isNotEmpty()

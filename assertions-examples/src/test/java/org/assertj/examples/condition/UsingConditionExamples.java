@@ -159,13 +159,15 @@ public class UsingConditionExamples extends AbstractAssertionsExamples {
 
   @Test
   public void combined_condition_example() {
-    assertThat("Yoda").has(jediPower);
-    assertThat("Yoda").has(allOf(jediPower, not(sithPower)));
-    assertThat("Solo").has(not(jediPower));
-    assertThat("Solo").doesNotHave(jediPower);
-    assertThat("Solo").is(allOf(not(JEDI), not(sith)));
-    assertThat("Solo").isNot(anyOf(JEDI, sith));
-    assertThat("Solo").doesNotHave(anyOf(jediPower, sithPower));
+    assertThat("Yoda")
+            .has(jediPower)
+            .has(allOf(jediPower, not(sithPower)));
+    assertThat("Solo")
+            .has(not(jediPower))
+            .doesNotHave(jediPower)
+            .is(allOf(not(JEDI), not(sith)))
+            .isNot(anyOf(JEDI, sith))
+            .doesNotHave(anyOf(jediPower, sithPower));
   }
 
   @Test

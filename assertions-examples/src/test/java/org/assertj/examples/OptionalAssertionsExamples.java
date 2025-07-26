@@ -50,9 +50,10 @@ public class OptionalAssertionsExamples extends AbstractAssertionsExamples {
     String someString = "something";
     assertThat(Optional.of(someString)).containsSame(someString);
     assertThat(Optional.of(someString)).hasValueSatisfying(s -> {
-      assertThat(s).isEqualTo("something");
-      assertThat(s).startsWith("some");
-      assertThat(s).endsWith("thing");
+      assertThat(s)
+              .isEqualTo("something")
+              .startsWith("some")
+              .endsWith("thing");
     });
 
     Condition<TolkienCharacter> isAnElf = new Condition<>(character -> character.getRace() == Race.ELF, "an elf");
