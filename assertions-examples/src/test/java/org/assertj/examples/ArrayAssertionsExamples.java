@@ -249,11 +249,12 @@ public class ArrayAssertionsExamples extends AbstractAssertionsExamples {
 
   @Test
   public void containsOnlyOnce_for_primitive_types_assertion_examples() {
-    // int
-    assertThat(new int[] { 1, 2, 3 }).containsOnlyOnce(1);
-    assertThat(new int[] { 1, 2, 3 }).containsOnlyOnce(1, 2);
-    assertThat(new int[] { 1, 2, 3 }).containsOnlyOnce(1, 2, 3);
-    assertThat(new int[] { 1, 2, 3 }).containsOnlyOnce(3, 2, 3);
+    assertThat(new int[] { 1, 2, 3 })
+            // int
+            .containsOnlyOnce(1)
+            .containsOnlyOnce(1, 2)
+            .containsOnlyOnce(1, 2, 3)
+            .containsOnlyOnce(3, 2, 3);
     try {
       assertThat(new int[] { 1, 2, 1 }).containsOnlyOnce(1);
     } catch (AssertionError e) {
@@ -303,12 +304,13 @@ public class ArrayAssertionsExamples extends AbstractAssertionsExamples {
 
   @Test
   public void hasSameSizeAs_assertion_examples() {
-    // comparing primitive arrays with primitive arrays
-    assertThat(new byte[] { 1, 2 }).hasSameSizeAs(new byte[] { 2, 3 });
-    assertThat(new byte[] { 1, 2 }).hasSameSizeAs(new int[] { 2, 3 });
-    // comparing primitive arrays with Object array
-    assertThat(new byte[] { 1, 2 }).hasSameSizeAs(new Byte[] { 2, 3 });
-    assertThat(new byte[] { 1, 2 }).hasSameSizeAs(new String[] { "1", "2" });
+    assertThat(new byte[] { 1, 2 })
+            // comparing primitive arrays with primitive arrays
+            .hasSameSizeAs(new byte[] { 2, 3 })
+            .hasSameSizeAs(new int[] { 2, 3 })
+            // comparing primitive arrays with Object array
+            .hasSameSizeAs(new Byte[] { 2, 3 })
+            .hasSameSizeAs(new String[] { "1", "2" });
     // comparing primitive arrays with Iterable
     assertThat(new long[] { 1, 2, 3 }).hasSameSizeAs(newArrayList(vilya, nenya, narya));
 

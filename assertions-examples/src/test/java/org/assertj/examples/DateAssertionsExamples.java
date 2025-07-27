@@ -103,14 +103,15 @@ public class DateAssertionsExamples extends AbstractAssertionsExamples {
     Date date4 = parseDatetimeWithMs("2003-01-01T01:55:55.555");
     Date date5 = parseDatetimeWithMs("2003-01-01T05:55:55.555");
 
-    assertThat(date1).isEqualToIgnoringMillis(date2);
-    assertThat(date1).isInSameSecondAs(date2);
-    assertThat(date1).isEqualToIgnoringSeconds(date3);
-    assertThat(date1).isInSameMinuteAs(date3);
-    assertThat(date1).isEqualToIgnoringMinutes(date4);
-    assertThat(date1).isInSameHourAs(date4);
-    assertThat(date1).isEqualToIgnoringHours(date5);
-    assertThat(date1).isInSameDayAs(date5);
+    assertThat(date1)
+            .isEqualToIgnoringMillis(date2)
+            .isInSameSecondAs(date2)
+            .isEqualToIgnoringSeconds(date3)
+            .isInSameMinuteAs(date3)
+            .isEqualToIgnoringMinutes(date4)
+            .isInSameHourAs(date4)
+            .isEqualToIgnoringHours(date5)
+            .isInSameDayAs(date5);
 
     try {
       assertThat(date1).isEqualToIgnoringMillis(date3);
@@ -143,9 +144,10 @@ public class DateAssertionsExamples extends AbstractAssertionsExamples {
       logAssertionErrorMessage("isInSameSecondAs date assertion", e);
     }
 
-    // succeeds because the time difference between dates < 1s
-    assertThat(date1).isInSameSecondWindowAs(date2);
-    assertThat(date1).isInSameSecondWindowAs(date3);
+    assertThat(date1)
+            // succeeds because the time difference between dates < 1s
+            .isInSameSecondWindowAs(date2)
+            .isInSameSecondWindowAs(date3);
     // fails because time difference between dates >= 1s
     try {
       assertThat(date1).isInSameSecondWindowAs(parseDatetimeWithMs("2003-01-01T12:00:02.000"));
@@ -171,9 +173,10 @@ public class DateAssertionsExamples extends AbstractAssertionsExamples {
       logAssertionErrorMessage("isInSameMinuteWindowAs date assertion", e);
     }
 
-    // succeeds because date time difference < 1 min
-    assertThat(date1).isInSameMinuteWindowAs(date2);
-    assertThat(date1).isInSameMinuteWindowAs(date3);
+    assertThat(date1)
+            // succeeds because date time difference < 1 min
+            .isInSameMinuteWindowAs(date2)
+            .isInSameMinuteWindowAs(date3);
     try {
       // fails because date time difference >= 1 min
       assertThat(date1).isInSameMinuteWindowAs(parseDatetime("2003-01-01T12:02:00"));
@@ -199,9 +202,10 @@ public class DateAssertionsExamples extends AbstractAssertionsExamples {
       logAssertionErrorMessage("isInSameHourAs date assertion", e);
     }
 
-    // succeeds because time difference < 1h
-    assertThat(date1).isInSameHourWindowAs(date2);
-    assertThat(date1).isInSameHourWindowAs(date3);
+    assertThat(date1)
+            // succeeds because time difference < 1h
+            .isInSameHourWindowAs(date2)
+            .isInSameHourWindowAs(date3);
     try {
       assertThat(date1).isInSameHourWindowAs(date4);
     } catch (AssertionError e) {
@@ -213,21 +217,23 @@ public class DateAssertionsExamples extends AbstractAssertionsExamples {
   public void is_in_the_same_day_or_month_or_year_assertions_examples() {
     Date date1 = parseDatetime("2003-04-26T23:17:00");
     Date date2 = parseDatetime("2003-04-26T12:30:00");
-    assertThat(date1).isInSameDayAs(date2);
-    assertThat(date1).isInSameMonthAs("2003-04-27");
-    assertThat(date1).isInSameYearAs("2003-05-13");
+    assertThat(date1)
+            .isInSameDayAs(date2)
+            .isInSameMonthAs("2003-04-27")
+            .isInSameYearAs("2003-05-13");
   }
 
   @Test
   public void has_field_date_assertions_examples() {
     Date date1 = parseDatetimeWithMs("2003-04-26T13:20:35.017");
-    assertThat(date1).hasMillisecond(17);
-    assertThat(date1).hasSecond(35);
-    assertThat(date1).hasMinute(20);
-    assertThat(date1).hasHourOfDay(13);
-    assertThat(date1).hasDayOfWeek(Calendar.SATURDAY);
-    assertThat(date1).hasMonth(4);
-    assertThat(date1).hasYear(2003);
+    assertThat(date1)
+            .hasMillisecond(17)
+            .hasSecond(35)
+            .hasMinute(20)
+            .hasHourOfDay(13)
+            .hasDayOfWeek(Calendar.SATURDAY)
+            .hasMonth(4)
+            .hasYear(2003);
   }
 
   @Test
@@ -304,12 +310,14 @@ public class DateAssertionsExamples extends AbstractAssertionsExamples {
 
     Assertions.setLenientDateParsing(true);
 
-    // assertions will pass
-    assertThat(date).isEqualTo("2001-01-34");
-    assertThat(date).isEqualTo("2001-02-02T24:00:00");
-    assertThat(date).isEqualTo("2001-02-04T-24:00:00.000");
-    assertThat(dateTime).isEqualTo("2001-02-03T04:05:05.1000");
-    assertThat(dateTime).isEqualTo("2001-02-03T04:04:66");
+    assertThat(date)
+            // assertions will pass
+            .isEqualTo("2001-01-34")
+            .isEqualTo("2001-02-02T24:00:00")
+            .isEqualTo("2001-02-04T-24:00:00.000");
+    assertThat(dateTime)
+            .isEqualTo("2001-02-03T04:05:05.1000")
+            .isEqualTo("2001-02-03T04:04:66");
     assertThat(dateTimeWithMs).isEqualTo("2001-02-03T04:05:07.-300");
 
     // assertions will fail

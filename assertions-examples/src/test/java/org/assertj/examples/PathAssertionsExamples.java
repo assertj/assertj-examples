@@ -87,8 +87,9 @@ public class PathAssertionsExamples extends AbstractAssertionsExamples {
     // compare paths content (uses the default charset)
 
     write(xFileClone, "The Truth Is Out There".getBytes());
-    assertThat(xFile).hasSameTextualContentAs(xFileClone);
-    assertThat(xFile).hasSameBinaryContentAs(xFileClone);
+    assertThat(xFile)
+            .hasSameTextualContentAs(xFileClone)
+            .hasSameBinaryContentAs(xFileClone);
 
     write(xFileFrench, "La Vérité Est Ailleurs".getBytes());
     try {
@@ -194,9 +195,9 @@ public class PathAssertionsExamples extends AbstractAssertionsExamples {
     assertThat(nonExistentPath).doesNotExist();
 
     assertThat(existingFile).isRegularFile();
-    assertThat(symlinkToExistingFile).isRegularFile();
-
-    assertThat(symlinkToExistingFile).isSymbolicLink();
+    assertThat(symlinkToExistingFile)
+            .isRegularFile()
+            .isSymbolicLink();
     assertThat(dirSymlink).isDirectory().isSymbolicLink();
     assertThat(symlinkToNonExistentPath).isSymbolicLink();
 

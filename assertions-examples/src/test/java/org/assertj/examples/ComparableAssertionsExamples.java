@@ -28,12 +28,15 @@ public class ComparableAssertionsExamples extends AbstractAssertionsExamples {
 
     Rating goodRating = new Rating(8);
     Rating badRating = new Rating(4);
-    assertThat(goodRating).isGreaterThan(badRating);
-    assertThat(goodRating).isGreaterThanOrEqualTo(badRating);
-    assertThat(badRating).isLessThan(goodRating);
-    assertThat(badRating).isLessThanOrEqualTo(goodRating);
-    assertThat(goodRating).isEqualByComparingTo(goodRating);
-    assertThat(goodRating).isNotEqualByComparingTo(badRating);
+    assertThat(goodRating)
+            .isGreaterThan(badRating)
+            .isGreaterThanOrEqualTo(badRating);
+    assertThat(badRating)
+            .isLessThan(goodRating)
+            .isLessThanOrEqualTo(goodRating);
+    assertThat(goodRating)
+            .isEqualByComparingTo(goodRating)
+            .isNotEqualByComparingTo(badRating);
     try {
       assertThat(badRating).isGreaterThan(goodRating);
     } catch (AssertionError e) {
