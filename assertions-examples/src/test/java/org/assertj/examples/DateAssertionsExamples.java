@@ -104,7 +104,7 @@ public class DateAssertionsExamples extends AbstractAssertionsExamples {
     Date date5 = parseDatetimeWithMs("2003-01-01T05:55:55.555");
 
     assertThat(date1)
-            .isEqualToIgnoringMillis(date2)
+            .isCloseTo(date2, 1000L)
             .isInSameSecondAs(date2)
             .isEqualToIgnoringSeconds(date3)
             .isInSameMinuteAs(date3)
@@ -114,7 +114,7 @@ public class DateAssertionsExamples extends AbstractAssertionsExamples {
             .isInSameDayAs(date5);
 
     try {
-      assertThat(date1).isEqualToIgnoringMillis(date3);
+      assertThat(date1).isCloseTo(date3, 1000L);
     } catch (AssertionError e) {
       logAssertionErrorMessage("isEqualToIgnoringMillis", e);
     }

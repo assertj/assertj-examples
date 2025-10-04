@@ -81,17 +81,17 @@ public class SoftAssertionsExamples extends AbstractAssertionsExamples {
     // let the assertions fail
     catchThrowable(() -> softly.assertAll());
     // check the built report
-    assertThat(reportBuilder.toString()).isEqualTo(format("Assertions report:%n" +
-                                                          "------------------%n" +
-                                                          "[check Frodo's race] %n" +
-                                                          "expected: \"Orc\"%n" +
-                                                          "but was : \"Hobbit\"%n" +
-                                                          "------------------%n" +
-                                                          "[check Aragorn's age] %n" +
-                                                          "Expecting:%n" +
-                                                          "  87%n" +
-                                                          "to be greater than:%n" +
-                                                          "  500%n%n"));
+    assertThat(reportBuilder).hasToString(format("Assertions report:%n" +
+                                                 "------------------%n" +
+                                                 "[check Frodo's race] %n" +
+                                                 "expected: \"Orc\"%n" +
+                                                 "but was : \"Hobbit\"%n" +
+                                                 "------------------%n" +
+                                                 "[check Aragorn's age] %n" +
+                                                 "Expecting:%n" +
+                                                 "  87%n" +
+                                                 "to be greater than:%n" +
+                                                 "  500%n%n"));
   }
 
   @Test
