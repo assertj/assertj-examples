@@ -129,10 +129,10 @@ public class NumberAssertionsExamples extends AbstractAssertionsExamples {
 
   @Test
   public void number_assertions_with_offset_examples() {
-    assertThat(8.1).isEqualTo(8.0, offset(0.1));
-    assertThat(8.1f).isEqualTo(8.2f, offset(0.1f));
+    assertThat(8.1).isCloseTo(8.0, offset(0.1));
+    assertThat(8.1f).isCloseTo(8.2f, offset(0.1f));
     try {
-      assertThat(8.1f).isEqualTo(8.0f, offset(0.1f));
+      assertThat(8.1f).isCloseTo(8.0f, offset(0.1f));
     } catch (AssertionError e) {
       logAssertionErrorMessage("float isEqualTo with offset", e);
     }
@@ -198,12 +198,12 @@ public class NumberAssertionsExamples extends AbstractAssertionsExamples {
     assertThat(8.1f)
             .isEqualTo(8.0f, within(0.2f))
             .isEqualTo(8.0f, offset(0.2f))
-            // alias of within
-            .isEqualTo(8.0f, byLessThan(0.2f)); assertThat(0.1f)
+            .isCloseTo(8.0f, byLessThan(0.2f));
+    assertThat(0.1f)
             // strict
             // assertions succeed when the difference == offset value ...
             .isCloseTo(0.0f, within(0.1f))
-            .isEqualTo(0.0f, within(0.1f));
+            .isCloseTo(0.0f, within(0.1f));
 
     assertThat(8.1f)
             .isNotCloseTo(8.0f, byLessThan(0.01f))
@@ -215,23 +215,23 @@ public class NumberAssertionsExamples extends AbstractAssertionsExamples {
     assertThat(8.1f)
             .isEqualTo(8.0f, within(0.2f))
             .isEqualTo(8.0f, offset(0.2f))
-            // alias of within
-            .isEqualTo(8.0f, byLessThan(0.2f)); assertThat(0.1f)
+            .isCloseTo(8.0f, byLessThan(0.2f));
+    assertThat(0.1f)
             // strict
             // assertions succeed when the difference == offset value ...
             .isEqualTo(0.0f, within(0.1f))
-            .isEqualTo(0.0f, offset(0.1f));
+            .isCloseTo(0.0f, offset(0.1f));
     assertThat(8.1f)
             // ... except when using byLessThan which implies a strict comparison
             // assertThat(0.1f).isEqualTo(0.0f, byLessThan(0.1f)); // strict => fail
             .isEqualTo(8.0f, within(0.2f))
             .isEqualTo(8.0f, offset(0.2f))
-            // alias of within
-            .isEqualTo(8.0f, byLessThan(0.2f)); assertThat(0.1f)
+            .isCloseTo(8.0f, byLessThan(0.2f));
+    assertThat(0.1f)
             // strict
             // assertions succeed when the difference == offset value ...
             .isEqualTo(0.0f, within(0.1f))
-            .isEqualTo(0.0f, offset(0.1f));
+            .isCloseTo(0.0f, offset(0.1f));
 
     assertThat(5)
             .isCloseTo(7, within(3))
@@ -298,7 +298,7 @@ public class NumberAssertionsExamples extends AbstractAssertionsExamples {
 
   @Test
   public void number_assertions_with_binary_representation_examples() {
-    assertThat(1).inBinary().isEqualTo(1);
+    assertThat(1).inBinary().isOne();
     try {
       assertThat(1).inBinary().isEqualTo(2);
     } catch (AssertionError e) {
