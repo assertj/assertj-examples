@@ -22,7 +22,7 @@ public class GeneratedJunitSoftAssertionsExamples extends AbstractAssertionsExam
 
   @Rule
   public JUnitSoftAssertions softly = new JUnitSoftAssertions();
-  
+
   @Test
   public void generated_soft_assertions_example() throws NameException {
     // use the generated soft assertions

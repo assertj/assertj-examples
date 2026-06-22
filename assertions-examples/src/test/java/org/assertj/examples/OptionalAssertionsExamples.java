@@ -40,9 +40,9 @@ public class OptionalAssertionsExamples extends AbstractAssertionsExamples {
   @Test
   public void optional_assertions_examples() {
     Optional<String> optional = Optional.of("Test");
-    assertThat(optional).isPresent()
-                        .containsInstanceOf(String.class)
-                        .contains("Test");
+    assertThat(optional)
+            .containsInstanceOf(String.class)
+            .hasValue("Test");
 
     Optional<Object> emptyOptional = Optional.empty();
     assertThat(emptyOptional).isEmpty();
@@ -69,12 +69,12 @@ public class OptionalAssertionsExamples extends AbstractAssertionsExamples {
       logAssertionErrorMessage("OptionalAssert.isPresent", e);
     }
     try {
-      assertThat(emptyOptional).contains("Test");
+      assertThat(emptyOptional).hasValue("Test");
     } catch (AssertionError e) {
       logAssertionErrorMessage("OptionalAssert.contains", e);
     }
     try {
-      assertThat(optional).contains("Foo");
+      assertThat(optional).hasValue("Foo");
     } catch (AssertionError e) {
       logAssertionErrorMessage("OptionalAssert.contains", e);
     }
@@ -147,8 +147,8 @@ public class OptionalAssertionsExamples extends AbstractAssertionsExamples {
 
     // assertions succeed
     assertThat(Optional.of("something")).contains("something")
-                                        .flatMap(UPPER_CASE_OPTIONAL_STRING)
-                                        .contains("SOMETHING");
+            .flatMap(UPPER_CASE_OPTIONAL_STRING)
+            .hasValue("SOMETHING");
 
     assertThat(Optional.<String> empty()).flatMap(UPPER_CASE_OPTIONAL_STRING)
                                          .isEmpty();

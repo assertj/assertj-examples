@@ -76,7 +76,7 @@ public class IterableAssertionsExamples extends AbstractAssertionsExamples {
 
     List<String> abc = asList("a", "b", "c");
     assertThat(abc).hasSize(3)
-                   .containsAnyOf("b")
+                   .contains("b")
                    .containsAnyOf("b", "c")
                    .containsAnyOf("a", "b", "c")
                    .containsAnyOf("a", "b", "c", "d")
@@ -145,7 +145,7 @@ public class IterableAssertionsExamples extends AbstractAssertionsExamples {
 
     List<Integer> testedList = list(1);
     List<Integer> referenceList = list(1, 2, 3);
-    assertThat(referenceList).containsSequence(testedList.toArray(new Integer[testedList.size()]));
+    assertThat(referenceList).contains(testedList.toArray(new Integer[testedList.size()]));
 
     List<String> options = list("--option", "a=b", "--option", "c=d");
     assertThat(options).containsSequence("--option", "c=d");
@@ -655,7 +655,7 @@ public class IterableAssertionsExamples extends AbstractAssertionsExamples {
   }
 
   @Test
-  public void test_issue_245() throws Exception {
+  public void issue_245() throws Exception {
     Foo foo1 = new Foo("id", 1);
     foo1._f2 = "foo1";
     Foo foo2 = new Foo("id", 2);
@@ -673,7 +673,7 @@ public class IterableAssertionsExamples extends AbstractAssertionsExamples {
   }
 
   @Test
-  public void test_issue_236() throws Exception {
+  public void issue_236() throws Exception {
     List<Foo> list1 = list(new Foo("id", 1));
     List<Foo> list2 = list(new Foo("id", 2));
     assertThat(list1).usingElementComparatorOnFields("id").isEqualTo(list2);
@@ -695,7 +695,7 @@ public class IterableAssertionsExamples extends AbstractAssertionsExamples {
   }
 
   @Test
-  public void test_issue_656() {
+  public void issue_656() {
     Iterator<String> iterator = new ArrayList<String>().iterator();
     assertThat(iterator).isSameAs(iterator);
   }
@@ -727,7 +727,7 @@ public class IterableAssertionsExamples extends AbstractAssertionsExamples {
   }
 
   @Test
-  public void test_navigation_with_list() {
+  public void navigation_with_list() {
     List<TolkienCharacter> hobbits = list(frodo, sam, pippin);
     assertThat(hobbits).first().isEqualTo(frodo);
     assertThat(hobbits).element(1).isEqualTo(sam);
@@ -735,7 +735,7 @@ public class IterableAssertionsExamples extends AbstractAssertionsExamples {
   }
 
   @Test
-  public void test_navigable_size_assertions() {
+  public void navigable_size_assertions() {
     Iterable<Ring> elvesRings = list(vilya, nenya, narya);
 
     // assertion will pass:

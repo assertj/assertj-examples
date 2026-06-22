@@ -20,6 +20,7 @@ import static org.assertj.examples.data.Race.HOBBIT;
 import java.util.Comparator;
 import java.util.List;
 
+import org.assertj.core.api.recursive.comparison.RecursiveComparisonConfiguration;
 import org.assertj.examples.comparator.AtPrecisionComparator;
 import org.assertj.examples.data.Employee;
 import org.assertj.examples.data.TolkienCharacter;
@@ -87,6 +88,14 @@ public class IterableWithSpecificComparatorAssertionsExamples extends AbstractAs
 
     Comparator<Double> closeEnough = new AtPrecisionComparator<>(0.5);
 
+    // since 3.x the recursive element comparator takes its own configuration to register field/type comparators
+    RecursiveComparisonConfiguration heightFieldConfig = RecursiveComparisonConfiguration.builder()
+                                                                                         .withComparatorForFields(closeEnough, "height")
+                                                                                         .build();
+    RecursiveComparisonConfiguration doubleTypeConfig = RecursiveComparisonConfiguration.builder()
+                                                                                        .withComparatorForType(closeEnough, Double.class)
+                                                                                        .build();
+
     Dude[] hobbits = new Dude[] { dude };
 
     // assertions will pass
@@ -102,8 +111,7 @@ public class IterableWithSpecificComparatorAssertionsExamples extends AbstractAs
                        .usingElementComparatorIgnoringFields("name")
                        .contains(tallerDude);
 
-    assertThat(hobbits).usingComparatorForElementFieldsWithNames(closeEnough, "height")
-                       .usingRecursiveFieldByFieldElementComparator()
+    assertThat(hobbits).usingRecursiveFieldByFieldElementComparator(heightFieldConfig)
                        .contains(tallerDude);
 
     assertThat(asList(dude)).usingComparatorForElementFieldsWithNames(closeEnough, "height")
@@ -118,8 +126,7 @@ public class IterableWithSpecificComparatorAssertionsExamples extends AbstractAs
                             .usingElementComparatorIgnoringFields("name")
                             .contains(tallerDude);
 
-    assertThat(asList(dude)).usingComparatorForElementFieldsWithNames(closeEnough, "height")
-                            .usingRecursiveFieldByFieldElementComparator()
+    assertThat(asList(dude)).usingRecursiveFieldByFieldElementComparator(heightFieldConfig)
                             .contains(tallerDude);
 
     assertThat(hobbits).usingComparatorForElementFieldsWithType(closeEnough, Double.class)
@@ -134,8 +141,7 @@ public class IterableWithSpecificComparatorAssertionsExamples extends AbstractAs
                        .usingElementComparatorIgnoringFields("name")
                        .contains(tallerDude);
 
-    assertThat(hobbits).usingComparatorForElementFieldsWithType(closeEnough, Double.class)
-                       .usingRecursiveFieldByFieldElementComparator()
+    assertThat(hobbits).usingRecursiveFieldByFieldElementComparator(doubleTypeConfig)
                        .contains(tallerDude);
 
     assertThat(asList(dude)).usingComparatorForElementFieldsWithType(closeEnough, Double.class)
@@ -150,8 +156,7 @@ public class IterableWithSpecificComparatorAssertionsExamples extends AbstractAs
                             .usingElementComparatorIgnoringFields("name")
                             .contains(tallerDude);
 
-    assertThat(asList(dude)).usingComparatorForElementFieldsWithType(closeEnough, Double.class)
-                            .usingRecursiveFieldByFieldElementComparator()
+    assertThat(asList(dude)).usingRecursiveFieldByFieldElementComparator(doubleTypeConfig)
                             .contains(tallerDude);
 
     Dude reallyTallDude = new Dude("Frodo", 1.9);

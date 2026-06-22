@@ -104,7 +104,7 @@ public class ArrayAssertionsExamples extends AbstractAssertionsExamples {
 
     String[] abc = { "a", "b", "c" };
     assertThat(abc).containsExactly("a", "b", "c")
-                   .containsAnyOf("b")
+                   .contains("b")
                    .containsAnyOf("b", "c")
                    .containsAnyOf("a", "b", "c")
                    .containsAnyOf("a", "b", "c", "d")

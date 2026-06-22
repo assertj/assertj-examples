@@ -21,7 +21,7 @@ import static org.assertj.examples.data.Race.HOBBIT;
 import static org.assertj.examples.data.Race.ORC;
 
 import org.assertj.examples.data.TolkienCharacter;
-import org.junit.AfterClass;
+import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.Test;
 
 public class AssumptionExamples extends AbstractAssertionsExamples {
@@ -30,7 +30,7 @@ public class AssumptionExamples extends AbstractAssertionsExamples {
 
   private static int ranTests = 0;
 
-  @AfterClass
+  @AfterAll
   public static void afterClass() {
     assertThat(ranTests).as("number of tests run").isEqualTo(2);
   }
