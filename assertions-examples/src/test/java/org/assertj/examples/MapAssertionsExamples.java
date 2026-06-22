@@ -55,6 +55,7 @@ public class MapAssertionsExamples extends AbstractAssertionsExamples {
   private Condition<Map.Entry<TolkienCharacter, Ring>> oneRingManBearer = new Condition<>(entry -> entry.getKey().getRace() == MAN
                                                                                                    && entry.getValue() == oneRing,
                                                                                           "One ring man bearer");
+
   // @format:on
 
   @Test
@@ -178,15 +179,15 @@ public class MapAssertionsExamples extends AbstractAssertionsExamples {
     try {
       Map<String, Integer> expected = ImmutableMap.<String, Integer> builder().put("a", 1).put("b", 2).build();
       Map<String, Integer> actual = ImmutableMap.<String, Integer> builder().put("b", 1).put("a", 1).build();
-      assertThat(expected).isEqualTo(actual);
+      assertThat(expected).containsExactlyInAnyOrderEntriesOf(actual);
     } catch (AssertionError e) {
       logAssertionErrorMessage("display sorted maps in error message", e);
     }
   }
 
-  @SuppressWarnings({ "unchecked", "rawtypes" })
+  @SuppressWarnings({"unchecked", "rawtypes"})
   @Test
-  public void test_bug_485() {
+  public void bug_485() {
     // https://github.com/joel-costigliola/assertj-core/issues/485
     Map map1 = new HashMap();
     map1.put("Key1", "Value1");
@@ -196,7 +197,7 @@ public class MapAssertionsExamples extends AbstractAssertionsExamples {
   }
 
   @Test
-  public void test_navigable_size_assertions() throws Exception {
+  public void navigable_size_assertions() throws Exception {
     Map<Ring, TolkienCharacter> ringBearers = new HashMap<>();
     ringBearers.put(nenya, galadriel);
     ringBearers.put(narya, gandalf);

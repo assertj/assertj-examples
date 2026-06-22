@@ -73,7 +73,7 @@ public class BasicAssertionsExamples extends AbstractAssertionsExamples {
     assertThat(error).isInstanceOf(AssertionError.class)
                      .hasMessage(format("[check Frodo's age] %n" +
                                         "expected: 33%n" +
-                                        "but was : 50"));
+                                        " but was: 50"));
 
     // you can pass a Supplier<String> to avoid building the description if the assertion succeeds
     assertThat(frodo.age).as(() -> "check Frodo's age").isEqualTo(50);

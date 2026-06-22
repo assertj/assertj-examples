@@ -17,14 +17,14 @@ import static org.assertj.core.presentation.StandardRepresentation.STANDARD_REPR
 
 import org.assertj.core.api.Assertions;
 import org.assertj.core.presentation.StandardRepresentation;
-import org.junit.After;
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
 
 public class RepresentationExamples extends AbstractAssertionsExamples {
 
   private static final CustomRepresentation CUSTOM_REPRESENTATION = new CustomRepresentation();
 
-  @After
+  @AfterEach
   public void afterTest() {
     Assertions.useRepresentation(STANDARD_REPRESENTATION);
   }

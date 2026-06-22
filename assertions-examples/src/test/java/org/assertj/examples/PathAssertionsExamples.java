@@ -19,7 +19,7 @@ import static java.nio.file.Files.deleteIfExists;
 import static java.nio.file.Files.write;
 import static java.util.Collections.singleton;
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.Assume.assumeTrue;
+import static org.junit.jupiter.api.Assumptions.assumeTrue;
 
 import java.nio.charset.Charset;
 import java.nio.file.FileSystems;

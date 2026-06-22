@@ -101,7 +101,7 @@ public class StreamAssertionsExamples extends AbstractAssertionsExamples {
 
     Stream<Integer> testedList = Stream.of(1);
     Stream<Integer> referenceList = Stream.of(1, 2, 3);
-    assertThat(referenceList).containsSequence(testedList.toArray(Integer[]::new));
+    assertThat(referenceList).contains(testedList.toArray(Integer[]::new));
 
     Stream<String> stream = Stream.of("--option", "a=b", "--option", "c=d");
     assertThat(stream).containsSequence("--option", "c=d");
@@ -110,14 +110,14 @@ public class StreamAssertionsExamples extends AbstractAssertionsExamples {
 
   @Test
   public void primitive_stream_assertions_examples() {
-    assertThat(IntStream.of(1, 2, 3)).isNotNull()
+    assertThat(IntStream.of(1, 2, 3))
                                      .contains(1)
                                      .anySatisfy(i -> assertThat(i).isLessThan(2));
 
     assertThat(LongStream.of(0, 1, 2, 3, 4)).hasSize(5)
                                             .containsSequence(1L, 2L, 3L);
 
-    assertThat(DoubleStream.of(1, 2, 3)).isNotNull()
+    assertThat(DoubleStream.of(1, 2, 3))
                                         .contains(1.0, 2.0, 3.0)
                                         .allMatch(Double::isFinite);
   }
@@ -299,11 +299,11 @@ public class StreamAssertionsExamples extends AbstractAssertionsExamples {
     Iterator<Ring> elvesRingsIterator = Stream.of(vilya, nenya, narya).iterator();
     // elvesRingsIterator is only consumed when needed which is not the case with null/notNull assertion
     assertThat(elvesRingsIterator).isNotNull();
-    assertThat(elvesRingsIterator.hasNext()).as("iterator is not consumed").isTrue();
+    assertThat(elvesRingsIterator).as("iterator is not consumed").hasNext();
     // elvesRingsIterator is consumed when needed but only once, you can then chain assertion
     assertThat(elvesRingsIterator).toIterable().isSubsetOf(ringsOfPower).contains(nenya, narya);
     // elvesRingsIterator is consumed ...
-    assertThat(elvesRingsIterator.hasNext()).as("iterator is consumed").isFalse();
+    assertThat(elvesRingsIterator).as("iterator is consumed").isExhausted();
   }
 
   @Test
@@ -465,7 +465,7 @@ public class StreamAssertionsExamples extends AbstractAssertionsExamples {
   }
 
   @Test
-  public void test_issue_245() throws Exception {
+  public void issue_245() throws Exception {
     Foo foo1 = new Foo("id", 1);
     foo1._f2 = "foo1";
     Foo foo2 = new Foo("id", 2);
@@ -482,7 +482,7 @@ public class StreamAssertionsExamples extends AbstractAssertionsExamples {
   }
 
   @Test
-  public void test_issue_236() throws Exception {
+  public void issue_236() throws Exception {
     List<Foo> stream2 = newArrayList(new Foo("id", 2));
     assertThat(Stream.of(new Foo("id", 1))).usingElementComparatorOnFields("id").isEqualTo(stream2);
     assertThat(Stream.of(new Foo("id", 1))).usingElementComparatorIgnoringFields("bar").isEqualTo(stream2);

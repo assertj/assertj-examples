@@ -25,13 +25,11 @@ public class Array2DAssertionsExamples extends AbstractAssertionsExamples {
     int[][] numbers = new int[][] { { 1, 2, 3 }, { 4, 5, 6 } };
     // 2D generic array
     assertThat(abc).hasDimensions(2, 3)
-                   .isNotEmpty()
                    .contains(new String[] { "1", "2", "3" }, atIndex(1))
                    .isDeepEqualTo(new String[][] { { "a", "b", "c" }, { "1", "2", "3" } })
                    .hasSameDimensionsAs(numbers);
     // 2D primtive arrays
     assertThat(numbers).hasDimensions(2, 3)
-                       .isNotEmpty()
                        .contains(new int[] { 1, 2, 3 }, atIndex(0))
                        .hasSameDimensionsAs(abc)
                        .isDeepEqualTo(new int[][] { { 1, 2, 3 }, { 4, 5, 6 } });
